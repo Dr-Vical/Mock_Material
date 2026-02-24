@@ -87,6 +87,36 @@ public partial class MainWindow : Window
     }
 
     // ═══════════════════════════════════════════════════════════
+    //  FONT SCALE SLIDER (global font size)
+    // ═══════════════════════════════════════════════════════════
+
+    private static readonly Dictionary<string, double> BaseFontSizes = new()
+    {
+        ["FontSizeXS"]  = 10,
+        ["FontSizeSM"]  = 11,
+        ["FontSizeMD"]  = 12,
+        ["FontSizeLG"]  = 13,
+        ["FontSizeXL"]  = 14,
+        ["FontSizeXXL"] = 16,
+        ["FontSize3XL"] = 20,
+    };
+
+    private void FontScaleSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+    {
+        if (!IsLoaded) return;
+
+        double scale = e.NewValue / 100.0;
+        var res = Application.Current.Resources;
+
+        foreach (var (key, baseSize) in BaseFontSizes)
+        {
+            res[key] = Math.Round(baseSize * scale, 1);
+        }
+
+        FontScaleLabel.Text = $"{e.NewValue:F0}%";
+    }
+
+    // ═══════════════════════════════════════════════════════════
     //  HUE SLIDER (accent color tone change)
     // ═══════════════════════════════════════════════════════════
 

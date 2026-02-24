@@ -31,7 +31,7 @@
                        AutomaticStateManagement="True">
 
             <!-- ── File Tab ── -->
-            <Fluent:RibbonTabItem Header="File" KeyTip="F">
+            <Fluent:RibbonTabItem Header="File" KeyTip="F" Margin="4,0,0,0">
                 <Fluent:RibbonGroupBox Header="File">
                     <Button Style="{StaticResource RibbonLargeRipple}">
                         <StackPanel HorizontalAlignment="Center">
@@ -183,6 +183,24 @@
                             <TextBlock Text="Actions" Style="{StaticResource RibbonButtonLabel}" />
                         </StackPanel>
                     </ToggleButton>
+                </Fluent:RibbonGroupBox>
+                <Fluent:RibbonGroupBox Header="Font Size">
+                    <StackPanel VerticalAlignment="Center" Margin="4,2">
+                        <DockPanel Margin="0,0,0,4">
+                            <TextBlock x:Name="FontScaleLabel" DockPanel.Dock="Right"
+                                       Text="100%" Width="35" TextAlignment="Right"
+                                       Foreground="{DynamicResource TextSecondary}"
+                                       FontSize="{DynamicResource FontSizeXS}" VerticalAlignment="Center" />
+                            <TextBlock Text="Scale" Foreground="{DynamicResource TextSecondary}"
+                                       FontSize="{DynamicResource FontSizeXS}" VerticalAlignment="Center" />
+                        </DockPanel>
+                        <Slider x:Name="FontScaleSlider"
+                                Minimum="70" Maximum="150"
+                                Value="{Binding FontScalePercent, Mode=TwoWay}"
+                                TickFrequency="10" IsSnapToTickEnabled="True"
+                                Width="150"
+                                ValueChanged="FontScaleSlider_ValueChanged" />
+                    </StackPanel>
                 </Fluent:RibbonGroupBox>
                 <Fluent:RibbonGroupBox Header="Display">
                     <ToggleButton Style="{StaticResource RibbonLargeRippleToggle}" IsChecked="{Binding ShowHelps, Mode=TwoWay}">

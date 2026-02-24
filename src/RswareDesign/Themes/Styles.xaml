@@ -6,18 +6,18 @@
     <!-- ═══════════════════════════════════════════════════════════ -->
     <!--  SPACING TOKENS — StaticResource                             -->
     <!-- ═══════════════════════════════════════════════════════════ -->
-    <Thickness x:Key="Padding.Panel">12</Thickness>
-    <Thickness x:Key="Padding.ToolWindow">8</Thickness>
-    <Thickness x:Key="Padding.Dialog">24</Thickness>
-    <Thickness x:Key="Padding.Input">8,4</Thickness>
-    <Thickness x:Key="Padding.Button">12,6</Thickness>
-    <Thickness x:Key="Padding.Button.Small">8,4</Thickness>
-    <Thickness x:Key="Padding.GridCell">6,3</Thickness>
+    <Thickness x:Key="Padding.Panel">13</Thickness>
+    <Thickness x:Key="Padding.ToolWindow">9</Thickness>
+    <Thickness x:Key="Padding.Dialog">25</Thickness>
+    <Thickness x:Key="Padding.Input">9,5</Thickness>
+    <Thickness x:Key="Padding.Button">13,7</Thickness>
+    <Thickness x:Key="Padding.Button.Small">9,5</Thickness>
+    <Thickness x:Key="Padding.GridCell">7,4</Thickness>
 
-    <Thickness x:Key="Margin.ListItem">0,0,0,4</Thickness>
-    <Thickness x:Key="Margin.FormField">0,0,0,12</Thickness>
-    <Thickness x:Key="Margin.Section">0,0,0,24</Thickness>
-    <Thickness x:Key="Margin.Inline">0,0,8,0</Thickness>
+    <Thickness x:Key="Margin.ListItem">0,0,0,5</Thickness>
+    <Thickness x:Key="Margin.FormField">0,0,0,13</Thickness>
+    <Thickness x:Key="Margin.Section">0,0,0,25</Thickness>
+    <Thickness x:Key="Margin.Inline">0,0,9,0</Thickness>
 
     <CornerRadius x:Key="Radius.None">0</CornerRadius>
     <CornerRadius x:Key="Radius.SM">2</CornerRadius>

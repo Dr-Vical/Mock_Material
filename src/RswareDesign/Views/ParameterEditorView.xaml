@@ -10,8 +10,9 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <!-- Parameter DataGrid -->
-        <DataGrid Grid.Row="0"
+        <!-- Parameter DataGrid — responsive column sizing via code-behind -->
+        <DataGrid x:Name="parameterGrid"
+                  Grid.Row="0"
                   ItemsSource="{Binding Parameters}"
                   AutoGenerateColumns="False"
                   CanUserAddRows="False"
@@ -42,6 +43,13 @@
                     <Setter Property="Padding" Value="{StaticResource Padding.GridCell}" />
                     <Setter Property="BorderBrush" Value="{DynamicResource DividerBrush}" />
                     <Setter Property="BorderThickness" Value="0,0,1,1" />
+                    <Setter Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" TextTrimming="CharacterEllipsis" />
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
                 </Style>
             </DataGrid.ColumnHeaderStyle>
 
@@ -83,14 +91,27 @@
             </DataGrid.RowStyle>
 
             <DataGrid.Columns>
+                <!-- Priority 0: FT NUM, PARAMETER, VALUE — kept visible, font scales last -->
                 <DataGridTextColumn Header="FT NUM"
                                     Binding="{Binding FtNumber}"
                                     IsReadOnly="True"
-                                    Width="80" />
+                                    Width="80">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
                 <DataGridTextColumn Header="PARAMETER"
                                     Binding="{Binding Name}"
                                     IsReadOnly="True"
-                                    Width="*" />
+                                    Width="220">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
                 <DataGridTextColumn Header="VALUE"
                                     Binding="{Binding Value}"
                                     Width="120">
@@ -98,25 +119,52 @@
                         <Style TargetType="TextBlock">
                             <Setter Property="Foreground" Value="{DynamicResource SecondaryBrush}" />
                             <Setter Property="FontWeight" Value="SemiBold" />
+                            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
+
+                <!-- Priority 1: UNITS, DEFAULT, MIN, MAX — shrinks/hides first -->
                 <DataGridTextColumn Header="UNITS"
                                     Binding="{Binding Unit}"
                                     IsReadOnly="True"
-                                    Width="100" />
+                                    Width="100">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
                 <DataGridTextColumn Header="DEFAULT"
                                     Binding="{Binding Default}"
                                     IsReadOnly="True"
-                                    Width="100" />
+                                    Width="120">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
                 <DataGridTextColumn Header="MIN"
                                     Binding="{Binding Min}"
                                     IsReadOnly="True"
-                                    Width="100" />
+                                    Width="100">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
                 <DataGridTextColumn Header="MAX"
                                     Binding="{Binding Max}"
                                     IsReadOnly="True"
-                                    Width="100" />
+                                    Width="100">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
 

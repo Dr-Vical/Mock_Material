@@ -30,6 +30,9 @@ public partial class MainWindowViewModel : ObservableObject
     private bool _isDarkTheme = true;
 
     [ObservableProperty]
+    private double _fontScalePercent = 100;
+
+    [ObservableProperty]
     private bool _showHelps;
 
     [ObservableProperty]
@@ -99,6 +102,11 @@ public partial class MainWindowViewModel : ObservableObject
     partial void OnIsDarkThemeChanged(bool value)
     {
         WeakReferenceMessenger.Default.Send(new ThemeChangedMessage(value));
+    }
+
+    partial void OnFontScalePercentChanged(double value)
+    {
+        WeakReferenceMessenger.Default.Send(new FontScaleChangedMessage(value));
     }
 
     [RelayCommand]
@@ -208,3 +216,5 @@ public class StatusEntry
 public class OpenOscilloscopeMessage { }
 
 public record ThemeChangedMessage(bool IsDark);
+
+public record FontScaleChangedMessage(double ScalePercent);
