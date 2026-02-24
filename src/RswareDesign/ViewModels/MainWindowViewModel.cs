@@ -30,25 +30,21 @@ public partial class MainWindowViewModel : ObservableObject
     private bool _isDarkTheme = true;
 
     [ObservableProperty]
-    private double _fontScalePercent = 100;
+    private int _selectedFontSize = 12;
 
-    [ObservableProperty]
-    private bool _showHelps;
-
-    [ObservableProperty]
-    private bool _showStatus = true;
-
-    [ObservableProperty]
-    private bool _showCommands = true;
+    public ObservableCollection<int> AvailableFontSizes { get; } = [8, 9, 10, 11, 12, 13, 14, 16, 18, 20];
 
     [ObservableProperty]
     private bool _isDriveTreeVisible = true;
 
     [ObservableProperty]
-    private bool _isErrorLogVisible = true;
+    private bool _isMainPanelVisible = true;
 
     [ObservableProperty]
     private bool _isActionPanelVisible = true;
+
+    [ObservableProperty]
+    private bool _isErrorLogVisible = true;
 
     public ObservableCollection<string> AvailablePorts { get; } = ["COM1", "COM2", "COM3", "COM4", "COM5"];
 
@@ -94,9 +90,39 @@ public partial class MainWindowViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void RevertParameters()
+    private void ExitApp()
     {
-        // Revert to original values
+        System.Windows.Application.Current.Shutdown();
+    }
+
+    [RelayCommand]
+    private void AdminMotorDb()
+    {
+        WeakReferenceMessenger.Default.Send(new ShowAdminPasswordMessage("MotorDb"));
+    }
+
+    [RelayCommand]
+    private void AdminParamSetting()
+    {
+        WeakReferenceMessenger.Default.Send(new ShowAdminPasswordMessage("ParamSetting"));
+    }
+
+    [RelayCommand]
+    private void Enable()
+    {
+        // Enable drive servo on
+    }
+
+    [RelayCommand]
+    private void DisableAll()
+    {
+        // Disable all drives servo off
+    }
+
+    [RelayCommand]
+    private void ClearFaultAll()
+    {
+        // Clear all drive faults
     }
 
     partial void OnIsDarkThemeChanged(bool value)
@@ -104,21 +130,9 @@ public partial class MainWindowViewModel : ObservableObject
         WeakReferenceMessenger.Default.Send(new ThemeChangedMessage(value));
     }
 
-    partial void OnFontScalePercentChanged(double value)
+    partial void OnSelectedFontSizeChanged(int value)
     {
-        WeakReferenceMessenger.Default.Send(new FontScaleChangedMessage(value));
-    }
-
-    [RelayCommand]
-    private void ToggleTheme()
-    {
-        IsDarkTheme = !IsDarkTheme;
-    }
-
-    [RelayCommand]
-    private void OpenOscilloscope()
-    {
-        WeakReferenceMessenger.Default.Send(new OpenOscilloscopeMessage());
+        WeakReferenceMessenger.Default.Send(new FontSizeChangedMessage(value));
     }
 
     private void BuildSampleTree()
@@ -217,4 +231,6 @@ public class OpenOscilloscopeMessage { }
 
 public record ThemeChangedMessage(bool IsDark);
 
-public record FontScaleChangedMessage(double ScalePercent);
+public record FontSizeChangedMessage(int FontSize);
+
+public record ShowAdminPasswordMessage(string Target);

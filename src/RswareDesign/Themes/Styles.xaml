@@ -26,6 +26,22 @@
     <CornerRadius x:Key="Radius.XL">8</CornerRadius>
 
     <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  RIBBON INLINE TOKENS — for non-button controls in ribbon    -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <Thickness x:Key="Padding.RibbonInline">4,2</Thickness>
+    <Thickness x:Key="Margin.RibbonLabelGap">0,0,0,3</Thickness>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  RIBBON INLINE LABEL — labels inside RibbonGroupBox          -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <Style x:Key="RibbonInlineLabel" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource TextSecondary}" />
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeXS}" />
+        <Setter Property="FontFamily" Value="{DynamicResource FontFamilyUI}" />
+        <Setter Property="Margin" Value="{StaticResource Margin.RibbonLabelGap}" />
+    </Style>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
     <!--  SIZE TOKENS — StaticResource                                -->
     <!-- ═══════════════════════════════════════════════════════════ -->
     <system:Double x:Key="Size.StatusBarHeight">24</system:Double>

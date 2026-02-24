@@ -163,10 +163,21 @@ All UI must reference tokens from the style dictionary files under `Themes/`:
 NEVER: Foreground="#CCCCCC"     -> USE: Foreground="{DynamicResource TextPrimary}"
 NEVER: FontSize="12"           -> USE: FontSize="{DynamicResource FontSizeMD}"
 NEVER: Background="#1E1E1E"    -> USE: Background="{DynamicResource SurfaceBrush}"
+NEVER: Margin="4,2"            -> USE: Margin="{StaticResource Padding.RibbonInline}"
 NEVER: Text="저장"              -> USE: Text="{DynamicResource loc.common.save}"
 NEVER: Foreground="#FFFFB74D"  -> USE: Style includes Foreground (use RibbonIconOpacityPulse)
 NEVER: Per-item color keys     -> USE: Single category color from 5-role system
 ```
+
+### Ribbon Controls (MUST follow)
+All controls inside `Fluent:RibbonGroupBox` MUST use predefined styles — no inline Foreground/FontSize/Margin.
+- Large buttons: `Style="{StaticResource RibbonLargeRipple}"` / `RibbonLargeRippleToggle`
+- Icons: `Style="{StaticResource RibbonIconOpacityPulse}"` / `RibbonIconShake`
+- Button labels: `Style="{StaticResource RibbonButtonLabel}"`
+- Inline labels: `Style="{StaticResource RibbonInlineLabel}"` (not raw Foreground+FontSize)
+- ComboBox: `Style="{StaticResource RibbonDarkComboBox}"`
+- Inline panel margin: `Margin="{StaticResource Padding.RibbonInline}"`
+- Preview rect size: `Width/Height="{StaticResource Size.IconLG}"`
 
 ### i18n Mandatory
 - All UI text: `{DynamicResource loc.*}` keys

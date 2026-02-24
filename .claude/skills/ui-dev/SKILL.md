@@ -27,6 +27,14 @@ When the user inputs `/ui-dev`, collect requirements interactively and execute t
 - **Material Design controls**: use MaterialDesignInXamlToolkit styles (MaterialDesignRaisedButton, MaterialDesignDataGrid, etc.)
 - **AvalonDock layout**: use LayoutAnchorable/LayoutDocument for dockable panels
 - **Fluent.Ribbon**: use for ribbon menu (RibbonTabItem, RibbonGroupBox)
+- **Ribbon inline controls**: ALL controls inside RibbonGroupBox MUST use predefined styles:
+  - Labels: `Style="{StaticResource RibbonInlineLabel}"` (NEVER raw Foreground/FontSize/FontFamily)
+  - Buttons: `Style="{StaticResource RibbonLargeRipple}"` / `RibbonLargeRippleToggle`
+  - Icons: `Style="{StaticResource RibbonIconOpacityPulse}"` / `RibbonIconShake`
+  - Button labels: `Style="{StaticResource RibbonButtonLabel}"`
+  - ComboBox: `Style="{StaticResource RibbonDarkComboBox}"`
+  - Inline panel: `Margin="{StaticResource Padding.RibbonInline}"`
+  - Sizes: use `{StaticResource Size.IconLG}` etc., not raw numbers
 - **CommunityToolkit.Mvvm**: ObservableObject, [ObservableProperty], [RelayCommand], WeakReferenceMessenger
 - **Window base**: `<Window>` with MaterialDesign theme (NOT dx:ThemedWindow)
 - **Color constraint**: MAX 5 color roles — STRICTLY ENFORCED:
@@ -52,6 +60,15 @@ When the user inputs `/ui-dev`, collect requirements interactively and execute t
 | Existing View Modification | `MODIFY_VIEW` | XAML layout, binding, style changes | Low |
 | Custom Control | `CONTROL` | Add reusable control | Medium |
 | Design System Extension | `DESIGN_SYSTEM` | Token/style/theme addition | High |
+| Navigation/Docking | `NAVIGATION` | Tree→Center switching, AvalonDock tabs | Medium |
+| Dialog/Sub-screen | `DIALOG` | Modal/modeless dialog window | Low |
+
+### UI Roadmap Reference
+- Read `.claude/specs/UI-ROADMAP.md` for full development phases
+- **Center view types (LayoutDocument tabs):** ParameterEditor, Monitor, Oscilloscope, ControlPanel, Faults, ServiceInfo
+- **Tool panels (LayoutAnchorable):** DriveTree (Left), ActionPanel (Right), ErrorLog (Bottom)
+- **Tree selection drives center content** — via TreeNodeSelectedMessage
+- **ActionPanel is context-aware** — buttons change based on active center view
 
 ---
 

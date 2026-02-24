@@ -37,7 +37,7 @@ public partial class ParameterEditorView : UserControl
         parameterGrid.Loaded += OnGridLoaded;
 
         // Listen for global font scale changes
-        WeakReferenceMessenger.Default.Register<FontScaleChangedMessage>(this, (r, _) =>
+        WeakReferenceMessenger.Default.Register<FontSizeChangedMessage>(this, (r, _) =>
         {
             ((ParameterEditorView)r).OnFontScaleChanged();
         });

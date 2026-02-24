@@ -10,6 +10,8 @@ namespace RswareDesign;
 
 public partial class MainWindow : Window
 {
+    private double _currentHue = 210; // default blue hue
+
     public MainWindow()
     {
         InitializeComponent();
@@ -23,6 +25,21 @@ public partial class MainWindow : Window
         WeakReferenceMessenger.Default.Register<ThemeChangedMessage>(this, (_, msg) =>
         {
             SwitchTheme(msg.IsDark);
+        });
+
+        WeakReferenceMessenger.Default.Register<FontSizeChangedMessage>(this, (_, msg) =>
+        {
+            UpdateFontSizes(msg.FontSize);
+        });
+
+        WeakReferenceMessenger.Default.Register<ShowAdminPasswordMessage>(this, (_, msg) =>
+        {
+            var dialog = new AdminPasswordDialog { Owner = this };
+            if (dialog.ShowDialog() == true)
+            {
+                // Password verified — open admin feature
+                // msg.Target: "MotorDb" or "ParamSetting"
+            }
         });
     }
 
@@ -82,12 +99,12 @@ public partial class MainWindow : Window
         }
         catch { /* Ignore */ }
 
-        // 5. Re-apply hue slider accent colors if changed from default
-        UpdateThemeColors(HueSlider.Value);
+        // 5. Re-apply accent colors with current hue
+        UpdateThemeColors(_currentHue);
     }
 
     // ═══════════════════════════════════════════════════════════
-    //  FONT SCALE SLIDER (global font size)
+    //  FONT SIZE (global font size via dropdown)
     // ═══════════════════════════════════════════════════════════
 
     private static readonly Dictionary<string, double> BaseFontSizes = new()
@@ -101,30 +118,20 @@ public partial class MainWindow : Window
         ["FontSize3XL"] = 20,
     };
 
-    private void FontScaleSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+    private void UpdateFontSizes(int baseMd)
     {
-        if (!IsLoaded) return;
-
-        double scale = e.NewValue / 100.0;
+        double scale = baseMd / 12.0;
         var res = Application.Current.Resources;
 
         foreach (var (key, baseSize) in BaseFontSizes)
         {
             res[key] = Math.Round(baseSize * scale, 1);
         }
-
-        FontScaleLabel.Text = $"{e.NewValue:F0}%";
     }
 
     // ═══════════════════════════════════════════════════════════
-    //  HUE SLIDER (accent color tone change)
+    //  ACCENT COLOR (hue-based color generation)
     // ═══════════════════════════════════════════════════════════
-
-    private void HueSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-    {
-        if (!IsLoaded) return;
-        UpdateThemeColors(e.NewValue);
-    }
 
     private void UpdateThemeColors(double hue)
     {

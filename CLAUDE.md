@@ -82,6 +82,32 @@ NEVER: Foreground="#FFFFB74D"  -> USE: Style includes Foreground (e.g. RibbonIco
 - Ribbon icons: `RibbonItemBrush` (Secondary role) — set via style, not per-icon
 - Error icons: `RibbonItemErrorBrush` (Error role) — set via style, not per-icon
 
+### Ribbon Controls (MUST follow)
+
+All controls inside `Fluent:RibbonGroupBox` MUST use design tokens — no raw values.
+
+| Element | Required Style/Token |
+|---------|---------------------|
+| Large Button | `Style="{StaticResource RibbonLargeRipple}"` |
+| Large ToggleButton | `Style="{StaticResource RibbonLargeRippleToggle}"` |
+| Icon | `Style="{StaticResource RibbonIconOpacityPulse}"` or `RibbonIconShake` |
+| Button label | `Style="{StaticResource RibbonButtonLabel}"` |
+| Inline label (Port, Size, etc.) | `Style="{StaticResource RibbonInlineLabel}"` |
+| ComboBox | `Style="{StaticResource RibbonDarkComboBox}"` |
+| Inline StackPanel margin | `Margin="{StaticResource Padding.RibbonInline}"` |
+| Preview rectangle size | `Width/Height="{StaticResource Size.IconLG}"` |
+
+```
+NEVER: Foreground="{DynamicResource TextSecondary}" FontSize="{DynamicResource FontSizeXS}"
+  USE: Style="{StaticResource RibbonInlineLabel}"
+
+NEVER: Margin="4,2"
+  USE: Margin="{StaticResource Padding.RibbonInline}"
+
+NEVER: Margin="0,0,0,3"
+  USE: Margin="{StaticResource Margin.RibbonLabelGap}"
+```
+
 ### i18n (Korean/English)
 - All UI text via `{DynamicResource loc.*}` keys
 - Parameter names localized from CSV Remark/Name columns
@@ -101,6 +127,7 @@ NEVER: Foreground="#FFFFB74D"  -> USE: Style includes Foreground (e.g. RibbonIco
 | i18n | `.claude/specs/I18N.md` |
 | Parameter System | `.claude/specs/PARAMETER-SYSTEM.md` |
 | Communication | `.claude/specs/COMMUNICATION.md` |
+| **UI Roadmap** | `.claude/specs/UI-ROADMAP.md` |
 
 ## Build
 

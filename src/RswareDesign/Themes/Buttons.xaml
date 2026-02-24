@@ -97,6 +97,60 @@
     </Style>
 
     <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  QUICK ACTION BUTTON (compact toolbar button)                -->
+    <!--  Horizontal icon + text, always visible action bar           -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <Style x:Key="QuickActionButton" TargetType="Button">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Bg" Background="Transparent"
+                            CornerRadius="{StaticResource Radius.SM}"
+                            Padding="8,4" MinHeight="28">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bg" Property="Background"
+                                    Value="{DynamicResource RibbonButton.HoverBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Bg" Property="Background"
+                                    Value="{DynamicResource RibbonButton.PressedBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  QUICK ACTION ICON (smaller, for inline toolbar)             -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <Style x:Key="QuickActionIcon" TargetType="materialDesign:PackIcon"
+           xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+        <Setter Property="Width" Value="{StaticResource Size.IconMD}" />
+        <Setter Property="Height" Value="{StaticResource Size.IconMD}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Foreground" Value="{DynamicResource RibbonItemBrush}" />
+    </Style>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  QUICK ACTION LABEL (compact text next to icon)              -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <Style x:Key="QuickActionLabel" TargetType="TextBlock">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="4,0,0,0" />
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeXS}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimary}" />
+        <Setter Property="FontFamily" Value="{DynamicResource FontFamilyUI}" />
+    </Style>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
     <!--  RIBBON DARK COMBOBOX                                        -->
     <!-- ═══════════════════════════════════════════════════════════ -->
     <Style x:Key="RibbonDarkComboBox" TargetType="ComboBox">
