@@ -1,0 +1,46 @@
+<UserControl x:Class="RswareDesign.Views.DriveTreeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:RswareDesign.Converters"
+             Background="{DynamicResource TreeBackgroundBrush}">
+
+    <UserControl.Resources>
+        <converters:StringToPackIconKindConverter x:Key="IconKindConverter" />
+    </UserControl.Resources>
+
+    <Grid>
+        <TreeView ItemsSource="{Binding TreeNodes}"
+                  Background="Transparent"
+                  BorderThickness="0"
+                  Padding="{StaticResource Padding.ToolWindow}">
+
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="TreeViewItem" BasedOn="{StaticResource {x:Type TreeViewItem}}">
+                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                    <Setter Property="Foreground" Value="{DynamicResource TextPrimary}" />
+                    <Setter Property="FontFamily" Value="{DynamicResource FontFamilyUI}" />
+                    <Setter Property="FontSize" Value="{DynamicResource FontSizeSM}" />
+                    <Setter Property="Padding" Value="4,2" />
+                </Style>
+            </TreeView.ItemContainerStyle>
+
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                    <StackPanel Orientation="Horizontal" Margin="2,1">
+                        <materialDesign:PackIcon
+                            Kind="{Binding IconKind, Converter={StaticResource IconKindConverter}}"
+                            Width="{DynamicResource Size.IconSM}"
+                            Height="{DynamicResource Size.IconSM}"
+                            Foreground="{DynamicResource PrimaryBrush}"
+                            VerticalAlignment="Center"
+                            Margin="0,0,6,0" />
+                        <TextBlock Text="{Binding Name}"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+
+        </TreeView>
+    </Grid>
+</UserControl>

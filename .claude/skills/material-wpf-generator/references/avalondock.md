@@ -58,44 +58,36 @@
 
 ## 2. XMLNS Namespace Declarations
 
-### Option A: Schema URI (Works for both Xceed and Dirkster)
+### ~~Option A: Schema URI~~ (DOES NOT WORK with Dirkster.AvalonDock 4.72.1)
 
-```xml
-xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
-```
+> **WARNING**: `http://schemas.xceed.com/wpf/xaml/avalondock` does NOT resolve for Dirkster's fork.
+> Build error: `MC3074: XML 네임스페이스 ... 에 'DockingManager' 태그가 없습니다.`
+> Always use CLR namespace (Option B) below.
 
-This is the **recommended** single-namespace approach. Both the Xceed package and the Dirkster fork register this XML namespace URI. All core types (`DockingManager`, `LayoutRoot`, `LayoutPanel`, `LayoutAnchorable`, `LayoutDocument`, etc.) are accessible through this one prefix.
-
-Common prefix conventions:
-- `avalonDock` - descriptive, clear
-- `xcad` - short, common in Xceed docs
-- `ad` - minimal
-- `dock` - intuitive
-
-### Option B: CLR Namespace (Explicit Assembly Reference)
+### Option B: CLR Namespace (RECOMMENDED for Dirkster.AvalonDock)
 
 ```xml
 <!-- Core DockingManager -->
-xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
+xmlns:avalonDock="clr-namespace:AvalonDock;assembly=AvalonDock"
 
-<!-- Layout model classes -->
-xmlns:adLayout="clr-namespace:AvalonDock.Layout;assembly=AvalonDock"
+<!-- Layout model classes (LayoutRoot, LayoutPanel, LayoutAnchorable, etc.) -->
+xmlns:avalonDockLayout="clr-namespace:AvalonDock.Layout;assembly=AvalonDock"
 
 <!-- Controls (rarely needed in XAML) -->
-xmlns:adControls="clr-namespace:AvalonDock.Controls;assembly=AvalonDock"
+xmlns:avalonDockControls="clr-namespace:AvalonDock.Controls;assembly=AvalonDock"
 ```
 
 ### Theme Namespaces
 
 ```xml
 <!-- VS2013 Theme -->
-xmlns:adTheme="clr-namespace:AvalonDock.Themes;assembly=AvalonDock.Themes.VS2013"
+xmlns:avalonDockTheme="clr-namespace:AvalonDock.Themes;assembly=AvalonDock.Themes.VS2013"
 
 <!-- Metro Theme -->
-xmlns:adTheme="clr-namespace:AvalonDock.Themes;assembly=AvalonDock.Themes.Metro"
+xmlns:avalonDockTheme="clr-namespace:AvalonDock.Themes;assembly=AvalonDock.Themes.Metro"
 
 <!-- Aero Theme -->
-xmlns:adTheme="clr-namespace:AvalonDock.Themes;assembly=AvalonDock.Themes.Aero"
+xmlns:avalonDockTheme="clr-namespace:AvalonDock.Themes;assembly=AvalonDock.Themes.Aero"
 ```
 
 ### Standard XAML Header Template
@@ -104,7 +96,8 @@ xmlns:adTheme="clr-namespace:AvalonDock.Themes;assembly=AvalonDock.Themes.Aero"
 <Window x:Class="MyApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
+        xmlns:avalonDock="clr-namespace:AvalonDock;assembly=AvalonDock"
+        xmlns:avalonDockLayout="clr-namespace:AvalonDock.Layout;assembly=AvalonDock"
         Title="MainWindow" Height="800" Width="1200">
 ```
 
