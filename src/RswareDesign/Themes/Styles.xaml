@@ -125,7 +125,7 @@
     <!-- ═══════════════════════════════════════════════════════════ -->
     <Style x:Key="RibbonButtonLabel" TargetType="TextBlock">
         <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="Margin" Value="0,2,0,0" />
+        <Setter Property="Margin" Value="0,4,0,0" />
         <Setter Property="FontSize" Value="{DynamicResource FontSizeXS}" />
         <Setter Property="Foreground" Value="{DynamicResource TextPrimary}" />
     </Style>
@@ -162,6 +162,57 @@
                                     <GradientStop Color="#FF0000FF" Offset="0.667" />
                                     <GradientStop Color="#FFFF00FF" Offset="0.833" />
                                     <GradientStop Color="#FFFF0000" Offset="1.0" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                        </Border>
+                        <Track x:Name="PART_Track">
+                            <Track.DecreaseRepeatButton>
+                                <RepeatButton Style="{StaticResource SliderTransparentRepeatButton}" />
+                            </Track.DecreaseRepeatButton>
+                            <Track.IncreaseRepeatButton>
+                                <RepeatButton Style="{StaticResource SliderTransparentRepeatButton}" />
+                            </Track.IncreaseRepeatButton>
+                            <Track.Thumb>
+                                <Thumb>
+                                    <Thumb.Template>
+                                        <ControlTemplate TargetType="Thumb">
+                                            <Grid Width="18" Height="18">
+                                                <Ellipse Fill="White" Width="18" Height="18">
+                                                    <Ellipse.Effect>
+                                                        <DropShadowEffect ShadowDepth="1"
+                                                                          BlurRadius="3"
+                                                                          Opacity="0.4" />
+                                                    </Ellipse.Effect>
+                                                </Ellipse>
+                                                <Ellipse Fill="{DynamicResource PrimaryBrush}"
+                                                         Width="10" Height="10" />
+                                            </Grid>
+                                        </ControlTemplate>
+                                    </Thumb.Template>
+                                </Thumb>
+                            </Track.Thumb>
+                        </Track>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  SATURATION SLIDER                                          -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <Style x:Key="SaturationSliderStyle" TargetType="Slider">
+        <Setter Property="Height" Value="24" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Slider">
+                    <Grid>
+                        <Border Height="8" CornerRadius="4" VerticalAlignment="Center" Margin="8,0">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                    <GradientStop Color="#FF808080" Offset="0.0" />
+                                    <GradientStop Color="#FF4488AA" Offset="0.5" />
+                                    <GradientStop Color="#FF0088FF" Offset="1.0" />
                                 </LinearGradientBrush>
                             </Border.Background>
                         </Border>

@@ -10,5 +10,6 @@ public class Parameter
     public string Min { get; set; } = "";
     public string Max { get; set; } = "";
     public string Access { get; set; } = "r/w";
+    public string Group { get; set; } = "";
     public bool IsModified { get; set; }
 }

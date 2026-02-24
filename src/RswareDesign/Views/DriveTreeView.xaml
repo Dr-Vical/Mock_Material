@@ -10,10 +10,12 @@
     </UserControl.Resources>
 
     <Grid>
-        <TreeView ItemsSource="{Binding TreeNodes}"
+        <TreeView x:Name="driveTree"
+                  ItemsSource="{Binding TreeNodes}"
                   Background="Transparent"
                   BorderThickness="0"
-                  Padding="{StaticResource Padding.ToolWindow}">
+                  Padding="{StaticResource Padding.ToolWindow}"
+                  SelectedItemChanged="OnTreeNodeSelected">
 
             <TreeView.ItemContainerStyle>
                 <Style TargetType="TreeViewItem" BasedOn="{StaticResource {x:Type TreeViewItem}}">
@@ -21,17 +23,17 @@
                     <Setter Property="Foreground" Value="{DynamicResource TextPrimary}" />
                     <Setter Property="FontFamily" Value="{DynamicResource FontFamilyUI}" />
                     <Setter Property="FontSize" Value="{DynamicResource FontSizeSM}" />
-                    <Setter Property="Padding" Value="4,2" />
+                    <Setter Property="Padding" Value="4,3" />
                 </Style>
             </TreeView.ItemContainerStyle>
 
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Children}">
-                    <StackPanel Orientation="Horizontal" Margin="2,1">
+                    <StackPanel Orientation="Horizontal" Margin="2,2">
                         <materialDesign:PackIcon
                             Kind="{Binding IconKind, Converter={StaticResource IconKindConverter}}"
-                            Width="{DynamicResource Size.IconSM}"
-                            Height="{DynamicResource Size.IconSM}"
+                            Width="{DynamicResource Size.IconMD}"
+                            Height="{DynamicResource Size.IconMD}"
                             Foreground="{DynamicResource PrimaryBrush}"
                             VerticalAlignment="Center"
                             Margin="0,0,6,0" />

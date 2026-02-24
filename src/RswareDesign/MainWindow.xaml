@@ -25,179 +25,226 @@
     <DockPanel LastChildFill="True">
 
         <!-- ═══════════════════════════════════════════════════ -->
-        <!--  RIBBON MENU (Top)                                  -->
+        <!--  RIBBON MENU (Top) + Quick Actions overlay          -->
         <!-- ═══════════════════════════════════════════════════ -->
-        <Fluent:Ribbon DockPanel.Dock="Top"
-                       AutomaticStateManagement="True">
+        <Grid DockPanel.Dock="Top">
+            <Fluent:Ribbon AutomaticStateManagement="True">
 
-            <!-- ══════════════════════════════════════════════════════ -->
-            <!--  [File] Tab                                            -->
-            <!-- ══════════════════════════════════════════════════════ -->
-            <Fluent:RibbonTabItem Header="File" KeyTip="F" Margin="4,0,0,0">
-                <Fluent:RibbonGroupBox Header="File">
-                    <Button Style="{StaticResource RibbonLargeRipple}">
-                        <StackPanel HorizontalAlignment="Center">
-                            <materialDesign:PackIcon Kind="FileDocumentPlus" Style="{StaticResource RibbonIconOpacityPulse}" />
-                            <TextBlock Text="New" Style="{StaticResource RibbonButtonLabel}" />
-                        </StackPanel>
-                    </Button>
-                    <Button Style="{StaticResource RibbonLargeRipple}">
-                        <StackPanel HorizontalAlignment="Center">
-                            <materialDesign:PackIcon Kind="FolderOpen" Style="{StaticResource RibbonIconOpacityPulse}" />
-                            <TextBlock Text="Open" Style="{StaticResource RibbonButtonLabel}" />
-                        </StackPanel>
-                    </Button>
-                    <Button Style="{StaticResource RibbonLargeRipple}" Command="{Binding SaveParametersCommand}">
-                        <StackPanel HorizontalAlignment="Center">
-                            <materialDesign:PackIcon Kind="ContentSave" Style="{StaticResource RibbonIconOpacityPulse}" />
-                            <TextBlock Text="Save" Style="{StaticResource RibbonButtonLabel}" />
-                        </StackPanel>
-                    </Button>
-                    <Button Style="{StaticResource RibbonLargeRipple}">
-                        <StackPanel HorizontalAlignment="Center">
-                            <materialDesign:PackIcon Kind="ContentSaveEdit" Style="{StaticResource RibbonIconOpacityPulse}" />
-                            <TextBlock Text="Save As" Style="{StaticResource RibbonButtonLabel}" />
-                        </StackPanel>
-                    </Button>
-                </Fluent:RibbonGroupBox>
-                <Fluent:RibbonGroupBox Header="Print">
-                    <Button Style="{StaticResource RibbonLargeRipple}">
-                        <StackPanel HorizontalAlignment="Center">
-                            <materialDesign:PackIcon Kind="Printer" Style="{StaticResource RibbonIconOpacityPulse}" />
-                            <TextBlock Text="Print" Style="{StaticResource RibbonButtonLabel}" />
-                        </StackPanel>
-                    </Button>
-                    <Button Style="{StaticResource RibbonLargeRipple}">
-                        <StackPanel HorizontalAlignment="Center">
-                            <materialDesign:PackIcon Kind="FileDocumentEdit" Style="{StaticResource RibbonIconOpacityPulse}" />
-                            <TextBlock Text="Page Setup" Style="{StaticResource RibbonButtonLabel}" />
-                        </StackPanel>
-                    </Button>
-                    <Button Style="{StaticResource RibbonLargeRipple}">
-                        <StackPanel HorizontalAlignment="Center">
-                            <materialDesign:PackIcon Kind="PrinterSettings" Style="{StaticResource RibbonIconOpacityPulse}" />
-                            <TextBlock Text="Print Setup" Style="{StaticResource RibbonButtonLabel}" />
-                        </StackPanel>
-                    </Button>
-                </Fluent:RibbonGroupBox>
-                <Fluent:RibbonGroupBox Header="Application">
-                    <Button Style="{StaticResource RibbonLargeRipple}" Command="{Binding ExitAppCommand}">
-                        <StackPanel HorizontalAlignment="Center">
-                            <materialDesign:PackIcon Kind="ExitToApp" Style="{StaticResource RibbonIconShake}" />
-                            <TextBlock Text="Exit" Style="{StaticResource RibbonButtonLabel}" />
-                        </StackPanel>
-                    </Button>
-                </Fluent:RibbonGroupBox>
-            </Fluent:RibbonTabItem>
+                <!-- ══════════════════════════════════════════════════════ -->
+                <!--  [File] Tab                                            -->
+                <!-- ══════════════════════════════════════════════════════ -->
+                <Fluent:RibbonTabItem Header="File" KeyTip="F" Margin="4,0,0,0">
+                    <Fluent:RibbonGroupBox Header="File">
+                        <Button Style="{StaticResource RibbonLargeRipple}">
+                            <StackPanel HorizontalAlignment="Center">
+                                <materialDesign:PackIcon Kind="FileDocumentPlus" Style="{StaticResource RibbonIconOpacityPulse}" />
+                                <TextBlock Text="New" Style="{StaticResource RibbonButtonLabel}" />
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource RibbonLargeRipple}">
+                            <StackPanel HorizontalAlignment="Center">
+                                <materialDesign:PackIcon Kind="FolderOpen" Style="{StaticResource RibbonIconOpacityPulse}" />
+                                <TextBlock Text="Open" Style="{StaticResource RibbonButtonLabel}" />
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource RibbonLargeRipple}" Command="{Binding SaveParametersCommand}">
+                            <StackPanel HorizontalAlignment="Center">
+                                <materialDesign:PackIcon Kind="ContentSave" Style="{StaticResource RibbonIconOpacityPulse}" />
+                                <TextBlock Text="Save" Style="{StaticResource RibbonButtonLabel}" />
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource RibbonLargeRipple}">
+                            <StackPanel HorizontalAlignment="Center">
+                                <materialDesign:PackIcon Kind="ContentSaveEdit" Style="{StaticResource RibbonIconOpacityPulse}" />
+                                <TextBlock Text="Save As" Style="{StaticResource RibbonButtonLabel}" />
+                            </StackPanel>
+                        </Button>
+                    </Fluent:RibbonGroupBox>
+                    <Fluent:RibbonGroupBox Header="Print">
+                        <Button Style="{StaticResource RibbonLargeRipple}">
+                            <StackPanel HorizontalAlignment="Center">
+                                <materialDesign:PackIcon Kind="Printer" Style="{StaticResource RibbonIconOpacityPulse}" />
+                                <TextBlock Text="Print" Style="{StaticResource RibbonButtonLabel}" />
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource RibbonLargeRipple}">
+                            <StackPanel HorizontalAlignment="Center">
+                                <materialDesign:PackIcon Kind="FileDocumentEdit" Style="{StaticResource RibbonIconOpacityPulse}" />
+                                <TextBlock Text="Page Setup" Style="{StaticResource RibbonButtonLabel}" />
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource RibbonLargeRipple}">
+                            <StackPanel HorizontalAlignment="Center">
+                                <materialDesign:PackIcon Kind="PrinterSettings" Style="{StaticResource RibbonIconOpacityPulse}" />
+                                <TextBlock Text="Print Setup" Style="{StaticResource RibbonButtonLabel}" />
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource RibbonLargeRipple}" Command="{Binding ExitAppCommand}">
+                            <StackPanel HorizontalAlignment="Center">
+                                <materialDesign:PackIcon Kind="ExitToApp" Style="{StaticResource RibbonIconShake}" />
+                                <TextBlock Text="Exit" Style="{StaticResource RibbonButtonLabel}" />
+                            </StackPanel>
+                        </Button>
+                    </Fluent:RibbonGroupBox>
+                </Fluent:RibbonTabItem>
 
-            <!-- ══════════════════════════════════════════════════════ -->
-            <!--  [Tools] Tab                                           -->
-            <!-- ══════════════════════════════════════════════════════ -->
-            <Fluent:RibbonTabItem Header="Tools" KeyTip="T">
-                <Fluent:RibbonGroupBox Header="Scan">
-                    <Button Style="{StaticResource RibbonLargeRipple}" Command="{Binding RescanCommand}">
-                        <StackPanel HorizontalAlignment="Center">
-                            <materialDesign:PackIcon Kind="Refresh" Style="{StaticResource RibbonIconOpacityPulse}" />
-                            <TextBlock Text="ReScan" Style="{StaticResource RibbonButtonLabel}" />
-                        </StackPanel>
-                    </Button>
-                    <Button Style="{StaticResource RibbonLargeRipple}">
-                        <StackPanel HorizontalAlignment="Center">
-                            <materialDesign:PackIcon Kind="CogRefresh" Style="{StaticResource RibbonIconOpacityPulse}" />
-                            <TextBlock Text="ReScan Option" Style="{StaticResource RibbonButtonLabel}" />
-                        </StackPanel>
-                    </Button>
-                </Fluent:RibbonGroupBox>
-                <Fluent:RibbonGroupBox Header="Communication">
-                    <Button Style="{StaticResource RibbonLargeRipple}">
-                        <StackPanel HorizontalAlignment="Center">
-                            <materialDesign:PackIcon Kind="SerialPort" Style="{StaticResource RibbonIconOpacityPulse}" />
-                            <TextBlock Text="Com Setting" Style="{StaticResource RibbonButtonLabel}" />
-                        </StackPanel>
-                    </Button>
-                </Fluent:RibbonGroupBox>
-            </Fluent:RibbonTabItem>
+                <!-- ══════════════════════════════════════════════════════ -->
+                <!--  [Tools] Tab                                           -->
+                <!-- ══════════════════════════════════════════════════════ -->
+                <Fluent:RibbonTabItem Header="Tools" KeyTip="T">
+                    <Fluent:RibbonGroupBox Header="Scan">
+                        <Button Style="{StaticResource RibbonLargeRipple}" Command="{Binding RescanCommand}">
+                            <StackPanel HorizontalAlignment="Center">
+                                <materialDesign:PackIcon Kind="Refresh" Style="{StaticResource RibbonIconOpacityPulse}" />
+                                <TextBlock Text="ReScan" Style="{StaticResource RibbonButtonLabel}" />
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource RibbonLargeRipple}">
+                            <StackPanel HorizontalAlignment="Center">
+                                <materialDesign:PackIcon Kind="CogRefresh" Style="{StaticResource RibbonIconOpacityPulse}" />
+                                <TextBlock Text="ReScan Option" Style="{StaticResource RibbonButtonLabel}" />
+                            </StackPanel>
+                        </Button>
+                    </Fluent:RibbonGroupBox>
+                    <Fluent:RibbonGroupBox Header="Communication">
+                        <Button Style="{StaticResource RibbonLargeRipple}">
+                            <StackPanel HorizontalAlignment="Center">
+                                <materialDesign:PackIcon Kind="SerialPort" Style="{StaticResource RibbonIconOpacityPulse}" />
+                                <TextBlock Text="Com Setting" Style="{StaticResource RibbonButtonLabel}" />
+                            </StackPanel>
+                        </Button>
+                    </Fluent:RibbonGroupBox>
+                </Fluent:RibbonTabItem>
 
-            <!-- ══════════════════════════════════════════════════════ -->
-            <!--  [Views] Tab (Default Selected)                        -->
-            <!-- ══════════════════════════════════════════════════════ -->
-            <Fluent:RibbonTabItem Header="Views" KeyTip="V" IsSelected="True">
-                <Fluent:RibbonGroupBox Header="Panels">
-                    <ToggleButton Style="{StaticResource RibbonLargeRippleToggle}" IsChecked="{Binding IsDriveTreeVisible, Mode=TwoWay}">
-                        <StackPanel HorizontalAlignment="Center">
-                            <materialDesign:PackIcon Kind="FileTree" Style="{StaticResource RibbonIconOpacityPulse}" />
-                            <TextBlock Text="DriveTree" Style="{StaticResource RibbonButtonLabel}" />
+                <!-- ══════════════════════════════════════════════════════ -->
+                <!--  [Views] Tab (Default Selected)                        -->
+                <!-- ══════════════════════════════════════════════════════ -->
+                <Fluent:RibbonTabItem Header="Views" KeyTip="V" IsSelected="True">
+                    <Fluent:RibbonGroupBox Header="Panels">
+                        <ToggleButton Style="{StaticResource RibbonLargeRippleToggle}" IsChecked="{Binding IsDriveTreeVisible, Mode=TwoWay}">
+                            <StackPanel HorizontalAlignment="Center">
+                                <materialDesign:PackIcon Kind="FileTree" Style="{StaticResource RibbonIconOpacityPulse}" />
+                                <TextBlock Text="DriveTree" Style="{StaticResource RibbonButtonLabel}" />
+                            </StackPanel>
+                        </ToggleButton>
+                        <ToggleButton Style="{StaticResource RibbonLargeRippleToggle}" IsChecked="{Binding IsMainPanelVisible, Mode=TwoWay}">
+                            <StackPanel HorizontalAlignment="Center">
+                                <materialDesign:PackIcon Kind="ViewDashboard" Style="{StaticResource RibbonIconOpacityPulse}" />
+                                <TextBlock Text="Main Panel" Style="{StaticResource RibbonButtonLabel}" />
+                            </StackPanel>
+                        </ToggleButton>
+                        <ToggleButton Style="{StaticResource RibbonLargeRippleToggle}" IsChecked="{Binding IsActionPanelVisible, Mode=TwoWay}">
+                            <StackPanel HorizontalAlignment="Center">
+                                <materialDesign:PackIcon Kind="FormatListChecks" Style="{StaticResource RibbonIconOpacityPulse}" />
+                                <TextBlock Text="Action Panel" Style="{StaticResource RibbonButtonLabel}" />
+                            </StackPanel>
+                        </ToggleButton>
+                    </Fluent:RibbonGroupBox>
+                    <Fluent:RibbonGroupBox Header="Theme">
+                        <!-- Theme (Dark/Gray/Light) -->
+                        <StackPanel VerticalAlignment="Center" Width="72" Margin="4,2">
+                            <TextBlock Text="Theme" Style="{StaticResource RibbonInlineLabel}" />
+                            <ComboBox Style="{StaticResource RibbonDarkComboBox}"
+                                      ItemsSource="{Binding AvailableThemes}"
+                                      SelectedItem="{Binding SelectedTheme, Mode=TwoWay}" />
                         </StackPanel>
-                    </ToggleButton>
-                    <ToggleButton Style="{StaticResource RibbonLargeRippleToggle}" IsChecked="{Binding IsMainPanelVisible, Mode=TwoWay}">
-                        <StackPanel HorizontalAlignment="Center">
-                            <materialDesign:PackIcon Kind="ViewDashboard" Style="{StaticResource RibbonIconOpacityPulse}" />
-                            <TextBlock Text="Main Panel" Style="{StaticResource RibbonButtonLabel}" />
+                        <!-- Font Size -->
+                        <StackPanel VerticalAlignment="Center" Width="52" Margin="4,2">
+                            <TextBlock Text="Font" Style="{StaticResource RibbonInlineLabel}" />
+                            <ComboBox Style="{StaticResource RibbonDarkComboBox}"
+                                      ItemsSource="{Binding AvailableFontSizes}"
+                                      SelectedItem="{Binding SelectedFontSize, Mode=TwoWay}" />
                         </StackPanel>
-                    </ToggleButton>
-                    <ToggleButton Style="{StaticResource RibbonLargeRippleToggle}" IsChecked="{Binding IsActionPanelVisible, Mode=TwoWay}">
-                        <StackPanel HorizontalAlignment="Center">
-                            <materialDesign:PackIcon Kind="FormatListChecks" Style="{StaticResource RibbonIconOpacityPulse}" />
-                            <TextBlock Text="Action Panel" Style="{StaticResource RibbonButtonLabel}" />
+                        <!-- Color (Hue Slider) -->
+                        <StackPanel VerticalAlignment="Center" Width="100" Margin="4,2">
+                            <TextBlock Text="Color" Style="{StaticResource RibbonInlineLabel}" />
+                            <Slider Style="{StaticResource HueSliderStyle}"
+                                    Minimum="0" Maximum="360"
+                                    Value="{Binding HueValue, Mode=TwoWay}" />
                         </StackPanel>
-                    </ToggleButton>
-                </Fluent:RibbonGroupBox>
-            </Fluent:RibbonTabItem>
+                        <!-- Saturation Slider -->
+                        <StackPanel VerticalAlignment="Center" Width="100" Margin="4,2">
+                            <TextBlock Text="Saturation" Style="{StaticResource RibbonInlineLabel}" />
+                            <Slider Style="{StaticResource SaturationSliderStyle}"
+                                    Minimum="0" Maximum="100"
+                                    Value="{Binding SaturationValue, Mode=TwoWay}" />
+                        </StackPanel>
+                        <!-- 한영 Toggle -->
+                        <StackPanel VerticalAlignment="Center" Width="42" Margin="4,2">
+                            <TextBlock Text="Lang" Style="{StaticResource RibbonInlineLabel}" />
+                            <ToggleButton IsChecked="{Binding IsKorean, Mode=TwoWay}"
+                                          Style="{StaticResource RibbonLargeRippleToggle}"
+                                          MinWidth="36" MinHeight="24" Padding="4,2">
+                                <TextBlock FontSize="{DynamicResource FontSizeXS}"
+                                           Foreground="{DynamicResource TextPrimary}">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Text" Value="EN" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsKorean}" Value="True">
+                                                    <Setter Property="Text" Value="KR" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </ToggleButton>
+                        </StackPanel>
+                    </Fluent:RibbonGroupBox>
+                </Fluent:RibbonTabItem>
 
-            <!-- ══════════════════════════════════════════════════════ -->
-            <!--  [Help] Tab                                            -->
-            <!-- ══════════════════════════════════════════════════════ -->
-            <Fluent:RibbonTabItem Header="Help" KeyTip="H">
-                <Fluent:RibbonGroupBox Header="Info">
-                    <Button Style="{StaticResource RibbonLargeRipple}">
-                        <StackPanel HorizontalAlignment="Center">
-                            <materialDesign:PackIcon Kind="ClipboardTextOutline" Style="{StaticResource RibbonIconOpacityPulse}" />
-                            <TextBlock Text="Release List" Style="{StaticResource RibbonButtonLabel}" />
+                <!-- ══════════════════════════════════════════════════════ -->
+                <!--  [Help] Tab                                            -->
+                <!-- ══════════════════════════════════════════════════════ -->
+                <Fluent:RibbonTabItem Header="Help" KeyTip="H">
+                    <Fluent:RibbonGroupBox Header="Info">
+                        <Button Style="{StaticResource RibbonLargeRipple}">
+                            <StackPanel HorizontalAlignment="Center">
+                                <materialDesign:PackIcon Kind="ClipboardTextOutline" Style="{StaticResource RibbonIconOpacityPulse}" />
+                                <TextBlock Text="Release List" Style="{StaticResource RibbonButtonLabel}" />
+                            </StackPanel>
+                        </Button>
+                    </Fluent:RibbonGroupBox>
+                    <Fluent:RibbonGroupBox Header="About">
+                        <StackPanel VerticalAlignment="Center" Margin="{StaticResource Padding.RibbonInline}">
+                            <TextBlock Text="Version" Style="{StaticResource RibbonInlineLabel}" />
+                            <TextBlock Text="Rsware 1.2.1"
+                                       Foreground="{DynamicResource TextPrimary}"
+                                       FontSize="{DynamicResource FontSizeSM}"
+                                       FontFamily="{DynamicResource FontFamilyUI}" />
                         </StackPanel>
-                    </Button>
-                </Fluent:RibbonGroupBox>
-                <Fluent:RibbonGroupBox Header="About">
-                    <StackPanel VerticalAlignment="Center" Margin="{StaticResource Padding.RibbonInline}">
-                        <TextBlock Text="Version" Style="{StaticResource RibbonInlineLabel}" />
-                        <TextBlock Text="Rsware 1.2.1"
-                                   Foreground="{DynamicResource TextPrimary}"
-                                   FontSize="{DynamicResource FontSizeSM}"
-                                   FontFamily="{DynamicResource FontFamilyUI}" />
-                    </StackPanel>
-                </Fluent:RibbonGroupBox>
-            </Fluent:RibbonTabItem>
+                    </Fluent:RibbonGroupBox>
+                </Fluent:RibbonTabItem>
 
-            <!-- ══════════════════════════════════════════════════════ -->
-            <!--  [Admin Option] Tab — password protected                -->
-            <!-- ══════════════════════════════════════════════════════ -->
-            <Fluent:RibbonTabItem Header="Admin Option" KeyTip="A">
-                <Fluent:RibbonGroupBox Header="Settings">
-                    <Button Style="{StaticResource RibbonLargeRipple}" Command="{Binding AdminMotorDbCommand}">
-                        <StackPanel HorizontalAlignment="Center">
-                            <materialDesign:PackIcon Kind="DatabaseCog" Style="{StaticResource RibbonIconOpacityPulse}" />
-                            <TextBlock Text="Motor DB" Style="{StaticResource RibbonButtonLabel}" />
-                        </StackPanel>
-                    </Button>
-                    <Button Style="{StaticResource RibbonLargeRipple}" Command="{Binding AdminParamSettingCommand}">
-                        <StackPanel HorizontalAlignment="Center">
-                            <materialDesign:PackIcon Kind="TuneVertical" Style="{StaticResource RibbonIconOpacityPulse}" />
-                            <TextBlock Text="Param Setting" Style="{StaticResource RibbonButtonLabel}" />
-                        </StackPanel>
-                    </Button>
-                </Fluent:RibbonGroupBox>
-            </Fluent:RibbonTabItem>
+                <!-- ══════════════════════════════════════════════════════ -->
+                <!--  [Admin Option] Tab — password protected                -->
+                <!-- ══════════════════════════════════════════════════════ -->
+                <Fluent:RibbonTabItem Header="Admin Option" KeyTip="A">
+                    <Fluent:RibbonGroupBox Header="Settings">
+                        <Button Style="{StaticResource RibbonLargeRipple}" Command="{Binding AdminMotorDbCommand}">
+                            <StackPanel HorizontalAlignment="Center">
+                                <materialDesign:PackIcon Kind="DatabaseCog" Style="{StaticResource RibbonIconOpacityPulse}" />
+                                <TextBlock Text="Motor DB" Style="{StaticResource RibbonButtonLabel}" />
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource RibbonLargeRipple}" Command="{Binding AdminParamSettingCommand}">
+                            <StackPanel HorizontalAlignment="Center">
+                                <materialDesign:PackIcon Kind="TuneVertical" Style="{StaticResource RibbonIconOpacityPulse}" />
+                                <TextBlock Text="Param Setting" Style="{StaticResource RibbonButtonLabel}" />
+                            </StackPanel>
+                        </Button>
+                    </Fluent:RibbonGroupBox>
+                </Fluent:RibbonTabItem>
 
-        </Fluent:Ribbon>
+            </Fluent:Ribbon>
 
-        <!-- ═══════════════════════════════════════════════════ -->
-        <!--  QUICK ACTIONS BAR (always visible, right-aligned)  -->
-        <!-- ═══════════════════════════════════════════════════ -->
-        <Border DockPanel.Dock="Top"
-                Background="{DynamicResource SurfaceBrush}"
-                BorderBrush="{DynamicResource BorderDefault}"
-                BorderThickness="0,0,0,1"
-                Padding="4,3">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <!-- ═══════════════════════════════════════════════════ -->
+            <!--  QUICK ACTIONS (overlay, right side of ribbon)     -->
+            <!-- ═══════════════════════════════════════════════════ -->
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Margin="0,0,8,20">
                 <!-- Enable -->
                 <Button Style="{StaticResource QuickActionButton}" Command="{Binding EnableCommand}">
                     <StackPanel Orientation="Horizontal">
@@ -222,7 +269,7 @@
                     </StackPanel>
                 </Button>
             </StackPanel>
-        </Border>
+        </Grid>
 
         <!-- ═══════════════════════════════════════════════════ -->
         <!--  STATUS BAR (Bottom)                                -->
@@ -286,7 +333,7 @@
                     <!-- Center: Editor (top) + Error Log (bottom) -->
                     <avalonDockLayout:LayoutPanel Orientation="Vertical">
                         <avalonDockLayout:LayoutDocumentPane>
-                            <avalonDockLayout:LayoutDocument Title="ECAT Homing"
+                            <avalonDockLayout:LayoutDocument Title="{Binding ActiveDocumentTitle}"
                                                               ContentId="paramEditor"
                                                               CanClose="False">
                                 <views:ParameterEditorView />

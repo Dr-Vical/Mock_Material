@@ -2,25 +2,25 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!-- ═══════════════════════════════════════════════════════════ -->
-    <!--  5-ROLE COLOR SYSTEM — LIGHT THEME                           -->
-    <!--  Same keys as DarkColors.xaml, swapped at runtime            -->
+    <!--  5-ROLE COLOR SYSTEM — LIGHT THEME (흰색톤)                    -->
+    <!--  Monochrome: White / Black / Gray palette                    -->
     <!-- ═══════════════════════════════════════════════════════════ -->
 
     <!-- ── 1. Primary ── -->
-    <SolidColorBrush x:Key="PrimaryBrush"          Color="#FF1976D2" />
-    <SolidColorBrush x:Key="PrimaryHoverBrush"      Color="#FF1565C0" />
+    <SolidColorBrush x:Key="PrimaryBrush"          Color="#FF546E7A" />
+    <SolidColorBrush x:Key="PrimaryHoverBrush"      Color="#FF455A64" />
     <SolidColorBrush x:Key="PrimaryForegroundBrush" Color="#FFFFFFFF" />
 
     <!-- ── 2. Secondary ── -->
-    <SolidColorBrush x:Key="SecondaryBrush"         Color="#FFFF9800" />
-    <SolidColorBrush x:Key="SecondaryHoverBrush"    Color="#FFF57C00" />
+    <SolidColorBrush x:Key="SecondaryBrush"         Color="#FF78909C" />
+    <SolidColorBrush x:Key="SecondaryHoverBrush"    Color="#FF607D8B" />
 
     <!-- ── 3. Surface ── -->
     <SolidColorBrush x:Key="SurfaceBrush"           Color="#FFE8E8E8" />
     <SolidColorBrush x:Key="SurfaceVariantBrush"    Color="#FFDEDEDE" />
 
     <!-- ── 4. Background ── -->
-    <SolidColorBrush x:Key="BackgroundBrush"        Color="#FFE0E0E0" />
+    <SolidColorBrush x:Key="BackgroundBrush"        Color="#FFF5F5F5" />
 
     <!-- ── 5. Error ── -->
     <SolidColorBrush x:Key="ErrorBrush"             Color="#FFE53935" />
@@ -39,28 +39,28 @@
     <!--  BORDER COLORS                                                -->
     <!-- ═══════════════════════════════════════════════════════════ -->
     <SolidColorBrush x:Key="BorderDefault"          Color="#FFC8C8C8" />
-    <SolidColorBrush x:Key="BorderFocused"          Color="#FF1976D2" />
+    <SolidColorBrush x:Key="BorderFocused"          Color="#FF546E7A" />
     <SolidColorBrush x:Key="DividerBrush"           Color="#FFC8C8C8" />
 
     <!-- ═══════════════════════════════════════════════════════════ -->
     <!--  COMPONENT-SPECIFIC COLORS                                    -->
     <!-- ═══════════════════════════════════════════════════════════ -->
-    <SolidColorBrush x:Key="RibbonBackgroundBrush"  Color="#FFE4E4E4" />
-    <SolidColorBrush x:Key="TreeBackgroundBrush"    Color="#FFE4E4E4" />
+    <SolidColorBrush x:Key="RibbonBackgroundBrush"  Color="#FFEEEEEE" />
+    <SolidColorBrush x:Key="TreeBackgroundBrush"    Color="#FFEEEEEE" />
     <SolidColorBrush x:Key="GridHeaderBrush"        Color="#FFD6D9DC" />
-    <SolidColorBrush x:Key="GridAlternatingRowBrush" Color="#FFDCDCDC" />
-    <SolidColorBrush x:Key="StatusBarBrush"         Color="#FF1976D2" />
+    <SolidColorBrush x:Key="GridAlternatingRowBrush" Color="#FFE2E2E2" />
+    <SolidColorBrush x:Key="StatusBarBrush"         Color="#FF546E7A" />
     <SolidColorBrush x:Key="StatusBarForeground"    Color="#FFFFFFFF" />
-    <SolidColorBrush x:Key="SelectedRowBrush"       Color="#FFBBDEFB" />
+    <SolidColorBrush x:Key="SelectedRowBrush"       Color="#FFCFD8DC" />
 
     <!-- ═══════════════════════════════════════════════════════════ -->
-    <!--  RIBBON ITEM COLOR                                            -->
+    <!--  RIBBON ITEM COLOR — Gray monochrome (Secondary role)        -->
     <!-- ═══════════════════════════════════════════════════════════ -->
-    <SolidColorBrush x:Key="RibbonItemBrush"        Color="#FF424242" />
+    <SolidColorBrush x:Key="RibbonItemBrush"        Color="#FF546E7A" />
     <SolidColorBrush x:Key="RibbonItemErrorBrush"   Color="#FFC62828" />
 
     <!-- ═══════════════════════════════════════════════════════════ -->
-    <!--  RIBBON BUTTON STATE COLORS (black overlay on light bg)       -->
+    <!--  RIBBON BUTTON STATE COLORS                                    -->
     <!-- ═══════════════════════════════════════════════════════════ -->
     <SolidColorBrush x:Key="RibbonButton.HoverBrush"   Color="#10000000" />
     <SolidColorBrush x:Key="RibbonButton.PressedBrush"  Color="#20000000" />

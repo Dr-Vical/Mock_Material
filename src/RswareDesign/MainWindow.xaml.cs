@@ -10,8 +10,6 @@ namespace RswareDesign;
 
 public partial class MainWindow : Window
 {
-    private double _currentHue = 210; // default blue hue
-
     public MainWindow()
     {
         InitializeComponent();
@@ -24,7 +22,12 @@ public partial class MainWindow : Window
 
         WeakReferenceMessenger.Default.Register<ThemeChangedMessage>(this, (_, msg) =>
         {
-            SwitchTheme(msg.IsDark);
+            SwitchTheme(msg.ThemeName);
+        });
+
+        WeakReferenceMessenger.Default.Register<HueChangedMessage>(this, (_, msg) =>
+        {
+            UpdateThemeColors(msg.Hue, msg.Saturation);
         });
 
         WeakReferenceMessenger.Default.Register<FontSizeChangedMessage>(this, (_, msg) =>
@@ -38,26 +41,25 @@ public partial class MainWindow : Window
             if (dialog.ShowDialog() == true)
             {
                 // Password verified — open admin feature
-                // msg.Target: "MotorDb" or "ParamSetting"
             }
         });
     }
 
     // ═══════════════════════════════════════════════════════════
-    //  THEME SWITCHING (Dark ↔ Light)
+    //  THEME SWITCHING (Dark / Gray / Light)
     // ═══════════════════════════════════════════════════════════
 
-    private void SwitchTheme(bool isDark)
+    private void SwitchTheme(string themeName)
     {
         var app = Application.Current;
         var mergedDicts = app.Resources.MergedDictionaries;
 
-        // 1. Swap color dictionary (DarkColors ↔ LightColors)
+        // 1. Swap color dictionary
         ResourceDictionary? currentColors = null;
         foreach (var dict in mergedDicts)
         {
             var src = dict.Source?.OriginalString ?? "";
-            if (src.Contains("DarkColors.xaml") || src.Contains("LightColors.xaml"))
+            if (src.Contains("DarkColors.xaml") || src.Contains("GrayColors.xaml") || src.Contains("LightColors.xaml"))
             {
                 currentColors = dict;
                 break;
@@ -67,11 +69,18 @@ public partial class MainWindow : Window
         if (currentColors != null)
             mergedDicts.Remove(currentColors);
 
-        var newSource = isDark ? "Themes/DarkColors.xaml" : "Themes/LightColors.xaml";
+        var newSource = themeName switch
+        {
+            "Light" => "Themes/LightColors.xaml",
+            "Gray"  => "Themes/GrayColors.xaml",
+            _       => "Themes/DarkColors.xaml",
+        };
         mergedDicts.Add(new ResourceDictionary
         {
             Source = new Uri(newSource, UriKind.Relative)
         });
+
+        bool isDark = themeName != "Light";
 
         // 2. Switch MaterialDesign base theme
         try
@@ -81,12 +90,12 @@ public partial class MainWindow : Window
             theme.SetBaseTheme(isDark ? BaseTheme.Dark : BaseTheme.Light);
             paletteHelper.SetTheme(theme);
         }
-        catch { /* Ignore if theme API differs */ }
+        catch { /* Ignore */ }
 
         // 3. Switch Fluent.Ribbon theme
         try
         {
-            ThemeManager.Current.ChangeTheme(app, isDark ? "Dark.Blue" : "Light.Blue");
+            ThemeManager.Current.ChangeTheme(app, isDark ? "Dark.Steel" : "Light.Steel");
         }
         catch { /* Ignore */ }
 
@@ -99,12 +108,59 @@ public partial class MainWindow : Window
         }
         catch { /* Ignore */ }
 
-        // 5. Re-apply accent colors with current hue
-        UpdateThemeColors(_currentHue);
+        // 5. Re-apply accent colors with current hue/saturation
+        var vm = DataContext as MainWindowViewModel;
+        if (vm != null)
+            UpdateThemeColors(vm.HueValue, vm.SaturationValue);
     }
 
     // ═══════════════════════════════════════════════════════════
-    //  FONT SIZE (global font size via dropdown)
+    //  ACCENT COLOR (hue + saturation based icon/accent colors)
+    // ═══════════════════════════════════════════════════════════
+
+    private void UpdateThemeColors(double hue, double satPercent)
+    {
+        var res = Application.Current.Resources;
+        var vm = DataContext as MainWindowViewModel;
+        bool isDark = vm?.SelectedTheme != "Light";
+
+        // Convert 0-100 slider → 0.0-1.0
+        double sat = satPercent / 100.0;
+
+        // Primary colors
+        var primary = HslToColor(hue, sat, isDark ? 0.60 : 0.42);
+        res["PrimaryBrush"] = new SolidColorBrush(primary);
+        res["PrimaryHoverBrush"] = new SolidColorBrush(HslToColor(hue, sat, isDark ? 0.52 : 0.35));
+
+        // Secondary = analogous hue (+20)
+        double secHue = (hue + 20) % 360;
+        double secSat = Math.Max(0, sat * 0.7);
+        var secondary = HslToColor(secHue, secSat, isDark ? 0.75 : 0.55);
+        res["SecondaryBrush"] = new SolidColorBrush(secondary);
+        res["SecondaryHoverBrush"] = new SolidColorBrush(HslToColor(secHue, secSat, isDark ? 0.68 : 0.48));
+
+        // RibbonItemBrush follows Secondary
+        res["RibbonItemBrush"] = new SolidColorBrush(secondary);
+
+        // Theme-aware derived colors
+        res["StatusBarBrush"] = new SolidColorBrush(HslToColor(hue, sat * 0.8, isDark ? 0.38 : 0.42));
+        res["BorderFocused"] = new SolidColorBrush(HslToColor(hue, secSat, isDark ? 0.65 : 0.48));
+        res["SelectedRowBrush"] = new SolidColorBrush(HslToColor(hue, sat * 0.6, isDark ? 0.28 : 0.82));
+
+        // Update MaterialDesign theme palette
+        try
+        {
+            var paletteHelper = new PaletteHelper();
+            var theme = paletteHelper.GetTheme();
+            theme.SetPrimaryColor(primary);
+            theme.SetSecondaryColor(secondary);
+            paletteHelper.SetTheme(theme);
+        }
+        catch { /* Ignore */ }
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    //  FONT SIZE
     // ═══════════════════════════════════════════════════════════
 
     private static readonly Dictionary<string, double> BaseFontSizes = new()
@@ -122,52 +178,8 @@ public partial class MainWindow : Window
     {
         double scale = baseMd / 12.0;
         var res = Application.Current.Resources;
-
         foreach (var (key, baseSize) in BaseFontSizes)
-        {
             res[key] = Math.Round(baseSize * scale, 1);
-        }
-    }
-
-    // ═══════════════════════════════════════════════════════════
-    //  ACCENT COLOR (hue-based color generation)
-    // ═══════════════════════════════════════════════════════════
-
-    private void UpdateThemeColors(double hue)
-    {
-        var res = Application.Current.Resources;
-        var vm = DataContext as MainWindowViewModel;
-        bool isDark = vm?.IsDarkTheme ?? true;
-
-        // Primary colors
-        var primary = HslToColor(hue, 0.86, 0.46);
-        res["PrimaryBrush"] = new SolidColorBrush(primary);
-        res["PrimaryHoverBrush"] = new SolidColorBrush(HslToColor(hue, 0.86, 0.38));
-
-        // Secondary = analogous hue (+35)
-        double secHue = (hue + 35) % 360;
-        var secondary = HslToColor(secHue, 0.80, 0.65);
-        res["SecondaryBrush"] = new SolidColorBrush(secondary);
-        res["SecondaryHoverBrush"] = new SolidColorBrush(HslToColor(secHue, 0.80, 0.58));
-
-        // RibbonItemBrush follows Secondary
-        res["RibbonItemBrush"] = new SolidColorBrush(secondary);
-
-        // Theme-aware derived colors
-        res["StatusBarBrush"] = new SolidColorBrush(HslToColor(hue, 1.0, isDark ? 0.40 : 0.45));
-        res["BorderFocused"] = new SolidColorBrush(HslToColor(hue, 0.55, isDark ? 0.72 : 0.50));
-        res["SelectedRowBrush"] = new SolidColorBrush(HslToColor(hue, 0.50, isDark ? 0.25 : 0.82));
-
-        // Update MaterialDesign theme palette
-        try
-        {
-            var paletteHelper = new PaletteHelper();
-            var theme = paletteHelper.GetTheme();
-            theme.SetPrimaryColor(primary);
-            theme.SetSecondaryColor(secondary);
-            paletteHelper.SetTheme(theme);
-        }
-        catch { /* Ignore if theme API differs */ }
     }
 
     // ═══════════════════════════════════════════════════════════

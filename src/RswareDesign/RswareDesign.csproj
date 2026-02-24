@@ -11,6 +11,12 @@
     <Resource Include="Assets\icon-64x64.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\..\Parameters\CSD7N_Parameter.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>Parameters\CSD7N_Parameter.csv</Link>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="MaterialDesignThemes" Version="5.*" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.*" />
     <PackageReference Include="Fluent.Ribbon" Version="11.*" />

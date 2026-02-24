@@ -18,7 +18,7 @@
                 <ControlTemplate TargetType="Button">
                     <Border x:Name="Bg" Background="Transparent"
                             CornerRadius="{StaticResource Radius.SM}"
-                            Padding="8,4" MinWidth="54" MinHeight="56">
+                            Padding="8,7,8,1" MinWidth="54" MinHeight="53">
                         <ContentPresenter HorizontalAlignment="Center"
                                           VerticalAlignment="Center" />
                     </Border>
@@ -57,7 +57,7 @@
                 <ControlTemplate TargetType="ToggleButton">
                     <Border x:Name="Bg" Background="Transparent"
                             CornerRadius="{StaticResource Radius.SM}"
-                            Padding="8,4" MinWidth="54" MinHeight="56">
+                            Padding="8,7,8,1" MinWidth="54" MinHeight="53">
                         <ContentPresenter HorizontalAlignment="Center"
                                           VerticalAlignment="Center" />
                     </Border>
@@ -159,6 +159,14 @@
         <Setter Property="BorderBrush" Value="{DynamicResource BorderDefault}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Padding" Value="6,3" />
+        <!-- Dropdown items: always dark text on system popup background -->
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="ComboBoxItem">
+                    <Setter Property="Foreground" Value="#FF212121" />
+                </Style>
+            </Setter.Value>
+        </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="{DynamicResource ComboBox.HoverBackground}" />
