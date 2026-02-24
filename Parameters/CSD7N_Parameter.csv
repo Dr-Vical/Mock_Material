@@ -1,0 +1,1372 @@
+﻿Tree,Group,FtNo,Number,Name,ValueType,Unit,Default,Min,Max,Command,DataAttribute,Rsware,Remark
+Drive,(top-level),Ft-9.51,1,Drive Name,string,-,,,,SET/STR,,O,"""Drive"""
+Drive,(top-level),Ft-0.02/D3,2,AC Line Loss Check,enum,-,0,0,2,SET/STR,Servo Off,O,0: Enable; 1: Disable; 2: Single phase input
+Drive,(top-level),Ft-9.50,3,Motor Model,string,-,,,,SET/STR,,O,"""Default Motor"""
+Drive,(top-level),Ft-0.02/D2,4,Command Polarity,enum,-,0,0,1,SET/STR,Servo Off,O,0: Normal; 1: Inverted
+Drive,(top-level),Ft-4.12,5,Initial Current Bias,int,-,(dynamic),-100,100,SET/STR,Always,O,
+Drive,Velocity Limits,Ft-2.17/D0,6,Velocity Limit Mode,int,-,(dynamic),0x0,0x1,SET/STR,Always,O,
+Drive,Velocity Limits,Ft-2.16,7,Manual Velocity Limit,int,rpm(mm/sec),(dynamic),1,6000,SET/STR,Always,O,
+Drive,Acceleration Limits,Ft-0.09,8,Acceleration Limits,int,-,0x0005,0x0000,0x0155,SET/STR,Always,,Network Type 미 지원
+Drive,Acceleration Limits,Ft-2.06,9,Acceleration,int,x0.01 Rev/sec2 (mm/sec2),(dynamic),1,2147483647,SET/STR,Always,O,
+Drive,Acceleration Limits,Ft-2.07,11,Deceleration,int,x0.01 Rev/sec2 (mm/sec2),(dynamic),1,0x7fffffff,SET/STR,Always,O,
+Drive,Acceleration Limits,Ft-2.08,13,S-Curve Time,int,msec,(dynamic),0,5000,SET/STR,Always,O,
+Drive,Communications,Ft-0.07,14,Drive Address,int,-,1,1,247,SET/STR,Always,O,
+Drive,Communications,Ft-0.33,15,Alias ID,int,-,(dynamic),0,255,SET/STR,Always,O,CSD7 신규기능
+Drive,Communications,Ft-0.34,16,Alias ID EEPROM,int,-,,,,SET/STR,,,[v2.00+]
+Drive,Current Limits,Ft-4.07,17,Positive Internal Current Limit,int,-,(dynamic),0,500,SET/STR,Always,O,
+Drive,Current Limits,Ft-4.08,18,Negative Internal Current Limit,int,-,(dynamic),0,500,SET/STR,Always,O,
+Drive,Current Limits,Ft-4.09,19,Positive External Current Limit,int,-,(dynamic),0,500,SET/STR,Always,O,
+Drive,Current Limits,Ft-4.10,20,Negative External Current Limit,int,-,(dynamic),0,500,SET/STR,Always,O,
+Drive,Current Limits,Ft-4.28/D3,21,Current Limit Band,int,-,0,0,2,SET/STR,Servo Off,O,"2016.08.23 추가, FW 2.14 [(Tuningless)]"
+Drive,Current Limits,Ft-5.11,22,Power Sag Warning,int,-,0,0,1,SET/STR,Always,O,CSD7 신규기능
+Drive,Current Limits,Ft-5.12,23,Power Sag Current Limit,int,-,50,0,450,SET/STR,Always,O,CSD7 신규기능
+Drive,Current Limits,Ft-5.13,24,Power Sag Current Limit Release Time,int,-,100,0,3000,SET/STR,Always,O,CSD7 신규기능
+Drive,Speed Functions,Ft-2.18,25,Velocity Window,int,-,(dynamic),0,1000,SET/STR,Always,O,
+Drive,Speed Functions,Ft-2.19,26,Up to Velocity,int,-,(dynamic),1,5000,SET/STR,Always,O,
+Drive,Position Functions,Ft-3.18,27,In Position Size,int,-,(dynamic),0,2500,SET/STR,Always,O,2016.08.23수정
+Drive,Position Functions,Ft-3.19,28,Near Position Size,int,-,(dynamic),0,2500,SET/STR,Always,O,2016.08.23수정
+Drive,Position Functions,Ft-3.36,29,In Position Hold Time,int,msec,0,0,10000,SET/STR,Servo Off,O,[v1.20+]
+Drive,Position Functions,Ft-3.41/D0,30,Position Error Monitoring Method,int,-,,,,SET/STR,Always,O,[v1.20+]
+Drive,Stopping Functions,Ft-0.02/D1,31,Overtravel Stop Method,enum,-,2,0,2,SET/STR,Servo Off,O,0: Current Control; 1: Dynamic Brake; 2: No Action
+Drive,Stopping Functions,Ft-4.11,32,Maximum Stopping Current,int,-,(dynamic),0,500,SET/STR,Always,O,
+Drive,Stopping Functions,Ft-0.02/D0,33,Fault and Disable Braking,enum,-,0,0,3,SET/STR,Servo Off,O,0: Brake and hold; 1: Brake and release; 2: Free Stop; 3: Free Stop and hold
+Drive,Stopping Functions,Ft-5.00,34,Brake Inactive Delay,int,-,(dynamic),0,10000,SET/STR,Servo Off,O,
+Drive,Stopping Functions,Ft-5.01,35,Disable Delay,int,-,(dynamic),0,10000,SET/STR,Servo Off,O,
+Drive,Stopping Functions,Ft-5.02,36,Brake Active Delay,int,-,(dynamic),0,10000,SET/STR,Servo Off,O,
+Drive,Stopping Functions,Ft-5.03,37,Braking Application Velocity,int,-,(dynamic),0,1000,SET/STR,Servo Off,O,
+Drive,Auxiliary Function Selection 1,Ft-0.05/D3,38,Emergency Stop Input,enum,-,0,0,1,STR,Drive Off=>On,O,0: Disable; 1: Enable
+Drive,Auxiliary Function Selection 1,Ft-5.26,39,STO Circuit Verification Mode,enum,-,0,0,1,SET/STR,Servo Off,O,0 : Disable; 1 : Enable [v2.00+]
+Drive,Display Monitoring,Ft-5.10/D3,40,Enable Display Monitor Value,int,-,0,0,1,SET/STR,Servo Off,O,
+Drive,Display Monitoring,Ft-5.10/D0,41,Display Number 01,int,-,0,0,9,SET/STR,Servo Off,O,[v<1.20 or v2.00~2.03]
+Drive,Display Monitoring,Ft-5.10/D1,42,Display Number 10,int,-,0,0,9,SET/STR,Servo Off,O,[v<1.20 or v2.00~2.03]
+Drive,Display Monitoring,Ft-5.10,43,Display Number,int,-,0x0000,0x0,0x1099,SET/STR,Servo Off,O,CSD7 신규기능 [v>=1.20 and v>2.03]
+Drive,RMS Current Load Factor,Ft-4.23,44,Current Feedback Squared Integrator Interval,int,s,(dynamic),0,60,SET/STR,Servo Off,O,CSD7 신규기능
+Drive,RMS Current Load Factor,Ft-4.24,45,RMS Current Feedback Threshold 1,int,%,(dynamic),0,350,SET/STR,Servo Off,O,CSD7 신규기능
+Drive,RMS Current Load Factor,Ft-4.25,46,RMS Current Feedback Threshold 2,int,%,(dynamic),0,350,SET/STR,Servo Off,O,CSD7 신규기능
+Drive,Shunt Resistor,Ft-0.06/D0,47,Shunt Resistor,int,-,0,0,2,SET/STR,Always,O,파라메터만 추가 [v2.00+]
+Drive,Shunt Resistor,Ft-5.24,48,External Shunt Resistance,float,-,0,0,1000,SET/STR,Servo Off,O,파라메터만 추가 [v2.00+]
+Drive,Shunt Resistor,Ft-5.25,49,External Shunt Resistor Power Rate,int,-,0,0,5000,SET/STR,Servo Off,O,파라메터만 추가 [v2.00+]
+ECAT Homing,(top-level),Ft-5.14,1,ECAT Abs Origin Offset,int,pulse,0,-2147483647,2147483647,SET/STR,Always,O,1.05.09.05 추가 [v1.06+]
+ECAT Homing,(top-level),Ft-5.15,2,ECAT Homing Method,int,-,0,-128,127,SET/STR,Always,O,"1.05.09.05 추가, 2016.08.23 수정 [v1.06+]"
+ECAT Homing,(top-level),Ft-5.16,3,ECAT Homing Time Out,int,sec,0,0,500,SET/STR,Always,O,"1.05.09.05 추가, 2016.08.23 수정 [v1.06+]"
+ECAT Homing,(top-level),Ft-5.17,4,ECAT Homing Offset,int,pulse,0,-2147483647,2147483647,SET/STR,Always,O,1.05.09.05 추가 [v1.06+]
+ECAT Homing,(top-level),Ft-5.18,5,ECAT Homing Speed 1,int,pulse/sec,0,0,2147483647,SET/STR,Always,O,1.05.09.05 추가 [v1.06+]
+ECAT Homing,(top-level),Ft-5.19,6,ECAT Homing Speed 2,int,pulse/sec,0,0,2147483647,SET/STR,Always,O,1.05.09.05 추가 [v1.06+]
+ECAT Homing,(top-level),Ft-5.20,7,ECAT Homing Acceleration,int,pulse/sec^2,0,0,2147483647,SET/STR,Always,O,1.05.09.05 추가 [v1.06+]
+ECAT Homing,(top-level),Ft-0.06/D1,8,Absolute Homing Completed,int,-,0,0,1,SET/STR,Always,X,Incremental Feedback Loss [v2.02+ && !DCT]
+ECAT Homing,(top-level),XET-1.09,10,Home Current,int,-,,,,XET,,,[v1.20+ && !DCT]
+ECAT Homing,(top-level),XET-1.10,11,Home Current Time,int,-,,,,XET,,,[v1.20+ && !DCT]
+Motor,(top-level),Ft-9.50,1,Motor Model,string,-,,,,SET/STR,,O,"""Default Motor"""
+Motor,(top-level),Ft-0.04,2,Inertia Ratio,float,*0.01%,1,0,60,SET/STR,Always,O,
+Motor,(top-level),Ft-5.09,3,Motor Overload Detect,enum,-,0,0,1,SET/STR,Servo Off,O,0: Thermal Model Method; 1: I Square T Method
+Motor,(top-level),Ft-5.57,4,Detection Level Motor Overload,int,%,0,0,100,SET/STR,Always,O,
+Motor,(top-level),Ft-5.30,5,PWM Frequency Select,int,-,,0,1,STR,Drive Off=>On,O,10kHz Reserved [v2.02+]
+Motor,(top-level),Ft-2.17/D1,6,Field Weakening Mode,int,-,0x0,0x0,0x1,SET/STR,Servo Off,O,
+Motor,(top-level),Ft-2.36,7,Field Weakening Start Velocity,int,rpm(mm/sec),0,0,6000,SET/STR,Servo Off,O,
+Motor,(top-level),Ft-2.37,8,Maximum Extended Velocity,int,rpm(mm/sec),0,0,6000,SET/STR,Servo Off,O,
+Motor,(top-level),Ft-2.38,9,Field Weakening Current Command Gain,int,-,0,0,100,SET/STR,Servo Off,O,
+Motor,General,Ft-9.00,10,Flag (Motor Status),int,-,0,0,1,SET/STR,0,O,"0:Custom, 1:Standard [(status)]"
+Motor,General,Ft-9.01,11,Type ID,int,-,0,0,3,SET/STR,0,O,"0:Rotary, 1:Linear, 2,3:Reserved [(status)]"
+Motor,General,Ft-9.09,12,Torque Constant,float,Nm/A,1130,1,65535,SET/STR,0,O,[(status)]
+Motor,General,Ft-9.09,13,Force Constant,float,Nm/A,1130,1,65535,SET/STR,0,O,[(status)]
+Motor,General,Ft-9.10,14,Inertia,int,kgcm^2,11796,1,2147483647,SET/STR,0,O,[(status)]
+Motor,General,Ft-9.10,15,Mass,float,kgcm^2,11796,1,2147483647,SET/STR,0,O,[(status)]
+Motor,General,Ft-9.11,16,Poles Per Rev,int,-,8,2,100,SET/STR,0,O,[(status)]
+Motor,General,Ft-9.11,17,Electrical Cycle Length,int,-,8,2,100,SET/STR,0,O,[(status)]
+Motor,General,Ft-9.14,18,Integral Limits,int,N/A,628,1,32767,SET/STR,0,O,[(status)]
+Motor,Electrical,Ft-9.06,19,Rated Voltage,int,Vdc,230,10,1000,SET/STR,0,O,[(status)]
+Motor,Electrical,Ft-9.02,20,Resistance,float,0.1 Ohm,640,1,65535,SET/STR,0,O,[(status)]
+Motor,Electrical,Ft-9.03,21,Inductance,float,mH,2048,1,65535,SET/STR,0,O,[(status)]
+Motor,Ratings,Ft-9.13,22,Max Rotation Speed,int,RPM,5000,10,32767,SET/STR,0,O,[(status)]
+Motor,Ratings,Ft-9.13,23,Max Linear Speed,int,RPM,5000,10,32767,SET/STR,0,O,[(status)]
+Motor,Ratings,Ft-9.04,24,Intermittent Current,int,0.001 A,887,1,32767,SET/STR,0,O,[(status)]
+Motor,Ratings,Ft-9.05,25,Continuous Current,int,0.001 A,308,1,32767,SET/STR,0,O,[(status)]
+Motor,Feedback,Ft-9.07,26,Encoder,int,-,5,1,5,SET/STR,0,O,"1:Inc, 2:sincos, 3:SRS, 4:Serial Inc, 4:Serial Abs [(status)]"
+Motor,Feedback,Ft-9.07,27,Encoder Standard,int,-,5,1,5,SET/STR,0,O,"1:Inc, 2:sincos, 3:SRS, 4:Serial Inc, 4:Serial Abs [(status)]"
+Motor,Feedback,Ft-9.07,28,Commutation,int,-,5,1,5,SET/STR,0,O,"1:Inc, 2:sincos, 3:SRS, 4:Serial Inc, 4:Serial Abs [(status)]"
+Motor,Feedback,Ft-9.07,29,Startup,int,-,5,1,5,SET/STR,0,O,"1:Inc, 2:sincos, 3:SRS, 4:Serial Inc, 4:Serial Abs [(status)]"
+Motor,Feedback,Ft-9.08,30,Hall Offset,int,Degree,120,0,359,SET/STR,0,O,[(status)]
+Motor,Feedback,Ft-9.12,31,Lines Per Rev,int,-,32768,100,10000000,SET/STR,0,O,[(status)]
+Motor,Feedback,Ft-9.12,32,Lines Per Meter,int,-,32768,100,10000000,SET/STR,0,O,[(status)]
+PID Tuning,(top-level),Ft-1.23/D0,1,Tuning Mode,int,-,0,0,2,SET/STR,Servo Off,O,2016.01.12 추가 [v1.20+]
+PID Tuning,(top-level),Ft-0.04,2,Inertia Ratio,float,*0.01%,1,0,60,SET/STR,Always,O,[v1.06+]
+PID Tuning,(top-level),Ft-1.00,3,Velocity Response Level,int,%,35,1,100,SET/STR,Always,O,
+PID Tuning,(top-level),Ft-1.01,4,System Gain,int,Hz,30,10,500,SET/STR,Always,O,상향 조정 필요함.
+PID Tuning,Main Velocity Regulator Gains,Ft-1.02,5,Velocity P Gain,int,-,215,0,40000,SET/STR,Always,O,
+PID Tuning,Main Velocity Regulator Gains,Ft-1.03,6,Velocity I Gain,int,-,125,0,16000000,SET/STR,Always,O,
+PID Tuning,Main Velocity Regulator Gains,Ft-1.04,7,Velocity I Gain Mode,int,-,0x0000,0x0000,0x0004,SET/STR,Servo Off,O,
+PID Tuning,Main Velocity Regulator Gains,Ft-1.05,8,Velocity I Gain Disable Threshold,int,-,100,0,3000,SET/STR,Always,O,
+PID Tuning,Main Velocity Regulator Gains,Ft-1.06,9,Velocity D Gain,int,-,0,0,1000,SET/STR,Always,O,[v<2.02]
+PID Tuning,Main Velocity Regulator Gains,Ft-2.04,10,Velocity Feed Forward,int,-,0,0,6000,SET/STR,Always,O,
+PID Tuning,Main Velocity Regulator Gains,Ft-2.02,11,Velocity Command LPF Bandwidth,int,Hz,1000,0,10000,SET/STR,Always,O,[v2.00~2.02]
+PID Tuning,Main Velocity Regulator Gains,Ft-2.03,12,Velocity Error Filter Bandwidth,int,Hz,30,0,2500,SET/STR,Always,O,[v<2.02]
+PID Tuning,Main Velocity Regulator Additional Gains,Ft-1.06,13,Velocity D Gain,int,-,0,0,1000,SET/STR,Always,O,[v>=2.02]
+PID Tuning,Main Velocity Regulator Additional Gains,Ft-2.03,14,Velocity Error Filter Bandwidth,int,Hz,30,0,2500,SET/STR,Always,O,[v>=2.02]
+PID Tuning,Main Velocity Regulator Additional Gains,Ft-2.02,15,Velocity Command LPF Bandwidth,int,Hz,1000,0,10000,SET/STR,Always,O,[v>=2.02]
+PID Tuning,Main Position Regulator Gains,Ft-1.07,16,1st Position Regulator Kp Gain,int,Hz,30,0,700,SET/STR,Always,O,
+PID Tuning,Main Position Regulator Gains,Ft-3.02,17,Position Feed Forward,int,-,0,0,100,SET/STR,Always,O,
+PID Tuning,Main Position Regulator Gains,Ft-3.03,18,Position FF Bandwidth,int,-,200,0,2500,SET/STR,Always,O,
+PID Tuning,Main Position Regulator Gains,Ft-3.01,19,Position Filter Bandwidth,int,-,0,0,1000,SET/STR,Always,O,
+PID Tuning,Main Position Regulator Gains,Ft-3.04,20,Moving Average Filter,int,-,320,0,1000,SET/STR,Servo Off,O,
+PID Tuning,Main Current Regulator Gains,Ft-4.06,21,Current Gain,int,-,0x0001,0x0000,0x0002,STR,Drive Off=>On,O,
+PID Tuning,Main Current Regulator Gains,Ft-4.28/D2,22,Current Command Feed Forward,int,-,0,0,1,SET/STR,Always,O,2017.10.16 추가 [v2.03+]
+PID Tuning,Main Current Regulator Gains,Ft-4.35,23,Main Current Regulator Max Bandwidth,int,Hz,0,0,100,STR,Power cycling,O,Ft-4.06 과 유사 기능(더 세분화) [v>2.05]
+PID Tuning,Main Current Regulator Gains,Ft-4.28/D0,24,Interlocking Gain Tuning Mode,enum,-,0,0,1,SET/STR,Always,O,0: Enable; 1: Disable [v2.00+]
+PID Tuning,Main Current Regulator Gains,Ft-4.02,25,Current Filter Bandwidth,int,-,500,0,10000,SET/STR,Always,O,
+PID Tuning,Main Current Regulator Gains,Ft-4.13,26,Resonant Freq Suppression,int,-,10000,0,10000,SET/STR,Always,O,
+PID Tuning,Main Current Regulator Gains,Ft-4.14,27,Notch Width Resonant Freq Suppression,int,-,10,0,20,SET/STR,Always,O,
+PID Tuning,Main Current Regulator Gains,Ft-4.15,28,Notch Depth Resonant Freq Suppression,int,-,100,0,100,SET/STR,Always,O,CSD7 신규기능
+PID Tuning,Main Current Regulator Gains,Ft-4.16,29,Resonant Freq Suppression 2nd,int,-,10000,0,10000,SET/STR,Always,O,
+PID Tuning,Main Current Regulator Gains,Ft-4.17,30,Notch Width 2nd,int,-,10,0,20,SET/STR,Always,O,
+PID Tuning,Main Current Regulator Gains,Ft-4.18,31,Notch Depth 2nd,int,-,100,0,100,SET/STR,Always,O,
+PID Tuning,Main Current Regulator Gains,Ft-4.19,32,Resonant Freq Suppression 3rd,int,-,10000,0,10000,SET/STR,Always,O,CSD7 신규기능
+PID Tuning,Main Current Regulator Gains,Ft-4.20,33,Notch Width 3rd,int,-,10,0,20,SET/STR,Always,O,CSD7 신규기능
+PID Tuning,Main Current Regulator Gains,Ft-4.21,34,Notch Depth 3rd,int,-,100,0,100,SET/STR,Always,O,CSD7 신규기능
+PID Tuning,Main Current Regulator Gains,Ft-4.29,35,Resonant Freq Suppression 4th,int,Hz,10000,0,10000,SET/STR,Always,O,
+PID Tuning,Main Current Regulator Gains,Ft-4.30,36,Notch Width 4th,int,Hz,10,0,20,SET/STR,Always,O,
+PID Tuning,Main Current Regulator Gains,Ft-4.31,37,Notch Depth 4th,int,Hz,100,0,100,SET/STR,Always,O,
+PID Tuning,Main Current Regulator Gains,Ft-4.32,38,Resonant Freq Suppression 5th,int,Hz,10000,0,10000,SET/STR,Always,O,
+PID Tuning,Main Current Regulator Gains,Ft-4.33,39,Notch Width 5th,int,Hz,10,0,20,SET/STR,Always,O,
+PID Tuning,Main Current Regulator Gains,Ft-4.34,40,Notch Depth 5th,int,Hz,100,0,100,SET/STR,Always,O,
+PID Tuning,Persistent Vibration Filter,Ft-2.31/D1,41,POC Enable,int,-,,,,SET/STR,,O,[v2.10+]
+PID Tuning,Persistent Vibration Filter,Ft-2.31/D2,42,POC BPF Upper Cutoff Freq Order Select,int,-,,,,SET/STR,,O,[v2.10+]
+PID Tuning,Persistent Vibration Filter,Ft-2.32,43,POC BPF Upper Cut Off Frequency,int,Hz,600,0,10000,SET/STR,Always,O,[v2.10+]
+PID Tuning,Persistent Vibration Filter,Ft-2.33,44,POC BPF Lower Cut Off Frequency,int,Hz,15,0,10000,SET/STR,Always,O,[v2.10+]
+PID Tuning,Persistent Vibration Filter,Ft-2.34,45,POC Kd Gain,int,-,10,0,10000,SET/STR,Always,O,[v2.10+]
+PID Tuning,Persistent Vibration Filter,Ft-2.35,46,POC LPF,int,Hz,50,0,10000,SET/STR,Always,O,[v2.10+]
+PID Tuning,Current Loop POC Filter,Ft-4.38/D3,47,Current POC Enable,int,-,0x0,0x0,0x1,SET/STR,Servo Off,O,[v2.10+]
+PID Tuning,Current Loop POC Filter,Ft-4.44,48,Current POC Kr Filter,int,Hz,3500,0,10000,SET/STR,,O,[v2.10+]
+PID Tuning,Current Loop POC Filter,Ft-4.45,49,Current POC BPF Upper Cutoff Freq,int,Hz,2500,0,10000,SET/STR,,O,[v2.10+]
+PID Tuning,Current Loop POC Filter,Ft-4.46,50,Current POC BPF Lower Cutoff Freq,int,Hz,10,0,10000,SET/STR,,O,[v2.10+]
+PID Tuning,Current Loop POC Filter,Ft-4.47,51,Current POC Kd Gain,int,Hz,2000,0,10000,SET/STR,,O,[v2.10+]
+PID Tuning,Current Loop POC Filter,Ft-4.48,52,Current POC Operation Delay,int,msec,0,0,10000,SET/STR,,O,[v2.10+]
+PID Tuning,Autotuning,Ft-0.03/D2,53,Off-Line Auto Tuning Velocity,int,*100rpm,7,2,9,SET/STR,Servo Off,O,
+PID Tuning,Autotuning,Ft-0.03/D0,54,Off-Line Auto Tuning Mode,enum,-,1,0,2,SET/STR,Servo Off,O,0: Inertia Moment Estimation; 1: Inertia Moment Estimation and Resonant Frequency Detection; 2: Resonant Frequency Detection
+PID Tuning,Gain Switching,Ft-0.05/D2,55,Gain Switching,enum,-,0,0,1,STR,Drive Off=>On,O,0: Disable; 1: Enable
+PID Tuning,Gain Switching,Ft-0.06/D2,56,Mode of Gain Switching,enum,-,0,0,9,SET/STR,Always,O,0: 1st Gain Fix; 1: 2nd Gain Fix; 2: Digital Input (G-SEL); 3: Torque Command Deviation; 4: Velocity Command; 5: Position Error; 6: Position Command; 7: In-Position; 8: Velocity; 9: Position Command and Speed
+PID Tuning,Gain Switching,Ft-1.10,57,Gain Switch Delay Time,int,*0.125msec,0,0,10000,SET/STR,Always,O,
+PID Tuning,Gain Switching,Ft-1.11,58,Gain Switch Level,int,Ft-0.06 D2에 따름,0,0,10000,SET/STR,Always,O,
+PID Tuning,Gain Switching,Ft-1.12,59,Gain Switch Hysteresis,int,Ft-0.06 D2에 따름,0,0,10000,SET/STR,Always,O,
+PID Tuning,Gain Switching,Ft-1.13,60,Gain Switch Position Time,int,*0.125msec,0,0,10000,SET/STR,Always,O,
+PID Tuning,2nd Regulator Gains,Ft-1.14,61,2nd Velocity P Gain,int,-,60,0,10000,SET/STR,Always,O,
+PID Tuning,2nd Regulator Gains,Ft-1.15,62,2nd Velocity I Gain,int,-,26,0,60000,SET/STR,Always,O,
+PID Tuning,2nd Regulator Gains,Ft-1.16,63,2nd Position Kp Gain,int,-,20,0,700,SET/STR,Always,O,
+PID Tuning,2nd Regulator Gains,Ft-4.03,64,2nd Current Bandwidth,int,-,300,0,10000,SET/STR,Always,O,
+PID Tuning,3rd Regulator Gains,Ft-1.17,65,3rd Velocity P Gain,int,-,60,0,10000,SET/STR,Always,O,
+PID Tuning,3rd Regulator Gains,Ft-1.18,66,3rd Velocity I Gain,int,-,26,0,60000,SET/STR,Always,O,
+PID Tuning,3rd Regulator Gains,Ft-1.19,67,3rd Position Kp Gain,int,-,20,0,700,SET/STR,Always,O,
+PID Tuning,3rd Regulator Gains,Ft-4.04,68,3rd Current Bandwidth,int,-,300,0,10000,SET/STR,Always,O,
+PID Tuning,4th Regulator Gains,Ft-1.20,69,4th Velocity P Gain,int,-,60,0,10000,SET/STR,Always,O,
+PID Tuning,4th Regulator Gains,Ft-1.21,70,4th Velocity I Gain,int,-,26,0,60000,SET/STR,Always,O,
+PID Tuning,4th Regulator Gains,Ft-1.22,71,4th Position Kp Gain,int,-,20,0,700,SET/STR,Always,O,
+PID Tuning,4th Regulator Gains,Ft-4.05,72,4th Current Bandwidth,int,-,300,0,10000,SET/STR,Always,O,
+PID Tuning,Vibration Suppression,Ft-3.14,73,1st Damping Frequency,int,-,0,0,50000,SET/STR,Servo Off,O,[v<1.20]
+PID Tuning,Vibration Suppression,Ft-3.15,74,1st Damping Ratio,int,-,0,0,0.999,SET/STR,Servo Off,O,
+PID Tuning,Vibration Suppression,Ft-3.16,75,2nd Damping Frequency,int,-,0,0,50000,SET/STR,Servo Off,O,
+PID Tuning,Vibration Suppression,Ft-3.17,76,2nd Damping Ratio,int,-,0,0,0.999,SET/STR,Servo Off,O,
+PID Tuning,Extension,Ft-4.35,77,Main Current Regulator Max Bandwidth,int,Hz,0,0,100,STR,Power cycling,O,Ft-4.06 과 유사 기능(더 세분화) [v2.03 only]
+Tuningless,(top-level),Ft-1.23/D0,1,Tuning Mode,int,-,0,0,2,SET/STR,Servo Off,O,2016.01.12 추가
+Tuningless,(top-level),Ft-4.22/D0,2,ANF Function,enum,-,0,0,1,SET/STR,Servo Off,O,0: Disable; 1: Enable
+Tuningless,(top-level),Ft-1.24,3,Tuningless Gain,int,-,5,0,100,SET/STR,Always,O,2016.05.02 변경
+Tuningless,(top-level),Ft-1.32,4,Tuningless Fine Gain,int,-,0,0,100,SET/STR,Always,O,[v2.10+]
+Tuningless,Model Parameter Estimation,Ft-1.26,5,Load Inertia Ratio,float,-,50,0,3000,SET/STR,Always,O,2016.04.22 추가
+Tuningless,Model Parameter Estimation,Ft-1.31,6,Viscous Friction Coefficient,int,-,,,,SET/STR,,,[v2.10+]
+Tuningless,Model Parameter Estimation,Ft-1.23/D3,7,Inertia Ratio Estimation Sensitivity,int,-,0,0,2,SET/STR,Servo Off,O,2024.06.19 [v2.10+]
+Tuningless,Model Parameter Estimation,Ft-1.25,8,Load Inertia Ratio Select,float,-,1,0,3,SET/STR,Always,O,2016.01.12 추가
+Tuningless,Model Parameter Estimation,Ft-1.27/D2,9,Viscous Friction Compensator,int,-,Enable (0),Enable (0),Disable (1),SET/STR,Servo Off,O,V2.10 추가 [v2.10+]
+Tuningless,Model Parameter Estimation,Ft-1.27/D3,10,On-Line Parameter Estimation,int,-,,,,SET/STR,,O,V2.10 추가 [v2.10+]
+Tuningless,Command Smoothing Filter,Ft-3.04,11,Moving Average Filter,int,-,320,0,1000,SET/STR,Servo Off,O,
+Tuningless,Command Smoothing Filter,Ft-3.31,12,Position Smoothing Filter,int,0.1 Hz,39,0,1000,SET/STR,Always,,V2.10 추가 [v2.10+]
+Tuningless,Command Smoothing Filter,Ft-2.27,13,Velocity Command Smoothing Filter,int,Hz,386,0,10000,SET/STR,Always,O,[v2.10+]
+Tuningless,Command Smoothing Filter,Ft-1.27/D1,14,Command Smoothing Filter Bandwidth Interlocking,int,-,Enable (0),Enable (0),Disable (1),SET/STR,Always,O,V2.10 추가 [v2.10+]
+Tuningless,Advanced Settings,Ft-1.27/D0,15,Smart Tuning Positioning Mode,int,-,0x,0x0,0x2,SET/STR,Servo Off,O,V2.10 추가 [v2.10+]
+Tuningless,Advanced Settings,Ft-1.33,16,Tuningless Feedforward Gain,int,-,0,0,500,SET/STR,Always,O,[v2.10+]
+Tuningless,Advanced Settings,Ft-4.37,17,Sliding Surface Slope,int,%,100,0,1000,SET/STR,Always,O,[v2.10+]
+Tuningless,Advanced Settings,Ft-4.38/D1,18,Sliding Surface Slope Interlocking,int,-,0x0,0x0,0x1,SET/STR,Servo Off,O,[v2.10+]
+Tuningless,Decoupled Disturbance Compensator,Ft-4.38/D0,19,DDC Interlocking,int,-,0x0,0x0,0x1,SET/STR,Servo Off,O,[v2.10+]
+Tuningless,Decoupled Disturbance Compensator,Ft-4.36,20,DDC Gain,int,-,10,0,60,SET/STR,Always,O,[v2.10+]
+Tuningless,Decoupled Disturbance Compensator,Ft-4.39/D3,21,DDC Q Filter Order Select,int,-,0x0,0x0,0x2,SET/STR,Always,O,[v2.10+]
+Tuningless,Decoupled Disturbance Compensator,Ft-4.41,22,DDC Q Value,int,-,707,0,1000,SET/STR,,O,[v2.10+]
+Tuningless,Decoupled Disturbance Compensator,Ft-4.43,23,Cascade DDC 2nd LPF Cutoff Freq,int,Hz,0,0,10000,SET/STR,,O,[v2.10+]
+Tuningless,Mode1 Positioning Priority,Ft-3.43/D0,24,Encoder Signal Filter,int,-,0x0,0x0,0x1,SET/STR,Servo Off,O,[v2.10+]
+Tuningless,Mode2 Positioning Min Overshoot,Ft-3.34,25,Outer Loop P Gain,int,-,202,0,6000,SET/STR,Always,O,[v2.10+]
+Tuningless,Mode2 Positioning Min Overshoot,Ft-4.38/D2,26,Outer Loop P Gain Interlocking,int,-,0x0,0x0,0x1,SET/STR,Servo Off,O,[v2.10+]
+Tuningless,Mode3 Path Tracking,Ft-2.28,27,Path Tracking Mode Vel LPF BW,int,Hz,38,0,6000,SET/STR,Always,O,[v2.10+]
+Tuningless,Mode3 Path Tracking,Ft-2.29,28,Path Tracking Mode Vel FF LPF BW,int,Hz,29,0,6000,SET/STR,Always,O,[v2.10+]
+Tuningless,Mode3 Path Tracking,Ft-3.43/D1,29,Path Tracking Input Smoothing Filter,int,-,0x0,0x0,0x1,SET/STR,Servo Off,O,[v2.10+]
+Tuningless,Main Current Regulator Gains,Ft-4.06,30,Current Gain,int,-,0x0001,0x0000,0x0002,STR,Drive Off=>On,O,
+Tuningless,Main Current Regulator Gains,Ft-4.28/D2,31,Current Command Feedforward,int,-,0,0,1,SET/STR,Always,O,2017.10.16 추가
+Tuningless,Main Current Regulator Gains,Ft-4.28/D1,32,Current Command LPF Bandwidth Interlocking(Tuningless),enum,-,0,0,1,SET/STR,Always,O,0: Enable; 1: Disable
+Tuningless,Main Current Regulator Gains,Ft-4.27,33,Current Command LBF Bandwidth,int,-,804,0,10000,SET/STR,Always,O,2016.08.23 추가 [v2.00+]
+Tuningless,Main Current Regulator Gains,Ft-4.13,34,Resonant Freq Suppression,int,-,10000,0,10000,SET/STR,Always,O,
+Tuningless,Main Current Regulator Gains,Ft-4.14,35,Notch Width,int,-,10,0,20,SET/STR,Always,O,
+Tuningless,Main Current Regulator Gains,Ft-4.15,36,Notch Depth,int,-,100,0,100,SET/STR,Always,O,CSD7 신규기능
+Tuningless,Main Current Regulator Gains,Ft-4.16,37,Resonant Freq Suppression 2nd,int,-,10000,0,10000,SET/STR,Always,O,
+Tuningless,Main Current Regulator Gains,Ft-4.17,38,Notch Width 2nd,int,-,10,0,20,SET/STR,Always,O,
+Tuningless,Main Current Regulator Gains,Ft-4.18,39,Notch Depth 2nd,int,-,100,0,100,SET/STR,Always,O,
+Tuningless,Main Current Regulator Gains,Ft-4.19,40,Resonant Freq Suppression 3rd,int,-,10000,0,10000,SET/STR,Always,O,CSD7 신규기능
+Tuningless,Main Current Regulator Gains,Ft-4.20,41,Notch Width 3rd,int,-,10,0,20,SET/STR,Always,O,CSD7 신규기능
+Tuningless,Main Current Regulator Gains,Ft-4.21,42,Notch Depth 3rd,int,-,100,0,100,SET/STR,Always,O,CSD7 신규기능
+Tuningless,Main Current Regulator Gains,Ft-4.29,43,Resonant Freq Suppression 4th,int,Hz,10000,0,10000,SET/STR,Always,O,
+Tuningless,Main Current Regulator Gains,Ft-4.30,44,Notch Width 4th,int,Hz,10,0,20,SET/STR,Always,O,
+Tuningless,Main Current Regulator Gains,Ft-4.31,45,Notch Depth 4th,int,Hz,100,0,100,SET/STR,Always,O,
+Tuningless,Main Current Regulator Gains,Ft-4.32,46,Resonant Freq Suppression 5th,int,Hz,10000,0,10000,SET/STR,Always,O,
+Tuningless,Main Current Regulator Gains,Ft-4.33,47,Notch Width 5th,int,Hz,10,0,20,SET/STR,Always,O,
+Tuningless,Main Current Regulator Gains,Ft-4.34,48,Notch Depth 5th,int,Hz,100,0,100,SET/STR,Always,O,
+Tuningless,Persistent Vibration Filter,Ft-2.31/D1,49,POC,int,-,,,,SET/STR,,O,
+Tuningless,Persistent Vibration Filter,Ft-2.31/D2,50,POC BPF Upper Cutoff Frequency Order Select,int,-,,,,SET/STR,,O,
+Tuningless,Persistent Vibration Filter,Ft-2.32,51,POC BPF Upper Cut Off Frequency,int,Hz,600,0,10000,SET/STR,Always,O,
+Tuningless,Persistent Vibration Filter,Ft-2.33,52,POC BPF Lower Cut Off Frequency,int,Hz,15,0,10000,SET/STR,Always,O,
+Tuningless,Persistent Vibration Filter,Ft-2.34,53,POC Kd Gain,int,-,10,0,10000,SET/STR,Always,O,
+Tuningless,Persistent Vibration Filter,Ft-2.35,54,POC LPF,int,Hz,50,0,10000,SET/STR,Always,O,
+Tuningless,Current Loop POC Filter,Ft-4.38/D3,55,Current POC,int,-,0x0,0x0,0x1,SET/STR,Servo Off,O,
+Tuningless,Current Loop POC Filter,Ft-4.44,56,Current POC Kr Filter,int,Hz,3500,0,10000,SET/STR,,O,
+Tuningless,Current Loop POC Filter,Ft-4.45,57,Current POC BPF Upper Cutoff Freq,int,Hz,2500,0,10000,SET/STR,,O,
+Tuningless,Current Loop POC Filter,Ft-4.46,58,Current POC BPF Lower Cutoff Freq,int,Hz,10,0,10000,SET/STR,,O,
+Tuningless,Current Loop POC Filter,Ft-4.47,59,Current POC Kd Gain,int,Hz,2000,0,10000,SET/STR,,O,
+Tuningless,Current Loop POC Filter,Ft-4.48,60,Current POC Operation Delay,int,msec,0,0,10000,SET/STR,,O,
+Resonant Suppression,Resonant Frequency Suppression Filter,Ft-4.13,1,Resonant Freq Suppression,int,-,10000,0,10000,SET/STR,Always,O,
+Resonant Suppression,Resonant Frequency Suppression Filter,Ft-4.14,2,Notch Width,int,-,10,0,20,SET/STR,Always,O,
+Resonant Suppression,Resonant Frequency Suppression Filter,Ft-4.15,3,Notch Depth,int,-,100,0,100,SET/STR,Always,O,CSD7 신규기능
+Resonant Suppression,Resonant Frequency Suppression Filter,Ft-4.16,4,Resonant Freq Suppression 2nd,int,-,10000,0,10000,SET/STR,Always,O,
+Resonant Suppression,Resonant Frequency Suppression Filter,Ft-4.17,5,Notch Width 2nd,int,-,10,0,20,SET/STR,Always,O,
+Resonant Suppression,Resonant Frequency Suppression Filter,Ft-4.18,6,Notch Depth 2nd,int,-,100,0,100,SET/STR,Always,O,
+Resonant Suppression,Resonant Frequency Suppression Filter,Ft-4.19,7,Resonant Freq Suppression 3rd,int,-,10000,0,10000,SET/STR,Always,O,CSD7 신규기능
+Resonant Suppression,Resonant Frequency Suppression Filter,Ft-4.20,8,Notch Width 3rd,int,-,10,0,20,SET/STR,Always,O,CSD7 신규기능
+Resonant Suppression,Resonant Frequency Suppression Filter,Ft-4.21,9,Notch Depth 3rd,int,-,100,0,100,SET/STR,Always,O,CSD7 신규기능
+Resonant Suppression,Resonant Frequency Suppression Filter,Ft-4.29,10,Resonant Freq Suppression 4th,int,Hz,10000,0,10000,SET/STR,Always,O,
+Resonant Suppression,Resonant Frequency Suppression Filter,Ft-4.30,11,Notch Width 4th,int,Hz,10,0,20,SET/STR,Always,O,
+Resonant Suppression,Resonant Frequency Suppression Filter,Ft-4.31,12,Notch Depth 4th,int,Hz,100,0,100,SET/STR,Always,O,
+Resonant Suppression,Resonant Frequency Suppression Filter,Ft-4.32,13,Resonant Freq Suppression 5th,int,Hz,10000,0,10000,SET/STR,Always,O,
+Resonant Suppression,Resonant Frequency Suppression Filter,Ft-4.33,14,Notch Width 5th,int,Hz,10,0,20,SET/STR,Always,O,
+Resonant Suppression,Resonant Frequency Suppression Filter,Ft-4.34,15,Notch Depth 5th,int,Hz,100,0,100,SET/STR,Always,O,
+Resonant Suppression,Adaptive Notch Filter (ANF),Ft-4.22/D0,16,ANF Function,enum,-,0,0,1,SET/STR,Servo Off,O,0: Disable; 1: Enable
+Resonant Suppression,Adaptive Notch Filter (ANF),Ft-4.22/D1,17,ANF HPF Cutoff Frequency,enum,-,1,0,1,SET/STR,Servo Off,O,0: Low; 1: High
+Resonant Suppression,Adaptive Notch Filter (ANF),Ft-4.22/D2,18,ANF Estimation Frequency Initial Value Selection,enum,-,1,0,1,SET/STR,Servo Off,O,0: Low; 1: High
+Resonant Suppression,Adaptive Notch Filter (ANF),Ft-4.22/D3,19,ANF Detect Level,enum,-,1,0,3,SET/STR,Servo Off,O,0: Low; 1: Middle; 2: High
+Vibration Suppression,Vibration Suppression,Ft-3.22/D0,1,Vibration Auto Search,int,-,0,0,1,SET/STR,Servo Off,O,2016.02.11 추가
+Vibration Suppression,Vibration Suppression,Ft-3.22/D1,2,Vibration Filter Type,int,-,0,0,2,SET/STR,Servo Off,O,2016.02.11 추가
+Vibration Suppression,Vibration Suppression,Ft-3.14,3,1st Damping Frequency,int,-,0,0,50000,SET/STR,Servo Off,O,
+Vibration Suppression,Vibration Suppression,Ft-3.15,4,1st Damping Ratio,int,-,0,0,0.999,SET/STR,Servo Off,O,
+Vibration Suppression,Vibration Suppression,Ft-3.16,5,2nd Damping Frequency,int,-,0,0,50000,SET/STR,Servo Off,O,
+Vibration Suppression,Vibration Suppression,Ft-3.17,6,2nd Damping Ratio,int,-,0,0,0.999,SET/STR,Servo Off,O,
+Bode Plot,Bode Plot,Ft-4.26/D0,1,Bode Plot Function,int,-,0,0,1,SET/STR,Servo Off,O,Cia402 오브젝트는 지원하지 않음 [v1.20+]
+Bode Plot,Bode Plot,Ft-4.26/D1,2,Driving Mode Selection,int,-,0,0,1,SET/STR,Servo Off,O,[v1.20+]
+Bode Plot,Bode Plot,Ft-4.26/D2,3,Excitation Amplitude,int,-,4,1,7,SET/STR,Servo Off,O,[v1.20+]
+Bode Plot,Resonant Freq Suppression Filter,Ft-4.13,4,Resonant Freq Suppression,int,-,10000,0,10000,SET/STR,Always,O,
+Bode Plot,Resonant Freq Suppression Filter,Ft-4.14,5,Notch Width,int,-,10,0,20,SET/STR,Always,O,
+Bode Plot,Resonant Freq Suppression Filter,Ft-4.15,6,Notch Depth,int,-,100,0,100,SET/STR,Always,O,CSD7 신규기능
+Bode Plot,Resonant Freq Suppression Filter,Ft-4.16,7,Resonant Freq Suppression 2nd,int,-,10000,0,10000,SET/STR,Always,O,
+Bode Plot,Resonant Freq Suppression Filter,Ft-4.17,8,Notch Width 2nd,int,-,10,0,20,SET/STR,Always,O,
+Bode Plot,Resonant Freq Suppression Filter,Ft-4.18,9,Notch Depth 2nd,int,-,100,0,100,SET/STR,Always,O,
+Bode Plot,Resonant Freq Suppression Filter,Ft-4.19,10,Resonant Freq Suppression 3rd,int,-,10000,0,10000,SET/STR,Always,O,CSD7 신규기능
+Bode Plot,Resonant Freq Suppression Filter,Ft-4.20,11,Notch Width 3rd,int,-,10,0,20,SET/STR,Always,O,CSD7 신규기능
+Bode Plot,Resonant Freq Suppression Filter,Ft-4.21,12,Notch Depth 3rd,int,-,100,0,100,SET/STR,Always,O,CSD7 신규기능
+Bode Plot,Resonant Freq Suppression Filter,Ft-4.29,13,Resonant Freq Suppression 4th,int,Hz,10000,0,10000,SET/STR,Always,O,
+Bode Plot,Resonant Freq Suppression Filter,Ft-4.30,14,Notch Width 4th,int,Hz,10,0,20,SET/STR,Always,O,
+Bode Plot,Resonant Freq Suppression Filter,Ft-4.31,15,Notch Depth 4th,int,Hz,100,0,100,SET/STR,Always,O,
+Bode Plot,Resonant Freq Suppression Filter,Ft-4.32,16,Resonant Freq Suppression 5th,int,Hz,10000,0,10000,SET/STR,Always,O,
+Bode Plot,Resonant Freq Suppression Filter,Ft-4.33,17,Notch Width 5th,int,Hz,10,0,20,SET/STR,Always,O,
+Bode Plot,Resonant Freq Suppression Filter,Ft-4.34,18,Notch Depth 5th,int,Hz,100,0,100,SET/STR,Always,O,
+Encoders,(top-level),Ft-3.00/D2,1,Encoder Output Forward Direction,enum,-,0,0,1,SET/STR,Servo Off,O,0: A Leads B; 1: B Leads A
+Encoders,(top-level),Ft-3.11/3.12,2,Output Ratio (Pulses),int,-,1,1,8388608,SET/STR,Servo Off,O,
+Encoders,(top-level),Ft-0.05/D0,3,Encoder Backup Battery,enum,-,1,0,1,STR,Drive Off=>On,O,0: Installed; 1: Not Installed [v1.06+]
+Encoders,(top-level),Ft-0.05/D1,4,Absolute Single Turn Reset,enum,-,0,0,1,STR,Drive Off=>On,O,0: Enable(Absolute Encoder Single Turn Clear); 1: Disable(Absolute Encoder Single Turn Hold) [v1.06+]
+Encoders,(top-level),Ft-0.06/D3,5,Absolute Feedback Transfer Type,enum,-,0,0,2,SET/STR,Always,O,0: Same as Command Polarity; 1: Always CCW; 2: Always CW
+Encoders,Touch Probe 1,Ft-3.21/D0,6,Touch Probe (composite parent),int,-,0,0,3,SET/STR,Always,O,[v2.02+]
+Encoders,Touch Probe 1,Ft-3.21/B0,7,Enable Touch Probe 1,enum,-,0,0,3,SET/STR,Always,O,[v2.02+]
+Encoders,Touch Probe 1,Ft-3.21/B4,8,Touch Probe 1 Mode,enum,-,0,0,3,SET/STR,Always,O,[v2.02+]
+Encoders,Touch Probe 1,Ft-3.21/B8,9,Touch Probe 1 Trigger,enum,-,0,0,3,SET/STR,Always,O,[v2.02+]
+Encoders,Touch Probe 1,Ft-3.21/B12,10,Touch Probe 1 Positive Edge,enum,-,0,0,F,SET/STR,Always,O,[v2.02+]
+Encoders,Touch Probe 1,Ft-3.21/B13,11,Touch Probe 1 Negative Edge,enum,-,0,0,F,SET/STR,Always,O,[v2.02+]
+Encoders,Touch Probe 2,Ft-3.21/B1,12,Enable Touch Probe 2,enum,-,0,0,3,SET/STR,Always,O,[v2.02+]
+Encoders,Touch Probe 2,Ft-3.21/B5,13,Touch Probe 2 Mode,enum,-,0,0,3,SET/STR,Always,O,[v2.02+]
+Encoders,Touch Probe 2,Ft-3.21/B9,14,Touch Probe 2 Trigger,enum,-,0,0,3,SET/STR,Always,O,[v2.02+]
+Encoders,Touch Probe 2,Ft-3.21/B14,15,Touch Probe 2 Positive Edge,enum,-,0,0,F,SET/STR,Always,O,[v2.02+]
+Encoders,Touch Probe 2,Ft-3.21/B15,16,Touch Probe 2 Negative Edge,enum,-,0,0,F,SET/STR,Always,O,[v2.02+]
+Encoders,Touch Probe (old),Ft-3.21,17,Enable Touch Probe,int,-,strValue,0,0xF333,SET/STR,Always,O,[v<2.02]
+Encoders,Touch Probe (old),Ft-3.21,18,Touch Probe Mode,int,-,strValue,0,0xF333,SET/STR,Always,O,[v<2.02]
+Encoders,Touch Probe (old),Ft-3.21,19,Touch Probe Source,int,-,strValue,0,0xF333,SET/STR,Always,O,[v<2.02]
+Encoders,Touch Probe (old),Ft-3.21,20,Touch Probe Edge,int,-,strValue,0,0xF333,SET/STR,Always,O,[v<2.02]
+Encoders,Gear Ratio,Ft-3.00/D3,21,Gear Ratio Change,enum,-,0,0,1,SET/STR,Servo Off,O,0: Enable Only on Drive Disabled; 1: Always Enable [v2.05+]
+Encoders,Gear Ratio,Ft-3.05/3.06,22,Gear Ratio,int,-,1,1,8388608,SET/STR,Servo Off,O,FW 2.05 추가 [v2.05+]
+Digital Inputs,Polarity Settings,Ft-5.38/D0,1,Input NOT Polarity,int,-,0,0,1,SET/STR,Servo Off,O,
+Digital Inputs,Polarity Settings,Ft-5.38/D1,2,Input POT Polarity,int,-,0,0,1,SET/STR,Servo Off,O,
+Digital Inputs,Polarity Settings,Ft-5.38/D2,3,Input HOME Polarity,int,-,0,0,1,SET/STR,Servo Off,O,
+Faults,(top-level),Ft-3.20,1,Following Error Limit,int,-,41943040,0,2147483647,SET/STR,Always,O,2022.03.21 2147483647 -> 41943040
+Faults,(top-level),Ft-5.04,2,AC Line Loss Delay,int,-,20,20,2000,SET/STR,Servo Off,O,
+ServiceInfo,Edit,Ft-7.00,1,Drive Size,int,-,400,50,1500,SET,Special,O,
+ServiceInfo,Edit,Ft-7.01,2,Bus Voltage Offset,int,-,0,-100,100,SET,Special,O,
+ServiceInfo,Edit,Ft-7.07,3,DC Bus Scaling,int,-,0,-1000,1000,SET,Special,O,
+ServiceInfo,Edit,Ft-6.00,4,U Phase Current Offset,int,-,0,-60000,60000,SET/STR,Servo Off,O,
+ServiceInfo,Edit,Ft-6.01,5,W Phase Current Offset,int,-,0,-60000,60000,SET/STR,Servo Off,O,
+ServiceInfo,Edit,Ft-7.02,6,Product Code,enum,-,0,0,1000,SET,Special,O,310: 아날로그형 고급 모델; 315: 네트워크형 고급 모델; 301: 아날로그형 표준 모델(Safety 없음); 305: 네트워크형 표준 모델(Safety 없음)
+ServiceInfo,Edit,Ft-7.08,7,Serial Number,enum,-,0,0,65535,SET,Special,O,New
+ServiceInfo,Edit,Ft-6.02,9,Abs Single Turn Offset,int,-,0,0,8388607,SET/STR,Servo Off,O,CSD7 신규기능
+ServiceInfo,Status,Ft-6.00,10,U Phase Current Offset,int,-,0,-60000,60000,SET/STR,Servo Off,O,
+ServiceInfo,Status,Ft-6.01,11,W Phase Current Offset,int,-,0,-60000,60000,SET/STR,Servo Off,O,
+ServiceInfo,Status,Ft-7.01,12,Bus Voltage Offset,int,-,0,-100,100,SET,Special,O,
+ServiceInfo,Status,Ft-7.07,13,DC Bus Scaling,int,-,0,-1000,1000,SET,Special,O,
+ServiceInfo,Status,Ft-6.03,14,Dynamic Brake Circuit Protection,enum,-,0x0001,0x0000,0x0001,SET/STR,Servo Off,O,0: Disable; 1: Enable
+ServiceInfo,Status,Ft-6.02,15,Abs Single Turn Offset,int,-,0,0,8388607,SET/STR,Servo Off,O,CSD7 신규기능
+ServiceInfo,Status,Ft-7.02,16,Product Code,enum,-,0,0,1000,SET,Special,O,310: 아날로그형 고급 모델; 315: 네트워크형 고급 모델; 301: 아날로그형 표준 모델(Safety 없음); 305: 네트워크형 표준 모델(Safety 없음)
+Control Panel,Velocity Control Panel,Ft-2.05,1,Jog Velocity Command,int,rpm(mm/sec),(dynamic),0,6000,SET/STR,Always,O,
+Group/Group 0 : Basic,(top-level),Ft-0.02/D0,1,Fault and Disable Braking,enum,-,0,0,3,SET/STR,Servo Off,O,0: Brake and hold; 1: Brake and release; 2: Free Stop; 3: Free Stop and hold
+Group/Group 0 : Basic,(top-level),Ft-0.02/D1,2,Overtravel Stop Method,enum,-,2,0,2,SET/STR,Servo Off,O,0: Current Control; 1: Dynamic Brake; 2: No Action
+Group/Group 0 : Basic,(top-level),Ft-0.02/D2,3,Command Polarity,enum,-,0,0,1,SET/STR,Servo Off,O,0: Normal; 1: Inverted
+Group/Group 0 : Basic,(top-level),Ft-0.02/D3,4,AC Line Loss Check,enum,-,0,0,2,SET/STR,Servo Off,O,0: Enable; 1: Disable; 2: Single phase input
+Group/Group 0 : Basic,(top-level),Ft-0.03/D0,5,Off-Line Auto Tuning Mode,enum,-,1,0,2,SET/STR,Servo Off,O,0: Inertia Moment Estimation; 1: Inertia Moment Estimation and Resonant Frequency Detection; 2: Resonant Frequency Detection
+Group/Group 0 : Basic,(top-level),Ft-0.03/D2,6,Off-Line Auto Tuning Velocity,int,*100rpm,7,2,9,SET/STR,Servo Off,O,
+Group/Group 0 : Basic,(top-level),Ft-0.04,7,Inertia Ratio,float,*0.01%,1,0,60,SET/STR,Always,O,
+Group/Group 0 : Basic,(top-level),Ft-0.05/D0,8,Encoder Backup Battery,enum,-,1,0,1,STR,Drive Off=>On,O,0: Installed; 1: Not Installed [v1.06+]
+Group/Group 0 : Basic,(top-level),Ft-0.05/D1,9,Absolute Single Turn Reset,enum,-,0,0,1,STR,Drive Off=>On,O,0: Enable(Absolute Encoder Single Turn Clear); 1: Disable(Absolute Encoder Single Turn Hold) [v1.06+]
+Group/Group 0 : Basic,(top-level),Ft-0.05/D2,10,Gain Switching,enum,-,0,0,1,STR,Drive Off=>On,O,0: Disable; 1: Enable
+Group/Group 0 : Basic,(top-level),Ft-0.05/D3,11,Emergency Stop Input,enum,-,0,0,1,STR,Drive Off=>On,O,0: Disable; 1: Enable
+Group/Group 0 : Basic,(top-level),Ft-0.06/D0,12,Shunt Resistor Connection,int,-,0,0,2,SET/STR,Always,O,파라메터만 추가 [v2.00+]
+Group/Group 0 : Basic,(top-level),Ft-0.06/D1,13,Absolute Homing Completed,int,-,0,0,1,SET/STR,Always,X,Incremental Feedback Loss [v2.02+]
+Group/Group 0 : Basic,(top-level),Ft-0.06/D2,14,Mode of Gain Switching,enum,-,0,0,9,SET/STR,Always,O,0: 1st Gain Fix; 1: 2nd Gain Fix; 2: Digital Input (G-SEL); 3: Torque Command Deviation; 4: Velocity Command; 5: Position Error; 6: Position Command; 7: In-Position; 8: Velocity; 9: Position Command and Speed
+Group/Group 0 : Basic,(top-level),Ft-0.06/D3,15,Absolute Feedback Transfer Type,enum,-,0,0,2,SET/STR,Always,O,0: Same as Command Polarity; 1: Always CCW; 2: Always CW
+Group/Group 0 : Basic,(top-level),Ft-0.07,16,Drive Address,int,-,1,1,247,SET/STR,Always,O,
+Group/Group 0 : Basic,(top-level),"Ft-0.10~0.19, 0.22~0.27",17,Input/Output Signal Allocation (loop),int,-,,,,SET/STR,,,
+Group/Group 0 : Basic,(top-level),Ft-0.33,18,Alias ID,int,-,(dynamic),0,255,SET/STR,Always,O,CSD7 신규기능
+Group/Group 0 : Basic,(top-level),Ft-0.34,19,Load Side BiSS Protocol,int,-,,,,SET/STR,,,
+Group/Group 1 : Gain,(top-level),Ft-1.00,1,Velocity Response Level,int,%,35,1,100,SET/STR,Always,O,
+Group/Group 1 : Gain,(top-level),Ft-1.01,2,System Gain,int,Hz,30,10,500,SET/STR,Always,O,상향 조정 필요함.
+Group/Group 1 : Gain,(top-level),Ft-1.02,3,Velocity P Gain,int,-,215,0,40000,SET/STR,Always,O,
+Group/Group 1 : Gain,(top-level),Ft-1.03,4,Velocity I Gain,int,-,125,0,16000000,SET/STR,Always,O,
+Group/Group 1 : Gain,(top-level),Ft-1.04,5,Velocity I Gain Mode,int,-,0x0000,0x0000,0x0004,SET/STR,Servo Off,O,
+Group/Group 1 : Gain,(top-level),Ft-1.05,6,Velocity I Gain Disable Threshold,int,-,100,0,3000,SET/STR,Always,O,
+Group/Group 1 : Gain,(top-level),Ft-1.06,7,Velocity D Gain,int,-,0,0,1000,SET/STR,Always,O,
+Group/Group 1 : Gain,(top-level),Ft-1.07,8,1st Position Regulator Kp Gain,int,Hz,30,0,700,SET/STR,Always,O,
+Group/Group 1 : Gain,Gain Switching,Ft-1.10,9,Gain Switch Delay Time,int,*0.125msec,0,0,10000,SET/STR,Always,O,
+Group/Group 1 : Gain,Gain Switching,Ft-1.11,10,Gain Switch Level,int,Ft-0.06 D2에 따름,0,0,10000,SET/STR,Always,O,
+Group/Group 1 : Gain,Gain Switching,Ft-1.12,11,Gain Switch Hysteresis,int,Ft-0.06 D2에 따름,0,0,10000,SET/STR,Always,O,
+Group/Group 1 : Gain,Gain Switching,Ft-1.13,12,Gain Switch Position Time,int,*0.125msec,0,0,10000,SET/STR,Always,O,
+Group/Group 1 : Gain,2nd Regulator Gains,Ft-1.14,13,2nd Velocity P Gain,int,-,60,0,10000,SET/STR,Always,O,
+Group/Group 1 : Gain,2nd Regulator Gains,Ft-1.15,14,2nd Velocity I Gain,int,-,26,0,60000,SET/STR,Always,O,
+Group/Group 1 : Gain,2nd Regulator Gains,Ft-1.16,15,2nd Position Kp Gain,int,-,20,0,700,SET/STR,Always,O,
+Group/Group 1 : Gain,3rd Regulator Gains,Ft-1.17,16,3rd Velocity P Gain,int,-,60,0,10000,SET/STR,Always,O,
+Group/Group 1 : Gain,3rd Regulator Gains,Ft-1.18,17,3rd Velocity I Gain,int,-,26,0,60000,SET/STR,Always,O,
+Group/Group 1 : Gain,3rd Regulator Gains,Ft-1.19,18,3rd Position Kp Gain,int,-,20,0,700,SET/STR,Always,O,
+Group/Group 1 : Gain,4th Regulator Gains,Ft-1.20,19,4th Velocity P Gain,int,-,60,0,10000,SET/STR,Always,O,
+Group/Group 1 : Gain,4th Regulator Gains,Ft-1.21,20,4th Velocity I Gain,int,-,26,0,60000,SET/STR,Always,O,
+Group/Group 1 : Gain,4th Regulator Gains,Ft-1.22,21,4th Position Kp Gain,int,-,20,0,700,SET/STR,Always,O,
+Group/Group 1 : Gain,Tuningless,Ft-1.23/D0,22,Tuning Mode,int,-,0,0,2,SET/STR,Servo Off,O,2016.01.12 추가 [v1.20+]
+Group/Group 1 : Gain,Tuningless,Ft-1.23/D3,23,Inertia Ratio Estimation Sensitivity,int,-,0,0,2,SET/STR,Servo Off,O,2024.06.19 [v2.10+]
+Group/Group 1 : Gain,Tuningless,Ft-1.24,24,Tuningless Gain,int,-,5,0,100,SET/STR,Always,O,2016.05.02 변경 [v1.20+]
+Group/Group 1 : Gain,Tuningless,Ft-1.25,25,Load Inertia Ratio Select,float,-,1,0,3,SET/STR,Always,O,2016.01.12 추가 [v1.20+]
+Group/Group 1 : Gain,Tuningless,Ft-1.26,26,Load Inertia Ratio,float,-,50,0,3000,SET/STR,Always,O,2016.04.22 추가 [v1.20+]
+Group/Group 1 : Gain,(unnamed),Ft-1.27/D0,27,Smart Tuning Positioning Mode,int,-,0x,0x0,0x2,SET/STR,Servo Off,O,V2.10 추가 [v2.10+]
+Group/Group 1 : Gain,(unnamed),Ft-1.27/D1,28,Command Smoothing Filter Bandwidth Interlocking,int,-,Enable (0),Enable (0),Disable (1),SET/STR,Always,O,V2.10 추가 [v2.10+]
+Group/Group 1 : Gain,(unnamed),Ft-1.27/D2,29,Viscous Friction Compensator,int,-,Enable (0),Enable (0),Disable (1),SET/STR,Servo Off,O,V2.10 추가 [v2.10+]
+Group/Group 1 : Gain,(unnamed),Ft-1.27/D3,30,On-Line Parameter Estimation,int,-,,,,SET/STR,,O,V2.10 추가 [v2.10+]
+Group/Group 1 : Gain,(unnamed),Ft-1.31,31,Viscous Friction Coefficient,int,-,,,,SET/STR,,,[v2.10+]
+Group/Group 1 : Gain,(unnamed),Ft-1.32,32,Tuningless Fine Gain,int,-,0,0,100,SET/STR,Always,O,[v2.10+]
+Group/Group 1 : Gain,(unnamed),Ft-1.33,33,Tuningless Feedforward Gain,int,-,0,0,500,SET/STR,Always,O,[v2.10+]
+Group/Group 2 : Velocity,(top-level),Ft-2.02,1,Velocity Command LPF Bandwidth,int,Hz,1000,0,10000,SET/STR,Always,O,[v2.00+]
+Group/Group 2 : Velocity,(top-level),Ft-2.03,2,Velocity Error Filter Bandwidth,int,Hz,30,0,2500,SET/STR,Always,O,
+Group/Group 2 : Velocity,(top-level),Ft-2.04,3,Velocity Feed Forward,int,-,0,0,6000,SET/STR,Always,O,
+Group/Group 2 : Velocity,(top-level),Ft-2.05,4,Jog Velocity Command,int,rpm(mm/sec),(dynamic),0,6000,SET/STR,Always,O,
+Group/Group 2 : Velocity,(top-level),Ft-2.06,5,Acceleration,int,x0.01 Rev/sec2 (mm/sec2),(dynamic),1,2147483647,SET/STR,Always,O,
+Group/Group 2 : Velocity,(top-level),Ft-2.07,6,Deceleration,int,x0.01 Rev/sec2 (mm/sec2),(dynamic),1,0x7fffffff,SET/STR,Always,O,
+Group/Group 2 : Velocity,(top-level),Ft-2.08,7,S-Curve Time,int,msec,(dynamic),0,5000,SET/STR,Always,O,
+Group/Group 2 : Velocity,(top-level),Ft-2.16,8,Manual Velocity Limit,int,rpm(mm/sec),(dynamic),1,6000,SET/STR,Always,O,
+Group/Group 2 : Velocity,(top-level),Ft-2.17/D0,9,Velocity Limit Mode,int,-,(dynamic),0x0,0x1,SET/STR,Always,O,
+Group/Group 2 : Velocity,(top-level),Ft-2.17/D1,10,Field Weakening Mode,int,-,0x0,0x0,0x1,SET/STR,Servo Off,O,
+Group/Group 2 : Velocity,(top-level),Ft-2.18,11,Velocity Window,int,-,(dynamic),0,1000,SET/STR,Always,O,
+Group/Group 2 : Velocity,(top-level),Ft-2.19,12,Up to Velocity,int,-,(dynamic),1,5000,SET/STR,Always,O,
+Group/Group 2 : Velocity,(top-level),Ft-2.21,13,Test Run Dwell Period,int,msec,500,500,5000,SET/STR,Servo Off,O,CSD7 신규기능
+Group/Group 2 : Velocity,(top-level),Ft-2.25,14,Linear Overspeed Level,int,0.001 m/s,0,0,5,SET/STR,Always,O,CSD7 신규기능 [v2.03+]
+Group/Group 2 : Velocity,(top-level),Ft-2.26,15,Linear Velocity Error Limit,int,0.001 m/s,0,0,5,SET/STR,Always,O,CSD7 신규기능 [v2.03+]
+Group/Group 2 : Velocity,(top-level),Ft-2.27,16,Vel Cmd Smoothing Filter,int,Hz,386,0,10000,SET/STR,Always,O,[v2.10+]
+Group/Group 2 : Velocity,(top-level),Ft-2.28,17,Path Tracking Mode Vel LPF BW,int,Hz,38,0,6000,SET/STR,Always,O,[v2.10+]
+Group/Group 2 : Velocity,(top-level),Ft-2.29,18,Path Tracking Mode Vel FF LPF BW,int,Hz,29,0,6000,SET/STR,Always,O,[v2.10+]
+Group/Group 2 : Velocity,(top-level),Ft-2.31/D1,19,POC Enable,int,-,,,,SET/STR,,O,[v2.10+]
+Group/Group 2 : Velocity,(top-level),Ft-2.31/D2,20,POC BPF Upper Cutoff Freq Order Select,int,-,,,,SET/STR,,O,[v2.10+]
+Group/Group 2 : Velocity,(top-level),Ft-2.32,21,POC BPF Upper Cut Off Frequency,int,Hz,600,0,10000,SET/STR,Always,O,[v2.10+]
+Group/Group 2 : Velocity,(top-level),Ft-2.33,22,POC BPF Lower Cut Off Frequency,int,Hz,15,0,10000,SET/STR,Always,O,[v2.10+]
+Group/Group 2 : Velocity,(top-level),Ft-2.34,23,POC Kd Gain,int,-,10,0,10000,SET/STR,Always,O,[v2.10+]
+Group/Group 2 : Velocity,(top-level),Ft-2.35,24,POC LPF,int,Hz,50,0,10000,SET/STR,Always,O,[v2.10+]
+Group/Group 2 : Velocity,(top-level),Ft-2.36,25,Field Weakening Start Velocity,int,rpm(mm/sec),0,0,6000,SET/STR,Servo Off,O,[v2.10+]
+Group/Group 2 : Velocity,(top-level),Ft-2.37,26,Maximum Extended Velocity,int,rpm(mm/sec),0,0,6000,SET/STR,Servo Off,O,[v2.10+]
+Group/Group 2 : Velocity,(top-level),Ft-2.38,27,Field Weakening Current Command Gain,int,-,0,0,100,SET/STR,Servo Off,O,[v2.10+]
+Group/Group 3 : Position,(top-level),Ft-3.00/D2,1,Encoder Output Forward Direction,enum,-,0,0,1,SET/STR,Servo Off,O,0: A Leads B; 1: B Leads A
+Group/Group 3 : Position,(top-level),Ft-3.00/D3,2,Gear Ratio Change,enum,-,0,0,1,SET/STR,Servo Off,O,0: Enable Only on Drive Disabled; 1: Always Enable [v2.05+]
+Group/Group 3 : Position,(top-level),Ft-3.01,3,Position Filter Bandwidth,int,-,0,0,1000,SET/STR,Always,O,
+Group/Group 3 : Position,(top-level),Ft-3.02,4,Position Feed Forward,int,-,0,0,100,SET/STR,Always,O,
+Group/Group 3 : Position,(top-level),Ft-3.03,5,Position FF Bandwidth,int,-,200,0,2500,SET/STR,Always,O,
+Group/Group 3 : Position,(top-level),Ft-3.04,6,Moving Average Filter,int,-,320,0,1000,SET/STR,Servo Off,O,
+Group/Group 3 : Position,(top-level),Ft-3.05/3.06,7,Gear Ratio,int,-,1,1,8388608,SET/STR,Servo Off,O,FW 2.05 추가 [v2.05+]
+Group/Group 3 : Position,(top-level),Ft-3.11/3.12,8,Output Ratio / Output Pulses / Motor Pulses,int,-,1,1,8388608,SET/STR,Servo Off,O,
+Group/Group 3 : Position,Vibration Suppression,Ft-3.14,9,1st Damping Frequency,int,-,0,0,50000,SET/STR,Servo Off,O,
+Group/Group 3 : Position,Vibration Suppression,Ft-3.15,10,1st Damping Ratio,int,-,0,0,0.999,SET/STR,Servo Off,O,
+Group/Group 3 : Position,Vibration Suppression,Ft-3.16,11,2nd Damping Frequency,int,-,0,0,50000,SET/STR,Servo Off,O,
+Group/Group 3 : Position,Vibration Suppression,Ft-3.17,12,2nd Damping Ratio,int,-,0,0,0.999,SET/STR,Servo Off,O,
+Group/Group 3 : Position,(top-level),Ft-3.18,13,In Position Size,int,-,(dynamic),0,2500,SET/STR,Always,O,2016.08.23수정
+Group/Group 3 : Position,(top-level),Ft-3.19,14,Near Position Size,int,-,(dynamic),0,2500,SET/STR,Always,O,2016.08.23수정
+Group/Group 3 : Position,(top-level),Ft-3.20,15,Following Error Limit,int,-,41943040,0,2147483647,SET/STR,Always,O,2022.03.21 2147483647 -> 41943040
+Group/Group 3 : Position,Touch Probe,Ft-3.21,16,Touch Probe (composite),int,-,strValue,0,0xF333,SET/STR,Always,O,[v2.02+]
+Group/Group 3 : Position,Touch Probe,Ft-3.21/B0,17,Enable Touch Probe 1,enum,-,0,0,3,SET/STR,Always,O,[v2.02+]
+Group/Group 3 : Position,Touch Probe,Ft-3.21/B1,18,Enable Touch Probe 2,enum,-,0,0,3,SET/STR,Always,O,[v2.02+]
+Group/Group 3 : Position,Touch Probe,Ft-3.21/B4,19,Touch Probe 1 Mode,enum,-,0,0,3,SET/STR,Always,O,[v2.02+]
+Group/Group 3 : Position,Touch Probe,Ft-3.21/B5,20,Touch Probe 2 Mode,enum,-,0,0,3,SET/STR,Always,O,[v2.02+]
+Group/Group 3 : Position,Touch Probe,Ft-3.21/B8,21,Touch Probe 1 Trigger,enum,-,0,0,3,SET/STR,Always,O,[v2.02+]
+Group/Group 3 : Position,Touch Probe,Ft-3.21/B9,22,Touch Probe 2 Trigger,enum,-,0,0,3,SET/STR,Always,O,[v2.02+]
+Group/Group 3 : Position,Touch Probe,Ft-3.21/B12,23,Touch Probe 1 Positive Edge,enum,-,0,0,F,SET/STR,Always,O,[v2.02+]
+Group/Group 3 : Position,Touch Probe,Ft-3.21/B13,24,Touch Probe 1 Negative Edge,enum,-,0,0,F,SET/STR,Always,O,[v2.02+]
+Group/Group 3 : Position,Touch Probe,Ft-3.21/B14,25,Touch Probe 2 Positive Edge,enum,-,0,0,F,SET/STR,Always,O,[v2.02+]
+Group/Group 3 : Position,Touch Probe,Ft-3.21/B15,26,Touch Probe 2 Negative Edge,enum,-,0,0,F,SET/STR,Always,O,[v2.02+]
+Group/Group 3 : Position,Touch Probe (old),Ft-3.21,27,Enable Touch Probe,int,-,strValue,0,0xF333,SET/STR,Always,O,[v<2.02]
+Group/Group 3 : Position,Touch Probe (old),Ft-3.21,28,Touch Probe Mode,int,-,strValue,0,0xF333,SET/STR,Always,O,[v<2.02]
+Group/Group 3 : Position,Touch Probe (old),Ft-3.21,29,Touch Probe Source,int,-,strValue,0,0xF333,SET/STR,Always,O,[v<2.02]
+Group/Group 3 : Position,Touch Probe (old),Ft-3.21,30,Touch Probe Edge,int,-,strValue,0,0xF333,SET/STR,Always,O,[v<2.02]
+Group/Group 3 : Position,(top-level),Ft-3.34,31,Outer Loop P Gain,int,-,202,0,6000,SET/STR,Always,O,[v1.20+]
+Group/Group 3 : Position,(top-level),Ft-3.36,32,In Position Hold Time,int,msec,0,0,10000,SET/STR,Servo Off,O,[v1.20+]
+Group/Group 3 : Position,(top-level),Ft-3.41/D0,33,Position Error Monitoring Method,int,-,,,,SET/STR,Always,O,[v1.20+]
+Group/Group 3 : Position,(top-level),Ft-3.43/D0,34,Encoder Signal Filter Enable,int,-,0x0,0x0,0x1,SET/STR,Servo Off,O,[v1.20+]
+Group/Group 3 : Position,(top-level),Ft-3.43/D1,35,Path Tracking Input Smoothing Filter Enable,int,-,0x0,0x0,0x1,SET/STR,Servo Off,O,[v1.20+]
+Group/Group 3 : Position,Vibration Suppression/Tuningless,Ft-3.22/D0,36,Vibration Auto Search,int,-,0,0,1,SET/STR,Servo Off,O,2016.02.11 추가 [v1.20+]
+Group/Group 3 : Position,Vibration Suppression/Tuningless,Ft-3.22/D1,37,Vibration Filter Type,int,-,0,0,2,SET/STR,Servo Off,O,2016.02.11 추가 [v1.20+]
+Group/Group 3 : Position,Fully Closed System Setting,Ft-3.23,38,Fully Closed System Selection,int,-,0,0,1,STR,Drive Off=>On,,V2.10 추가 [v2.10+]
+Group/Group 3 : Position,Fully Closed System Setting,Ft-3.24,39,AqB Scale Counts Per Meter Um,int,um,0,0,100,SET/STR,Servo Off,,"V2.10 추가, 2.14변경 [v2.10+]"
+Group/Group 3 : Position,Fully Closed System Setting,Ft-3.25,40,Load Side Encoder Type,int,-,0,0,1,STR,Drive Off=>On,,V2.10 추가 [v2.10+]
+Group/Group 3 : Position,Fully Closed System Setting,Ft-3.26,41,Load Side Encoder Direction,int,-,0,0,1,STR,Drive Off=>On,,V2.10 추가 [v2.10+]
+Group/Group 3 : Position,Fully Closed System Setting,Ft-3.27,42,Conversion Ratio Den,int,-,0,0,2147483647,SET/STR,Servo Off,,"V2.10 추가, 2.14변경 [v2.10+]"
+Group/Group 3 : Position,Fully Closed System Setting,Ft-3.28,43,Conversion Ratio Num,int,-,0,0,2147483647,SET/STR,Servo Off,,"V2.10 추가, 2.14변경 [v2.10+]"
+Group/Group 3 : Position,Fully Closed System Setting,Ft-3.29,44,Dual Feedback Filter Setting,int,Hz,0,0,1000,STR,Drive Off=>On,,V2.10 추가 [v2.10+]
+Group/Group 3 : Position,Fully Closed System Setting,Ft-3.30,45,Motor Load Position Error Overflow Level,int,Counts,0,0,10000000,SET/STR,Servo Off,,V2.10 추가 [v2.10+]
+Group/Group 3 : Position,Fully Closed System Setting,Ft-3.31,46,Position Smoothing Filter,int,0.1 Hz,39,0,1000,SET/STR,Always,,V2.10 추가 [v2.10+]
+Group/Group 3 : Position,Fully Closed System Setting,Ft-3.32,47,AqB Scale Counts Per Meter,int,Lines/m,0,0,125000000,SET/STR,Servo Off,,V2.10 추가 [v2.10+]
+Group/Group 3 : Position,Fully Closed System Setting,Ft-3.33,48,Motor Side Overspeed Level,int,RPM,0,0,6000,SET/STR,Servo Off,,V2.10 추가 [v2.10+]
+Group/Group 4 : Current,(top-level),Ft-4.02,1,Current Filter Bandwidth,int,-,500,0,10000,SET/STR,Always,O,
+Group/Group 4 : Current,(top-level),Ft-4.03,2,2nd Current Bandwidth,int,-,300,0,10000,SET/STR,Always,O,
+Group/Group 4 : Current,(top-level),Ft-4.04,3,3rd Current Bandwidth,int,-,300,0,10000,SET/STR,Always,O,
+Group/Group 4 : Current,(top-level),Ft-4.05,4,4th Current Bandwidth,int,-,300,0,10000,SET/STR,Always,O,
+Group/Group 4 : Current,(top-level),Ft-4.06,5,Current Gain,int,-,0x0001,0x0000,0x0002,STR,Drive Off=>On,O,
+Group/Group 4 : Current,(top-level),Ft-4.07,6,Positive Internal Current Limit,int,-,(dynamic),0,500,SET/STR,Always,O,
+Group/Group 4 : Current,(top-level),Ft-4.08,7,Negative Internal Current Limit,int,-,(dynamic),0,500,SET/STR,Always,O,
+Group/Group 4 : Current,(top-level),Ft-4.09,8,Positive External Current Limit,int,-,(dynamic),0,500,SET/STR,Always,O,
+Group/Group 4 : Current,(top-level),Ft-4.10,9,Negative External Current Limit,int,-,(dynamic),0,500,SET/STR,Always,O,
+Group/Group 4 : Current,(top-level),Ft-4.11,10,Maximum Stopping Current,int,-,(dynamic),0,500,SET/STR,Always,O,
+Group/Group 4 : Current,(top-level),Ft-4.12,11,Initial Current Bias,int,-,(dynamic),-100,100,SET/STR,Always,O,
+Group/Group 4 : Current,(top-level),Ft-4.13,12,Resonant Freq Suppression,int,-,10000,0,10000,SET/STR,Always,O,
+Group/Group 4 : Current,(top-level),Ft-4.14,13,Notch Width,int,-,10,0,20,SET/STR,Always,O,
+Group/Group 4 : Current,(top-level),Ft-4.15,14,Notch Depth,int,-,100,0,100,SET/STR,Always,O,CSD7 신규기능
+Group/Group 4 : Current,(top-level),Ft-4.16,15,Resonant Freq Suppression 2nd,int,-,10000,0,10000,SET/STR,Always,O,
+Group/Group 4 : Current,(top-level),Ft-4.17,16,Notch Width 2nd,int,-,10,0,20,SET/STR,Always,O,
+Group/Group 4 : Current,(top-level),Ft-4.18,17,Notch Depth 2nd,int,-,100,0,100,SET/STR,Always,O,
+Group/Group 4 : Current,(top-level),Ft-4.19,18,Resonant Freq Suppression 3rd,int,-,10000,0,10000,SET/STR,Always,O,CSD7 신규기능
+Group/Group 4 : Current,(top-level),Ft-4.20,19,Notch Width 3rd,int,-,10,0,20,SET/STR,Always,O,CSD7 신규기능
+Group/Group 4 : Current,(top-level),Ft-4.21,20,Notch Depth 3rd,int,-,100,0,100,SET/STR,Always,O,CSD7 신규기능
+Group/Group 4 : Current,(top-level),Ft-4.29,21,Resonant Freq Suppression 4th,int,Hz,10000,0,10000,SET/STR,Always,O,
+Group/Group 4 : Current,(top-level),Ft-4.30,22,Notch Width 4th,int,Hz,10,0,20,SET/STR,Always,O,
+Group/Group 4 : Current,(top-level),Ft-4.31,23,Notch Depth 4th,int,Hz,100,0,100,SET/STR,Always,O,
+Group/Group 4 : Current,(top-level),Ft-4.32,24,Resonant Freq Suppression 5th,int,Hz,10000,0,10000,SET/STR,Always,O,
+Group/Group 4 : Current,(top-level),Ft-4.33,25,Notch Width 5th,int,Hz,10,0,20,SET/STR,Always,O,
+Group/Group 4 : Current,(top-level),Ft-4.34,26,Notch Depth 5th,int,Hz,100,0,100,SET/STR,Always,O,
+Group/Group 4 : Current,(top-level),Ft-4.22/D0,27,ANF Function,enum,-,0,0,1,SET/STR,Servo Off,O,0: Disable; 1: Enable
+Group/Group 4 : Current,(top-level),Ft-4.22/D1,28,ANF HPF Cutoff Frequency,enum,-,1,0,1,SET/STR,Servo Off,O,0: Low; 1: High
+Group/Group 4 : Current,(top-level),Ft-4.22/D2,29,ANF Estimation Frequency Initial Value Selection,enum,-,1,0,1,SET/STR,Servo Off,O,0: Low; 1: High
+Group/Group 4 : Current,(top-level),Ft-4.22/D3,30,ANF Detect Level,enum,-,1,0,3,SET/STR,Servo Off,O,0: Low; 1: Middle; 2: High
+Group/Group 4 : Current,(top-level),Ft-4.23,31,Current Feedback Squared Integrator Interval,int,s,(dynamic),0,60,SET/STR,Servo Off,O,CSD7 신규기능
+Group/Group 4 : Current,(top-level),Ft-4.24,32,RMS Current Feedback Threshold 1,int,%,(dynamic),0,350,SET/STR,Servo Off,O,CSD7 신규기능
+Group/Group 4 : Current,(top-level),Ft-4.25,33,RMS Current Feedback Threshold 2,int,%,(dynamic),0,350,SET/STR,Servo Off,O,CSD7 신규기능
+Group/Group 4 : Current,(top-level),Ft-4.26/D0,34,Bode Plot Function,int,-,0,0,1,SET/STR,Servo Off,O,Cia402 오브젝트는 지원하지 않음 [v1.20+]
+Group/Group 4 : Current,(top-level),Ft-4.26/D1,35,Driving Mode Selection,int,-,0,0,1,SET/STR,Servo Off,O,[v1.20+]
+Group/Group 4 : Current,(top-level),Ft-4.26/D2,36,Excitation Amplitude,int,-,4,1,7,SET/STR,Servo Off,O,[v1.20+]
+Group/Group 4 : Current,(top-level),Ft-4.27,37,Current Command LBF Bandwidth,int,-,804,0,10000,SET/STR,Always,O,2016.08.23 추가 [v2.00+]
+Group/Group 4 : Current,Current Cmd LPF BW Interlocking,Ft-4.28/D0,38,Interlocking Gain Tuning Mode,enum,-,0,0,1,SET/STR,Always,O,0: Enable; 1: Disable [v2.00+]
+Group/Group 4 : Current,Current Cmd LPF BW Interlocking,Ft-4.28/D1,39,Interlocking Tuningless Mode,enum,-,0,0,1,SET/STR,Always,O,0: Enable; 1: Disable [v2.00+]
+Group/Group 4 : Current,Current Cmd LPF BW Interlocking,Ft-4.28/D2,40,Current Command Feed Forward,int,-,0,0,1,SET/STR,Always,O,2017.10.16 추가 [v2.03+]
+Group/Group 4 : Current,Current Cmd LPF BW Interlocking,Ft-4.28/D3,41,Current Limit Band,int,-,0,0,2,SET/STR,Servo Off,O,"2016.08.23 추가, FW 2.14 [v2.11+]"
+Group/Group 4 : Current,(top-level),Ft-4.35,42,Main Current Regulator Max BW,int,Hz,0,0,100,STR,Power cycling,O,Ft-4.06 과 유사 기능(더 세분화) [v2.03+]
+Group/Group 4 : Current,(top-level),Ft-4.36,43,DDC Gain,int,-,10,0,60,SET/STR,Always,O,[v2.10+]
+Group/Group 4 : Current,(top-level),Ft-4.37,44,Sliding Surface Slope,int,%,100,0,1000,SET/STR,Always,O,[v2.10+]
+Group/Group 4 : Current,(top-level),Ft-4.38/D0,45,DDC Interlocking,int,-,0x0,0x0,0x1,SET/STR,Servo Off,O,[v2.10+]
+Group/Group 4 : Current,(top-level),Ft-4.38/D1,46,Sliding Surface Slope Interlocking,int,-,0x0,0x0,0x1,SET/STR,Servo Off,O,[v2.10+]
+Group/Group 4 : Current,(top-level),Ft-4.38/D2,47,Outer Loop P Gain Interlocking,int,-,0x0,0x0,0x1,SET/STR,Servo Off,O,[v2.10+]
+Group/Group 4 : Current,(top-level),Ft-4.39/D3,48,DDC Q Filter Order Select,int,-,0x0,0x0,0x2,SET/STR,Always,O,[v2.10+]
+Group/Group 4 : Current,(top-level),Ft-4.41,49,DDC Q Value,int,-,707,0,1000,SET/STR,,O,[v2.10+]
+Group/Group 4 : Current,(top-level),Ft-4.43,50,Cascade DDC 2nd LPF Cutoff Freq,int,Hz,0,0,10000,SET/STR,,O,[v2.10+]
+Group/Group 4 : Current,Current Loop POC Filter,Ft-4.38/D3,51,Current POC,int,-,0x0,0x0,0x1,SET/STR,Servo Off,O,[v2.10+]
+Group/Group 4 : Current,Current Loop POC Filter,Ft-4.44,52,Current POC Kr Filter,int,Hz,3500,0,10000,SET/STR,,O,[v2.10+]
+Group/Group 4 : Current,Current Loop POC Filter,Ft-4.45,53,Current POC BPF Upper Cutoff Freq,int,Hz,2500,0,10000,SET/STR,,O,[v2.10+]
+Group/Group 4 : Current,Current Loop POC Filter,Ft-4.46,54,Current POC BPF Lower Cutoff Freq,int,Hz,10,0,10000,SET/STR,,O,[v2.10+]
+Group/Group 4 : Current,Current Loop POC Filter,Ft-4.47,55,Current POC Kd Gain,int,Hz,2000,0,10000,SET/STR,,O,[v2.10+]
+Group/Group 4 : Current,Current Loop POC Filter,Ft-4.48,56,Current POC Operation Delay,int,msec,0,0,10000,SET/STR,,O,[v2.10+]
+Group/Group 5 : Auxiliary,(top-level),Ft-5.00,1,Brake Inactive Delay,int,-,(dynamic),0,10000,SET/STR,Servo Off,O,
+Group/Group 5 : Auxiliary,(top-level),Ft-5.01,2,Disable Delay,int,-,(dynamic),0,10000,SET/STR,Servo Off,O,
+Group/Group 5 : Auxiliary,(top-level),Ft-5.02,3,Brake Active Delay,int,-,(dynamic),0,10000,SET/STR,Servo Off,O,
+Group/Group 5 : Auxiliary,(top-level),Ft-5.03,4,Braking Application Velocity,int,-,(dynamic),0,1000,SET/STR,Servo Off,O,
+Group/Group 5 : Auxiliary,(top-level),Ft-5.04,5,AC Line Loss Delay,int,-,20,20,2000,SET/STR,Servo Off,O,
+Group/Group 5 : Auxiliary,(top-level),Ft-5.09,6,Motor Overload Detect,enum,-,0,0,1,SET/STR,Servo Off,O,0: Thermal Model Method; 1: I Square T Method
+Group/Group 5 : Auxiliary,(top-level),Ft-5.10,7,Display Number (combined),int,-,0x0000,0x0,0x1099,SET/STR,Servo Off,O,CSD7 신규기능 [v1.20+]
+Group/Group 5 : Auxiliary,(top-level),Ft-5.10/D0,8,Display Number 01,int,-,0,0,9,SET/STR,Servo Off,O,[v<1.20]
+Group/Group 5 : Auxiliary,(top-level),Ft-5.10/D1,9,Display Number 10,int,-,0,0,9,SET/STR,Servo Off,O,[v<1.20]
+Group/Group 5 : Auxiliary,(top-level),Ft-5.10/D3,10,Enable Display Monitor Value,int,-,0,0,1,SET/STR,Servo Off,O,
+Group/Group 5 : Auxiliary,(top-level),Ft-5.11,11,Power Sag Warning,int,-,0,0,1,SET/STR,Always,O,CSD7 신규기능
+Group/Group 5 : Auxiliary,(top-level),Ft-5.12,12,Power Sag Current Limit,int,-,50,0,450,SET/STR,Always,O,CSD7 신규기능
+Group/Group 5 : Auxiliary,(top-level),Ft-5.13,13,Power Sag Current Limit Release Time,int,-,100,0,3000,SET/STR,Always,O,CSD7 신규기능
+Group/Group 5 : Auxiliary,(top-level),Ft-5.14,14,ECAT Abs Origin Offset,int,pulse,0,-2147483647,2147483647,SET/STR,Always,O,1.05.09.05 추가 [v1.06+]
+Group/Group 5 : Auxiliary,(top-level),Ft-5.15,15,ECAT Homing Method,int,-,0,-128,127,SET/STR,Always,O,"1.05.09.05 추가, 2016.08.23 수정 [v1.06+]"
+Group/Group 5 : Auxiliary,(top-level),Ft-5.16,16,ECAT Homing Time Out,int,sec,0,0,500,SET/STR,Always,O,"1.05.09.05 추가, 2016.08.23 수정 [v1.06+]"
+Group/Group 5 : Auxiliary,(top-level),Ft-5.17,17,ECAT Homing Offset,int,pulse,0,-2147483647,2147483647,SET/STR,Always,O,1.05.09.05 추가 [v1.06+]
+Group/Group 5 : Auxiliary,(top-level),Ft-5.18,18,ECAT Homing Speed 1,int,pulse/sec,0,0,2147483647,SET/STR,Always,O,1.05.09.05 추가 [v1.06+]
+Group/Group 5 : Auxiliary,(top-level),Ft-5.19,19,ECAT Homing Speed 2,int,pulse/sec,0,0,2147483647,SET/STR,Always,O,1.05.09.05 추가 [v1.06+]
+Group/Group 5 : Auxiliary,(top-level),Ft-5.20,20,ECAT Homing Acceleration,int,pulse/sec^2,0,0,2147483647,SET/STR,Always,O,1.05.09.05 추가 [v1.06+]
+Group/Group 5 : Auxiliary,(top-level),Ft-5.21/D0,21,Converter EEPROM Write,int,-,0,0,1,SET/STR,Servo Off,O,[v1.20+]
+Group/Group 5 : Auxiliary,(top-level),Ft-5.21/D2,22,Angle Search Moving Count,int,-,0,0,0,SET/STR,,,[v1.20~v2.02]
+Group/Group 5 : Auxiliary,(top-level),Ft-5.21/D3,23,BiSS Commutation Angle Search,int,-,0,0,1,SET/STR,,,BiSS Linear 모터를 위해 적용 [v2.03+]
+Group/Group 5 : Auxiliary,(top-level),Ft-5.22/D0,24,Encoder Feedback Forward Direction,int,-,0,0,1,STR,Drive Off=>On,O,FW 2.10 추가변경 [v1.20+]
+Group/Group 5 : Auxiliary,(top-level),Ft-5.24,25,External Shunt Resistance,float,-,0,0,1000,SET/STR,Servo Off,O,파라메터만 추가 [v2.00+]
+Group/Group 5 : Auxiliary,(top-level),Ft-5.25,26,External Shunt Resistor Power Rate,int,-,0,0,5000,SET/STR,Servo Off,O,파라메터만 추가 [v2.00+]
+Group/Group 5 : Auxiliary,(top-level),Ft-5.26,27,STO Circuit Verification Mode,enum,-,0,0,1,SET/STR,Servo Off,O,0 : Disable; 1 : Enable [v2.00+]
+Group/Group 5 : Auxiliary,(top-level),Ft-5.30,28,PWM Frequency Select,int,-,,0,1,STR,Drive Off=>On,O,10kHz Reserved [v2.02+]
+Group/Group 5 : Auxiliary,(top-level),Ft-5.31,29,BiSS Commutation Angle,int,degree,0,0,359,SET/STR,Servo Off,O,BiSS Linear 모터를 위해 적용 [v2.03+]
+Group/Group 5 : Auxiliary,(top-level),Ft-5.32,30,BiSS Master Clock Freq,enum,-,0,0,4,STR,Drive Off=>On,O,0: 1.25MHz; 1: 1.428571MHz; 2: 1.666667MHz; 3: 2.0MHz; 4: 2.5MHz [v2.03+]
+Group/Group 5 : Auxiliary,(top-level),Ft-5.33,31,Target Position,int,Turn,30,0,1000,SET/STR,Always,,V2.10 추가 [v2.10+]
+Group/Group 5 : Auxiliary,(top-level),Ft-5.34,32,Target Velocity,int,RPM,1000,0,6000,SET/STR,Always,,V2.10 추가 [v2.10+]
+Group/Group 5 : Auxiliary,(top-level),Ft-5.35,33,Accel/Decel Time,int,msec,50,0,1000,SET/STR,Always,,V2.10 추가 [v2.10+]
+Group/Group 5 : Auxiliary,(top-level),Ft-5.36/D0,34,Detect Excessive Resonance Fault,int,-,Enable (0),Enable (0),Disable (1),SET/STR,Servo Off,,V2.10 추가 [v2.10+]
+Group/Group 5 : Auxiliary,(top-level),Ft-5.36/D1,35,Auto Tune Direction,int,-,Forward + (0),Forward + (0),Backward - (1),SET/STR,Servo Off,,V2.10 추가 [v2.10+]
+Group/Group 5 : Auxiliary,(top-level),Ft-5.37,36,Target Tact Time,int,msec,20,0,1000,SET/STR,Always,,V2.10 추가 [v2.10+]
+Group/Group 5 : Auxiliary,(top-level),Ft-5.38/D0,37,Input NOT Polarity,int,-,0,0,1,SET/STR,Servo Off,O,
+Group/Group 5 : Auxiliary,(top-level),Ft-5.38/D1,38,Input POT Polarity,int,-,0,0,1,SET/STR,Servo Off,O,
+Group/Group 5 : Auxiliary,(top-level),Ft-5.38/D2,39,Input HOME Polarity,int,-,0,0,1,SET/STR,Servo Off,O,
+Group/Group 5 : Auxiliary,(top-level),Ft-5.39/D1,40,Encoder Direction Setup Mode,int,-,0x0,0x0,0x1,SET/STR,Servo Off,O,
+Group/Group 5 : Auxiliary,(top-level),Ft-5.39/D2,41,Encoder Direction Setup Operation,int,-,0x0,0x0,0x1,SET/STR,Servo Off,O,
+Group/Group 5 : Auxiliary,(top-level),Ft-5.40,42,Short Angle Search Current Cmd Ratio,int,%,50,0,300,SET/STR,Servo Off,O,
+Group/Group 5 : Auxiliary,(top-level),Ft-5.41,43,Short Angle Search Current Cmd Max Time,int,ms,200,0,200,SET/STR,Servo Off,O,
+Group/Group 5 : Auxiliary,(top-level),Ft-5.42,44,Short Angle Search Current Cmd LBF BW,int,Hz,100,0,1000,SET/STR,Servo Off,O,
+Group/Group 5 : Auxiliary,(top-level),Ft-5.43,45,Short Angle Search Zero Moving Pulse Width,int,Pulse,100,0,32767,SET/STR,Servo Off,O,
+Group/Group 5 : Auxiliary,(top-level),Ft-5.44,46,Short Angle Search Stop Pulse Count,int,Pulse,40,0,32767,SET/STR,Servo Off,O,
+Group/Group 5 : Auxiliary,(top-level),Ft-5.45,47,Short Angle Search Stop Time,int,ms,40,0,32767,SET/STR,Servo Off,O,
+Group/Group 5 : Auxiliary,(top-level),Ft-5.46,48,Short Angle Search Stop Time Limit,int,ms,1000,0,32767,SET/STR,Servo Off,O,
+Group/Group 5 : Auxiliary,(top-level),Ft-5.47,49,Current Command Target Angle,int,Counts,16384,0,32767,SET/STR,Servo Off,O,
+Group/Group 5 : Auxiliary,(top-level),Ft-5.48,50,Current Command Target Interval Angle,int,Counts,2048,0,32767,SET/STR,Servo Off,O,
+Group/Group 5 : Auxiliary,(top-level),Ft-5.57,51,Detection Level Motor Overload,int,%,0,0,100,SET/STR,Always,O,
+Monitor,MDM,,0,Velocity Feedback,int,"Rotary [RPM], Linear [mm/s]",,,,MDM,ReadOnly,O,"Ft-0.08=700, 필터 미적용"
+Monitor,MDM,,1,Velocity Command,int,"Rotary [RPM], Linear [mm/s]",,,,MDM,ReadOnly,O,"Index Mode 이고 Ft-0.08=700, 프로파일 속도 지령"
+Monitor,MDM,,2,velocity Error,int,"Rotary [RPM], Linear [mm/s]",,,,MDM,ReadOnly,O,
+Monitor,MDM,,3,Currennt Command,int,0.001[A],,,,MDM,ReadOnly,O,
+Monitor,MDM,,4,Position Feedback,int,[Pulse],,,,MDM,ReadOnly,O,Index Mode 이고 User DPR 사용시 User DPR 단위 적용
+Monitor,MDM,,5,Position Command,int,[Pulse],,,,MDM,ReadOnly,O,
+Monitor,MDM,,6,Position Error,int,[Pulse],,,,MDM,ReadOnly,O,
+Monitor,MDM,,7,Position Command Frequecy,int,0.1[Kpps],,,,MDM,ReadOnly,O,
+Monitor,MDM,,8,Electrical Anagle,int,0.1[degree],,,,MDM,ReadOnly,O,
+Monitor,MDM,,9,Mechanical Angle,int,0.1[degree],,,,MDM,ReadOnly,O,
+Monitor,MDM,,10,Shunt Utilization Ratio,int,[%],,,,MDM,ReadOnly,O,
+Monitor,MDM,,11,DC Link Voltage,int,[V],,,,MDM,ReadOnly,O,"Ft-0.08=700, 필터 미적용"
+Monitor,MDM,,12,Multi Turn Data,int,[Turns],,,,MDM,ReadOnly,O,
+Monitor,MDM,,13,Offset in Velocity Command,int,0.1[mV],,,,MDM,ReadOnly,O,
+Monitor,MDM,,14,Offset in Torque Command,int,0.1[mV],,,,MDM,ReadOnly,O,
+Monitor,MDM,,15,I/O Monitoring,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,16,U Phase Current,int,[mA],,,,MDM,ReadOnly,O,Network Model 이고 Ft-0.08=777 이면 dwMonAddrA
+Monitor,MDM,,17,V Phase Current,int,[mA],,,,MDM,ReadOnly,O,Network Model 이고 Ft-0.08=777 이면 dwMonAddrB
+Monitor,MDM,,18,W Phase Current,int,[mA],,,,MDM,ReadOnly,O,Network Model 이고 Ft-0.08=777 이면 dwMonAddrC
+Monitor,MDM,,19,Motor Utilization,int,0.1[%],,,,MDM,ReadOnly,O,
+Monitor,MDM,,20,Analog Velocity Command Voltage,int,0.01[V],,,,MDM,ReadOnly,O,
+Monitor,MDM,,21,Analog Current Command Voltage,int,0.01[V],,,,MDM,ReadOnly,O,
+Monitor,MDM,,22,Current Feedback,int,0.001[A],,,,MDM,ReadOnly,O,
+Monitor,MDM,,23,Reserved,int,-,,,,MDM,ReadOnly,O,Always 0
+Monitor,MDM,,24,Motor Feedback Position,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,25,Digital Input Function State,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,26,Digital Output Function State,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,27,Instantaneous Shunt Power,int,[W],,,,MDM,ReadOnly,O,
+Monitor,MDM,,28,Drive Utilization,int,[%],,,,MDM,ReadOnly,O,
+Monitor,MDM,,29,Indexing Input Function State,int,-,,,,MDM,ReadOnly,O,"Index Select 6 추가, 20171017"
+Monitor,MDM,,30,Indexing Output Function State,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,31,Motion FPGA Build,int,YYYYMMDD,,,,MDM,ReadOnly,O,Motion ASIC : 20151124
+Monitor,MDM,,32,Selected Index,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,33,2 msec Counter,int,-,,,,MDM,ReadOnly,O,Trigger Source Immediate Scope
+Monitor,MDM,,34,Absolute Single Turn Data,int,-,,,,MDM,ReadOnly,O,Gear Ratio 적용
+Monitor,MDM,,35,Absolute Maximum Current Cimand,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,36,0x60B8(Touch Probe Function),int,-,,,,MDM,ReadOnly,O,"아날로그:0, Network: 0x60B8 값"
+Monitor,MDM,,37,0x60B9(Touch Probe Status),int,-,,,,MDM,ReadOnly,O,"아날로그:0, Network: 0x60B9 값"
+Monitor,MDM,,38,0x60BA(Touch Probe Position 1 Positive Value),int,-,,,,MDM,ReadOnly,O,"아날로그:0, Network: 0x60BA"
+Monitor,MDM,,39,0x60BB(Touch Probe Position 1 Negative Value),int,-,,,,MDM,ReadOnly,O,"아날로그:0, Network: 0x60BB"
+Monitor,MDM,,40,0x60BC(Touch Probe Position 2 Positive Value),int,-,,,,MDM,ReadOnly,O,"아날로그:0, Network: 0x60BC"
+Monitor,MDM,,41,0x60BD(Touch Probe Position 2 Negative Value),int,-,,,,MDM,ReadOnly,O,"아날로그:0, Network: 0x60BD"
+Monitor,MDM,,42,Power On Hour,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,43,EtherCAT IP Build,int,YYYYMMDD,,,,MDM,ReadOnly,O,
+Monitor,MDM,,44,Instantaneous Current RMS,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,45,Maximum Currnet RMS,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,46,ANF Monitor 1,int,-,,,,MDM,ReadOnly,O,High Pass Filtered Current Command Output
+Monitor,MDM,,47,ANF Monitor 2,int,-,,,,MDM,ReadOnly,O,High Pass Filtered Current Command Variance
+Monitor,MDM,,48,ANF Monitor 3,int,-,,,,MDM,ReadOnly,O,Estimation Frequenncy
+Monitor,MDM,,49,Reserved,int,-,,,,MDM,ReadOnly,O,for DCT
+Monitor,MDM,,50,Reserved,int,-,,,,MDM,ReadOnly,O,for DCT
+Monitor,MDM,,51,Reserved,int,-,,,,MDM,ReadOnly,O,for DCT
+Monitor,MDM,,52,Reserved,int,-,,,,MDM,ReadOnly,O,for DCT
+Monitor,MDM,,53,Reserved,int,-,,,,MDM,ReadOnly,O,for DCT
+Monitor,MDM,,54,Reserved,int,-,,,,MDM,ReadOnly,O,for DCT
+Monitor,MDM,,55,Reserved,int,-,,,,MDM,ReadOnly,O,for DCT
+Monitor,MDM,,56,Reserved,int,-,,,,MDM,ReadOnly,O,for DCT
+Monitor,MDM,,57,Reserved,int,-,,,,MDM,ReadOnly,O,for DCT
+Monitor,MDM,,58,Reserved,int,-,,,,MDM,ReadOnly,O,for DCT
+Monitor,MDM,,59,Serial Converter Encoder ABSS,int,-,,,,MDM,ReadOnly,O,Linear 가 아니면 항상 0
+Monitor,MDM,,60,Serial Converter Encoder ABSA,int,-,,,,MDM,ReadOnly,O,Linear 가 아니면 항상 0
+Monitor,MDM,,61,Serial Converter Hall Data,int,-,,,,MDM,ReadOnly,O,Linear 가 아니면 항상 0
+Monitor,MDM,,62,Serial Converter Alarm Code,int,-,,,,MDM,ReadOnly,O,Linear 가 아니면 항상 0
+Monitor,MDM,,63,EtherCAT Homing Mode State Machine,int,-,,,,MDM,ReadOnly,O,"아날로그:0, Network:"
+Monitor,MDM,,64,EtherCAT Homing Error,int,-,,,,MDM,ReadOnly,O,"아날로그:0, Network:"
+Monitor,MDM,,65,Drive Enabled,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,66,Serial Converter FPGA Version,int,-,,,,MDM,ReadOnly,O,Linear 가 아니면 항상 0
+Monitor,MDM,,67,Vibration Damping Frequency,int,0.01[Hz],,,,MDM,ReadOnly,O,
+Monitor,MDM,,68,Vibration Damping Ratio,int,0.001,,,,MDM,ReadOnly,O,
+Monitor,MDM,,69,Estimated Inertia Ratio in Tuningless,int,0.1,,,,MDM,ReadOnly,O,
+Monitor,MDM,,70,Angle Search End Flag,int,-,,,,MDM,ReadOnly,O,for Hallless
+Monitor,MDM,,71,Angle Search Result Angle,int,[Degree],,,,MDM,ReadOnly,O,
+Monitor,MDM,,72,Angle Search Current Command,int,0.001[A],,,,MDM,ReadOnly,O,
+Monitor,MDM,,73,OS Version,int,-,,,,MDM,ReadOnly,O,0:Not Support
+Monitor,MDM,,74,Control Board Revision,int,-,,,,MDM,ReadOnly,O,"0:Not Support, 1:Rev.A, 2:Rev.B"
+Monitor,MDM,,75,Product Model,int,-,,,,MDM,ReadOnly,O,"0:Not Support, 1:Analog, 2:Network"
+Monitor,MDM,,76,Eeprom Alias ID,int,-,,,,MDM,ReadOnly,O,Analog 모델은 항상 0
+Monitor,MDM,,77,PWM Frequency,int,[kHz],,,,MDM,ReadOnly,O,"0, 8: 8kHz, 10:10kHz"
+Monitor,MDM,,78,SC Period,int,[usec],,,,MDM,ReadOnly,O,"0, 125:125usec, 200:200usec"
+Monitor,MDM,,79,0x60B8(Touch Probe Function),int,-,,,,MDM,ReadOnly,O,Network Model 전용
+Monitor,MDM,,80,0x60B9(Touch Probe Status),int,-,,,,MDM,ReadOnly,O,Network Model 전용
+Monitor,MDM,,81,0x60D5(Touch Probe 1 Positive Edge Counter),int,-,,,,MDM,ReadOnly,O,Network Model 전용
+Monitor,MDM,,82,0x60D6(Touch Probe 1 Negative Edge Counter),int,-,,,,MDM,ReadOnly,O,Network Model 전용
+Monitor,MDM,,83,0x60D7(Touch Probe 2 Positive Edge Counter),int,-,,,,MDM,ReadOnly,O,Network Model 전용
+Monitor,MDM,,84,0x60D8(Touch Probe 2 Negative Edge Counter),int,-,,,,MDM,ReadOnly,O,Network Model 전용
+Monitor,MDM,,85,Writing BiSS Commutation Angle to Flash,int,"0:Not Finish, 1:Finish",,,,MDM,ReadOnly,O,
+Monitor,MDM,,86,BiSS SVALID,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,87,BiSS Error Bit,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,88,BiSS Warning Bit,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,89,Encoder Increase Direction compare with UVW Phase Forward Direction,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,90,EtherCAT State Machine,int,-,,,,MDM,ReadOnly,O,Network Model 전용
+Monitor,MDM,,91,CiA402 State Machine,int,-,,,,MDM,ReadOnly,O,Network Model 전용
+Monitor,MDM,,92,EtherCAT Al Status Codes,int,-,,,,MDM,ReadOnly,O,Network Model 전용
+Monitor,MDM,,93,ABSS Data(BiSS),int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,94,ABSA Data(BiSS),int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,95,ABSA(Linear-BiSS-CC),int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,97,Motor Power Limit Ratio,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,98,Drive Power Limit Ratio,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,99,Build Date,int,-,,,,MDM,ReadOnly,O,20170701 (V2.02.00.00)
+Monitor,MDM,,100,,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,101,,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,102,,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,103,,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,104,,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,105,,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,106,,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,107,TAS,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,108,,int,-,,,,MDM,ReadOnly,O,gTact
+Monitor,MDM,,109,,int,-,,,,MDM,ReadOnly,O,OvsCheck
+Monitor,MDM,,110,,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,111,,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,112,,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,113,,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,114,,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,115,,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,116,Peak Velocity,int,-,,,,MDM,ReadOnly,O,Peak_velfdk
+Monitor,MDM,,117,Peak Load Factor,int,-,,,,MDM,ReadOnly,O,Peak_loadfactor
+Monitor,MDM,,118,,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,119,,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,120,,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,130,Flag,int,-,,,,MDM,ReadOnly,O,Flag
+Monitor,MDM,,131,flgPowerOnce,int,-,,,,MDM,ReadOnly,O,flgPowerOnce
+Monitor,MDM,,132,flgPowerOnce_cnt,int,-,,,,MDM,ReadOnly,O,flgPowerOnce_cnt
+Monitor,MDM,,133,,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,134,,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,135,,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,136,,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,137,,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,138,,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,139,,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,140,,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,190,u16SmEventMissedCounter,int,-,,,,MDM,ReadOnly,O,sSyncManOutPar.u16SmEventMissedCounter
+Monitor,MDM,,191,bDcRunning,int,-,,,,MDM,ReadOnly,O,bDcRunning
+Monitor,MDM,,192,bSmSyncSequenceValid,int,-,,,,MDM,ReadOnly,O,bSmSyncSequenceValid
+Monitor,MDM,,193,i16WaitForPllRunningCnt,int,-,,,,MDM,ReadOnly,O,i16WaitForPllRunningCnt
+Monitor,MDM,,194,g_PDIdiffTime,int,-,,,,MDM,ReadOnly,O,g_PDIdiffTime
+Monitor,MDM,,195,g_DCshiftTime,int,-,,,,MDM,ReadOnly,O,g_DCshiftTime
+Monitor,MDM,,196,,int,-,,,,MDM,ReadOnly,O,
+Monitor,MDM,,197,MonitorA,int,-,,,,MDM,ReadOnly,O,"dwMonAddrA, 모니터링 변수A"
+Monitor,MDM,,198,MonitorB,int,-,,,,MDM,ReadOnly,O,"dwMonAddrB, 모니터링 변수B"
+Monitor,MDM,,199,MonitorC,int,-,,,,MDM,ReadOnly,O,"dwMonAddrC, 모니터링 변수C"
+Monitor,MDM,,200,Control Word,int,Hexa표현,,,,MDM,ReadOnly,O,제어워드
+Monitor,MDM,,201,Status Word,int,Hexa표현,,,,MDM,ReadOnly,O,상태워드
+Monitor,MDM,,202,mo_bufferEmpty,int,-,,,,MDM,ReadOnly,O,pMcPpmode->queEmptyFlag
+Monitor,MDM,,203,mo_queueNum,int,-,,,,MDM,ReadOnly,O,pMcPpmode->cmdBufferRemained
+Monitor,MDM,,204,mo_NewSetPoint,int,-,,,,MDM,ReadOnly,O,pMcPpmode->cmd_NewSetPoint
+Monitor,MDM,,205,mo_SetAcknowledged,int,-,,,,MDM,ReadOnly,O,pMcPpmode->cmd_SetPointAck
+Monitor,MDM,,206,mo_TargetReached,int,-,,,,MDM,ReadOnly,O,pMcPpmode->cmd_targetReached
+Monitor,MDM,,207,mo_HaltEnabled,int,-,,,,MDM,ReadOnly,O,pProfile->cmdHaltEnabled
+Monitor,MDM,,208,mo_profileState,int,-,,,,MDM,ReadOnly,O,pProfile->profileState
+Monitor,MDM,,209,mo_profileStatus,int,-,,,,MDM,ReadOnly,O,mcAxis->mpMotionStatus->profileStatus
+Monitor,MDM,,210,pp_cmdposition,int,-,,,,MDM,ReadOnly,O,명령 목표위치 MCsystem.mAxes[0].mpProfileData->cmdPosition
+Monitor,MDM,,211,pp_cmdvelocity,int,-,,,,MDM,ReadOnly,O,명령 목표 속도
+Monitor,MDM,,212,pp_cmdaccel,int,-,,,,MDM,ReadOnly,O,명령 목표 가속도
+Monitor,MDM,,213,pp_cmddecel,int,-,,,,MDM,ReadOnly,O,명령 목표 감속도
+Monitor,MDM,,214,pp_cmdjerk,int,-,,,,MDM,ReadOnly,O,명령 목표 저크
+Monitor,MDM,,215,pp_actualposition,int,-,,,,MDM,ReadOnly,O,pp제어기 목표위치 MCsystem.mAxes[0].mpProfileData->actualPosition
+Monitor,MDM,,216,pp_actualvelocity,int,-,,,,MDM,ReadOnly,O,PP제어기 목표 속도
+Monitor,MDM,,217,pp_actualaccel,int,-,,,,MDM,ReadOnly,O,PP제어기 목표 가속도
+Monitor,MDM,,218,pp_actualjerk,int,-,,,,MDM,ReadOnly,O,PP제어기 목표 저크
+Monitor,MDM,,219,pp_feedbackposition,int,-,,,,MDM,ReadOnly,O,pp제어기 현재위치 MCsystem.mAxes[0].mpProfileData->feedbackPostion
+Monitor,MDM,,220,pp_feedbackvelocity,int,-,,,,MDM,ReadOnly,O,PP제어기 목표 속도
+Monitor,MDM,,221,reserved,int,-,,,,MDM,ReadOnly,O,PP제어기 목표 가속도
+Monitor,MDM,,222,reserved,int,-,,,,MDM,ReadOnly,O,PP제어기 목표 저크
+Monitor,MDM,,223,pp_positionoffset,int,-,,,,MDM,ReadOnly,O,pp제어기 내부 위치옵셋 MCsystem.mAxes[0].mpProfileData->positionOffset
+Monitor,MDM,,224,,int,-,,,,MDM,ReadOnly,O,reserved
+Monitor,MDM,,225,,int,-,,,,MDM,ReadOnly,O,reserved
+Monitor,MDM,,226,,int,-,,,,MDM,ReadOnly,O,reserved
+Monitor,MDM,,227,,int,-,,,,MDM,ReadOnly,O,reserved
+Monitor,MDM,,228,,int,-,,,,MDM,ReadOnly,O,reserved
+Monitor,MDM,,229,,int,-,,,,MDM,ReadOnly,O,reserved
+Monitor,MDM,,230,mo_targetposition,int,-,,,,MDM,ReadOnly,O,모션제어의 입력 목표위치 MCsystem.mAxes[0].mpControlData->targetPos
+Monitor,MDM,,231,mo_targetvelocity,int,-,,,,MDM,ReadOnly,O,모션제어의 입력 목표속도 MCsystem.mAxes[0].mpControlData->targetVel
+Monitor,MDM,,232,mo_feedbackposition,int,-,,,,MDM,ReadOnly,O,모션제어의 출력 현재위치 MCsystem.mAxes[0].mpFeedbackData->posActValUnit
+Monitor,MDM,,233,mo_feedbackvelocity,int,-,,,,MDM,ReadOnly,O,모션제어의 출력 현재속도 MCsystem.mAxes[0].mpFeedbackData->velActVal
+Monitor,MDM,,234,mo_feedbacktorque,int,-,,,,MDM,ReadOnly,O,모션제어의 출력 현재토크 torqActVal
+Monitor,MDM,,235,mo_etherCmdOffset,int,-,,,,MDM,ReadOnly,O,서보 내부 통신 위치오프셋
+Monitor,MDM,,236,mo_originOffset,int,-,,,,MDM,ReadOnly,O,서보 내부 원점 위치오프셋
+Monitor,MDM,,237,EtherCmdOffsetRemainder,int,-,,,,MDM,ReadOnly,O,서보 내부 기어비적용한 나머지 카운터값
+Monitor,MDM,,238,gOriginFbkOffset_64 High DWORD,int,-,,,,MDM,ReadOnly,O,원점 위치 상위 32비트
+Monitor,MDM,,239,gOriginFbkOffset_64 Low DWORD,int,-,,,,MDM,ReadOnly,O,원점 위치 하위 32비트
+Digital Outputs,(top-level),Ft-0.22/D3,1,Within In-Position Window(/P-COM),enum,-,0,0,3,SET/STR,Always,O,0: Unassigned; 1: Output 1; 2: Output 2; 3: Output 3
+Digital Outputs,(top-level),Ft-0.22/D2,2,Up to Velocity(/TG-ON),enum,-,0,0,3,SET/STR,Always,O,0: Unassigned; 1: Output 1; 2: Output 2; 3: Output 3
+Digital Outputs,(top-level),Ft-0.22/D1,3,Brake(/BK),enum,-,0,0,3,SET/STR,Always,O,0: Unassigned; 1: Output 1; 2: Output 2; 3: Output 3
+Digital Outputs,(top-level),Ft-0.22/D0,4,Within Velocity Window(/V-COM),enum,-,0,0,3,SET/STR,Always,O,0: Unassigned; 1: Output 1; 2: Output 2; 3: Output 3
+Digital Outputs,(top-level),Ft-0.23/D3,5,Current Limited(/T-LMT),enum,-,0,0,3,SET/STR,Always,O,0: Unassigned; 1: Output 1; 2: Output 2; 3: Output 3
+Digital Outputs,(top-level),Ft-0.23/D2,6,Velocity Limited(/V-LMT),enum,-,0,0,3,SET/STR,Always,O,0: Unassigned; 1: Output 1; 2: Output 2; 3: Output 3
+Digital Outputs,(top-level),Ft-0.23/D1,7,Within Near-Position Window(/NEAR),enum,-,0,0,3,SET/STR,Always,O,0: Unassigned; 1: Output 1; 2: Output 2; 3: Output 3
+Digital Outputs,(top-level),Ft-0.23/D0,8,Warning(/WARN),enum,-,0,0,3,SET/STR,Always,O,0: Unassigned; 1: Output 1; 2: Output 2; 3: Output 3
+Digital Outputs,(top-level),Ft-0.24/D3,9,Absolute Position Valid(/A-VLD),enum,-,0,0,3,SET/STR,Always,O,0: Unassigned; 1: Output 1; 2: Output 2; 3: Output 3
+Digital Outputs,(top-level),Ft-0.24/D2,10,Ready(/RDY),enum,-,0,0,3,SET/STR,Always,O,0: Unassigned; 1: Output 1; 2: Output 2; 3: Output 3
+Digital Outputs,(top-level),Ft-0.24/D1,11,RMS Current Feedback Threshold Output 1(/RMS-CLT1),enum,-,0,0,3,SET/STR,Always,O,0: Unassigned; 1: Output 1; 2: Output 2; 3: Output 3
+Digital Outputs,(top-level),Ft-0.24/D0,12,RMS Current Feedback Threshold Output 2(/RMS-CLT2),enum,-,0,0,3,SET/STR,Always,O,0: Unassigned; 1: Output 1; 2: Output 2; 3: Output 3
+Digital Outputs,(top-level),Ft-0.25/D3,13,Commutation Angle Valid(/CAG-V),enum,-,0,0,3,SET/STR,Always,O,0: Unassigned; 1: Output 1; 2: Output 2; 3: Output 3 [v1.20+]
+Digital Outputs,(top-level),Ft-0.25/D2,14,Reserved,enum,-,0,0,3,SET/STR,Always,O,0: Unassigned; 1: Output 1; 2: Output 2; 3: Output 3
+Digital Outputs,(top-level),Ft-0.25/D1,15,Reserved,enum,-,0,0,3,SET/STR,Always,O,0: Unassigned; 1: Output 1; 2: Output 2; 3: Output 3
+Digital Outputs,(top-level),Ft-0.25/D0,16,Reserved,enum,-,0,0,3,SET/STR,Always,O,0: Unassigned; 1: Output 1; 2: Output 2; 3: Output 3
+Digital Outputs,(top-level),Ft-0.26/D3,17,Reserved,enum,-,0,0,3,SET/STR,Always,O,0: Unassigned; 1: Output 1; 2: Output 2; 3: Output 3
+Digital Outputs,(top-level),Ft-0.26/D2,18,Reserved,enum,-,0,0,3,SET/STR,Always,O,0: Unassigned; 1: Output 1; 2: Output 2; 3: Output 3
+Digital Outputs,(top-level),Ft-0.26/D1,19,Reserved,enum,-,0,0,3,SET/STR,Always,O,0: Unassigned; 1: Output 1; 2: Output 2; 3: Output 3
+Digital Outputs,(top-level),Ft-0.26/D0,20,Reserved,enum,-,0,0,3,SET/STR,Always,O,0: Unassigned; 1: Output 1; 2: Output 2; 3: Output 3
+Digital Outputs,(top-level),Ft-0.27/D3,21,Reserved,enum,-,0,0,3,SET/STR,Always,O,0: Unassigned; 1: Output 1; 2: Output 2; 3: Output 3
+Digital Outputs,(top-level),Ft-0.27/D2,22,Reserved,enum,-,0,0,3,SET/STR,Always,O,0: Unassigned; 1: Output 1; 2: Output 2; 3: Output 3
+Digital Outputs,(top-level),Ft-0.27/D1,23,Reserved,enum,-,0,0,3,SET/STR,Always,O,0: Unassigned; 1: Output 1; 2: Output 2; 3: Output 3
+Digital Outputs,(top-level),Ft-0.27/D0,24,Reserved,enum,-,0,0,3,SET/STR,Always,O,0: Unassigned; 1: Output 1; 2: Output 2; 3: Output 3
+Digital Outputs,(top-level),Ft-0.28/D3,25,Reserved,enum,-,0,0,3,SET/STR,Always,O,0: Unassigned; 1: Output 1; 2: Output 2; 3: Output 3 [v1.20+]
+Digital Outputs,(top-level),Ft-0.28/D2,26,Reserved,enum,-,0,0,3,SET/STR,Always,O,0: Unassigned; 1: Output 1; 2: Output 2; 3: Output 3 [v1.20+]
+Digital Outputs,(top-level),Ft-0.28/D1,27,Reserved,enum,-,0,0,3,SET/STR,Always,O,0: Unassigned; 1: Output 1; 2: Output 2; 3: Output 3 [v1.20+]
+Digital Outputs,(top-level),Ft-0.28/D0,28,Reserved,enum,-,0,0,3,SET/STR,Always,O,0: Unassigned; 1: Output 1; 2: Output 2; 3: Output 3 [v1.20+]
+Fully Closed System/Load Side AqB Scale,(top-level),Ft-3.23,1,Fully Closed System Selection,enum,-,0,0,1,SET/STR,Servo Off,O,0: Semi; 1: Fully [v2.10+]
+Fully Closed System/Load Side AqB Scale,(top-level),Ft-3.25,2,Load Side Encoder Type,enum,-,0,0,1,SET/STR,Servo Off,O,0: AqB; 1: BiSS [v2.10+]
+Fully Closed System/Load Side AqB Scale,Converter Configuration,Ft-3.26,3,AqB Encoder Pulse Per Rev,int,pulse,0,0,2147483647,SET/STR,Servo Off,O,[v2.10+]
+Fully Closed System/Load Side AqB Scale,Converter Configuration,Ft-3.27,4,AqB Encoder Direction,enum,-,0,0,1,SET/STR,Servo Off,O,0: Normal; 1: Reverse [v2.10+]
+Fully Closed System/Load Side AqB Scale,Converter Configuration,Ft-3.28,5,AqB Multi Turn Bit,int,bit,0,0,31,SET/STR,Servo Off,O,[v2.10+]
+Fully Closed System/Load Side AqB Scale,Converter Configuration,Ft-3.29,6,AqB Single Turn Bit,int,bit,0,0,31,SET/STR,Servo Off,O,[v2.10+]
+Fully Closed System/Load Side AqB Scale,Converter Configuration,Ft-3.30,7,AqB Scale Lines Per Rev,int,Lines,0,0,2147483647,SET/STR,Servo Off,O,[v2.10+]
+Fully Closed System/Load Side AqB Scale,Error Threshold,Ft-3.31,8,Fully Closed Following Error Limit,int,pulse,41943040,0,2147483647,SET/STR,Always,O,[v2.10+]
+Fully Closed System/Load Side AqB Scale,Error Threshold,Ft-3.32,9,Fully Closed Velocity Error Limit,int,rpm,6000,0,65535,SET/STR,Always,O,[v2.10+]
+Fully Closed System/Load Side AqB Scale,(top-level),Ft-3.33,10,Fully Closed Velocity LPF,int,Hz,100,0,10000,SET/STR,Always,O,[v2.10+]
+Fully Closed System/Load Side AqB Scale,(top-level),Ft-3.34,11,Fully Closed Compensation Gain,int,%,100,0,200,SET/STR,Always,O,[v2.10+]
+Fully Closed System/Load Side BiSS Scale,(top-level),Ft-3.23,1,Fully Closed System Selection,enum,-,0,0,1,SET/STR,Servo Off,O,0: Semi; 1: Fully [v2.10+]
+Fully Closed System/Load Side BiSS Scale,(top-level),Ft-3.25,2,Load Side Encoder Type,enum,-,0,0,1,SET/STR,Servo Off,O,0: AqB; 1: BiSS [v2.10+]
+Fully Closed System/Load Side BiSS Scale,BiSS Configuration,Ft-3.35,3,BiSS Multi Turn Bit,int,bit,0,0,31,SET/STR,Servo Off,O,[v2.10+]
+Fully Closed System/Load Side BiSS Scale,BiSS Configuration,Ft-3.36,4,BiSS Single Turn Bit,int,bit,0,0,31,SET/STR,Servo Off,O,[v2.10+]
+Fully Closed System/Load Side BiSS Scale,BiSS Configuration,Ft-3.37,5,BiSS Status Bit,int,bit,0,0,31,SET/STR,Servo Off,O,[v2.10+]
+Fully Closed System/Load Side BiSS Scale,BiSS Configuration,Ft-3.38,6,BiSS CRC Polynomial,int,-,0,0,65535,SET/STR,Servo Off,O,[v2.10+]
+Fully Closed System/Load Side BiSS Scale,BiSS Configuration,Ft-3.39,7,BiSS Clock Frequency,enum,-,0,0,4,SET/STR,Servo Off,O,0: 1.25MHz; 1: 1.43MHz; 2: 1.67MHz; 3: 2.0MHz; 4: 2.5MHz [v2.10+]
+Fully Closed System/Load Side BiSS Scale,BiSS Configuration,Ft-3.40,8,BiSS Lines Per Rev,int,Lines,0,0,2147483647,SET/STR,Servo Off,O,[v2.10+]
+Fully Closed System/Load Side BiSS Scale,Error Threshold,Ft-3.31,9,Fully Closed Following Error Limit,int,pulse,41943040,0,2147483647,SET/STR,Always,O,[v2.10+]
+Fully Closed System/Load Side BiSS Scale,Error Threshold,Ft-3.32,10,Fully Closed Velocity Error Limit,int,rpm,6000,0,65535,SET/STR,Always,O,[v2.10+]
+Fully Closed System/Load Side BiSS Scale,(top-level),Ft-3.33,11,Fully Closed Velocity LPF,int,Hz,100,0,10000,SET/STR,Always,O,[v2.10+]
+Fully Closed System/Load Side BiSS Scale,(top-level),Ft-3.34,12,Fully Closed Compensation Gain,int,%,100,0,200,SET/STR,Always,O,[v2.10+]
+ECAT Objects/PDOMapping,(top-level),,1,RxPDO Mapping,int,-,,,,PDO,ReadOnly,O,0x1C12 Sync Manager 2 PDO Assignment
+ECAT Objects/PDOMapping,(top-level),,2,TxPDO Mapping,int,-,,,,PDO,ReadOnly,O,0x1C13 Sync Manager 3 PDO Assignment
+ECAT Objects/Object 1,(top-level),0x1000,1,Device Type,int,-,0x01920192,,,PDO,ReadOnly,O,
+ECAT Objects/Object 1,(top-level),0x1001,2,Error Register,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 1,(top-level),0x1008,3,Manufacturer Device Name,string,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 1,(top-level),0x1009,4,Manufacturer Hardware Version,string,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 1,(top-level),0x100A,5,Manufacturer Software Version,string,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 1,(top-level),0x1018:01,6,Vendor ID,int,-,0x800005A5,,,PDO,ReadOnly,O,
+ECAT Objects/Object 1,(top-level),0x1018:02,7,Product Code,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 1,(top-level),0x1018:03,8,Revision Number,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 1,(top-level),0x1018:04,9,Serial Number,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 1,Sync Manager Communication Type,0x1C00:01,10,Comm Type SM0,int,-,1,,,PDO,ReadOnly,O,
+ECAT Objects/Object 1,Sync Manager Communication Type,0x1C00:02,11,Comm Type SM1,int,-,2,,,PDO,ReadOnly,O,
+ECAT Objects/Object 1,Sync Manager Communication Type,0x1C00:03,12,Comm Type SM2,int,-,3,,,PDO,ReadOnly,O,
+ECAT Objects/Object 1,Sync Manager Communication Type,0x1C00:04,13,Comm Type SM3,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 1,SM2 Synchronization,0x1C32:01,14,Synchronization Type,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 1,SM2 Synchronization,0x1C32:02,15,Cycle Time,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 1,SM2 Synchronization,0x1C32:05,16,Minimum Cycle Time,int,-,250000,,,PDO,ReadOnly,O,
+ECAT Objects/Object 1,SM3 Synchronization,0x1C33:01,17,Synchronization Type,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 1,SM3 Synchronization,0x1C33:02,18,Cycle Time,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 1,SM3 Synchronization,0x1C33:05,19,Minimum Cycle Time,int,-,250000,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2001,1,Motor Model,string,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Selection of 4 Basic Mode,0x2002:00,2,Selection of 4 Basic Mode,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Selection of 4 Basic Mode,0x2002:01,3,Fault and Disable Braking,int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Selection of 4 Basic Mode,0x2002:02,4,Overtravel Stop Method,int,-,0x2,,,PDO,Always,O,
+ECAT Objects/Object 2,Selection of 4 Basic Mode,0x2002:03,5,Command Polarity,int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Selection of 4 Basic Mode,0x2002:04,6,AC Line Loss Check,int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Selection of Auto Tuning Function,0x2003:00,7,Selection of Auto Tuning Function,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Selection of Auto Tuning Function,0x2003:01,8,Off-Line Auto Tuning Mode,int,-,0x1,,,PDO,Always,O,
+ECAT Objects/Object 2,Selection of Auto Tuning Function,0x2003:02,9,Reserved2,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Selection of Auto Tuning Function,0x2003:03,10,Off-Line Auto Tuning Velocity,int,-,0x7,,,PDO,Always,O,
+ECAT Objects/Object 2,Selection of Auto Tuning Function,0x2003:04,11,Reserved4,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2004,12,Inertia Ratio,int,-,100,,,PDO,Always,O,
+ECAT Objects/Object 2,Auxiliary Function Selection 1,0x2005:00,13,Auxiliary Function Selection 1,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Auxiliary Function Selection 1,0x2005:01,14,Encoder Backup Battery,int,-,0x1,,,PDO,Always,O,
+ECAT Objects/Object 2,Auxiliary Function Selection 1,0x2005:02,15,Absolute Single Turn Reset,int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Auxiliary Function Selection 1,0x2005:03,16,Gain Change Enable,int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Auxiliary Function Selection 1,0x2005:04,17,Emergency Stop Input,int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Auxiliary Function Selection 2,0x2006:00,18,Auxiliary Function Selection 2,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Auxiliary Function Selection 2,0x2006:01,19,Shunt Resistor Connection,int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Auxiliary Function Selection 2,0x2006:02,20,Absolute Homing Completed,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Auxiliary Function Selection 2,0x2006:03,21,Mode of Gain Switching,int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Auxiliary Function Selection 2,0x2006:04,22,Absolute Feedback Transfer Type,int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2007,23,Drive Address,int,-,1,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2008,24,Password,int,-,,,,PDO,Always,O,
+ECAT Objects/Object 2,Digital Input Assignment 1,0x200A:00,25,Digital Input Assignment 1,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 1,0x200A:01,26,Drive Enable(/ENABLE),int,-,0xb,,,PDO,Always,O,
+ECAT Objects/Object 2,Digital Input Assignment 1,0x200A:02,27,Overtravel - Positive (P-OT),int,-,0x2,,,PDO,Always,O,
+ECAT Objects/Object 2,Digital Input Assignment 1,0x200A:03,28,Overtravel - Negative (N-OT),int,-,0x3,,,PDO,Always,O,
+ECAT Objects/Object 2,Digital Input Assignment 1,0x200A:04,29,Integrator Inhibit (/P-CON),int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Digital Input Assignment 2,0x200B:00,30,Digital Input Assignment 2,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 2,0x200B:01,31,Fault Reset (/A-RST),int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Digital Input Assignment 2,0x200B:02,32,Current Limit-Negative (/N-TL),int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Digital Input Assignment 2,0x200B:03,33,Current Limit-Positive (/P-TL),int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Digital Input Assignment 2,0x200B:04,34,Reserved4,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 3,0x200C:00,35,Digital Input Assignment 3,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 3,0x200C:01,36,Reserved1,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 3,0x200C:02,37,Reserved2,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 3,0x200C:03,38,Reserved3,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 3,0x200C:04,39,Reserved4,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 4,0x200D:00,40,Digital Input Assignment 4,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 4,0x200D:01,41,Reserved1,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 4,0x200D:02,42,Reserved2,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 4,0x200D:03,43,Alternate Gain Select (/G-SEL),int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Digital Input Assignment 4,0x200D:04,44,Reserved4,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 5,0x200E:00,45,Digital Input Assignment 5,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 5,0x200E:01,46,Reserved1,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 5,0x200E:02,47,Reserved2,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 5,0x200E:03,48,Reserved3,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 5,0x200E:04,49,Reserved4,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 6,0x200F:00,50,Digital Input Assignment 6,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 6,0x200F:01,51,Absolute Encoder Reset (/R-ABS),int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Digital Input Assignment 6,0x200F:02,52,Gain Bank Select (/BANK-SEL),int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Digital Input Assignment 6,0x200F:03,53,Reserved3,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 6,0x200F:04,54,Reserved4,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 7,0x2010:00,55,Digital Input Assignment 7,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 7,0x2010:01,56,Home Sensor (/HOM-SEN),int,-,0x4,,,PDO,Always,O,
+ECAT Objects/Object 2,Digital Input Assignment 7,0x2010:02,57,Reserved2,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 7,0x2010:03,58,Reserved3,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 7,0x2010:04,59,Reserved4,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 8,0x2011:00,60,Digital Input Assignment 8,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 8,0x2011:01,61,Reserved1,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 8,0x2011:02,62,Reserved2,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 8,0x2011:03,63,Reserved3,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 8,0x2011:04,64,Reserved4,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 9,0x2012:00,65,Digital Input Assignment 9,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 9,0x2012:01,66,Reserved1,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 9,0x2012:02,67,Reserved2,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 9,0x2012:03,68,Reserved3,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 9,0x2012:04,69,Reserved4,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 10,0x2013:00,70,Digital Input Assignment 10,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 10,0x2013:01,71,Reserved1,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 10,0x2013:02,72,Reserved2,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 10,0x2013:03,73,Reserved3,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 10,0x2013:04,74,Reserved4,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 11,0x2014:00,75,Digital Input Assignment 11,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 11,0x2014:01,76,Reserved1,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 11,0x2014:02,77,Reserved2,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 11,0x2014:03,78,Reserved3,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 11,0x2014:04,79,Reserved4,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 12,0x2015:00,80,Digital Input Assignment 12,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 12,0x2015:01,81,Touch Probe 1,int,-,0x9,,,PDO,Always,O,
+ECAT Objects/Object 2,Digital Input Assignment 12,0x2015:02,82,Touch Probe 2,int,-,0xa,,,PDO,Always,O,
+ECAT Objects/Object 2,Digital Input Assignment 12,0x2015:03,83,Reserved3,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Input Assignment 12,0x2015:04,84,Reserved4,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Output Assignment 1,0x2016:00,85,Digital Output Assignment 1,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Output Assignment 1,0x2016:01,86,Within In-Position Window (/P-COM),int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Digital Output Assignment 1,0x2016:02,87,Up to Velocity (/TG-ON),int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Digital Output Assignment 1,0x2016:03,88,Brake Control (/BK),int,-,0x3,,,PDO,Always,O,
+ECAT Objects/Object 2,Digital Output Assignment 1,0x2016:04,89,Within Velocity Window (/V-COM),int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Digital Output Assignment 2,0x2017:00,90,Digital Output Assignment 2,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Output Assignment 2,0x2017:01,91,Current Limited (/T-LMT),int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Digital Output Assignment 2,0x2017:02,92,Velocity Limited(/V-LMT),int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Digital Output Assignment 2,0x2017:03,93,Within Near-Position Window (/NEAR),int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Digital Output Assignment 2,0x2017:04,94,Warning (/WARN),int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Digital Output Assignment 3,0x2018:00,95,Digital Output Assignment 3,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Output Assignment 3,0x2018:01,96,Absolute Position Valid (/A-VLD),int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Digital Output Assignment 3,0x2018:02,97,Drive Ready (/RDY),int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Digital Output Assignment 3,0x2018:03,98,Reserved3,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Output Assignment 3,0x2018:04,99,Reserved4,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Output Assignment 4,0x2019:00,100,Digital Output Assignment 4,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Output Assignment 4,0x2019:01,101,Reserved1,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Output Assignment 4,0x2019:02,102,Reserved2,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Output Assignment 4,0x2019:03,103,Reserved3,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Output Assignment 4,0x2019:04,104,Reserved4,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Output Assignment 5,0x201A:00,105,Digital Output Assignment 5,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Output Assignment 5,0x201A:01,106,Reserved1,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Output Assignment 5,0x201A:02,107,Reserved2,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Output Assignment 5,0x201A:03,108,Reserved3,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Output Assignment 5,0x201A:04,109,Reserved4,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Output Assignment 6,0x201B:00,110,Digital Output Assignment 6,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Output Assignment 6,0x201B:01,111,Reserved1,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Output Assignment 6,0x201B:02,112,Reserved2,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Output Assignment 6,0x201B:03,113,RMS Current Load Factor Threshold Output 1(/RMS-CLT1),int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Digital Output Assignment 6,0x201B:04,114,RMS Current Load Factor Threshold Output 2(/RMS-CLT2),int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Digital Output Assignment 7,0x201C:00,115,Digital Output Assignment 7,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Output Assignment 7,0x201C:01,116,Commutation Angle Valid (/CAG-V),int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Digital Output Assignment 7,0x201C:02,117,Reserved2,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Output Assignment 7,0x201C:03,118,Reserved3,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Digital Output Assignment 7,0x201C:04,119,Reserved4,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2021,120,Alias ID,int,-,,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2022,121,Load Side BiSS Protocol,int,-,0,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,(top-level),0x2100,122,Velocity Regulator Response Level,int,-,35,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2101,123,System Gain,int,-,50,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2102,124,1st Velocity Regulator P Gain,int,-,215,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2103,125,1st Velocity Regulator I Gain,int,-,125,,,PDO,Always,O,
+ECAT Objects/Object 2,Velocity Regulator I Gain Mode,0x2104:00,126,Velocity Regulator I Gain Mode,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Velocity Regulator I Gain Mode,0x2104:01,127,Selection of Mode,int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Velocity Regulator I Gain Mode,0x2104:02,128,Reserved2,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Velocity Regulator I Gain Mode,0x2104:03,129,Reserved3,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Velocity Regulator I Gain Mode,0x2104:04,130,Reserved4,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2105,131,Velocity Regulator I Gain Disable Threshold,int,-,100,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2106,132,Velocity Regulator D Gain,int,-,,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2107,133,1st Position Regulator Kp Gain,int,-,50,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x210A,134,Delay Time of Gain Switching,int,-,,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x210B,135,Level of Gain Switching,int,-,,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x210C,136,Hysterisis of Gain Switching,int,-,,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x210D,137,Position Gain Switching Time,int,-,,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x210E,138,2nd Velocity Regulator P Gain,int,-,60,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x210F,139,2nd Velocity Regulator I Gain,int,-,26,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2110,140,2nd Position Regulator Kp Gain,int,-,20,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2111,141,3rd Velocity Regulator P Gain,int,-,60,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2112,142,3rd Velocity Regulator I Gain,int,-,26,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2113,143,3rd Position Regulator Kp Gain,int,-,20,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2114,144,4th Velocity Regulator P Gain,int,-,60,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2115,145,4th Velocity Regulator I Gain,int,-,26,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2116,146,4th Position Regulator Kp Gain,int,-,20,,,PDO,Always,O,
+ECAT Objects/Object 2,Tuning Mode Setting,0x2117:00,147,Tuning Mode Setting,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Tuning Mode Setting,0x2117:01,148,Tuning Mode,int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Tuning Mode Setting,0x2117:02,149,Reserved2,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Tuning Mode Setting,0x2117:03,150,Reserved3,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Tuning Mode Setting,0x2117:04,151,Inertia Ratio Estimation Sensitivity,int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2118,152,Tuningless Gain,int,-,5,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2119,153,Estimation Start Inertia Ratio,int,-,1,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x211A,154,Load Inertia Ratio Setting,int,-,50,,,PDO,Always,O,
+ECAT Objects/Object 2,Smart Tuning Advanced Setting,0x211B:00,155,Smart Tuning Advanced Setting,int,-,4,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Advanced Setting,0x211B:01,156,Smart Tuning Mode,int,-,,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Advanced Setting,0x211B:02,157,Smoothing Filter Bandwidth Interlocking,int,-,,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Advanced Setting,0x211B:03,158,Viscous Friction Compensator,int,-,,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Advanced Setting,0x211B:04,159,Reserved4,int,-,,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,(top-level),0x211C,160,Viscous Friction Coefficient,int,-,,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,(top-level),0x2120,161,Tuningless Fine Gain,int,-,0,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,(top-level),0x2121,162,Tuningless Feedforward Gain,int,-,0,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,(top-level),0x2202,163,Velocity Command LPF Bandwidth,int,-,1000,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2203,164,Velocity Error Filter Bandwidth,int,-,30,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2204,165,Velocity Regulator Kff Gain,int,-,,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2205,166,Jog Velocity Command,int,-,50,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2206,167,Acceleration,int,-,41667,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2207,168,Deceleration,int,-,41667,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2208,169,S-Curve Time,int,-,,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2210,170,Manual Velocity Limit,int,-,5000,,,PDO,Always,O,
+ECAT Objects/Object 2,Velocity Limit Mode,0x2211:00,171,Velocity Limit Mode,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Velocity Limit Mode,0x2211:01,172,Velocity Limit Mode,int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Velocity Limit Mode,0x2211:02,173,Field Weakening Mode,int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Velocity Limit Mode,0x2211:03,174,Reserved3,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Velocity Limit Mode,0x2211:04,175,Reserved4,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2212,176,Velocity Window,int,-,10,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2213,177,Up to Velocity,int,-,20,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2215,178,Dwell Time,int,-,500,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2219,179,Linear Motor Overspeed Level,int,-,,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x221A,180,Linear Motor Velocity Error Limit,int,-,,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x221B,181,Velocity Smoothing Filter,int,-,386,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,(top-level),0x221C,182,Path Tracking Mode Velocity LPF Bandwidth,int,-,38,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,(top-level),0x221D,183,Path Tracking Mode Velocity Feedforward LPF Bandwidth,int,-,29,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,Persistent Oscillation Compensator,0x221F:00,184,Persistent Oscillation Compensator,int,-,4,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Persistent Oscillation Compensator,0x221F:01,185,Reserved1,int,-,0x0,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Persistent Oscillation Compensator,0x221F:02,186,Persistent Oscillation Compensator,int,-,0x0,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,Persistent Oscillation Compensator,0x221F:03,187,POC BPF Upper Cut-off Frequency Order Select,int,-,0x0,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,Persistent Oscillation Compensator,0x221F:04,188,Reserved4,int,-,0x0,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,(top-level),0x2220,189,Persistent Oscillation Compensator BPF Upper Cut-off Frequency,int,-,600,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,(top-level),0x2221,190,Persistent Oscillation Compensator BPF Lower Cut-off Frequency,int,-,15,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,(top-level),0x2222,191,Persistent Oscillation Compensator Kd Gain,int,-,10,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,(top-level),0x2223,192,Persistent Oscillation Compensator Kr Filter Bandwidth,int,-,50,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,(top-level),0x2224,193,Field Weakening Start Velocity,int,-,0,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2225,194,Maximum Extended Velocity,int,-,0,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2226,195,Field Weakening Current Command Gain,int,-,0,,,PDO,Always,O,
+ECAT Objects/Object 2,Follower,0x2300:00,196,Follower,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Follower,0x2300:01,197,Reserved1,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Follower,0x2300:02,198,Reserved2,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Follower,0x2300:03,199,Encoder Output Forward Direction,int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Follower,0x2300:04,200,Gear Ratio Change,int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2301,201,Position Command LPF Bandwidth,int,-,,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2302,202,Position Regulator Kff Gain,int,-,,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2303,203,Position Regulator Kff LPF Bandwidth,int,-,200,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2304,204,Moving Average Filter,int,-,320,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2305,205,1st Gear Ratio, Follower Counts,int,-,1,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2306,206,1st Gear Ratio, Master Counts,int,-,1,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x230B,207,Encoder Output Ratio, Output Counts,int,-,1,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x230C,208,Encoder Output Ratio, Motor Counts,int,-,1,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x230E,209,1st Damping Frequency,int,-,,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x230F,210,1st Damping Ratio,int,-,,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2310,211,2nd Damping Frequency,int,-,,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2311,212,2nd Damping Ratio,int,-,,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2312,213,In Position Size,int,-,10,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2313,214,Near Position Size,int,-,20,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2314,215,Following Error Limit,int,-,strData,,,PDO,Always,O,
+ECAT Objects/Object 2,Touch Probe Function,0x2315:00,216,Touch Probe Function,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Touch Probe Function,0x2315:01,217,Touch Probe Enable,int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Touch Probe Function,0x2315:02,218,Touch Probe Mode,int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Touch Probe Function,0x2315:03,219,Touch Probe Source,int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Touch Probe Function,0x2315:04,220,Touch Probe Edge,int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Vibration Setting,0x2316:00,221,Vibration Setting,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Vibration Setting,0x2316:01,222,Vibration Auto Search,int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Vibration Setting,0x2316:02,223,Vibration Filter Type,int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Vibration Setting,0x2316:03,224,Reserved3,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Vibration Setting,0x2316:04,225,Reserved4,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2317,226,Fully Closed System Selection,int,-,,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,(top-level),0x2318,227,Scale Resolution,int,-,,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,(top-level),0x2319,228,Load Side Encoder Type,int,-,,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,(top-level),0x231A,229,Load Side Encoder Feedback Forward Direction,int,-,,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,(top-level),0x231B,230,Conversion Ratio Denominator,int,-,,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,(top-level),0x231C,231,Conversion Ratio Numerator,int,-,,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,(top-level),0x231D,232,Smart Compensator Filter Bandwidth,int,-,,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,(top-level),0x231E,233,Position Difference Error Level,int,-,,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,(top-level),0x231F,234,Position Smoothing Filter,int,-,39,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,(top-level),0x2320,235,Counts Per Meter of AqB Scale,int,-,,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,(top-level),0x2321,236,Motor Side Overspeed Levels,int,-,,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,(top-level),0x2322,237,Outer Loop P Gain,int,-,202,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,(top-level),0x2324,238,In Position Hold Time,int,-,0,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,Error Display Method,0x2329:00,239,Error Display Method,int,-,4,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Error Display Method,0x2329:01,240,Position Error Monitoring Method,int,-,0x0,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,Error Display Method,0x2329:02,241,Reserved2,int,-,0x0,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Error Display Method,0x2329:03,242,Reserved3,int,-,0x0,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Error Display Method,0x2329:04,243,Reserved4,int,-,0x0,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart tuning Mode Filter Functionality,0x232B:00,244,Smart tuning Mode Filter Functionality,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Smart tuning Mode Filter Functionality,0x232B:01,245,Encoder Signal Filter,int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Smart tuning Mode Filter Functionality,0x232B:02,246,Path Tracking Input Smoothing Filter,int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Smart tuning Mode Filter Functionality,0x232B:03,247,Reserved3,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Smart tuning Mode Filter Functionality,0x232B:04,248,Reserved4,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2402,249,1st Current Command LPF Bandwidth,int,-,500,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2403,250,2nd Current Command LPF Bandwidth,int,-,300,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2404,251,3rd Current Command LPF Bandwidth,int,-,300,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2405,252,4th Current Command LPF Bandwidth,int,-,300,,,PDO,Always,O,
+ECAT Objects/Object 2,Main Current Regulator Gain,0x2406:00,253,Main Current Regulator Gain,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Main Current Regulator Gain,0x2406:01,254,Selection of Gain,int,-,0x1,,,PDO,Always,O,
+ECAT Objects/Object 2,Main Current Regulator Gain,0x2406:02,255,Reserved2,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Main Current Regulator Gain,0x2406:03,256,Reserved3,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Main Current Regulator Gain,0x2406:04,257,Reserved4,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2407,258,Positive Internal Current Limit,int,-,350,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2408,259,Negative Internal Current Limit,int,-,350,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2409,260,Positive External Current Limit,int,-,100,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x240A,261,Negative External Current Limit,int,-,100,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x240B,262,Maximum Stopping Current,int,-,350,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x240C,263,Initial Current Bias,int,-,,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x240D,264,1st Resonant Frequency Suppression Filter,int,-,10000,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x240E,265,1st Resonant Frequency Suppression Filter Width,int,-,10,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x240F,266,1st Resonant Frequency Suppression Filter Depth,int,-,100,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2410,267,2nd Resonant Frequency Suppression Filter,int,-,10000,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2411,268,2nd Resonant Frequency Suppression Filter Width,int,-,10,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2412,269,2nd Resonant Frequency Suppression Filter Depth,int,-,100,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2413,270,3rd Resonant Frequency Suppression Filter,int,-,10000,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2414,271,3rd Resonant Frequency Suppression Filter Width,int,-,10,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2415,272,3rd Resonant Frequency Suppression Filter Depth,int,-,100,,,PDO,Always,O,
+ECAT Objects/Object 2,Adaptive Notch Filter(ANF) Setting,0x2416:00,273,Adaptive Notch Filter(ANF) Setting,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Adaptive Notch Filter(ANF) Setting,0x2416:01,274,ANF Function,int,-,0,,,PDO,Always,O,
+ECAT Objects/Object 2,Adaptive Notch Filter(ANF) Setting,0x2416:02,275,ANF HPF Cutoff Frequency,int,-,0,,,PDO,Always,O,
+ECAT Objects/Object 2,Adaptive Notch Filter(ANF) Setting,0x2416:03,276,ANF Estimation Frequency Initial Value,int,-,1,,,PDO,Always,O,
+ECAT Objects/Object 2,Adaptive Notch Filter(ANF) Setting,0x2416:04,277,ANF Detect Level,int,-,1,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2417,278,RMS Current Load Factor Cumulative Time Setting,int,-,10,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2418,279,RMS Current Load Factor Threshold Setting 1,int,-,350000,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2419,280,RMS Current Load Factor Threshold Setting 2,int,-,350000,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x241B,281,Current Command LPF Bandwidth (Tuningless),int,-,804,,,PDO,Always,O,
+ECAT Objects/Object 2,Current Command LPF Bandwidth Interlocking,0x241C:00,282,Current Command LPF Bandwidth Interlocking,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Current Command LPF Bandwidth Interlocking,0x241C:01,283,1st Current Command LPF Bandwidth Interlocking(Gain Tuning),int,-,0,,,PDO,Always,O,
+ECAT Objects/Object 2,Current Command LPF Bandwidth Interlocking,0x241C:02,284,Current Command LPF Bandwidth Interlocking(Tuningless),int,-,0,,,PDO,Always,O,
+ECAT Objects/Object 2,Current Command LPF Bandwidth Interlocking,0x241C:03,285,Current Command Feedforward,int,-,0,,,PDO,Always,O,
+ECAT Objects/Object 2,Current Command LPF Bandwidth Interlocking,0x241C:04,286,Current Limit Band,int,-,0,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x241D,287,4th Resonant Frequency Suppression Filter,int,-,10000,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x241E,288,4th Resonant Frequency Suppression Filter Width,int,-,10,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x241F,289,4th Resonant Frequency Suppression Filter Depth,int,-,100,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2420,290,5th Resonant Frequency Suppression Filter,int,-,10000,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2421,291,5th Resonant Frequency Suppression Filter Width,int,-,10,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2422,292,5th Resonant Frequency Suppression Filter Depth,int,-,100,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2423,293,Main Current Regulator Max Bandwidth,int,-,0,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2424,294,DDC Gain,int,-,10,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,(top-level),0x2425,295,Sliding Surface Slope (G1 Gain),int,-,100,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Interlocking,0x2426:00,296,Smart Tuning Interlocking,int,-,4,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Interlocking,0x2426:01,297,DDC Interlocking,int,-,0x0,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Interlocking,0x2426:02,298,Sliding Surface Slope Interlocking,int,-,0x0,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Interlocking,0x2426:03,299,Outer Loop P Gain Interlocking,int,-,0x0,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Interlocking,0x2426:04,300,Current POC,int,-,0x0,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,Current Controller Advanced Function,0x2427:00,301,Current Controller Advanced Function,int,-,4,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Current Controller Advanced Function,0x2427:01,302,Reserved1,int,-,0x0,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Current Controller Advanced Function,0x2427:02,303,Reserved2,int,-,0x0,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Current Controller Advanced Function,0x2427:03,304,Reserved3,int,-,0x0,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Current Controller Advanced Function,0x2427:04,305,DDC Q-Filter Order Select,int,-,0x0,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,(top-level),0x2429,306,DDC Q-Value,int,-,707,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,(top-level),0x242B,307,Cascade DDC 2nd LPF Cut-off Frequency,int,-,0,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x242C,308,Current POC Kr Filter,int,-,3500,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x242D,309,Current POC BPF Upper Cut-off Frequency,int,-,2500,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x242E,310,Current POC BPF Lower Cut-off Frequency,int,-,10,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x242F,311,Current POC Kd Gain,int,-,2000,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2430,312,Current POC Operation Delay,int,-,0,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2500,313,Brake Inactive Delay,int,-,,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2501,314,Disable Delay,int,-,,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2502,315,Brake Active Delay,int,-,500,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2503,316,Braking Application Velocity,int,-,100,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2504,317,AC Line Loss Fault Delay,int,-,20,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2509,318,Motor Overload Method Selection,int,-,,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x250B,319,Power Sag Warning Enable,int,-,,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x250C,320,Power Sag Current Limit,int,-,50,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x250D,321,Power Sag Current Limit Release Time,int,-,100,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x250E,322,ECAT Abs Origin Offset,int,-,,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x250F,323,ECAT Homing Method,int,-,35,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2510,324,ECAT Homing Timeout,int,-,,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2511,325,ECAT Homing Offset,int,-,,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2512,326,ECAT Homing Velocity 1,int,-,200000,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2513,327,ECAT Homing Velocity 2,int,-,200000,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2514,328,ECAT Homing Acceleration,int,-,2000000,,,PDO,Always,O,
+ECAT Objects/Object 2,Linear Function,0x2515:00,329,Linear Function,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Linear Function,0x2515:01,330,Reserved1,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Linear Function,0x2515:02,331,Reserved2,int,-,3,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Linear Function,0x2515:03,332,Reserved3,int,-,5,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Linear Function,0x2515:04,333,BiSS Commutation Angle Search Enable,int,-,,,,PDO,Always,O,
+ECAT Objects/Object 2,Encoder Feedback Forward Direction,0x2516:00,334,Encoder Feedback Forward Direction,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Encoder Feedback Forward Direction,0x2516:01,335,Encoder Feedback Forward Direction,int,-,0x0,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,Encoder Feedback Forward Direction,0x2516:02,336,U-V-W Phase Sequence of Rotor Direction,int,-,0x0,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,Encoder Feedback Forward Direction,0x2516:03,337,Hall Offset Clear Signal,int,-,0x1,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,Encoder Feedback Forward Direction,0x2516:04,338,Hall Signal Polarity,int,-,0x0,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,(top-level),0x2518,339,External Shunt Resistance,int,-,,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2519,340,External Shunt Resistor Power Rate,int,-,,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x251A,341,STO Circuit Verification Mode,int,-,,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x251E,342,PWM Switching Frequency,int,-,,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x251F,343,BiSS Commutation Angle Value,int,-,,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2520,344,BiSS Master Clock Frequency,int,-,,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2521,345,Target Position,int,-,30,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,(top-level),0x2522,346,Target Velocity,int,-,1000,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,(top-level),0x2523,347,Acc/Dec Time,int,-,50,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning AutoSetup Function Setting,0x2524:00,348,Smart Tuning AutoSetup Function Setting,int,-,4,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning AutoSetup Function Setting,0x2524:01,349,Detect Excessive Resonance Fault,int,-,0,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning AutoSetup Function Setting,0x2524:02,350,Direction,int,-,0,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning AutoSetup Function Setting,0x2524:03,351,Reserved3,int,-,,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning AutoSetup Function Setting,0x2524:04,352,Reserved4,int,-,,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,(top-level),0x2525,353,Target Tact Time,int,-,20,,,PDO,Always,O,[v2.10+]
+ECAT Objects/Object 2,Sensor Input Polarity,0x2526:00,354,Sensor Input Polarity,int,-,4,,,PDO,ReadOnly,O,[v2.14+]
+ECAT Objects/Object 2,Sensor Input Polarity,0x2526:01,355,N-OT Polarity,int,-,0,,,PDO,Always,O,[v2.14+]
+ECAT Objects/Object 2,Sensor Input Polarity,0x2526:02,356,P-OT Polarity,int,-,0,,,PDO,Always,O,[v2.14+]
+ECAT Objects/Object 2,Sensor Input Polarity,0x2526:03,357,Home Sensor Polarity,int,-,,,,PDO,Always,O,[v2.14+]
+ECAT Objects/Object 2,Sensor Input Polarity,0x2526:04,358,Reserved,int,-,,,,PDO,ReadOnly,O,[v2.14+]
+ECAT Objects/Object 2,Commutation Angle Self-Sensing Startup,0x2527:00,359,Commutation Angle Self-Sensing Startup,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Commutation Angle Self-Sensing Startup,0x2527:01,360,Reserved1,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Commutation Angle Self-Sensing Startup,0x2527:02,361,Encoder Direction Setup Mode,int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Commutation Angle Self-Sensing Startup,0x2527:03,362,Encoder Direction Setup Operation,int,-,0x0,,,PDO,Always,O,
+ECAT Objects/Object 2,Commutation Angle Self-Sensing Startup,0x2527:04,363,Reserved4,int,-,0x0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2528,364,Self-Sensing Current Command,int,-,50,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2529,365,Self-Sensing Current Command Time,int,-,200,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x252A,366,Self-Sensing Current Command LPF Bandwidth,int,-,100,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x252B,367,Position Size for Self-Sensing Current Command Cut-off,int,-,100,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x252C,368,Motor Stopping Position Size,int,-,40,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x252D,369,Motor Stopping Time Lapse,int,-,40,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x252E,370,Motor Stopping Timeout,int,-,1000,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x252F,371,Target Commutation Angle,int,-,16384,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2530,372,Target Commutation Angle Interval,int,-,2048,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2539,373,Motor Overload Detection Level,int,-,0,,,PDO,Always,O,
+ECAT Objects/Object 2,(top-level),0x2600,374,U Phase Current Offset,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2601,375,W Phase Current Offset,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2602,376,Absolute Single Turn Offset,int,-,,,,PDO,Always,O,
+ECAT Objects/Object 2,Dynamic Brake Circuit Protection,0x2603:00,377,Dynamic Brake Circuit Protection,int,-,4,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Dynamic Brake Circuit Protection,0x2603:01,378,Dynamic Brake Circuit Protection,int,-,1,,,PDO,Always,O,
+ECAT Objects/Object 2,Dynamic Brake Circuit Protection,0x2603:02,379,Reserved2,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Dynamic Brake Circuit Protection,0x2603:03,380,Reserved3,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Dynamic Brake Circuit Protection,0x2603:04,381,Reserved4,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2609,382,U Phase Current Offset (Digital),int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x260A,383,W Phase Current Offset (Digital),int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x260B,384,Writing BiSS Commutation Angle to Flash Status,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2700,385,Drive Capacity,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2702,386,Product Code,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2708,387,Serial No. High Word,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2709,388,Serial No. Low Word,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2A00,389,Velocity Feedback,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2A01,390,Velocity Command,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2A02,391,Velocity Error,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2A08,392,Commutation Angle,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2A09,393,Mechanical Angle,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2A0A,394,Shunt Power Limit Ratio,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2A0C,395,Absolute Rotations,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2A10,396,U Phase Current,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2A11,397,V Phase Current,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2A12,398,W Phase Current,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2A13,399,Motor Utilization,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2A1B,400,Instantaneous Shunt Power,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2A1C,401,Drive Utilization,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2A1F,402,FPGA Version,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2A22,403,Absolute Single Turn Data,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2A23,404,Absolute Maximum Current Command,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2A24,405,Power Time Hour,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2A25,406,Power Time Min Sec,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2A2B,407,EtherCAT Version,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2A2C,408,Current Load Factor(RMS),int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2A2D,409,Current Peak Load Factor(RMS),int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2A3B,410,ABSS Data,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2A3C,411,ABSA Data,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2A3D,412,Conv Hall Data,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2A3E,413,Conv Alarm Data,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2A3F,414,ECAT Homing Status,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2A40,415,ECAT Homing Error,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2A49,416,OS Version,string,-,Not Support,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2A4A,417,Product Revision,string,-,Not Support,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2A4B,418,Product Type,string,-,Not Support,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2F00,419,Servo Warning,int,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2F01,420,Fault History #1,string,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2F02,421,Fault History #2,string,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2F03,422,Fault History #3,string,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2F04,423,Fault History #4,string,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2F05,424,Fault History #5,string,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2F06,425,Fault History #6,string,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2F07,426,Fault History #7,string,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,(top-level),0x2F08,427,Fault History #8,string,-,,,,PDO,ReadOnly,O,
+ECAT Objects/Object 2,Motion History,0x2F09:00,428,Motion History,int,-,16,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Motion History,0x2F09:01,429,m1,string,-,,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Motion History,0x2F09:02,430,m2,string,-,,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Motion History,0x2F09:03,431,m3,string,-,,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Motion History,0x2F09:04,432,m4,string,-,,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Motion History,0x2F09:05,433,m5,string,-,,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Motion History,0x2F09:06,434,m6,string,-,,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Motion History,0x2F09:07,435,m7,string,-,,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Motion History,0x2F09:08,436,m8,string,-,,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Motion History,0x2F09:09,437,m9,string,-,,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Motion History,0x2F09:0A,438,m10,string,-,,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Motion History,0x2F09:0B,439,m11,string,-,,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Motion History,0x2F09:0C,440,m12,string,-,,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Motion History,0x2F09:0D,441,m13,string,-,,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Motion History,0x2F09:0E,442,m14,string,-,,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Motion History,0x2F09:0F,443,m15,string,-,,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Motion History,0x2F09:10,444,m16,string,-,,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Monitoring,0x2F0A:00,445,Smart Tuning Monitoring,int,-,32,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Monitoring,0x2F0A:01,446,Inertia Ratio of Load,int,-,50,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Monitoring,0x2F0A:02,447,Tungingless Gain,int,-,300,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Monitoring,0x2F0A:03,448,target position,int,-,30,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Monitoring,0x2F0A:04,449,target velocity,int,-,1000,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Monitoring,0x2F0A:05,450,acc_dec time,int,-,50,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Monitoring,0x2F0A:06,451,Detect Excessive Resonance fault,int,-,,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Monitoring,0x2F0A:07,452,direction,int,-,,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Monitoring,0x2F0A:08,453,D2,int,-,,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Monitoring,0x2F0A:09,454,D3,int,-,,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Monitoring,0x2F0A:0A,455,position smoothing filter,int,-,161,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Monitoring,0x2F0A:0B,456,load type,int,-,,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Monitoring,0x2F0A:0C,457,inposition size,int,-,20,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Monitoring,0x2F0A:0D,458,Tacttime_target (ms),int,-,20,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Monitoring,0x2F0A:0E,459,,int,-,,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Monitoring,0x2F0A:0F,460,,int,-,,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Monitoring,0x2F0A:10,461,tuning state,int,-,,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Monitoring,0x2F0A:11,462,Velocity feedback(Peak),int,-,,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Monitoring,0x2F0A:12,463,Load Factor (RMS),int,-,,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Monitoring,0x2F0A:13,464,Load Factor (Peak),int,-,,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Monitoring,0x2F0A:14,465,,int,-,,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Monitoring,0x2F0A:15,466,Tacttime_result,int,-,,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Monitoring,0x2F0A:16,467,,int,-,,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Monitoring,0x2F0A:17,468,Overshoot_result,int,-,,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Monitoring,0x2F0A:18,469,Notch Filter 1 Frequency,int,-,10000,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Monitoring,0x2F0A:19,470,Notch Filter 1 Width,int,-,10,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Monitoring,0x2F0A:1A,471,Notch Filter 1 Depth,int,-,100,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Monitoring,0x2F0A:1B,472,Notch Filter 2 Frequency,int,-,10000,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Monitoring,0x2F0A:1C,473,Notch Filter 2 Width,int,-,10,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Monitoring,0x2F0A:1D,474,Notch Filter 2 Depth,int,-,100,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Monitoring,0x2F0A:1E,475,Notch Filter 3 Frequency,int,-,10000,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Monitoring,0x2F0A:1F,476,Notch Filter 3 Width,int,-,10,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 2,Smart Tuning Monitoring,0x2F0A:20,477,Notch Filter 3 Depth,int,-,100,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 3,(top-level),0x3001,1,Auto Tuning,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 3,(top-level),0x3002,2,Smart Tuning,int,-,0,,,PDO,ReadOnly,O,[v2.10+]
+ECAT Objects/Object 3,(top-level),0x3009,3,Fault History Clear,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 3,(top-level),0x300A,4,Absolute Encoder Multi Turn Clear,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 3,(top-level),0x3010,5,Drive Reboot,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 5,(top-level),0x5010,1,Debug Flag,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 5,(top-level),0x5011,2,Monitor Address,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 5,(top-level),0x5012,3,Monitor A,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 5,(top-level),0x5013,4,Monitor B,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 5,(top-level),0x5014,5,Monitor C,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 5,(top-level),0x5015,6,DC Shift Time,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 5,(top-level),0x5020,7,HouseKeeping Time,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 5,(top-level),0x5022,8,SM Event CycleTime,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 6,(top-level),0x603F,1,Error Code,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 6,(top-level),0x6040,2,Control Word,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 6,(top-level),0x6041,3,Status Word,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 6,(top-level),0x6060,4,Modes of Operation,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 6,(top-level),0x6061,5,Modes of Operation Display,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 6,(top-level),0x6062,6,Position Demand Value,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 6,(top-level),0x6063,7,Position Actual Internal Value,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 6,(top-level),0x6064,8,Position Actual Value,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 6,(top-level),0x6065,9,Following Error Window,int,-,(dynamic),,,PDO,ReadOnly,O,
+ECAT Objects/Object 6,(top-level),0x6067,10,Position Window,int,-,10,,,PDO,ReadOnly,O,
+ECAT Objects/Object 6,(top-level),0x606B,11,Velocity Demand Value,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 6,(top-level),0x606C,12,Velocity Actual Value,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 6,(top-level),0x606D,13,Velocity Window,int,-,10,,,PDO,ReadOnly,O,
+ECAT Objects/Object 6,(top-level),0x6071,14,Target Torque,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 6,(top-level),0x6072,15,Maximum Torque,int,-,3500,,,PDO,ReadOnly,O,
+ECAT Objects/Object 6,(top-level),0x6074,16,Torque Demand Value,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 6,(top-level),0x6077,17,Torque Actual Value,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 6,(top-level),0x607A,18,Target Position,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 6,(top-level),0x607C,19,Home Offset,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 6,(top-level),0x607F,20,Max Profile Velocity,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 6,(top-level),0x6081,21,Profile Velocity,int,-,100000,,,PDO,ReadOnly,O,
+ECAT Objects/Object 6,(top-level),0x6083,22,Profile Acceleration,int,-,1000000,,,PDO,ReadOnly,O,
+ECAT Objects/Object 6,(top-level),0x6084,23,Profile Deceleration,int,-,1000000,,,PDO,ReadOnly,O,
+ECAT Objects/Object 6,(top-level),0x6085,24,Quick Stop Deceleration,int,-,1000000,,,PDO,ReadOnly,O,
+ECAT Objects/Object 6,(top-level),0x6098,25,Homing Method,int,-,35,,,PDO,ReadOnly,O,
+ECAT Objects/Object 6,(top-level),0x60B0,26,Position Offset,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 6,(top-level),0x60B1,27,Velocity Offset,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 6,(top-level),0x60B2,28,Torque Offset,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 6,(top-level),0x60B8,29,Touch Probe Function,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 6,(top-level),0x60B9,30,Touch Probe Status,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 6,(top-level),0x60FF,31,Target Velocity,int,-,0,,,PDO,ReadOnly,O,
+ECAT Objects/Object 6,(top-level),0x6502,32,Supported Drive Modes,int,-,0x43A1,,,PDO,ReadOnly,O,
+ECAT OP Mode/CSP,(top-level),0x603F,1,Error Code,int,-,0,,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/CSP,(top-level),0x6040,2,Control Word,int,-,0,,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/CSP,(top-level),0x6041,3,Status Word,int,-,0,,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/CSP,(top-level),0x6060,4,Modes of Operation,int,-,0,,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/CSP,(top-level),0x6064,5,Position Actual Value,int,-,0,,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/CSP,(top-level),0x6065,6,Following Error Window,int,-,(dynamic),,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/CSP,(top-level),0x607A,7,Target Position,int,-,0,,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/CSP,(top-level),0x60B0,8,Position Offset,int,-,0,,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/CSP,(top-level),0x60B1,9,Velocity Offset,int,-,0,,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/CSP,(top-level),0x60B2,10,Torque Offset,int,-,0,,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/CSP,(top-level),0x60F4,11,Following Error Actual Value,int,-,0,,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/CSV,(top-level),0x603F,1,Error Code,int,-,0,,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/CSV,(top-level),0x6040,2,Control Word,int,-,0,,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/CSV,(top-level),0x6041,3,Status Word,int,-,0,,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/CSV,(top-level),0x6060,4,Modes of Operation,int,-,0,,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/CSV,(top-level),0x606B,5,Velocity Demand Value,int,-,0,,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/CSV,(top-level),0x606C,6,Velocity Actual Value,int,-,0,,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/CSV,(top-level),0x60B1,7,Velocity Offset,int,-,0,,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/CSV,(top-level),0x60B2,8,Torque Offset,int,-,0,,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/CSV,(top-level),0x60FF,9,Target Velocity,int,-,0,,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/CST,(top-level),0x603F,1,Error Code,int,-,0,,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/CST,(top-level),0x6040,2,Control Word,int,-,0,,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/CST,(top-level),0x6041,3,Status Word,int,-,0,,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/CST,(top-level),0x6060,4,Modes of Operation,int,-,0,,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/CST,(top-level),0x6071,5,Target Torque,int,-,0,,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/CST,(top-level),0x6072,6,Maximum Torque,int,-,3500,,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/CST,(top-level),0x6077,7,Torque Actual Value,int,-,0,,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/CST,(top-level),0x60B1,8,Velocity Offset,int,-,0,,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/CST,(top-level),0x60B2,9,Torque Offset,int,-,0,,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/HM,(top-level),0x603F,1,Error Code,int,-,0,,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/HM,(top-level),0x6040,2,Control Word,int,-,0,,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/HM,(top-level),0x6041,3,Status Word,int,-,0,,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/HM,(top-level),0x6060,4,Modes of Operation,int,-,0,,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/HM,(top-level),0x6064,5,Position Actual Value,int,-,0,,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/HM,(top-level),0x607C,6,Home Offset,int,-,0,,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/HM,(top-level),0x6098,7,Homing Method,int,-,35,,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/HM,(top-level),0x609A,8,Homing Acceleration,int,-,2000000,,,PDO,ReadOnly,O,[v2.05+]
+ECAT OP Mode/PP,(top-level),0x603F,1,Error Code,int,-,0,,,PDO,ReadOnly,O,[v2.10+]
+ECAT OP Mode/PP,(top-level),0x6040,2,Control Word,int,-,0,,,PDO,ReadOnly,O,[v2.10+]
+ECAT OP Mode/PP,(top-level),0x6041,3,Status Word,int,-,0,,,PDO,ReadOnly,O,[v2.10+]
+ECAT OP Mode/PP,(top-level),0x6060,4,Modes of Operation,int,-,0,,,PDO,ReadOnly,O,[v2.10+]
+ECAT OP Mode/PP,(top-level),0x6064,5,Position Actual Value,int,-,0,,,PDO,ReadOnly,O,[v2.10+]
+ECAT OP Mode/PP,(top-level),0x6065,6,Following Error Window,int,-,(dynamic),,,PDO,ReadOnly,O,[v2.10+]
+ECAT OP Mode/PP,(top-level),0x607A,7,Target Position,int,-,0,,,PDO,ReadOnly,O,[v2.10+]
+ECAT OP Mode/PP,(top-level),0x6081,8,Profile Velocity,int,-,100000,,,PDO,ReadOnly,O,[v2.10+]
+ECAT OP Mode/PP,(top-level),0x6083,9,Profile Acceleration,int,-,1000000,,,PDO,ReadOnly,O,[v2.10+]
+ECAT OP Mode/PP,(top-level),0x6084,10,Profile Deceleration,int,-,1000000,,,PDO,ReadOnly,O,[v2.10+]
+ECAT OP Mode/PP,(top-level),0x6085,11,Quick Stop Deceleration,int,-,1000000,,,PDO,ReadOnly,O,[v2.10+]
+ECAT OP Mode/PP,(top-level),0x6086,12,Motion Profile Type,int,-,0,,,PDO,ReadOnly,O,[v2.10+]
+ECAT OP Mode/PP,(top-level),0x60F4,13,Following Error Actual Value,int,-,0,,,PDO,ReadOnly,O,[v2.10+]
