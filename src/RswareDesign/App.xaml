@@ -16,8 +16,11 @@
                 <!-- Fluent.Ribbon -->
                 <ResourceDictionary Source="pack://application:,,,/Fluent;component/Themes/Generic.xaml" />
 
-                <!-- Custom Tokens -->
-                <ResourceDictionary Source="Themes/SharedTokens.xaml" />
+                <!-- Style Dictionary: Colors → Fonts → Styles → Buttons -->
+                <ResourceDictionary Source="Themes/DarkColors.xaml" />
+                <ResourceDictionary Source="Themes/Fonts.xaml" />
+                <ResourceDictionary Source="Themes/Styles.xaml" />
+                <ResourceDictionary Source="Themes/Buttons.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

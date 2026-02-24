@@ -21,6 +21,7 @@ When the user inputs `/ui-dev`, collect requirements interactively and execute t
 | `.claude/specs/PARAMETER-SYSTEM.md` | CSV schema, DataGrid rules, parameter model | When modifying parameter views |
 
 ### UI-Specific Rules (this skill only)
+- **Style Dictionary mandatory**: all UI references from `Themes/` files (Colors, Fonts, Styles, Buttons)
 - **Design token mandatory**: no hardcoded colors (`#RRGGBB`), FontSize, Padding/Margin, FontFamily
 - **i18n mandatory**: XAML `{DynamicResource loc.*}`, ViewModel `ILocalizationService.Get()`
 - **Material Design controls**: use MaterialDesignInXamlToolkit styles (MaterialDesignRaisedButton, MaterialDesignDataGrid, etc.)
@@ -28,7 +29,18 @@ When the user inputs `/ui-dev`, collect requirements interactively and execute t
 - **Fluent.Ribbon**: use for ribbon menu (RibbonTabItem, RibbonGroupBox)
 - **CommunityToolkit.Mvvm**: ObservableObject, [ObservableProperty], [RelayCommand], WeakReferenceMessenger
 - **Window base**: `<Window>` with MaterialDesign theme (NOT dx:ThemedWindow)
-- **Color constraint**: MAX 5 color roles (Primary, Secondary, Surface, Background, Error)
+- **Color constraint**: MAX 5 color roles — STRICTLY ENFORCED:
+  - Primary (`PrimaryBrush`) — accents, active elements
+  - Secondary (`SecondaryBrush`, `RibbonItemBrush`) — highlights, ribbon icons
+  - Surface (`SurfaceBrush`) — panel/card backgrounds
+  - Background (`BackgroundBrush`) — app background
+  - Error (`ErrorBrush`, `RibbonItemErrorBrush`) — error/danger states
+- **NEVER define per-item colors** — all items in same category share ONE color from 5 roles
+- **Style Dictionary file structure**:
+  - `Themes/Colors.xaml` — Color/brush definitions
+  - `Themes/Fonts.xaml` — FontFamily, FontSize tokens
+  - `Themes/Styles.xaml` — Spacing, sizes, icon effects, labels
+  - `Themes/Buttons.xaml` — Button, ToggleButton, ComboBox styles
 
 ---
 

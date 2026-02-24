@@ -1,0 +1,41 @@
+{
+  "permissions": {
+    "allow": [
+      "*"
+    ],
+    "deny": [
+      "Bash(rm -rf /*)",
+      "Bash(del /f /s /q C:\\*)"
+    ]
+  },
+  "autoAllowBashIfSandboxed": true,
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \".claude/hooks/archive-prompt.ps1\"",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \".claude/hooks/log-response.ps1\"",
+            "timeout": 60
+          },
+          {
+            "type": "command",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \".claude/hooks/save-context.ps1\"",
+            "timeout": 60
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,5 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using RswareDesign.Models;
 using System.Collections.ObjectModel;
 
@@ -95,10 +96,21 @@ public partial class MainWindowViewModel : ObservableObject
         // Revert to original values
     }
 
+    partial void OnIsDarkThemeChanged(bool value)
+    {
+        WeakReferenceMessenger.Default.Send(new ThemeChangedMessage(value));
+    }
+
     [RelayCommand]
     private void ToggleTheme()
     {
         IsDarkTheme = !IsDarkTheme;
+    }
+
+    [RelayCommand]
+    private void OpenOscilloscope()
+    {
+        WeakReferenceMessenger.Default.Send(new OpenOscilloscopeMessage());
     }
 
     private void BuildSampleTree()
@@ -192,3 +204,7 @@ public class StatusEntry
     public string Value { get; set; } = "";
     public string Units { get; set; } = "";
 }
+
+public class OpenOscilloscopeMessage { }
+
+public record ThemeChangedMessage(bool IsDark);

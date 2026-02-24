@@ -79,6 +79,21 @@ var paramView = new ParameterEditorView
 };
 ```
 
+## Style Dictionary Structure
+
+All tokens are defined in `Themes/` and loaded in `App.xaml` in this order:
+
+| File | Contents | Source |
+|------|----------|--------|
+| `Themes/Colors.xaml` | 5-role colors, text/border brushes, component brushes, `RibbonItemBrush` | Colors → Fonts → Styles → Buttons |
+| `Themes/Fonts.xaml` | FontFamily (UI, Code, Mono), FontSize (XS~3XL) | |
+| `Themes/Styles.xaml` | Spacing, sizes, icon effects, labels, sliders | |
+| `Themes/Buttons.xaml` | Button, ToggleButton, ComboBox styles | |
+
+**Color constraint: 5 roles only.** NEVER define per-item colors.
+- `RibbonItemBrush` = Secondary (all ribbon icons use this ONE color)
+- `RibbonItemErrorBrush` = Error (disconnect/error icons only)
+
 ## Design Token Binding Rules
 
 | Category | Binding Type | Reason | Example |
@@ -90,8 +105,9 @@ var paramView = new ParameterEditorView
 | Spacing (Padding/Margin) | `{StaticResource}` | Compile-time (fixed) | `Padding="{StaticResource Padding.Panel}"` |
 | CornerRadius | `{StaticResource}` | Compile-time | `CornerRadius="{StaticResource Radius.MD}"` |
 | Sizes (double) | `{StaticResource}` | Compile-time | `Height="{StaticResource Size.StatusBarHeight}"` |
-| Text styles | `{StaticResource}` | Compile-time | `Style="{StaticResource TextStyle.Body}"` |
-| Button styles | `{StaticResource}` | Compile-time | `Style="{StaticResource ButtonStyle.Primary}"` |
+| Text styles | `{StaticResource}` | Compile-time | `Style="{StaticResource RibbonButtonLabel}"` |
+| Button styles | `{StaticResource}` | Compile-time | `Style="{StaticResource RibbonLargeRipple}"` |
+| Icon styles | `{StaticResource}` | Includes Foreground color | `Style="{StaticResource RibbonIconOpacityPulse}"` |
 
 ## MaterialDesign Attached Properties
 
@@ -181,4 +197,6 @@ NEVER: dxmvvm:ViewModelSource       -> USE: DI from App.xaml.cs
 NEVER: BindableBase                 -> USE: ObservableObject (CommunityToolkit.Mvvm)
 NEVER: DelegateCommand              -> USE: [RelayCommand] attribute
 NEVER: IEventAggregator             -> USE: WeakReferenceMessenger
+NEVER: Per-icon Foreground="#FF..."  -> USE: Style with built-in Foreground (RibbonIconOpacityPulse)
+NEVER: 18 different icon colors      -> USE: Single RibbonItemBrush (Secondary role)
 ```

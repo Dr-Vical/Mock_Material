@@ -1,0 +1,3 @@
+﻿TIMESTAMP: 2026-02-24 15:44:33
+RAW_INPUT: {"session_id":"4e43d4e6-8022-4d0b-8341-00cabee922e1","transcript_path":"C:\\Users\\bcchoi\\.claude\\projects\\C--Users-bcchoi-Desktop-01-Project-106--------02-Material\\4e43d4e6-8022-4d0b-8341-00cabee922e1.jsonl","cwd":"C:\\Users\\bcchoi\\Desktop\\01.Project\\106.디자인 시안\\02.Material","permission_mode":"acceptEdits","hook_event_name":"UserPromptSubmit","prompt":"지금까지 내용 커밋하고 푸쉬해줘"}
+LENGTH: 383

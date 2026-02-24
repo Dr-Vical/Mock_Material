@@ -43,6 +43,23 @@ RswareDesign.sln
 - Inter-module messaging via `WeakReferenceMessenger`
 - No code-behind logic in Views (data binding only)
 
+### Style Dictionary Structure (MUST follow)
+
+All UI elements MUST reference styles from the style dictionary files under `Themes/`.
+**NEVER** use hardcoded values — always use tokens from the style dictionary.
+
+```
+Themes/
+├── DarkColors.xaml  — Dark theme color/brush definitions (5-role system)
+├── LightColors.xaml — Light theme color/brush definitions (same keys)
+├── Fonts.xaml       — FontFamily, FontSize tokens
+├── Styles.xaml      — Spacing, sizes, icon effects, labels, slider styles
+└── Buttons.xaml     — Button, ToggleButton, ComboBox styles
+```
+
+Loaded in `App.xaml`: DarkColors (default) → Fonts → Styles → Buttons
+At runtime, DarkColors ↔ LightColors are swapped by theme toggle.
+
 ### Design Tokens (MUST follow)
 ```
 NEVER: Foreground="#CCCCCC"     -> USE: Foreground="{DynamicResource TextPrimary}"
@@ -51,14 +68,19 @@ NEVER: Background="#1E1E1E"    -> USE: Background="{DynamicResource SurfaceBrush
 NEVER: Margin="0,0,0,12"      -> USE: Margin="{StaticResource Margin.FormField}"
 NEVER: CornerRadius="4"        -> USE: CornerRadius="{StaticResource Radius.MD}"
 NEVER: Text="저장"              -> USE: Text="{DynamicResource loc.common.save}"
+NEVER: Foreground="#FFFFB74D"  -> USE: Style includes Foreground (e.g. RibbonIconOpacityPulse)
 ```
 
-### Color Constraint: MAX 5 roles
-1. **Primary** - Accent, active elements, primary buttons
-2. **Secondary** - Highlights, selected items, secondary actions
-3. **Surface** - Panel/card backgrounds
-4. **Background** - App background
-5. **Error** - Error/danger states
+### Color Constraint: MAX 5 roles (STRICTLY ENFORCED)
+1. **Primary** - Accent, active elements, primary buttons (`PrimaryBrush`)
+2. **Secondary** - Highlights, selected items, ribbon icons (`SecondaryBrush`, `RibbonItemBrush`)
+3. **Surface** - Panel/card backgrounds (`SurfaceBrush`, `SurfaceVariantBrush`)
+4. **Background** - App background (`BackgroundBrush`)
+5. **Error** - Error/danger states, disconnect (`ErrorBrush`, `RibbonItemErrorBrush`)
+
+**NEVER define per-item colors.** All items in the same category share ONE color from the 5 roles.
+- Ribbon icons: `RibbonItemBrush` (Secondary role) — set via style, not per-icon
+- Error icons: `RibbonItemErrorBrush` (Error role) — set via style, not per-icon
 
 ### i18n (Korean/English)
 - All UI text via `{DynamicResource loc.*}` keys

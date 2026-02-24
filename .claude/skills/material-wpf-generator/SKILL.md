@@ -100,14 +100,16 @@ RswareDesign/
 │   ├── MonitorView.xaml
 │   ├── OscilloscopeView.xaml
 │   └── ErrorLogView.xaml
-├── Themes/
-│   ├── DarkTheme.xaml
-│   ├── LightTheme.xaml
-│   ├── SharedTokens.xaml
-│   ├── ButtonStyles.xaml
-│   ├── DataGridStyles.xaml
-│   ├── TreeViewStyles.xaml
-│   └── DockingStyles.xaml
+├── Themes/                         ← Style Dictionary (App.xaml loads in order)
+│   ├── Colors.xaml                 ← 5-role colors + component brushes (CORE)
+│   ├── Fonts.xaml                  ← FontFamily + FontSize tokens (CORE)
+│   ├── Styles.xaml                 ← Spacing, sizes, icon effects, labels (CORE)
+│   ├── Buttons.xaml                ← Button, ToggleButton, ComboBox styles (CORE)
+│   ├── DarkTheme.xaml              ← Dark theme overrides (optional)
+│   ├── LightTheme.xaml             ← Light theme overrides (optional)
+│   ├── DataGridStyles.xaml         ← DataGrid-specific styles (optional)
+│   ├── TreeViewStyles.xaml         ← TreeView-specific styles (optional)
+│   └── DockingStyles.xaml          ← AvalonDock-specific styles (optional)
 ├── Services/
 │   ├── ThemeService.cs
 │   ├── LocalizationService.cs
@@ -138,12 +140,23 @@ Present files in project-tree order. Each file as a code block with the relative
 
 ## Design Rules
 
-### Color Constraint: MAX 5 roles
-1. **Primary** — Accent, active elements, primary buttons
-2. **Secondary** — Highlights, selected items
-3. **Surface** — Panel/card backgrounds
-4. **Background** — App background
-5. **Error** — Error/danger states
+### Style Dictionary Structure (MANDATORY)
+All UI must reference tokens from the style dictionary files under `Themes/`:
+- `Colors.xaml` — Color/brush definitions (5-role system + component brushes)
+- `Fonts.xaml` — FontFamily, FontSize tokens
+- `Styles.xaml` — Spacing, sizes, icon effects, labels, slider styles
+- `Buttons.xaml` — Button, ToggleButton, ComboBox styles
+
+### Color Constraint: MAX 5 roles (STRICTLY ENFORCED)
+1. **Primary** — Accent, active elements, primary buttons (`PrimaryBrush`)
+2. **Secondary** — Highlights, selected items, ribbon icons (`SecondaryBrush`, `RibbonItemBrush`)
+3. **Surface** — Panel/card backgrounds (`SurfaceBrush`, `SurfaceVariantBrush`)
+4. **Background** — App background (`BackgroundBrush`)
+5. **Error** — Error/danger states, disconnect (`ErrorBrush`, `RibbonItemErrorBrush`)
+
+**NEVER define per-item colors.** All items in the same category share ONE color from the 5 roles.
+- Ribbon icons: `RibbonItemBrush` (Secondary) — built into style, not set per-icon
+- Error icons: `RibbonItemErrorBrush` (Error) — built into style, not set per-icon
 
 ### Design Token Mandatory
 ```
@@ -151,6 +164,8 @@ NEVER: Foreground="#CCCCCC"     -> USE: Foreground="{DynamicResource TextPrimary
 NEVER: FontSize="12"           -> USE: FontSize="{DynamicResource FontSizeMD}"
 NEVER: Background="#1E1E1E"    -> USE: Background="{DynamicResource SurfaceBrush}"
 NEVER: Text="저장"              -> USE: Text="{DynamicResource loc.common.save}"
+NEVER: Foreground="#FFFFB74D"  -> USE: Style includes Foreground (use RibbonIconOpacityPulse)
+NEVER: Per-item color keys     -> USE: Single category color from 5-role system
 ```
 
 ### i18n Mandatory
