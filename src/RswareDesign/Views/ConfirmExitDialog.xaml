@@ -1,0 +1,66 @@
+<Window x:Class="RswareDesign.Views.ConfirmExitDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="Confirm Exit"
+        Width="380" Height="180"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        TextElement.Foreground="{DynamicResource TextPrimary}"
+        TextElement.FontFamily="{DynamicResource FontFamilyUI}"
+        TextElement.FontSize="{DynamicResource FontSizeMD}">
+
+    <Border Background="{DynamicResource SurfaceBrush}"
+            BorderBrush="{DynamicResource BorderDefault}"
+            BorderThickness="1"
+            CornerRadius="{StaticResource Radius.LG}"
+            Margin="8"
+            Effect="{StaticResource MaterialDesignShadowDepth3}">
+        <Grid Margin="{StaticResource Padding.Dialog}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,16">
+                <materialDesign:PackIcon Kind="AlertCircleOutline"
+                                         Width="{StaticResource Size.IconXL}"
+                                         Height="{StaticResource Size.IconXL}"
+                                         Foreground="{DynamicResource WarningBrush}"
+                                         VerticalAlignment="Center"
+                                         Margin="{StaticResource Margin.Inline}" />
+                <TextBlock Text="Confirm Exit"
+                           FontSize="{DynamicResource FontSizeLG}"
+                           FontWeight="SemiBold"
+                           Foreground="{DynamicResource TextPrimary}"
+                           VerticalAlignment="Center" />
+            </StackPanel>
+
+            <!-- Message -->
+            <TextBlock Grid.Row="1"
+                       Text="Are you sure you want to exit? Any unsaved changes will be lost."
+                       TextWrapping="Wrap"
+                       FontSize="{DynamicResource FontSizeMD}"
+                       Foreground="{DynamicResource TextSecondary}"
+                       Margin="0,0,0,8" />
+
+            <!-- Buttons -->
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Cancel"
+                        Style="{StaticResource MaterialDesignFlatButton}"
+                        Margin="{StaticResource Margin.Inline}"
+                        Click="BtnCancel_Click" />
+                <Button Content="Exit"
+                        Style="{StaticResource MaterialDesignRaisedButton}"
+                        Background="{DynamicResource ErrorBrush}"
+                        BorderThickness="0"
+                        Click="BtnExit_Click" />
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

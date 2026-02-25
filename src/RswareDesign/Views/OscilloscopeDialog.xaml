@@ -79,22 +79,22 @@
                                Margin="8,2" />
                     <CheckBox x:Name="ChkCh1" Content="CH1 Position"
                               IsChecked="True"
-                              Foreground="#FFFFEB3B"
+                              Foreground="{DynamicResource ChartCH1Brush}"
                               Margin="{StaticResource Margin.Inline}"
                               Checked="Channel_Changed" Unchecked="Channel_Changed" />
                     <CheckBox x:Name="ChkCh2" Content="CH2 Velocity"
                               IsChecked="True"
-                              Foreground="#FF4CAF50"
+                              Foreground="{DynamicResource ChartCH2Brush}"
                               Margin="{StaticResource Margin.Inline}"
                               Checked="Channel_Changed" Unchecked="Channel_Changed" />
                     <CheckBox x:Name="ChkCh3" Content="CH3 Current"
                               IsChecked="True"
-                              Foreground="#FF29B6F6"
+                              Foreground="{DynamicResource ChartCH3Brush}"
                               Margin="{StaticResource Margin.Inline}"
                               Checked="Channel_Changed" Unchecked="Channel_Changed" />
                     <CheckBox x:Name="ChkCh4" Content="CH4 Error"
                               IsChecked="True"
-                              Foreground="#FFEF5350"
+                              Foreground="{DynamicResource ChartCH4Brush}"
                               Margin="{StaticResource Margin.Inline}"
                               Checked="Channel_Changed" Unchecked="Channel_Changed" />
                 </StackPanel>

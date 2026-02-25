@@ -133,6 +133,7 @@ Before presenting output, verify:
 - Design tokens used (no hardcoded colors, fonts, spacing)
 - i18n keys used (no hardcoded Korean/English strings)
 - Code-behind is minimal (DataContext binding only)
+- **WPF binding safety**: `Path.Data` with nullable → `TargetNullValue='M0 0'`, `Image.Source` with nullable → `TargetNullValue={x:Null}`
 
 ## Output Format
 

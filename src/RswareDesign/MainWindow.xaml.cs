@@ -1,8 +1,13 @@
+using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using ControlzEx.Theming;
 using CommunityToolkit.Mvvm.Messaging;
 using MaterialDesignThemes.Wpf;
+using RswareDesign.Services;
 using RswareDesign.ViewModels;
 using RswareDesign.Views;
 
@@ -43,6 +48,188 @@ public partial class MainWindow : Window
                 // Password verified — open admin feature
             }
         });
+
+        WeakReferenceMessenger.Default.Register<ComparePanelChangedMessage>(this, (_, msg) =>
+        {
+            UpdateComparePanels();
+        });
+
+        WeakReferenceMessenger.Default.Register<TreeNodeSelectedMessage>(this, (_, msg) =>
+        {
+            // Refresh action buttons on all existing panels when tree selection changes
+            var newButtons = ActionButtonRegistry.GetForNodeType(msg.NodeType);
+            foreach (var panel in _comparePanels.Values)
+            {
+                panel.ActionButtons = newButtons;
+                panel.RebuildActionButtons();
+            }
+        });
+
+        WeakReferenceMessenger.Default.Register<ShowExitConfirmMessage>(this, (_, _) =>
+        {
+            var dialog = new ConfirmExitDialog { Owner = this };
+            if (dialog.ShowDialog() == true)
+                Application.Current.Shutdown();
+        });
+
+        // Initialize Panel A on startup + apply window chrome
+        Loaded += (_, _) =>
+        {
+            UpdateComparePanels();
+            ApplyWindowChrome(isDark: true); // default is dark theme
+        };
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    //  COMPARE PANEL MANAGEMENT (A/B/C/D)
+    // ═══════════════════════════════════════════════════════════
+
+    private readonly Dictionary<string, CompareParameterPanel> _comparePanels = new();
+    private readonly HashSet<string> _newlyAddedPanels = new();
+
+    private void UpdateComparePanels()
+    {
+        var vm = DataContext as MainWindowViewModel;
+        if (vm == null) return;
+
+        var panelStates = new Dictionary<string, bool>
+        {
+            ["A"] = vm.IsPanelAVisible,
+            ["B"] = vm.IsPanelBVisible,
+            ["C"] = vm.IsPanelCVisible,
+            ["D"] = vm.IsPanelDVisible,
+        };
+
+        // Enforce minimum 1 panel
+        int visibleCount = panelStates.Values.Count(v => v);
+        if (visibleCount == 0)
+        {
+            // Find the panel that was just turned off and turn it back on
+            // (this shouldn't normally happen due to VM guard, but just in case)
+            vm.IsPanelAVisible = true;
+            return;
+        }
+
+        // Remove panels that are no longer visible
+        foreach (var id in _comparePanels.Keys.ToList())
+        {
+            if (!panelStates.GetValueOrDefault(id))
+            {
+                _comparePanels.Remove(id);
+            }
+        }
+
+        // Add panels that should be visible
+        foreach (var (id, visible) in panelStates)
+        {
+            if (visible && !_comparePanels.ContainsKey(id))
+            {
+                int total = vm.Parameters.Count;
+                string nodeType = vm.SelectedNodeType;
+                var panel = new CompareParameterPanel
+                {
+                    PanelLabel = id,
+                    DataContext = vm,
+                    HeaderBrush = Application.Current.TryFindResource($"Panel{id}Brush") as Brush,
+                    LabelBrush = Application.Current.TryFindResource($"Panel{id}Accent") as Brush,
+                    TotalCount = total,
+                    LoadedCount = 0,
+                    ActionButtons = ActionButtonRegistry.GetForNodeType(nodeType),
+                };
+                panel.CloseRequested += (s, _) =>
+                {
+                    int currentVisible = new[] { vm.IsPanelAVisible, vm.IsPanelBVisible, vm.IsPanelCVisible, vm.IsPanelDVisible }.Count(v => v);
+                    if (currentVisible <= 1) return;
+
+                    switch (id)
+                    {
+                        case "A": vm.IsPanelAVisible = false; break;
+                        case "B": vm.IsPanelBVisible = false; break;
+                        case "C": vm.IsPanelCVisible = false; break;
+                        case "D": vm.IsPanelDVisible = false; break;
+                    }
+                };
+                _comparePanels[id] = panel;
+                _newlyAddedPanels.Add(id);
+            }
+        }
+
+        RebuildCenterLayout();
+    }
+
+    private void RebuildCenterLayout()
+    {
+        centerPanelGrid.Children.Clear();
+        centerPanelGrid.RowDefinitions.Clear();
+        centerPanelGrid.ColumnDefinitions.Clear();
+
+        var orderedPanels = _comparePanels.OrderBy(p => p.Key).ToList();
+        int count = orderedPanels.Count;
+
+        if (count == 0) return;
+
+        if (count == 1)
+        {
+            centerPanelGrid.Children.Add(orderedPanels[0].Value);
+        }
+        else if (count == 2)
+        {
+            centerPanelGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            centerPanelGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+
+            Grid.SetColumn(orderedPanels[0].Value, 0);
+            Grid.SetColumn(orderedPanels[1].Value, 1);
+            centerPanelGrid.Children.Add(orderedPanels[0].Value);
+            centerPanelGrid.Children.Add(orderedPanels[1].Value);
+        }
+        else
+        {
+            centerPanelGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            centerPanelGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            centerPanelGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+            centerPanelGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+
+            int[] cols = [0, 1, 0, 1];
+            int[] rows = [0, 0, 1, 1];
+            for (int i = 0; i < count && i < 4; i++)
+            {
+                Grid.SetColumn(orderedPanels[i].Value, cols[i]);
+                Grid.SetRow(orderedPanels[i].Value, rows[i]);
+                centerPanelGrid.Children.Add(orderedPanels[i].Value);
+            }
+        }
+
+        // Animate newly added panels (fade-in + slight scale)
+        foreach (var (id, panel) in orderedPanels)
+        {
+            if (_newlyAddedPanels.Contains(id))
+            {
+                panel.Opacity = 0;
+                panel.RenderTransform = new ScaleTransform(0.95, 0.95);
+                panel.RenderTransformOrigin = new Point(0.5, 0.5);
+
+                var fadeIn = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(250))
+                {
+                    EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
+                };
+                var scaleX = new DoubleAnimation(0.95, 1, TimeSpan.FromMilliseconds(250))
+                {
+                    EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
+                };
+                var scaleY = new DoubleAnimation(0.95, 1, TimeSpan.FromMilliseconds(250))
+                {
+                    EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
+                };
+
+                panel.BeginAnimation(OpacityProperty, fadeIn);
+                ((ScaleTransform)panel.RenderTransform).BeginAnimation(ScaleTransform.ScaleXProperty, scaleX);
+                ((ScaleTransform)panel.RenderTransform).BeginAnimation(ScaleTransform.ScaleYProperty, scaleY);
+
+                // Start loading count animation after fade-in
+                panel.StartLoadingAnimation();
+            }
+        }
+        _newlyAddedPanels.Clear();
     }
 
     // ═══════════════════════════════════════════════════════════
@@ -54,7 +241,42 @@ public partial class MainWindow : Window
         var app = Application.Current;
         var mergedDicts = app.Resources.MergedDictionaries;
 
-        // 1. Swap color dictionary
+        bool isDark = themeName != "Light";
+
+        // 1. Switch MaterialDesign base theme (FIRST — adds its own resource dicts)
+        try
+        {
+            var paletteHelper = new PaletteHelper();
+            var theme = paletteHelper.GetTheme();
+            theme.SetBaseTheme(isDark ? BaseTheme.Dark : BaseTheme.Light);
+            paletteHelper.SetTheme(theme);
+        }
+        catch { /* Ignore */ }
+
+        // 2. Switch Fluent.Ribbon theme (Gray uses Dark.Red to match red accent)
+        try
+        {
+            var fluentTheme = themeName switch
+            {
+                "Gray"  => "Dark.Red",
+                "Light" => "Light.Steel",
+                _       => "Dark.Steel",
+            };
+            ThemeManager.Current.ChangeTheme(app, fluentTheme);
+        }
+        catch { /* Ignore */ }
+
+        // 3. Switch AvalonDock theme
+        try
+        {
+            dockManager.Theme = isDark
+                ? new AvalonDock.Themes.Vs2013DarkTheme()
+                : new AvalonDock.Themes.Vs2013LightTheme();
+        }
+        catch { /* Ignore */ }
+
+        // 4. Swap our color dictionary LAST — overrides Fluent.Ribbon defaults
+        //    (Colors.xaml includes Fluent.Ribbon.Brushes.* override keys)
         ResourceDictionary? currentColors = null;
         foreach (var dict in mergedDicts)
         {
@@ -80,38 +302,13 @@ public partial class MainWindow : Window
             Source = new Uri(newSource, UriKind.Relative)
         });
 
-        bool isDark = themeName != "Light";
-
-        // 2. Switch MaterialDesign base theme
-        try
-        {
-            var paletteHelper = new PaletteHelper();
-            var theme = paletteHelper.GetTheme();
-            theme.SetBaseTheme(isDark ? BaseTheme.Dark : BaseTheme.Light);
-            paletteHelper.SetTheme(theme);
-        }
-        catch { /* Ignore */ }
-
-        // 3. Switch Fluent.Ribbon theme
-        try
-        {
-            ThemeManager.Current.ChangeTheme(app, isDark ? "Dark.Steel" : "Light.Steel");
-        }
-        catch { /* Ignore */ }
-
-        // 4. Switch AvalonDock theme
-        try
-        {
-            dockManager.Theme = isDark
-                ? new AvalonDock.Themes.Vs2013DarkTheme()
-                : new AvalonDock.Themes.Vs2013LightTheme();
-        }
-        catch { /* Ignore */ }
-
         // 5. Re-apply accent colors with current hue/saturation
         var vm = DataContext as MainWindowViewModel;
         if (vm != null)
             UpdateThemeColors(vm.HueValue, vm.SaturationValue);
+
+        // 6. Update title bar color to match new theme
+        ApplyWindowChrome(isDark);
     }
 
     // ═══════════════════════════════════════════════════════════
@@ -180,6 +377,51 @@ public partial class MainWindow : Window
         var res = Application.Current.Resources;
         foreach (var (key, baseSize) in BaseFontSizes)
             res[key] = Math.Round(baseSize * scale, 1);
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    //  TITLE BAR & WINDOW CHROME (Windows 11 DWM)
+    // ═══════════════════════════════════════════════════════════
+
+    [DllImport("dwmapi.dll", PreserveSig = true)]
+    private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
+
+    private const int DWMWA_USE_IMMERSIVE_DARK_MODE = 20;
+    private const int DWMWA_WINDOW_CORNER_PREFERENCE = 33;
+    private const int DWMWA_CAPTION_COLOR = 35;
+    private const int DWMWA_TEXT_COLOR = 36;
+    private const int DWMWCP_ROUND = 2;
+
+    private void ApplyWindowChrome(bool isDark)
+    {
+        var hwnd = new WindowInteropHelper(this).Handle;
+        if (hwnd == IntPtr.Zero) return;
+
+        // Rounded corners
+        int cornerPref = DWMWCP_ROUND;
+        DwmSetWindowAttribute(hwnd, DWMWA_WINDOW_CORNER_PREFERENCE, ref cornerPref, sizeof(int));
+
+        // Immersive dark mode (affects title bar button icons)
+        int darkMode = isDark ? 1 : 0;
+        DwmSetWindowAttribute(hwnd, DWMWA_USE_IMMERSIVE_DARK_MODE, ref darkMode, sizeof(int));
+
+        // Caption (title bar) color — COLORREF = 0x00BBGGRR
+        var bgBrush = Application.Current.TryFindResource("BackgroundBrush") as SolidColorBrush;
+        if (bgBrush != null)
+        {
+            var c = bgBrush.Color;
+            int colorRef = c.R | (c.G << 8) | (c.B << 16);
+            DwmSetWindowAttribute(hwnd, DWMWA_CAPTION_COLOR, ref colorRef, sizeof(int));
+        }
+
+        // Title text color
+        var textBrush = Application.Current.TryFindResource("TextPrimary") as SolidColorBrush;
+        if (textBrush != null)
+        {
+            var c = textBrush.Color;
+            int colorRef = c.R | (c.G << 8) | (c.B << 16);
+            DwmSetWindowAttribute(hwnd, DWMWA_TEXT_COLOR, ref colorRef, sizeof(int));
+        }
     }
 
     // ═══════════════════════════════════════════════════════════

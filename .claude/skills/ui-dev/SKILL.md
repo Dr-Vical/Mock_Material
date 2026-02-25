@@ -44,6 +44,10 @@ When the user inputs `/ui-dev`, collect requirements interactively and execute t
   - Background (`BackgroundBrush`) — app background
   - Error (`ErrorBrush`, `RibbonItemErrorBrush`) — error/danger states
 - **NEVER define per-item colors** — all items in same category share ONE color from 5 roles
+- **WPF Binding Safety** (runtime error prevention):
+  - `Path.Data` with nullable binding → MUST add `TargetNullValue='M0 0'` (GeometryConverter cannot convert null)
+  - Even `Visibility=Collapsed` parents still evaluate child bindings — null safety required
+  - `Image.Source` with nullable path → use `TargetNullValue={x:Null}`
 - **Style Dictionary file structure**:
   - `Themes/Colors.xaml` — Color/brush definitions
   - `Themes/Fonts.xaml` — FontFamily, FontSize tokens

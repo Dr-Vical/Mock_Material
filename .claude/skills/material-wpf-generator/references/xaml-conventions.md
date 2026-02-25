@@ -180,6 +180,27 @@ sig.Color = ScottPlot.Color.FromHex("#90CAF9");
 pltMonitor.Refresh();
 ```
 
+## WPF Binding Safety Rules
+
+### Path.Data with nullable bindings
+WPF's `GeometryConverter` cannot convert null. If `Path.Data` binds to a nullable property, add `TargetNullValue`:
+
+```xml
+<!-- WRONG: Throws GeometryConverter exception when CustomIconPath is null -->
+<Path Data="{Binding CustomIconPath}" />
+
+<!-- CORRECT: Provides empty geometry fallback -->
+<Path Data="{Binding CustomIconPath, TargetNullValue='M0 0'}" />
+```
+
+**Rule:** Any `Path.Data` binding to a nullable property MUST include `TargetNullValue='M0 0'`.
+Even if the parent is `Visibility=Collapsed`, bindings still evaluate and trigger errors.
+
+### General nullable binding safety
+- `Image.Source` with nullable path → use `TargetNullValue={x:Null}`
+- `Path.Data` with nullable geometry string → use `TargetNullValue='M0 0'`
+- Converters with nullable input → always handle null in Convert method
+
 ## Prohibited Patterns
 
 ```

@@ -1,4 +1,5 @@
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Threading;
 using MaterialDesignThemes.Wpf;
 using ScottPlot;
@@ -66,13 +67,14 @@ public partial class OscilloscopeDialog : Window
     {
         var plot = OscPlot.Plot;
 
-        // Dark theme
-        plot.FigureBackground.Color = ScottPlot.Color.FromHex("#1E1E1E");
-        plot.DataBackground.Color = ScottPlot.Color.FromHex("#252526");
-        plot.Grid.MajorLineColor = ScottPlot.Color.FromHex("#3C3C3C");
+        // Theme colors from style dictionary
+        plot.FigureBackground.Color = GetThemeColor("BackgroundBrush");
+        plot.DataBackground.Color = GetThemeColor("SurfaceBrush");
+        plot.Grid.MajorLineColor = GetThemeColor("SurfaceVariantBrush");
 
         // Axes styling
-        var axisColor = ScottPlot.Color.FromHex("#9E9E9E");
+        var axisColor = GetThemeColor("TextSecondary");
+        var frameColor = GetThemeColor("BorderDefault");
         plot.Axes.Bottom.Label.Text = "Time (ms)";
         plot.Axes.Left.Label.Text = "Amplitude";
         plot.Axes.Bottom.Label.ForeColor = axisColor;
@@ -81,44 +83,57 @@ public partial class OscilloscopeDialog : Window
         plot.Axes.Left.TickLabelStyle.ForeColor = axisColor;
         plot.Axes.Bottom.MajorTickStyle.Color = axisColor;
         plot.Axes.Left.MajorTickStyle.Color = axisColor;
-        plot.Axes.Bottom.FrameLineStyle.Color = ScottPlot.Color.FromHex("#424242");
-        plot.Axes.Left.FrameLineStyle.Color = ScottPlot.Color.FromHex("#424242");
-        plot.Axes.Right.FrameLineStyle.Color = ScottPlot.Color.FromHex("#424242");
-        plot.Axes.Top.FrameLineStyle.Color = ScottPlot.Color.FromHex("#424242");
+        plot.Axes.Bottom.FrameLineStyle.Color = frameColor;
+        plot.Axes.Left.FrameLineStyle.Color = frameColor;
+        plot.Axes.Right.FrameLineStyle.Color = frameColor;
+        plot.Axes.Top.FrameLineStyle.Color = frameColor;
 
         // CH1: Position (Yellow)
         _sigCh1 = plot.Add.Signal(_ch1Data, PeriodMs);
         _sigCh1.LegendText = "CH1 Position (counts)";
-        _sigCh1.Color = ScottPlot.Color.FromHex("#FFEB3B");
+        _sigCh1.Color = GetThemeColor("ChartCH1Brush");
         _sigCh1.LineWidth = 1.5f;
 
         // CH2: Velocity (Green)
         _sigCh2 = plot.Add.Signal(_ch2Data, PeriodMs);
         _sigCh2.LegendText = "CH2 Velocity";
-        _sigCh2.Color = ScottPlot.Color.FromHex("#4CAF50");
+        _sigCh2.Color = GetThemeColor("ChartCH2Brush");
         _sigCh2.LineWidth = 1.5f;
 
         // CH3: Current (Cyan)
         _sigCh3 = plot.Add.Signal(_ch3Data, PeriodMs);
         _sigCh3.LegendText = "CH3 Current (mA)";
-        _sigCh3.Color = ScottPlot.Color.FromHex("#29B6F6");
+        _sigCh3.Color = GetThemeColor("ChartCH3Brush");
         _sigCh3.LineWidth = 1.5f;
 
         // CH4: Position Error (Red)
         _sigCh4 = plot.Add.Signal(_ch4Data, PeriodMs);
         _sigCh4.LegendText = "CH4 Pos Error";
-        _sigCh4.Color = ScottPlot.Color.FromHex("#EF5350");
+        _sigCh4.Color = GetThemeColor("ChartCH4Brush");
         _sigCh4.LineWidth = 1.2f;
 
         // Legend
         plot.Legend.IsVisible = true;
         plot.Legend.Alignment = Alignment.UpperRight;
-        plot.Legend.BackgroundColor = ScottPlot.Color.FromHex("#2D2D30");
-        plot.Legend.FontColor = ScottPlot.Color.FromHex("#E0E0E0");
-        plot.Legend.OutlineColor = ScottPlot.Color.FromHex("#424242");
+        plot.Legend.BackgroundColor = GetThemeColor("SurfaceVariantBrush");
+        plot.Legend.FontColor = GetThemeColor("TextPrimary");
+        plot.Legend.OutlineColor = GetThemeColor("BorderDefault");
 
         plot.Axes.AutoScale();
         OscPlot.Refresh();
+    }
+
+    /// <summary>
+    /// Reads a SolidColorBrush from the application style dictionary and converts to ScottPlot.Color.
+    /// </summary>
+    private static ScottPlot.Color GetThemeColor(string resourceKey)
+    {
+        if (Application.Current.TryFindResource(resourceKey) is SolidColorBrush brush)
+        {
+            var c = brush.Color;
+            return new ScottPlot.Color(c.R, c.G, c.B, c.A);
+        }
+        return ScottPlot.Colors.Gray;
     }
 
     private void OnTimerTick(object? sender, EventArgs e)

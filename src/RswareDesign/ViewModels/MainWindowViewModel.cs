@@ -16,6 +16,9 @@ public partial class MainWindowViewModel : ObservableObject
     private string _activeDocumentTitle = "ECAT Homing";
 
     [ObservableProperty]
+    private string _selectedNodeType = "ECATHoming";
+
+    [ObservableProperty]
     private bool _isConnected;
 
     [ObservableProperty]
@@ -61,7 +64,20 @@ public partial class MainWindowViewModel : ObservableObject
     [ObservableProperty]
     private bool _isErrorLogVisible = true;
 
-    // Bottom checkboxes (ParameterEditorView)
+    // Compare panel visibility (A/B/C/D) — all panels are equal, at least 1 must remain
+    [ObservableProperty]
+    private bool _isPanelAVisible = true; // A is default-on at startup
+
+    [ObservableProperty]
+    private bool _isPanelBVisible;
+
+    [ObservableProperty]
+    private bool _isPanelCVisible;
+
+    [ObservableProperty]
+    private bool _isPanelDVisible;
+
+    // Bottom checkboxes
     [ObservableProperty]
     private bool _showHelps;
 
@@ -101,6 +117,7 @@ public partial class MainWindowViewModel : ObservableObject
         // Update document title
         ActiveDocumentTitle = msg.NodeName;
         Title = $"RswareDesign - [Drive - {msg.NodeName}]";
+        SelectedNodeType = msg.NodeType;
 
         // Load parameters from CSV for selected node
         LoadParametersForNode(msg.NodeType);
@@ -149,7 +166,7 @@ public partial class MainWindowViewModel : ObservableObject
     [RelayCommand]
     private void ExitApp()
     {
-        System.Windows.Application.Current.Shutdown();
+        WeakReferenceMessenger.Default.Send(new ShowExitConfirmMessage());
     }
 
     [RelayCommand]
@@ -197,6 +214,46 @@ public partial class MainWindowViewModel : ObservableObject
         WeakReferenceMessenger.Default.Send(new FontSizeChangedMessage(value));
     }
 
+    partial void OnIsPanelAVisibleChanged(bool value)
+    {
+        if (!value && !IsPanelBVisible && !IsPanelCVisible && !IsPanelDVisible)
+        {
+            IsPanelAVisible = true; // Can't remove last panel
+            return;
+        }
+        WeakReferenceMessenger.Default.Send(new ComparePanelChangedMessage("A", value));
+    }
+
+    partial void OnIsPanelBVisibleChanged(bool value)
+    {
+        if (!value && !IsPanelAVisible && !IsPanelCVisible && !IsPanelDVisible)
+        {
+            IsPanelBVisible = true; // Can't remove last panel
+            return;
+        }
+        WeakReferenceMessenger.Default.Send(new ComparePanelChangedMessage("B", value));
+    }
+
+    partial void OnIsPanelCVisibleChanged(bool value)
+    {
+        if (!value && !IsPanelAVisible && !IsPanelBVisible && !IsPanelDVisible)
+        {
+            IsPanelCVisible = true; // Can't remove last panel
+            return;
+        }
+        WeakReferenceMessenger.Default.Send(new ComparePanelChangedMessage("C", value));
+    }
+
+    partial void OnIsPanelDVisibleChanged(bool value)
+    {
+        if (!value && !IsPanelAVisible && !IsPanelBVisible && !IsPanelCVisible)
+        {
+            IsPanelDVisible = true; // Can't remove last panel
+            return;
+        }
+        WeakReferenceMessenger.Default.Send(new ComparePanelChangedMessage("D", value));
+    }
+
     // ═══════════════════════════════════════════════════════════
     //  SAMPLE DATA
     // ═══════════════════════════════════════════════════════════
@@ -214,7 +271,7 @@ public partial class MainWindowViewModel : ObservableObject
                     Children =
                     [
                         new DriveTreeNode { Name = "Mode Configuration", IconKind = "TuneVertical", NodeType = "ModeConfig" },
-                        new DriveTreeNode { Name = "Motor", IconKind = "Engine", NodeType = "Motor" },
+                        new DriveTreeNode { Name = "Motor", NodeType = "Motor", CustomIconPath = "M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z" },
                         new DriveTreeNode
                         {
                             Name = "PID Tuning", IconKind = "ChartLine", NodeType = "PIDTuning", IsExpanded = true,
@@ -295,3 +352,7 @@ public record FontSizeChangedMessage(int FontSize);
 public record ShowAdminPasswordMessage(string Target);
 
 public record TreeNodeSelectedMessage(string NodeName, string NodeType);
+
+public record ComparePanelChangedMessage(string PanelId, bool IsVisible);
+
+public class ShowExitConfirmMessage { }

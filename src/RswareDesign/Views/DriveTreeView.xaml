@@ -7,10 +7,18 @@
 
     <UserControl.Resources>
         <converters:StringToPackIconKindConverter x:Key="IconKindConverter" />
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVis" />
     </UserControl.Resources>
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
         <TreeView x:Name="driveTree"
+                  Grid.Row="0"
                   ItemsSource="{Binding TreeNodes}"
                   Background="Transparent"
                   BorderThickness="0"
@@ -30,13 +38,25 @@
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Children}">
                     <StackPanel Orientation="Horizontal" Margin="2,2">
+                        <!-- Custom SVG Path icon -->
+                        <Viewbox Width="{DynamicResource Size.IconMD}"
+                                 Height="{DynamicResource Size.IconMD}"
+                                 VerticalAlignment="Center"
+                                 Margin="0,0,6,0"
+                                 Visibility="{Binding HasCustomIcon, Converter={StaticResource BoolToVis}}">
+                            <Path Data="{Binding CustomIconPath, TargetNullValue='M0 0'}"
+                                  Fill="{DynamicResource PrimaryBrush}"
+                                  Stretch="Uniform" />
+                        </Viewbox>
+                        <!-- PackIcon (default) -->
                         <materialDesign:PackIcon
                             Kind="{Binding IconKind, Converter={StaticResource IconKindConverter}}"
                             Width="{DynamicResource Size.IconMD}"
                             Height="{DynamicResource Size.IconMD}"
                             Foreground="{DynamicResource PrimaryBrush}"
                             VerticalAlignment="Center"
-                            Margin="0,0,6,0" />
+                            Margin="0,0,6,0"
+                            Visibility="{Binding HasCustomIcon, Converter={StaticResource InverseBoolToVis}}" />
                         <TextBlock Text="{Binding Name}"
                                    VerticalAlignment="Center" />
                     </StackPanel>
@@ -44,5 +64,180 @@
             </TreeView.ItemTemplate>
 
         </TreeView>
+
+        <!-- A/B/C/D Compare Panel Toggle Buttons -->
+        <Border Grid.Row="1"
+                Background="{DynamicResource SurfaceVariantBrush}"
+                BorderBrush="{DynamicResource DividerBrush}"
+                BorderThickness="0,1,0,0">
+            <UniformGrid Columns="4" Height="32">
+                <ToggleButton IsChecked="{Binding IsPanelAVisible, Mode=TwoWay}"
+                              ToolTip="Compare Panel A">
+                    <ToggleButton.Style>
+                        <Style TargetType="ToggleButton">
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="BorderThickness" Value="0" />
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border x:Name="toggleBorder"
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="{DynamicResource DividerBrush}"
+                                                BorderThickness="0,0,1,0">
+                                            <TextBlock Text="A"
+                                                       FontWeight="Bold"
+                                                       FontFamily="{DynamicResource FontFamilyUI}"
+                                                       FontSize="{DynamicResource FontSizeMD}"
+                                                       Foreground="{DynamicResource TextSecondary}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       x:Name="toggleText" />
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter TargetName="toggleBorder" Property="Background" Value="{DynamicResource PanelAAccent}" />
+                                                <Setter TargetName="toggleText" Property="Foreground" Value="{DynamicResource TextOnPrimary}" />
+                                            </Trigger>
+                                            <MultiTrigger>
+                                                <MultiTrigger.Conditions>
+                                                    <Condition Property="IsMouseOver" Value="True" />
+                                                    <Condition Property="IsChecked" Value="False" />
+                                                </MultiTrigger.Conditions>
+                                                <Setter TargetName="toggleBorder" Property="Background" Value="{DynamicResource RibbonButton.HoverBrush}" />
+                                            </MultiTrigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ToggleButton.Style>
+                </ToggleButton>
+                <ToggleButton IsChecked="{Binding IsPanelBVisible, Mode=TwoWay}"
+                              ToolTip="Compare Panel B">
+                    <ToggleButton.Style>
+                        <Style TargetType="ToggleButton">
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="BorderThickness" Value="0" />
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border x:Name="toggleBorder"
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="{DynamicResource DividerBrush}"
+                                                BorderThickness="0,0,1,0">
+                                            <TextBlock Text="B"
+                                                       FontWeight="Bold"
+                                                       FontFamily="{DynamicResource FontFamilyUI}"
+                                                       FontSize="{DynamicResource FontSizeMD}"
+                                                       Foreground="{DynamicResource TextSecondary}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       x:Name="toggleText" />
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter TargetName="toggleBorder" Property="Background" Value="{DynamicResource PanelBAccent}" />
+                                                <Setter TargetName="toggleText" Property="Foreground" Value="{DynamicResource TextOnPrimary}" />
+                                            </Trigger>
+                                            <MultiTrigger>
+                                                <MultiTrigger.Conditions>
+                                                    <Condition Property="IsMouseOver" Value="True" />
+                                                    <Condition Property="IsChecked" Value="False" />
+                                                </MultiTrigger.Conditions>
+                                                <Setter TargetName="toggleBorder" Property="Background" Value="{DynamicResource RibbonButton.HoverBrush}" />
+                                            </MultiTrigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ToggleButton.Style>
+                </ToggleButton>
+                <ToggleButton IsChecked="{Binding IsPanelCVisible, Mode=TwoWay}"
+                              ToolTip="Compare Panel C">
+                    <ToggleButton.Style>
+                        <Style TargetType="ToggleButton">
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="BorderThickness" Value="0" />
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border x:Name="toggleBorder"
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="{DynamicResource DividerBrush}"
+                                                BorderThickness="0,0,1,0">
+                                            <TextBlock Text="C"
+                                                       FontWeight="Bold"
+                                                       FontFamily="{DynamicResource FontFamilyUI}"
+                                                       FontSize="{DynamicResource FontSizeMD}"
+                                                       Foreground="{DynamicResource TextSecondary}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       x:Name="toggleText" />
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter TargetName="toggleBorder" Property="Background" Value="{DynamicResource PanelCAccent}" />
+                                                <Setter TargetName="toggleText" Property="Foreground" Value="{DynamicResource TextOnPrimary}" />
+                                            </Trigger>
+                                            <MultiTrigger>
+                                                <MultiTrigger.Conditions>
+                                                    <Condition Property="IsMouseOver" Value="True" />
+                                                    <Condition Property="IsChecked" Value="False" />
+                                                </MultiTrigger.Conditions>
+                                                <Setter TargetName="toggleBorder" Property="Background" Value="{DynamicResource RibbonButton.HoverBrush}" />
+                                            </MultiTrigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ToggleButton.Style>
+                </ToggleButton>
+                <ToggleButton IsChecked="{Binding IsPanelDVisible, Mode=TwoWay}"
+                              ToolTip="Compare Panel D">
+                    <ToggleButton.Style>
+                        <Style TargetType="ToggleButton">
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="BorderThickness" Value="0" />
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border x:Name="toggleBorder"
+                                                Background="{TemplateBinding Background}">
+                                            <TextBlock Text="D"
+                                                       FontWeight="Bold"
+                                                       FontFamily="{DynamicResource FontFamilyUI}"
+                                                       FontSize="{DynamicResource FontSizeMD}"
+                                                       Foreground="{DynamicResource TextSecondary}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       x:Name="toggleText" />
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter TargetName="toggleBorder" Property="Background" Value="{DynamicResource PanelDAccent}" />
+                                                <Setter TargetName="toggleText" Property="Foreground" Value="{DynamicResource TextOnPrimary}" />
+                                            </Trigger>
+                                            <MultiTrigger>
+                                                <MultiTrigger.Conditions>
+                                                    <Condition Property="IsMouseOver" Value="True" />
+                                                    <Condition Property="IsChecked" Value="False" />
+                                                </MultiTrigger.Conditions>
+                                                <Setter TargetName="toggleBorder" Property="Background" Value="{DynamicResource RibbonButton.HoverBrush}" />
+                                            </MultiTrigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ToggleButton.Style>
+                </ToggleButton>
+            </UniformGrid>
+        </Border>
     </Grid>
 </UserControl>

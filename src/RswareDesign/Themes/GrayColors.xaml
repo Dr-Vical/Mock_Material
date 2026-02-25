@@ -2,61 +2,63 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!-- ═══════════════════════════════════════════════════════════ -->
-    <!--  5-ROLE COLOR SYSTEM — GRAY THEME (회색톤)                    -->
-    <!--  Monochrome: White / Black / Gray palette                    -->
+    <!--  5-ROLE COLOR SYSTEM — GRAY THEME (NewRS 기반 차콜 + Red)      -->
+    <!--  Source: NewRS.PNG — Charcoal gray (NOT black) + Red accent   -->
     <!-- ═══════════════════════════════════════════════════════════ -->
 
-    <!-- ── 1. Primary ── -->
-    <SolidColorBrush x:Key="PrimaryBrush"          Color="#FF90A4AE" />
-    <SolidColorBrush x:Key="PrimaryHoverBrush"      Color="#FF78909C" />
+    <!-- ── 1. Primary (Red accent — active tabs, buttons) ── -->
+    <SolidColorBrush x:Key="PrimaryBrush"          Color="#FFD32F2F" />
+    <SolidColorBrush x:Key="PrimaryHoverBrush"      Color="#FFC62828" />
     <SolidColorBrush x:Key="PrimaryForegroundBrush" Color="#FFFFFFFF" />
 
-    <!-- ── 2. Secondary ── -->
-    <SolidColorBrush x:Key="SecondaryBrush"         Color="#FFCFD8DC" />
-    <SolidColorBrush x:Key="SecondaryHoverBrush"    Color="#FFB0BEC5" />
+    <!-- ── 2. Secondary (Light steel gray — icons, secondary highlights) ── -->
+    <SolidColorBrush x:Key="SecondaryBrush"         Color="#FFB0B4BC" />
+    <SolidColorBrush x:Key="SecondaryHoverBrush"    Color="#FF9EA2AA" />
 
-    <!-- ── 3. Surface ── -->
-    <SolidColorBrush x:Key="SurfaceBrush"           Color="#FF58585E" />
-    <SolidColorBrush x:Key="SurfaceVariantBrush"    Color="#FF65656B" />
+    <!-- ── 3. Surface (Charcoal panels — visible gray, not black) ── -->
+    <SolidColorBrush x:Key="SurfaceBrush"           Color="#FF2D2D35" />
+    <SolidColorBrush x:Key="SurfaceVariantBrush"    Color="#FF3A3A45" />
 
-    <!-- ── 4. Background ── -->
-    <SolidColorBrush x:Key="BackgroundBrush"        Color="#FF48484E" />
+    <!-- ── 4. Background (Dark charcoal — clearly NOT black) ── -->
+    <SolidColorBrush x:Key="BackgroundBrush"        Color="#FF252530" />
 
-    <!-- ── 5. Error ── -->
+    <!-- ── 5. Error / Warning / Success ── -->
     <SolidColorBrush x:Key="ErrorBrush"             Color="#FFEF5350" />
-    <SolidColorBrush x:Key="WarningBrush"           Color="#FFFFD54F" />
+    <SolidColorBrush x:Key="WarningBrush"           Color="#FFFFC107" />
     <SolidColorBrush x:Key="SuccessBrush"           Color="#FF66BB6A" />
 
     <!-- ═══════════════════════════════════════════════════════════ -->
     <!--  TEXT COLORS                                                  -->
     <!-- ═══════════════════════════════════════════════════════════ -->
-    <SolidColorBrush x:Key="TextPrimary"            Color="#FFF0F0F0" />
-    <SolidColorBrush x:Key="TextSecondary"          Color="#FFB8B8B8" />
-    <SolidColorBrush x:Key="TextDisabled"           Color="#FF787878" />
+    <SolidColorBrush x:Key="TextPrimary"            Color="#FFE4E4E8" />
+    <SolidColorBrush x:Key="TextSecondary"          Color="#FFA0A0A8" />
+    <SolidColorBrush x:Key="TextDisabled"           Color="#FF606068" />
     <SolidColorBrush x:Key="TextOnPrimary"          Color="#FFFFFFFF" />
 
     <!-- ═══════════════════════════════════════════════════════════ -->
     <!--  BORDER COLORS                                                -->
     <!-- ═══════════════════════════════════════════════════════════ -->
-    <SolidColorBrush x:Key="BorderDefault"          Color="#FF6E6E74" />
-    <SolidColorBrush x:Key="BorderFocused"          Color="#FF90A4AE" />
-    <SolidColorBrush x:Key="DividerBrush"           Color="#FF6E6E74" />
+    <SolidColorBrush x:Key="BorderDefault"          Color="#FF484852" />
+    <SolidColorBrush x:Key="BorderFocused"          Color="#FFD32F2F" />
+    <SolidColorBrush x:Key="DividerBrush"           Color="#FF404048" />
 
     <!-- ═══════════════════════════════════════════════════════════ -->
     <!--  COMPONENT-SPECIFIC COLORS                                    -->
     <!-- ═══════════════════════════════════════════════════════════ -->
-    <SolidColorBrush x:Key="RibbonBackgroundBrush"  Color="#FF505056" />
-    <SolidColorBrush x:Key="TreeBackgroundBrush"    Color="#FF505056" />
-    <SolidColorBrush x:Key="GridHeaderBrush"        Color="#FF525258" />
-    <SolidColorBrush x:Key="GridAlternatingRowBrush" Color="#FF4E4E54" />
-    <SolidColorBrush x:Key="StatusBarBrush"         Color="#FF607D8B" />
+    <SolidColorBrush x:Key="ValueHighlightBrush"     Color="#FFFFD54F" />
+
+    <SolidColorBrush x:Key="RibbonBackgroundBrush"  Color="#FF333338" />
+    <SolidColorBrush x:Key="TreeBackgroundBrush"    Color="#FF2D2D33" />
+    <SolidColorBrush x:Key="GridHeaderBrush"        Color="#FF383842" />
+    <SolidColorBrush x:Key="GridAlternatingRowBrush" Color="#FF2A2A34" />
+    <SolidColorBrush x:Key="StatusBarBrush"         Color="#FFD32F2F" />
     <SolidColorBrush x:Key="StatusBarForeground"    Color="#FFFFFFFF" />
-    <SolidColorBrush x:Key="SelectedRowBrush"       Color="#FF607D8B" />
+    <SolidColorBrush x:Key="SelectedRowBrush"       Color="#FF2F4060" />
 
     <!-- ═══════════════════════════════════════════════════════════ -->
-    <!--  RIBBON ITEM COLOR — Gray monochrome (Secondary role)        -->
+    <!--  RIBBON ITEM COLOR — Light steel gray (Secondary role)        -->
     <!-- ═══════════════════════════════════════════════════════════ -->
-    <SolidColorBrush x:Key="RibbonItemBrush"        Color="#FFCFD8DC" />
+    <SolidColorBrush x:Key="RibbonItemBrush"        Color="#FFB0B4BC" />
     <SolidColorBrush x:Key="RibbonItemErrorBrush"   Color="#FFEF5350" />
 
     <!-- ═══════════════════════════════════════════════════════════ -->
@@ -64,12 +66,56 @@
     <!-- ═══════════════════════════════════════════════════════════ -->
     <SolidColorBrush x:Key="RibbonButton.HoverBrush"   Color="#20FFFFFF" />
     <SolidColorBrush x:Key="RibbonButton.PressedBrush"  Color="#35FFFFFF" />
-    <SolidColorBrush x:Key="RibbonButton.CheckedBrush"  Color="#FF65656B" />
+    <SolidColorBrush x:Key="RibbonButton.CheckedBrush"  Color="#FF404048" />
 
     <!-- ═══════════════════════════════════════════════════════════ -->
     <!--  COMBOBOX STATE COLORS                                        -->
     <!-- ═══════════════════════════════════════════════════════════ -->
-    <SolidColorBrush x:Key="ComboBox.HoverBackground"  Color="#FF68686E" />
-    <SolidColorBrush x:Key="ComboBox.HoverBorder"      Color="#FF888890" />
+    <SolidColorBrush x:Key="ComboBox.HoverBackground"  Color="#FF454550" />
+    <SolidColorBrush x:Key="ComboBox.HoverBorder"      Color="#FF606068" />
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  PANEL A/B/C/D IDENTIFICATION COLORS                        -->
+    <!--  Matching NewRS scope panels (A=Red, B=Blue, C=Green, D=Amber) -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+
+    <LinearGradientBrush x:Key="PanelABrush" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Color="#50D32F2F" Offset="0" />
+        <GradientStop Color="#002D2D35" Offset="1" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="PanelBBrush" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Color="#501565C0" Offset="0" />
+        <GradientStop Color="#002D2D35" Offset="1" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="PanelCBrush" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Color="#502E7D32" Offset="0" />
+        <GradientStop Color="#002D2D35" Offset="1" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="PanelDBrush" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Color="#50F9A825" Offset="0" />
+        <GradientStop Color="#002D2D35" Offset="1" />
+    </LinearGradientBrush>
+
+    <SolidColorBrush x:Key="PanelAAccent" Color="#FFD32F2F" />
+    <SolidColorBrush x:Key="PanelBAccent" Color="#FF1565C0" />
+    <SolidColorBrush x:Key="PanelCAccent" Color="#FF2E7D32" />
+    <SolidColorBrush x:Key="PanelDAccent" Color="#FFF9A825" />
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  CHART CHANNEL COLORS (Oscilloscope / Monitor)              -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <SolidColorBrush x:Key="ChartCH1Brush" Color="#FFFFEB3B" />
+    <SolidColorBrush x:Key="ChartCH2Brush" Color="#FF4CAF50" />
+    <SolidColorBrush x:Key="ChartCH3Brush" Color="#FF29B6F6" />
+    <SolidColorBrush x:Key="ChartCH4Brush" Color="#FFEF5350" />
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  FLUENT.RIBBON BACKGROUND OVERRIDES                         -->
+    <!--  Match ribbon area to our BackgroundBrush / SurfaceBrush    -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.RibbonTabControl.Background" Color="#FF252530" />
+    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.Ribbon.Background"           Color="#FF252530" />
+    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.RibbonWindow.TitleBackground" Color="#FF252530" />
+    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.RibbonGroupBox.Background"   Color="#FF2D2D35" />
 
 </ResourceDictionary>

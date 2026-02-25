@@ -6,6 +6,7 @@
         xmlns:avalonDock="clr-namespace:AvalonDock;assembly=AvalonDock"
         xmlns:avalonDockLayout="clr-namespace:AvalonDock.Layout;assembly=AvalonDock"
         xmlns:avalonDockTheme="clr-namespace:AvalonDock.Themes;assembly=AvalonDock.Themes.VS2013"
+        xmlns:avalonDockControls="clr-namespace:AvalonDock.Controls;assembly=AvalonDock"
         xmlns:views="clr-namespace:RswareDesign.Views"
         xmlns:vm="clr-namespace:RswareDesign.ViewModels"
         Title="{Binding Title}"
@@ -244,28 +245,55 @@
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom"
-                        Margin="0,0,8,20">
-                <!-- Enable -->
-                <Button Style="{StaticResource QuickActionButton}" Command="{Binding EnableCommand}">
+                        Margin="0,0,8,16">
+                <!-- Enable (fixed green icon — special case, only these 3 buttons) -->
+                <Button Style="{StaticResource QuickActionButton}" Command="{Binding EnableCommand}"
+                        Padding="10,6" MinHeight="38">
                     <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="Play" Style="{StaticResource QuickActionIcon}" />
-                        <TextBlock Text="Enable" Style="{StaticResource QuickActionLabel}" />
+                        <materialDesign:PackIcon Kind="Play"
+                                                 Width="22" Height="22"
+                                                 VerticalAlignment="Center"
+                                                 Foreground="{DynamicResource SuccessBrush}">
+                            <materialDesign:PackIcon.Effect>
+                                <DropShadowEffect Color="{Binding Color, Source={StaticResource SuccessBrush}}" ShadowDepth="0" BlurRadius="8" Opacity="0.6" />
+                            </materialDesign:PackIcon.Effect>
+                        </materialDesign:PackIcon>
+                        <TextBlock Text="Enable" Style="{StaticResource QuickActionLabel}"
+                                   FontSize="{DynamicResource FontSizeSM}" Margin="8,0,0,0" />
                     </StackPanel>
                 </Button>
-                <!-- Disable All -->
-                <Button Style="{StaticResource QuickActionButton}" Command="{Binding DisableAllCommand}">
+                <!-- Disable All (fixed red icon — special case) -->
+                <Button Style="{StaticResource QuickActionButton}" Command="{Binding DisableAllCommand}"
+                        Padding="10,6" MinHeight="38">
                     <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="Stop" Style="{StaticResource QuickActionIcon}" />
-                        <TextBlock Text="Disable All" Style="{StaticResource QuickActionLabel}" />
+                        <materialDesign:PackIcon Kind="Stop"
+                                                 Width="22" Height="22"
+                                                 VerticalAlignment="Center"
+                                                 Foreground="{DynamicResource ErrorBrush}">
+                            <materialDesign:PackIcon.Effect>
+                                <DropShadowEffect Color="{Binding Color, Source={StaticResource ErrorBrush}}" ShadowDepth="0" BlurRadius="8" Opacity="0.6" />
+                            </materialDesign:PackIcon.Effect>
+                        </materialDesign:PackIcon>
+                        <TextBlock Text="Disable All" Style="{StaticResource QuickActionLabel}"
+                                   FontSize="{DynamicResource FontSizeSM}" Margin="8,0,0,0" />
                     </StackPanel>
                 </Button>
                 <!-- Separator -->
-                <Rectangle Width="1" Height="18" Fill="{DynamicResource DividerBrush}" Margin="6,0" VerticalAlignment="Center" />
-                <!-- Clear Fault All -->
-                <Button Style="{StaticResource QuickActionButton}" Command="{Binding ClearFaultAllCommand}">
+                <Rectangle Width="1" Height="24" Fill="{DynamicResource DividerBrush}" Margin="10,0" VerticalAlignment="Center" />
+                <!-- Clear Fault All (fixed amber icon — special case) -->
+                <Button Style="{StaticResource QuickActionButton}" Command="{Binding ClearFaultAllCommand}"
+                        Padding="10,6" MinHeight="38">
                     <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="AlertRemove" Style="{StaticResource QuickActionIcon}" />
-                        <TextBlock Text="Clear Fault All" Style="{StaticResource QuickActionLabel}" />
+                        <materialDesign:PackIcon Kind="AlertRemove"
+                                                 Width="22" Height="22"
+                                                 VerticalAlignment="Center"
+                                                 Foreground="{DynamicResource WarningBrush}">
+                            <materialDesign:PackIcon.Effect>
+                                <DropShadowEffect Color="{Binding Color, Source={StaticResource WarningBrush}}" ShadowDepth="0" BlurRadius="8" Opacity="0.6" />
+                            </materialDesign:PackIcon.Effect>
+                        </materialDesign:PackIcon>
+                        <TextBlock Text="Clear Fault All" Style="{StaticResource QuickActionLabel}"
+                                   FontSize="{DynamicResource FontSizeSM}" Margin="8,0,0,0" />
                     </StackPanel>
                 </Button>
             </StackPanel>
@@ -315,6 +343,12 @@
             <avalonDock:DockingManager.Theme>
                 <avalonDockTheme:Vs2013DarkTheme />
             </avalonDock:DockingManager.Theme>
+            <!-- Hide document tab strip (single document, no tabs needed) -->
+            <avalonDock:DockingManager.Resources>
+                <Style TargetType="{x:Type avalonDockControls:LayoutDocumentTabItem}">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </Style>
+            </avalonDock:DockingManager.Resources>
 
             <avalonDockLayout:LayoutRoot>
                 <avalonDockLayout:LayoutPanel Orientation="Horizontal">
@@ -336,7 +370,8 @@
                             <avalonDockLayout:LayoutDocument Title="{Binding ActiveDocumentTitle}"
                                                               ContentId="paramEditor"
                                                               CanClose="False">
-                                <views:ParameterEditorView />
+                                <Grid x:Name="centerPanelGrid" />
+                                <!-- All panels (A/B/C/D) are created dynamically from code-behind -->
                             </avalonDockLayout:LayoutDocument>
                         </avalonDockLayout:LayoutDocumentPane>
 
@@ -352,18 +387,8 @@
                         </avalonDockLayout:LayoutAnchorablePane>
                     </avalonDockLayout:LayoutPanel>
 
-                    <!-- Right: Action Panel -->
-                    <avalonDockLayout:LayoutAnchorablePane DockWidth="160">
-                        <avalonDockLayout:LayoutAnchorable Title="Actions"
-                                                            ContentId="actions"
-                                                            CanClose="False"
-                                                            CanFloat="True"
-                                                            CanAutoHide="True">
-                            <views:ActionPanelView />
-                        </avalonDockLayout:LayoutAnchorable>
-                    </avalonDockLayout:LayoutAnchorablePane>
 
-                </avalonDockLayout:LayoutPanel>
+</avalonDockLayout:LayoutPanel>
             </avalonDockLayout:LayoutRoot>
         </avalonDock:DockingManager>
 

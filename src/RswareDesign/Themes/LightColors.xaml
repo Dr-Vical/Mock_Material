@@ -45,6 +45,8 @@
     <!-- ═══════════════════════════════════════════════════════════ -->
     <!--  COMPONENT-SPECIFIC COLORS                                    -->
     <!-- ═══════════════════════════════════════════════════════════ -->
+    <SolidColorBrush x:Key="ValueHighlightBrush"     Color="#FFF57F17" />
+
     <SolidColorBrush x:Key="RibbonBackgroundBrush"  Color="#FFEEEEEE" />
     <SolidColorBrush x:Key="TreeBackgroundBrush"    Color="#FFEEEEEE" />
     <SolidColorBrush x:Key="GridHeaderBrush"        Color="#FFD6D9DC" />
@@ -71,5 +73,49 @@
     <!-- ═══════════════════════════════════════════════════════════ -->
     <SolidColorBrush x:Key="ComboBox.HoverBackground"  Color="#FFD8D8D8" />
     <SolidColorBrush x:Key="ComboBox.HoverBorder"      Color="#FFA0A0A0" />
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  PANEL A/B/C/D IDENTIFICATION COLORS                        -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+
+    <!-- Panel A/B/C/D — visible accent on light theme -->
+    <LinearGradientBrush x:Key="PanelABrush" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Color="#50C05050" Offset="0" />
+        <GradientStop Color="#00F5F5F5" Offset="1" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="PanelBBrush" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Color="#50C09830" Offset="0" />
+        <GradientStop Color="#00F5F5F5" Offset="1" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="PanelCBrush" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Color="#504868B0" Offset="0" />
+        <GradientStop Color="#00F5F5F5" Offset="1" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="PanelDBrush" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Color="#5048A868" Offset="0" />
+        <GradientStop Color="#00F5F5F5" Offset="1" />
+    </LinearGradientBrush>
+
+    <SolidColorBrush x:Key="PanelAAccent" Color="#FFC05050" />
+    <SolidColorBrush x:Key="PanelBAccent" Color="#FFC09830" />
+    <SolidColorBrush x:Key="PanelCAccent" Color="#FF4868B0" />
+    <SolidColorBrush x:Key="PanelDAccent" Color="#FF48A868" />
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  CHART CHANNEL COLORS (Oscilloscope / Monitor)              -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <SolidColorBrush x:Key="ChartCH1Brush" Color="#FFF9A825" />
+    <SolidColorBrush x:Key="ChartCH2Brush" Color="#FF2E7D32" />
+    <SolidColorBrush x:Key="ChartCH3Brush" Color="#FF1565C0" />
+    <SolidColorBrush x:Key="ChartCH4Brush" Color="#FFC62828" />
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  FLUENT.RIBBON BACKGROUND OVERRIDES                         -->
+    <!--  Match ribbon area to our BackgroundBrush / SurfaceBrush    -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.RibbonTabControl.Background" Color="#FFF5F5F5" />
+    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.Ribbon.Background"           Color="#FFF5F5F5" />
+    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.RibbonWindow.TitleBackground" Color="#FFF5F5F5" />
+    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.RibbonGroupBox.Background"   Color="#FFE8E8E8" />
 
 </ResourceDictionary>
