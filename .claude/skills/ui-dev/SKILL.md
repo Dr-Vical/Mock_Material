@@ -49,10 +49,15 @@ When the user inputs `/ui-dev`, collect requirements interactively and execute t
   - Even `Visibility=Collapsed` parents still evaluate child bindings — null safety required
   - `Image.Source` with nullable path → use `TargetNullValue={x:Null}`
 - **Style Dictionary file structure**:
-  - `Themes/Colors.xaml` — Color/brush definitions
+  - `Themes/DarkColors.xaml`, `GrayColors.xaml`, `LightColors.xaml` — Color/brush definitions + Fluent.Ribbon overrides
   - `Themes/Fonts.xaml` — FontFamily, FontSize tokens
   - `Themes/Styles.xaml` — Spacing, sizes, icon effects, labels
   - `Themes/Buttons.xaml` — Button, ToggleButton, ComboBox styles
+- **Fluent.Ribbon 배경 오버라이드**: Colors.xaml에 `Fluent.Ribbon.Brushes.*` 키 등록 (코드 할당 금지)
+  - SwitchTheme 순서: MaterialDesign → Fluent.Ribbon → AvalonDock → Colors.xaml (LAST wins)
+- **ScottPlot 색상**: `GetThemeColor("ResourceKey")` 헬퍼 패턴 사용 (`FromHex` 금지)
+- **DropShadowEffect**: `Color="{Binding Color, Source={StaticResource BrushName}}"` (hex 금지)
+- **Chart 채널 토큰**: `ChartCH1Brush`~`ChartCH4Brush` — Colors.xaml에 등록
 
 ---
 

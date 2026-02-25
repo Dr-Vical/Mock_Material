@@ -168,6 +168,33 @@ NEVER: Margin="4,2"            -> USE: Margin="{StaticResource Padding.RibbonInl
 NEVER: Text="저장"              -> USE: Text="{DynamicResource loc.common.save}"
 NEVER: Foreground="#FFFFB74D"  -> USE: Style includes Foreground (use RibbonIconOpacityPulse)
 NEVER: Per-item color keys     -> USE: Single category color from 5-role system
+NEVER: ScottPlot.Color.FromHex("#xxx") -> USE: GetThemeColor("ResourceKey") helper
+NEVER: app.Resources["Fluent.Ribbon.Brushes.*"] = ... -> USE: Colors.xaml에 키 등록
+NEVER: DropShadowEffect Color="#xxx" -> USE: Color="{Binding Color, Source={StaticResource BrushName}}"
+```
+
+### Fluent.Ribbon Background Override (MUST follow)
+Each Colors.xaml MUST include Fluent.Ribbon background override keys:
+```xml
+<SolidColorBrush x:Key="Fluent.Ribbon.Brushes.RibbonTabControl.Background" Color="..." />
+<SolidColorBrush x:Key="Fluent.Ribbon.Brushes.Ribbon.Background"           Color="..." />
+<SolidColorBrush x:Key="Fluent.Ribbon.Brushes.RibbonWindow.TitleBackground" Color="..." />
+<SolidColorBrush x:Key="Fluent.Ribbon.Brushes.RibbonGroupBox.Background"   Color="..." />
+```
+SwitchTheme order: MaterialDesign → Fluent.Ribbon → AvalonDock → Colors.xaml (LAST wins)
+
+### ScottPlot Theme Integration
+All ScottPlot colors MUST use the `GetThemeColor()` helper pattern:
+```csharp
+private static ScottPlot.Color GetThemeColor(string resourceKey)
+{
+    if (Application.Current.TryFindResource(resourceKey) is SolidColorBrush brush)
+    {
+        var c = brush.Color;
+        return new ScottPlot.Color(c.R, c.G, c.B, c.A);
+    }
+    return ScottPlot.Colors.Gray;
+}
 ```
 
 ### Ribbon Controls (MUST follow)
