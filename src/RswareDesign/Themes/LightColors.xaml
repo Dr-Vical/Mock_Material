@@ -108,6 +108,10 @@
     <SolidColorBrush x:Key="ChartCH2Brush" Color="#FF2E7D32" />
     <SolidColorBrush x:Key="ChartCH3Brush" Color="#FF1565C0" />
     <SolidColorBrush x:Key="ChartCH4Brush" Color="#FFC62828" />
+    <SolidColorBrush x:Key="ChartCH5Brush" Color="#FFE65100" />
+    <SolidColorBrush x:Key="ChartCH6Brush" Color="#FF7B1FA2" />
+    <SolidColorBrush x:Key="ChartCH7Brush" Color="#FF00796B" />
+    <SolidColorBrush x:Key="ChartCH8Brush" Color="#FFC2185B" />
 
     <!-- ═══════════════════════════════════════════════════════════ -->
     <!--  FLUENT.RIBBON BACKGROUND OVERRIDES                         -->

@@ -241,14 +241,14 @@
                                 </ControlTemplate>
                             </ToggleButton.Template>
                         </ToggleButton>
-                        <!-- Selected item display -->
+                        <!-- Selected item display (right margin clears 16px arrow) -->
                         <ContentPresenter x:Name="contentPresenter"
                                           Content="{TemplateBinding SelectionBoxItem}"
                                           ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
                                           ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}"
                                           HorizontalAlignment="Left"
                                           VerticalAlignment="Center"
-                                          Margin="{TemplateBinding Padding}"
+                                          Margin="6,3,22,3"
                                           IsHitTestVisible="False" />
                         <!-- Dropdown popup (dark themed) -->
                         <Popup x:Name="PART_Popup"

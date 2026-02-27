@@ -12,7 +12,8 @@
     <Thickness x:Key="Padding.Input">9,5</Thickness>
     <Thickness x:Key="Padding.Button">13,7</Thickness>
     <Thickness x:Key="Padding.Button.Small">9,5</Thickness>
-    <Thickness x:Key="Padding.GridCell">7,4</Thickness>
+    <Thickness x:Key="Padding.GridCell">10,5</Thickness>
+    <Thickness x:Key="Padding.PanelHeader">10,5</Thickness>
 
     <Thickness x:Key="Margin.ListItem">0,0,0,5</Thickness>
     <Thickness x:Key="Margin.FormField">0,0,0,13</Thickness>
@@ -44,6 +45,16 @@
     <!-- ═══════════════════════════════════════════════════════════ -->
     <!--  SIZE TOKENS — StaticResource                                -->
     <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- GRID COLUMN WIDTH CONFIG — CompareParameterPanel reads on startup -->
+    <system:Double x:Key="Size.Col.Favorite">30</system:Double>
+    <system:Double x:Key="Size.Col.FtNum">45</system:Double>
+    <system:Double x:Key="Size.Col.Parameter">220</system:Double>
+    <system:Double x:Key="Size.Col.Value">45</system:Double>
+    <system:Double x:Key="Size.Col.Units">80</system:Double>
+    <system:Double x:Key="Size.Col.Default">65</system:Double>
+    <system:Double x:Key="Size.Col.Min">80</system:Double>
+    <system:Double x:Key="Size.Col.Max">80</system:Double>
+
     <system:Double x:Key="Size.StatusBarHeight">24</system:Double>
     <system:Double x:Key="Size.GridRowHeight">28</system:Double>
     <system:Double x:Key="Size.GridHeaderHeight">32</system:Double>

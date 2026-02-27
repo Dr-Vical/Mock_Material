@@ -68,12 +68,29 @@ public partial class CompareParameterPanel : UserControl
     }
 
     public event EventHandler? CloseRequested;
+    public Func<bool>? CanCloseCheck { get; set; }
 
     private DispatcherTimer? _countTimer;
+
+    private static readonly string[] ColumnWidthKeys =
+    [
+        "Size.Col.Favorite", "Size.Col.FtNum", "Size.Col.Parameter", "Size.Col.Value",
+        "Size.Col.Units", "Size.Col.Default", "Size.Col.Min", "Size.Col.Max"
+    ];
 
     public CompareParameterPanel()
     {
         InitializeComponent();
+        Loaded += (_, _) => ApplyColumnWidths();
+    }
+
+    private void ApplyColumnWidths()
+    {
+        for (int i = 0; i < ColumnWidthKeys.Length && i < parameterGrid.Columns.Count; i++)
+        {
+            if (Application.Current.TryFindResource(ColumnWidthKeys[i]) is double w)
+                parameterGrid.Columns[i].Width = new DataGridLength(w);
+        }
     }
 
     /// <summary>
@@ -112,6 +129,10 @@ public partial class CompareParameterPanel : UserControl
 
     private void OnCloseClick(object sender, RoutedEventArgs e)
     {
+        // Block close if this is the last panel
+        if (CanCloseCheck != null && !CanCloseCheck())
+            return;
+
         // Animate out, then fire close
         RenderTransform = new ScaleTransform(1, 1);
         RenderTransformOrigin = new Point(0.5, 0.5);

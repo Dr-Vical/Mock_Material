@@ -65,6 +65,23 @@ public partial class MainWindow : Window
             }
         });
 
+        WeakReferenceMessenger.Default.Register<ToggleMonitorSectionMessage>(this, (_, msg) =>
+        {
+            ToggleMonitorSection(msg.Section);
+        });
+
+        WeakReferenceMessenger.Default.Register<ShowClearFavoritesConfirmMessage>(this, (_, _) =>
+        {
+            var result = MessageBox.Show(
+                "Clear all favorite parameters?",
+                "Clear Favorites",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes && DataContext is MainWindowViewModel vm)
+                vm.ExecuteClearAllFavorites();
+        });
+
         WeakReferenceMessenger.Default.Register<ShowExitConfirmMessage>(this, (_, _) =>
         {
             var dialog = new ConfirmExitDialog { Owner = this };
@@ -77,6 +94,9 @@ public partial class MainWindow : Window
         {
             UpdateComparePanels();
             ApplyWindowChrome(isDark: true); // default is dark theme
+
+            // Hide Monitor & Control panel on startup (show via button click)
+            monitorControlPane.Hide();
         };
     }
 
@@ -136,11 +156,13 @@ public partial class MainWindow : Window
                     LoadedCount = 0,
                     ActionButtons = ActionButtonRegistry.GetForNodeType(nodeType),
                 };
+                panel.CanCloseCheck = () =>
+                {
+                    int count = new[] { vm.IsPanelAVisible, vm.IsPanelBVisible, vm.IsPanelCVisible, vm.IsPanelDVisible }.Count(v => v);
+                    return count > 1;
+                };
                 panel.CloseRequested += (s, _) =>
                 {
-                    int currentVisible = new[] { vm.IsPanelAVisible, vm.IsPanelBVisible, vm.IsPanelCVisible, vm.IsPanelDVisible }.Count(v => v);
-                    if (currentVisible <= 1) return;
-
                     switch (id)
                     {
                         case "A": vm.IsPanelAVisible = false; break;
@@ -230,6 +252,41 @@ public partial class MainWindow : Window
             }
         }
         _newlyAddedPanels.Clear();
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    //  MONITOR & CONTROL PANEL (AvalonDock toggle)
+    // ═══════════════════════════════════════════════════════════
+
+    private void ToggleMonitorSection(string section)
+    {
+        // Show the pane if hidden
+        if (!monitorControlPane.IsVisible)
+        {
+            monitorControlPane.Show();
+
+            // Set DataContext after showing
+            if (monitorControlPane.Content is MonitorControlDialog m)
+                m.DataContext = DataContext;
+        }
+
+        // Toggle the requested section
+        if (monitorControlPane.Content is MonitorControlDialog monitor)
+        {
+            switch (section)
+            {
+                case "Oscilloscope":
+                    monitor.ToggleChart();
+                    break;
+                case "ControlPanel":
+                    monitor.ToggleControlPanel();
+                    break;
+            }
+
+            // If both sections are hidden, hide the entire pane
+            if (!monitor.IsChartVisible && !monitor.IsControlPanelVisible)
+                monitorControlPane.Hide();
+        }
     }
 
     // ═══════════════════════════════════════════════════════════

@@ -143,35 +143,35 @@
                     </Fluent:RibbonGroupBox>
                     <Fluent:RibbonGroupBox Header="Theme">
                         <!-- Theme (Dark/Gray/Light) -->
-                        <StackPanel VerticalAlignment="Center" Width="72" Margin="4,2">
+                        <StackPanel VerticalAlignment="Center" Width="80" Margin="4,2" ClipToBounds="True">
                             <TextBlock Text="Theme" Style="{StaticResource RibbonInlineLabel}" />
                             <ComboBox Style="{StaticResource RibbonDarkComboBox}"
                                       ItemsSource="{Binding AvailableThemes}"
                                       SelectedItem="{Binding SelectedTheme, Mode=TwoWay}" />
                         </StackPanel>
                         <!-- Font Size -->
-                        <StackPanel VerticalAlignment="Center" Width="52" Margin="4,2">
+                        <StackPanel VerticalAlignment="Center" Width="58" Margin="4,2" ClipToBounds="True">
                             <TextBlock Text="Font" Style="{StaticResource RibbonInlineLabel}" />
                             <ComboBox Style="{StaticResource RibbonDarkComboBox}"
                                       ItemsSource="{Binding AvailableFontSizes}"
                                       SelectedItem="{Binding SelectedFontSize, Mode=TwoWay}" />
                         </StackPanel>
                         <!-- Color (Hue Slider) -->
-                        <StackPanel VerticalAlignment="Center" Width="100" Margin="4,2">
+                        <StackPanel VerticalAlignment="Center" Width="110" Margin="4,2" ClipToBounds="True">
                             <TextBlock Text="Color" Style="{StaticResource RibbonInlineLabel}" />
                             <Slider Style="{StaticResource HueSliderStyle}"
                                     Minimum="0" Maximum="360"
                                     Value="{Binding HueValue, Mode=TwoWay}" />
                         </StackPanel>
                         <!-- Saturation Slider -->
-                        <StackPanel VerticalAlignment="Center" Width="100" Margin="4,2">
-                            <TextBlock Text="Saturation" Style="{StaticResource RibbonInlineLabel}" />
+                        <StackPanel VerticalAlignment="Center" Width="110" Margin="4,2" ClipToBounds="True">
+                            <TextBlock Text="Saturation" Style="{StaticResource RibbonInlineLabel}" TextTrimming="CharacterEllipsis" />
                             <Slider Style="{StaticResource SaturationSliderStyle}"
                                     Minimum="0" Maximum="100"
                                     Value="{Binding SaturationValue, Mode=TwoWay}" />
                         </StackPanel>
                         <!-- 한영 Toggle -->
-                        <StackPanel VerticalAlignment="Center" Width="42" Margin="4,2">
+                        <StackPanel VerticalAlignment="Center" Width="46" Margin="4,2" ClipToBounds="True">
                             <TextBlock Text="Lang" Style="{StaticResource RibbonInlineLabel}" />
                             <ToggleButton IsChecked="{Binding IsKorean, Mode=TwoWay}"
                                           Style="{StaticResource RibbonLargeRippleToggle}"
@@ -387,8 +387,19 @@
                         </avalonDockLayout:LayoutAnchorablePane>
                     </avalonDockLayout:LayoutPanel>
 
+                    <!-- Right: Monitor & Control (initially hidden, shown on button click) -->
+                    <avalonDockLayout:LayoutAnchorablePane DockWidth="500">
+                        <avalonDockLayout:LayoutAnchorable x:Name="monitorControlPane"
+                                                            Title="Monitor &amp; Control"
+                                                            ContentId="monitorControl"
+                                                            CanClose="True"
+                                                            CanFloat="True"
+                                                            CanAutoHide="True">
+                            <views:MonitorControlDialog />
+                        </avalonDockLayout:LayoutAnchorable>
+                    </avalonDockLayout:LayoutAnchorablePane>
 
-</avalonDockLayout:LayoutPanel>
+                </avalonDockLayout:LayoutPanel>
             </avalonDockLayout:LayoutRoot>
         </avalonDock:DockingManager>
 

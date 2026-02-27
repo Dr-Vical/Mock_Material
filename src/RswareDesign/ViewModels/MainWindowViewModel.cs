@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -93,6 +94,13 @@ public partial class MainWindowViewModel : ObservableObject
 
     public ObservableCollection<Parameter> Parameters { get; } = [];
 
+    private DriveTreeNode _favoritesNode = new()
+    {
+        Name = "Favorites", IconKind = "Star", NodeType = "Favorites"
+    };
+
+    public ObservableCollection<Parameter> FavoriteParameters { get; } = [];
+
     public ObservableCollection<StatusEntry> StatusEntries { get; } = [];
 
     public MainWindowViewModel()
@@ -130,11 +138,106 @@ public partial class MainWindowViewModel : ObservableObject
 
     private void LoadParametersForNode(string nodeType)
     {
+        foreach (var p in Parameters)
+            p.PropertyChanged -= OnParameterPropertyChanged;
+
         Parameters.Clear();
+
+        if (nodeType == "Favorites")
+        {
+            // Show favorited parameters (already have IsFavorite=true)
+            foreach (var p in FavoriteParameters)
+            {
+                p.PropertyChanged += OnParameterPropertyChanged;
+                Parameters.Add(p);
+            }
+            return;
+        }
 
         var csvParams = CsvParameterLoader.LoadForNodeType(nodeType);
         foreach (var p in csvParams)
+        {
+            // Restore favorite state if previously starred
+            if (FavoriteParameters.Any(f => f.FtNumber == p.FtNumber))
+                p.IsFavorite = true;
+
+            p.PropertyChanged += OnParameterPropertyChanged;
             Parameters.Add(p);
+        }
+    }
+
+    private void OnParameterPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (sender is not Parameter param) return;
+
+        if (e.PropertyName == nameof(Parameter.IsFavorite))
+        {
+            UpdateFavorites(param);
+            WeakReferenceMessenger.Default.Send(new FavoriteAnimationMessage(param.IsFavorite));
+        }
+        else if (e.PropertyName == nameof(Parameter.Value))
+        {
+            ClampValueIfNeeded(param);
+        }
+    }
+
+    private void ClampValueIfNeeded(Parameter param)
+    {
+        if (!double.TryParse(param.Value, out double val)) return;
+
+        bool hasMin = double.TryParse(param.Min, out double min);
+        bool hasMax = double.TryParse(param.Max, out double max);
+
+        if (hasMin && val < min)
+        {
+            param.Value = min.ToString();
+            StatusEntries.Add(new StatusEntry
+            {
+                Status = $"[Warning] {param.ShortNumber} {param.Name}",
+                Value = $"Value clamped to Min ({min})",
+                Units = param.Unit,
+            });
+        }
+        else if (hasMax && val > max)
+        {
+            param.Value = max.ToString();
+            StatusEntries.Add(new StatusEntry
+            {
+                Status = $"[Warning] {param.ShortNumber} {param.Name}",
+                Value = $"Value clamped to Max ({max})",
+                Units = param.Unit,
+            });
+        }
+    }
+
+    private void UpdateFavorites(Parameter param)
+    {
+        if (param.IsFavorite)
+        {
+            if (FavoriteParameters.All(f => f.FtNumber != param.FtNumber))
+            {
+                // Store a copy for the favorites list
+                FavoriteParameters.Add(new Parameter
+                {
+                    FtNumber = param.FtNumber,
+                    Name = param.Name,
+                    Value = param.Value,
+                    Unit = param.Unit,
+                    Default = param.Default,
+                    Min = param.Min,
+                    Max = param.Max,
+                    Access = param.Access,
+                    Group = param.Group,
+                    IsFavorite = true,
+                });
+            }
+        }
+        else
+        {
+            var existing = FavoriteParameters.FirstOrDefault(f => f.FtNumber == param.FtNumber);
+            if (existing != null)
+                FavoriteParameters.Remove(existing);
+        }
     }
 
     // ═══════════════════════════════════════════════════════════
@@ -190,6 +293,23 @@ public partial class MainWindowViewModel : ObservableObject
     [RelayCommand]
     private void ClearFaultAll() { }
 
+    [RelayCommand]
+    private void ClearAllFavorites()
+    {
+        WeakReferenceMessenger.Default.Send(new ShowClearFavoritesConfirmMessage());
+    }
+
+    public void ExecuteClearAllFavorites()
+    {
+        // Un-star current visible parameters
+        foreach (var p in Parameters)
+        {
+            if (p.IsFavorite)
+                p.IsFavorite = false;
+        }
+        FavoriteParameters.Clear();
+    }
+
     // ═══════════════════════════════════════════════════════════
     //  PROPERTY CHANGE HANDLERS
     // ═══════════════════════════════════════════════════════════
@@ -213,6 +333,8 @@ public partial class MainWindowViewModel : ObservableObject
     {
         WeakReferenceMessenger.Default.Send(new FontSizeChangedMessage(value));
     }
+
+
 
     partial void OnIsPanelAVisibleChanged(bool value)
     {
@@ -271,6 +393,7 @@ public partial class MainWindowViewModel : ObservableObject
                     Children =
                     [
                         new DriveTreeNode { Name = "Mode Configuration", IconKind = "TuneVertical", NodeType = "ModeConfig" },
+                        _favoritesNode,
                         new DriveTreeNode { Name = "Motor", NodeType = "Motor", CustomIconPath = "M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z" },
                         new DriveTreeNode
                         {
@@ -355,4 +478,14 @@ public record TreeNodeSelectedMessage(string NodeName, string NodeType);
 
 public record ComparePanelChangedMessage(string PanelId, bool IsVisible);
 
+public record FavoriteToggledMessage(Parameter Parameter);
+
 public class ShowExitConfirmMessage { }
+
+public record ShowMonitorControlMessage();
+
+public record ToggleMonitorSectionMessage(string Section); // "Oscilloscope" or "ControlPanel"
+
+public record FavoriteAnimationMessage(bool IsAdded);
+
+public record ShowClearFavoritesConfirmMessage();

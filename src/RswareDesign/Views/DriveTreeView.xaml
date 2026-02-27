@@ -15,7 +15,14 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+
+        <!-- Animation overlay for +1/-1 floating text -->
+        <Canvas x:Name="animationCanvas"
+                Grid.Row="0"
+                IsHitTestVisible="False"
+                Panel.ZIndex="100" />
 
         <TreeView x:Name="driveTree"
                   Grid.Row="0"
@@ -65,8 +72,51 @@
 
         </TreeView>
 
-        <!-- A/B/C/D Compare Panel Toggle Buttons -->
+        <!-- Oscilloscope / Control Panel Buttons -->
         <Border Grid.Row="1"
+                Background="{DynamicResource SurfaceBrush}"
+                BorderBrush="{DynamicResource DividerBrush}"
+                BorderThickness="0,1,0,0">
+            <UniformGrid Columns="2" Height="34">
+                <Button Click="OnOscilloscopeClick"
+                        ToolTip="Open Oscilloscope / Monitor"
+                        Background="Transparent" BorderThickness="0"
+                        Cursor="Hand">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="ChartBellCurveCumulative"
+                                                 Width="{DynamicResource Size.IconSM}"
+                                                 Height="{DynamicResource Size.IconSM}"
+                                                 Foreground="{DynamicResource SecondaryBrush}"
+                                                 VerticalAlignment="Center"
+                                                 Margin="0,0,5,0" />
+                        <TextBlock Text="Oscilloscope"
+                                   FontSize="{DynamicResource FontSizeXS}"
+                                   Foreground="{DynamicResource TextPrimary}"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+                <Button Click="OnControlPanelClick"
+                        ToolTip="Open Control Panel"
+                        Background="Transparent" BorderThickness="0"
+                        Cursor="Hand">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="GamepadVariant"
+                                                 Width="{DynamicResource Size.IconSM}"
+                                                 Height="{DynamicResource Size.IconSM}"
+                                                 Foreground="{DynamicResource SecondaryBrush}"
+                                                 VerticalAlignment="Center"
+                                                 Margin="0,0,5,0" />
+                        <TextBlock Text="Control Panel"
+                                   FontSize="{DynamicResource FontSizeXS}"
+                                   Foreground="{DynamicResource TextPrimary}"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+            </UniformGrid>
+        </Border>
+
+        <!-- A/B/C/D Compare Panel Toggle Buttons -->
+        <Border Grid.Row="2"
                 Background="{DynamicResource SurfaceVariantBrush}"
                 BorderBrush="{DynamicResource DividerBrush}"
                 BorderThickness="0,1,0,0">
