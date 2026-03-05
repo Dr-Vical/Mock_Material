@@ -87,7 +87,7 @@
             <!-- Parameter grid -->
             <DataGrid x:Name="parameterGrid"
                       Grid.Column="0"
-                      ItemsSource="{Binding Parameters}"
+                      ItemsSource="{Binding PanelParameters, RelativeSource={RelativeSource AncestorType=UserControl}}"
                       AutoGenerateColumns="False"
                       CanUserAddRows="False"
                       CanUserDeleteRows="False"

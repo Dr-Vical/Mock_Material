@@ -143,7 +143,7 @@
                     </Fluent:RibbonGroupBox>
                     <Fluent:RibbonGroupBox Header="Theme">
                         <!-- Theme (Dark/Gray/Light) -->
-                        <StackPanel VerticalAlignment="Center" Width="80" Margin="4,2" ClipToBounds="True">
+                        <StackPanel VerticalAlignment="Center" Width="120" Margin="4,2" ClipToBounds="True">
                             <TextBlock Text="Theme" Style="{StaticResource RibbonInlineLabel}" />
                             <ComboBox Style="{StaticResource RibbonDarkComboBox}"
                                       ItemsSource="{Binding AvailableThemes}"
@@ -171,11 +171,32 @@
                                     Value="{Binding SaturationValue, Mode=TwoWay}" />
                         </StackPanel>
                         <!-- 한영 Toggle -->
-                        <StackPanel VerticalAlignment="Center" Width="46" Margin="4,2" ClipToBounds="True">
+                        <StackPanel VerticalAlignment="Center" Width="46" Margin="8,2,4,2" ClipToBounds="True">
                             <TextBlock Text="Lang" Style="{StaticResource RibbonInlineLabel}" />
                             <ToggleButton IsChecked="{Binding IsKorean, Mode=TwoWay}"
-                                          Style="{StaticResource RibbonLargeRippleToggle}"
-                                          MinWidth="36" MinHeight="24" Padding="4,2">
+                                          OverridesDefaultStyle="True"
+                                          Cursor="Hand" Focusable="False"
+                                          MinWidth="36" Height="18">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border x:Name="Bd"
+                                                Background="{DynamicResource SurfaceVariantBrush}"
+                                                BorderBrush="{DynamicResource BorderDefault}"
+                                                BorderThickness="1" CornerRadius="2" Padding="4,1">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter TargetName="Bd" Property="Background"
+                                                        Value="{DynamicResource RibbonButton.CheckedBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Bd" Property="Background"
+                                                        Value="{DynamicResource RibbonButton.HoverBrush}" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
                                 <TextBlock FontSize="{DynamicResource FontSizeXS}"
                                            Foreground="{DynamicResource TextPrimary}">
                                     <TextBlock.Style>

@@ -248,7 +248,7 @@
                                           ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}"
                                           HorizontalAlignment="Left"
                                           VerticalAlignment="Center"
-                                          Margin="6,3,22,3"
+                                          Margin="6,3,18,3"
                                           IsHitTestVisible="False" />
                         <!-- Dropdown popup (dark themed) -->
                         <Popup x:Name="PART_Popup"

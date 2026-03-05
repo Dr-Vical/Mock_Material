@@ -24,6 +24,10 @@ public partial class MonitorControlDialog : UserControl
     private double _phase;
     private bool _isRunning;
 
+    private static readonly int[][] GroupChannels = [[0, 1], [2, 3], [4, 5], [6, 7]];
+    private static readonly string[] GroupColorKeys = ["ChartCH1Brush", "ChartCH3Brush", "ChartCH5Brush", "ChartCH7Brush"];
+    private readonly IYAxis?[] _groupYAxes = new IYAxis?[4];
+
     private Point _dragStartPoint;
     private int _dragSourceIndex = -1;
 
@@ -56,12 +60,12 @@ public partial class MonitorControlDialog : UserControl
         GenerateInitialData();
         SetupChart();
 
-        _timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(30) };
+        _timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(50) };
         _timer.Tick += OnTimerTick;
 
         // Start with chart & control panel hidden (shown via button click)
         ChartToolbar.Visibility = Visibility.Collapsed;
-        MonitorPlot.Visibility = Visibility.Collapsed;
+        ChartArea.Visibility = Visibility.Collapsed;
         ChartStatusBar.Visibility = Visibility.Collapsed;
         ControlPanel.Visibility = Visibility.Collapsed;
 
@@ -103,7 +107,7 @@ public partial class MonitorControlDialog : UserControl
         {
             // Hide chart + stop timer
             ChartToolbar.Visibility = Visibility.Collapsed;
-            MonitorPlot.Visibility = Visibility.Collapsed;
+            ChartArea.Visibility = Visibility.Collapsed;
             ChartStatusBar.Visibility = Visibility.Collapsed;
 
             if (_isRunning)
@@ -119,7 +123,7 @@ public partial class MonitorControlDialog : UserControl
         {
             // Show chart area (stopped, Start button ready)
             ChartToolbar.Visibility = Visibility.Visible;
-            MonitorPlot.Visibility = Visibility.Visible;
+            ChartArea.Visibility = Visibility.Visible;
             ChartStatusBar.Visibility = Visibility.Visible;
         }
     }
@@ -129,6 +133,44 @@ public partial class MonitorControlDialog : UserControl
         ControlPanel.Visibility = ControlPanel.Visibility == Visibility.Visible
             ? Visibility.Collapsed
             : Visibility.Visible;
+
+        if (ControlPanel.Visibility == Visibility.Visible)
+            UpdateGauges();
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    //  SCALE PANEL / FAVORITES COLLAPSE TOGGLE
+    // ═══════════════════════════════════════════════════════════
+
+    private void ToggleScalePanel_Click(object sender, RoutedEventArgs e)
+    {
+        bool collapse = ScalePanel.Visibility == Visibility.Visible;
+        ScalePanel.Visibility = collapse ? Visibility.Collapsed : Visibility.Visible;
+        ScaleToggleIcon.Kind = collapse ? PackIconKind.ChevronRight : PackIconKind.ChevronLeft;
+    }
+
+    private GridLength _savedFavoritesWidth = new(220);
+
+    private void ToggleFavoritesPanel_Click(object sender, RoutedEventArgs e)
+    {
+        bool collapse = FavoritesContent.Visibility == Visibility.Visible;
+        if (collapse)
+        {
+            _savedFavoritesWidth = FavoritesColumn.Width;
+            FavoritesContent.Visibility = Visibility.Collapsed;
+            FavoritesColumn.Width = new GridLength(0);
+            FavoritesColumn.MinWidth = 0;
+            FavoritesSplitter.Visibility = Visibility.Collapsed;
+            FavoritesToggleIcon.Kind = PackIconKind.ChevronLeft;
+        }
+        else
+        {
+            FavoritesContent.Visibility = Visibility.Visible;
+            FavoritesColumn.Width = _savedFavoritesWidth;
+            FavoritesColumn.MinWidth = 150;
+            FavoritesSplitter.Visibility = Visibility.Visible;
+            FavoritesToggleIcon.Kind = PackIconKind.ChevronRight;
+        }
     }
 
     // ═══════════════════════════════════════════════════════════
@@ -183,10 +225,10 @@ public partial class MonitorControlDialog : UserControl
 
         var axisColor = GetThemeColor("TextSecondary");
         var frameColor = GetThemeColor("BorderDefault");
-        plot.Axes.Bottom.Label.Text = "Time (ms)";
-        plot.Axes.Left.Label.Text = "Amplitude";
-        plot.Axes.Bottom.Label.ForeColor = axisColor;
-        plot.Axes.Left.Label.ForeColor = axisColor;
+        plot.Axes.Bottom.Label.Text ="Time (ms)";
+        plot.Axes.Left.Label.Text ="";
+        plot.Axes.Bottom.Label.ForeColor =axisColor;
+        plot.Axes.Left.Label.ForeColor =axisColor;
         plot.Axes.Bottom.TickLabelStyle.ForeColor = axisColor;
         plot.Axes.Left.TickLabelStyle.ForeColor = axisColor;
         plot.Axes.Bottom.MajorTickStyle.Color = axisColor;
@@ -212,8 +254,32 @@ public partial class MonitorControlDialog : UserControl
         plot.Legend.FontColor = GetThemeColor("TextPrimary");
         plot.Legend.OutlineColor = GetThemeColor("BorderDefault");
 
+        // ── Multi-axis: each group gets its own Y-axis ──
+        _groupYAxes[0] = plot.Axes.Left;
+        var currentAxisColor = GetThemeColor(GroupColorKeys[0]);
+        plot.Axes.Left.TickLabelStyle.ForeColor = currentAxisColor;
+        plot.Axes.Left.MajorTickStyle.Color = currentAxisColor;
+
+        for (int g = 1; g < 4; g++)
+        {
+            var axis = plot.Axes.AddLeftAxis();
+            var color = GetThemeColor(GroupColorKeys[g]);
+            axis.Label.Text ="";
+            axis.TickLabelStyle.ForeColor = color;
+            axis.TickLabelStyle.FontSize = 9;
+            axis.MajorTickStyle.Color = color;
+            axis.FrameLineStyle.Color = color;
+            _groupYAxes[g] = axis;
+        }
+
+        // Assign each signal to its group's Y-axis
+        for (int g = 0; g < 4; g++)
+            foreach (int ch in GroupChannels[g])
+                _signals[ch]!.Axes.YAxis = _groupYAxes[g]!;
+
         plot.Axes.AutoScale();
         MonitorPlot.Refresh();
+        UpdateScaleTextBoxes();
     }
 
     private static ScottPlot.Color GetThemeColor(string resourceKey)
@@ -228,7 +294,7 @@ public partial class MonitorControlDialog : UserControl
 
     private void OnTimerTick(object? sender, EventArgs e)
     {
-        for (int s = 0; s < 5; s++)
+        for (int s = 0; s < 3; s++)
         {
             _phase++;
             for (int ch = 0; ch < 8; ch++)
@@ -238,6 +304,7 @@ public partial class MonitorControlDialog : UserControl
             }
         }
         MonitorPlot.Refresh();
+        UpdateGauges();
     }
 
     private void Channel_Changed(object sender, RoutedEventArgs e)
@@ -250,12 +317,14 @@ public partial class MonitorControlDialog : UserControl
 
         MonitorPlot.Plot.Axes.AutoScale();
         MonitorPlot.Refresh();
+        UpdateScaleTextBoxes();
     }
 
     private void BtnAutoScale_Click(object sender, RoutedEventArgs e)
     {
         MonitorPlot.Plot.Axes.AutoScale();
         MonitorPlot.Refresh();
+        UpdateScaleTextBoxes();
     }
 
     private void BtnStartStop_Click(object sender, RoutedEventArgs e)
@@ -276,6 +345,353 @@ public partial class MonitorControlDialog : UserControl
             StartStopIcon.Kind = PackIconKind.Stop;
             StartStopText.Text = "Stop";
         }
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    //  SCALE GROUP CONTROLS
+    // ═══════════════════════════════════════════════════════════
+
+    private void BtnAutoScaleGroup_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is not FrameworkElement fe) return;
+        if (!int.TryParse(fe.Tag?.ToString(), out int groupIndex)) return;
+        AutoScaleGroup(groupIndex);
+    }
+
+    private void ScaleValue_LostFocus(object sender, RoutedEventArgs e)
+    {
+        if (sender is not TextBox tb) return;
+        if (!int.TryParse(tb.Tag?.ToString(), out int groupIndex)) return;
+        ApplyScaleFromTextBoxes(groupIndex);
+    }
+
+    private void ScaleValue_KeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.Key == Key.Enter)
+        {
+            ScaleValue_LostFocus(sender, e);
+            Keyboard.ClearFocus();
+        }
+    }
+
+    private void AutoScaleGroup(int groupIndex)
+    {
+        if (_groupYAxes[groupIndex] is null) return;
+
+        double min = double.MaxValue, max = double.MinValue;
+        foreach (int ch in GroupChannels[groupIndex])
+        {
+            if (!_signals[ch]!.IsVisible) continue;
+            for (int i = 0; i < PointCount; i++)
+            {
+                min = Math.Min(min, _channelData[ch][i]);
+                max = Math.Max(max, _channelData[ch][i]);
+            }
+        }
+        if (min >= max) return;
+        var range = max - min;
+        if (range < 1) range = 1;
+        min -= range * 0.1;
+        max += range * 0.1;
+
+        TextBox[] maxBoxes = [TxtMax0, TxtMax1, TxtMax2, TxtMax3];
+        TextBox[] minBoxes = [TxtMin0, TxtMin1, TxtMin2, TxtMin3];
+        maxBoxes[groupIndex].Text = max.ToString("F0");
+        minBoxes[groupIndex].Text = min.ToString("F0");
+
+        _groupYAxes[groupIndex]!.Range.Set(min, max);
+        MonitorPlot.Refresh();
+    }
+
+    private void ApplyScaleFromTextBoxes(int groupIndex)
+    {
+        if (_groupYAxes[groupIndex] is null) return;
+
+        TextBox[] maxBoxes = [TxtMax0, TxtMax1, TxtMax2, TxtMax3];
+        TextBox[] minBoxes = [TxtMin0, TxtMin1, TxtMin2, TxtMin3];
+
+        if (!double.TryParse(maxBoxes[groupIndex].Text, out double max)) return;
+        if (!double.TryParse(minBoxes[groupIndex].Text, out double min)) return;
+        if (min >= max) return;
+
+        _groupYAxes[groupIndex]!.Range.Set(min, max);
+        MonitorPlot.Refresh();
+    }
+
+    private void UpdateScaleTextBoxes()
+    {
+        TextBox[] maxBoxes = [TxtMax0, TxtMax1, TxtMax2, TxtMax3];
+        TextBox[] minBoxes = [TxtMin0, TxtMin1, TxtMin2, TxtMin3];
+
+        for (int g = 0; g < 4; g++)
+        {
+            if (_groupYAxes[g] is null) continue;
+            var axisRange = _groupYAxes[g]!.Range;
+            maxBoxes[g].Text = axisRange.Max.ToString("F0");
+            minBoxes[g].Text = axisRange.Min.ToString("F0");
+        }
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    //  CHART THEME (call after theme switch)
+    // ═══════════════════════════════════════════════════════════
+
+    public void RefreshChartTheme()
+    {
+        if (_signals[0] is null) return;
+        var plot = MonitorPlot.Plot;
+
+        plot.FigureBackground.Color = GetThemeColor("BackgroundBrush");
+        plot.DataBackground.Color = GetThemeColor("SurfaceBrush");
+        plot.Grid.MajorLineColor = GetThemeColor("SurfaceVariantBrush");
+
+        var axisColor = GetThemeColor("TextSecondary");
+        var frameColor = GetThemeColor("BorderDefault");
+        plot.Axes.Bottom.Label.ForeColor =axisColor;
+        plot.Axes.Left.Label.ForeColor =axisColor;
+        plot.Axes.Bottom.TickLabelStyle.ForeColor = axisColor;
+        plot.Axes.Left.TickLabelStyle.ForeColor = axisColor;
+        plot.Axes.Bottom.MajorTickStyle.Color = axisColor;
+        plot.Axes.Left.MajorTickStyle.Color = axisColor;
+        plot.Axes.Bottom.FrameLineStyle.Color = frameColor;
+        plot.Axes.Left.FrameLineStyle.Color = frameColor;
+        plot.Axes.Right.FrameLineStyle.Color = frameColor;
+        plot.Axes.Top.FrameLineStyle.Color = frameColor;
+
+        for (int ch = 0; ch < 8; ch++)
+        {
+            if (_signals[ch] != null)
+                _signals[ch]!.Color = GetThemeColor(_channelColorKeys[ch]);
+        }
+
+        plot.Legend.BackgroundColor = GetThemeColor("SurfaceVariantBrush");
+        plot.Legend.FontColor = GetThemeColor("TextPrimary");
+        plot.Legend.OutlineColor = GetThemeColor("BorderDefault");
+
+        // Update group axis colors
+        for (int g = 0; g < 4; g++)
+        {
+            if (_groupYAxes[g] is null) continue;
+            var groupColor = GetThemeColor(GroupColorKeys[g]);
+            _groupYAxes[g]!.TickLabelStyle.ForeColor = groupColor;
+            _groupYAxes[g]!.MajorTickStyle.Color = groupColor;
+            _groupYAxes[g]!.FrameLineStyle.Color = groupColor;
+        }
+
+        MonitorPlot.Refresh();
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    //  GAUGE INSTRUMENTS
+    // ═══════════════════════════════════════════════════════════
+
+    private static Brush GetWpfBrush(string key)
+    {
+        return Application.Current.TryFindResource(key) is Brush brush ? brush : Brushes.Gray;
+    }
+
+    private void UpdateGauges()
+    {
+        if (ControlPanel.Visibility != Visibility.Visible) return;
+
+        int lastIdx = PointCount - 1;
+        double velCur = _channelData[2][lastIdx];
+        double velCmd = _channelData[3][lastIdx];
+        double torCur = _channelData[0][lastIdx];
+        double torCmd = _channelData[1][lastIdx];
+        double posCur = _channelData[4][lastIdx];
+        double posCmd = _channelData[5][lastIdx];
+
+        DrawSemiCircleGauge(VelocityGauge, velCur, velCmd, -5000, 5000,
+            "ChartCH3Brush", "ChartCH4Brush");
+        DrawSemiCircleGauge(TorqueGauge, torCur, torCmd, -3000, 3000,
+            "ChartCH1Brush", "ChartCH2Brush");
+        DrawPositionBar(posCur, posCmd);
+
+        TxtVelocityCur.Text = velCur.ToString("F0");
+        TxtVelocityCmd.Text = $"Cmd: {velCmd:F0}";
+        TxtVelocityCurLabel.Text = $"Cur: {velCur:F0}";
+
+        TxtTorqueCur.Text = torCur.ToString("F0");
+        TxtTorqueCmd.Text = $"Cmd: {torCmd:F0}";
+        TxtTorqueCurLabel.Text = $"Cur: {torCur:F0}";
+
+        TxtPositionCurLabel.Text = $"Cur: {posCur:F0}";
+        TxtPositionCmdLabel.Text = $"Cmd: {posCmd:F0}";
+    }
+
+    private void DrawSemiCircleGauge(Canvas canvas, double curValue, double cmdValue,
+        double minValue, double maxValue, string curBrushKey, string cmdBrushKey)
+    {
+        canvas.Children.Clear();
+
+        double w = canvas.Width;
+        double h = canvas.Height;
+        double cx = w / 2;
+        double cy = h - 2;
+        double radius = Math.Min(cx - 5, h - 8);
+
+        // Background track (full semicircle)
+        canvas.Children.Add(CreateArcPath(cx, cy, radius, 0, 1,
+            GetWpfBrush("SurfaceBrush"), 10));
+
+        // Normalize: 0 = left (min), 0.5 = center (zero), 1 = right (max)
+        double zeroNorm = (0 - minValue) / (maxValue - minValue);
+        double cmdNorm = Math.Clamp((cmdValue - minValue) / (maxValue - minValue), 0.001, 0.999);
+        double curNorm = Math.Clamp((curValue - minValue) / (maxValue - minValue), 0.001, 0.999);
+
+        // Command arc (from zero to command, semi-transparent)
+        double cmdStart = Math.Min(zeroNorm, cmdNorm);
+        double cmdEnd = Math.Max(zeroNorm, cmdNorm);
+        if (cmdEnd - cmdStart > 0.002)
+        {
+            var baseBrush = GetWpfBrush(cmdBrushKey);
+            var cmdColor = baseBrush is SolidColorBrush scb ? scb.Color : System.Windows.Media.Colors.Gray;
+            var cmdBrush = new SolidColorBrush(cmdColor) { Opacity = 0.4 };
+            cmdBrush.Freeze();
+            canvas.Children.Add(CreateArcPath(cx, cy, radius, cmdStart, cmdEnd, cmdBrush, 8));
+        }
+
+        // Current arc (from zero to current)
+        double curStart = Math.Min(zeroNorm, curNorm);
+        double curEnd = Math.Max(zeroNorm, curNorm);
+        if (curEnd - curStart > 0.002)
+        {
+            canvas.Children.Add(CreateArcPath(cx, cy, radius, curStart, curEnd,
+                GetWpfBrush(curBrushKey), 5));
+        }
+
+        // Needle line for current value
+        double curAngle = Math.PI * (1 - curNorm);
+        double nx = cx + radius * Math.Cos(curAngle);
+        double ny = cy - radius * Math.Sin(curAngle);
+        var needle = new System.Windows.Shapes.Line
+        {
+            X1 = cx, Y1 = cy, X2 = nx, Y2 = ny,
+            Stroke = GetWpfBrush(curBrushKey),
+            StrokeThickness = 1.5,
+            StrokeEndLineCap = PenLineCap.Round
+        };
+        canvas.Children.Add(needle);
+
+        // Center dot
+        var dot = new System.Windows.Shapes.Ellipse
+        {
+            Width = 6, Height = 6,
+            Fill = GetWpfBrush("TextPrimary")
+        };
+        Canvas.SetLeft(dot, cx - 3);
+        Canvas.SetTop(dot, cy - 3);
+        canvas.Children.Add(dot);
+    }
+
+    private static System.Windows.Shapes.Path CreateArcPath(
+        double cx, double cy, double radius,
+        double startNorm, double endNorm,
+        Brush stroke, double thickness)
+    {
+        // Convert normalized 0..1 to angles: 0→π (left), 1→0 (right)
+        double startAngle = Math.PI * (1 - startNorm);
+        double endAngle = Math.PI * (1 - endNorm);
+
+        var startPt = new Point(
+            cx + radius * Math.Cos(startAngle),
+            cy - radius * Math.Sin(startAngle));
+        var endPt = new Point(
+            cx + radius * Math.Cos(endAngle),
+            cy - radius * Math.Sin(endAngle));
+
+        bool isLargeArc = Math.Abs(startAngle - endAngle) > Math.PI;
+
+        var figure = new PathFigure { StartPoint = startPt, IsFilled = false };
+        figure.Segments.Add(new ArcSegment
+        {
+            Point = endPt,
+            Size = new Size(radius, radius),
+            SweepDirection = SweepDirection.Clockwise,
+            IsLargeArc = isLargeArc
+        });
+
+        var geo = new PathGeometry();
+        geo.Figures.Add(figure);
+
+        return new System.Windows.Shapes.Path
+        {
+            Data = geo,
+            Stroke = stroke,
+            StrokeThickness = thickness,
+            StrokeStartLineCap = PenLineCap.Round,
+            StrokeEndLineCap = PenLineCap.Round
+        };
+    }
+
+    private void DrawPositionBar(double curPos, double cmdPos)
+    {
+        PositionCanvas.Children.Clear();
+
+        double width = PositionCanvas.ActualWidth;
+        if (width <= 0) width = 200;
+        double height = 32;
+
+        // Calculate min/max from position data
+        double minPos = double.MaxValue, maxPos = double.MinValue;
+        for (int i = 0; i < PointCount; i++)
+        {
+            minPos = Math.Min(minPos, _channelData[4][i]);
+            maxPos = Math.Max(maxPos, _channelData[4][i]);
+        }
+        double range = maxPos - minPos;
+        if (range < 1) { range = 1000; minPos = curPos - 500; maxPos = curPos + 500; }
+
+        // Track line
+        var trackLine = new System.Windows.Shapes.Line
+        {
+            X1 = 0, Y1 = height / 2, X2 = width, Y2 = height / 2,
+            Stroke = GetWpfBrush("BorderDefault"),
+            StrokeThickness = 4,
+            StrokeStartLineCap = PenLineCap.Round,
+            StrokeEndLineCap = PenLineCap.Round
+        };
+        PositionCanvas.Children.Add(trackLine);
+
+        // Command marker (dashed vertical line)
+        double cmdNorm = Math.Clamp((cmdPos - minPos) / range, 0, 1);
+        double cmdX = cmdNorm * width;
+        var cmdLine = new System.Windows.Shapes.Line
+        {
+            X1 = cmdX, Y1 = 2, X2 = cmdX, Y2 = height - 2,
+            Stroke = GetWpfBrush("ChartCH6Brush"),
+            StrokeThickness = 2,
+            StrokeDashArray = new DoubleCollection { 3, 2 }
+        };
+        PositionCanvas.Children.Add(cmdLine);
+
+        // Current marker (triangle + vertical line)
+        double curNorm = Math.Clamp((curPos - minPos) / range, 0, 1);
+        double curX = curNorm * width;
+        var curTriangle = new System.Windows.Shapes.Polygon
+        {
+            Points = new PointCollection
+            {
+                new Point(curX, 4),
+                new Point(curX - 5, 14),
+                new Point(curX + 5, 14)
+            },
+            Fill = GetWpfBrush("ChartCH5Brush")
+        };
+        PositionCanvas.Children.Add(curTriangle);
+
+        var curLine = new System.Windows.Shapes.Line
+        {
+            X1 = curX, Y1 = 14, X2 = curX, Y2 = height - 2,
+            Stroke = GetWpfBrush("ChartCH5Brush"),
+            StrokeThickness = 2
+        };
+        PositionCanvas.Children.Add(curLine);
+
+        // Update min/max labels
+        TxtPositionMin.Text = minPos.ToString("F0");
+        TxtPositionMax.Text = maxPos.ToString("F0");
     }
 
     // ═══════════════════════════════════════════════════════════

@@ -56,10 +56,14 @@ public partial class MainWindow : Window
 
         WeakReferenceMessenger.Default.Register<TreeNodeSelectedMessage>(this, (_, msg) =>
         {
-            // Refresh action buttons on all existing panels when tree selection changes
+            // Refresh per-panel data + action buttons when tree selection changes
             var newButtons = ActionButtonRegistry.GetForNodeType(msg.NodeType);
-            foreach (var panel in _comparePanels.Values)
+            foreach (var (id, panel) in _comparePanels)
             {
+                panel.PanelParameters = CsvParameterLoader.LoadForPanel(msg.NodeType, id);
+                panel.TotalCount = panel.PanelParameters.Count;
+                panel.LoadedCount = 0;
+                panel.StartLoadingAnimation();
                 panel.ActionButtons = newButtons;
                 panel.RebuildActionButtons();
             }
@@ -144,15 +148,16 @@ public partial class MainWindow : Window
         {
             if (visible && !_comparePanels.ContainsKey(id))
             {
-                int total = vm.Parameters.Count;
                 string nodeType = vm.SelectedNodeType;
+                var panelParams = CsvParameterLoader.LoadForPanel(nodeType, id);
                 var panel = new CompareParameterPanel
                 {
                     PanelLabel = id,
                     DataContext = vm,
                     HeaderBrush = Application.Current.TryFindResource($"Panel{id}Brush") as Brush,
                     LabelBrush = Application.Current.TryFindResource($"Panel{id}Accent") as Brush,
-                    TotalCount = total,
+                    PanelParameters = panelParams,
+                    TotalCount = panelParams.Count,
                     LoadedCount = 0,
                     ActionButtons = ActionButtonRegistry.GetForNodeType(nodeType),
                 };
@@ -181,47 +186,48 @@ public partial class MainWindow : Window
 
     private void RebuildCenterLayout()
     {
-        centerPanelGrid.Children.Clear();
+        var orderedPanels = _comparePanels.OrderBy(p => p.Key).ToList();
+        int count = orderedPanels.Count;
+        var activeSet = new HashSet<CompareParameterPanel>(orderedPanels.Select(p => p.Value));
+
+        // Remove only panels that are no longer active (keep existing ones in place)
+        foreach (var child in centerPanelGrid.Children.OfType<CompareParameterPanel>().ToList())
+        {
+            if (!activeSet.Contains(child))
+                centerPanelGrid.Children.Remove(child);
+        }
+
+        // Rebuild grid definitions
         centerPanelGrid.RowDefinitions.Clear();
         centerPanelGrid.ColumnDefinitions.Clear();
 
-        var orderedPanels = _comparePanels.OrderBy(p => p.Key).ToList();
-        int count = orderedPanels.Count;
-
         if (count == 0) return;
 
-        if (count == 1)
+        if (count >= 2)
         {
-            centerPanelGrid.Children.Add(orderedPanels[0].Value);
+            centerPanelGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            centerPanelGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
         }
-        else if (count == 2)
+        if (count >= 3)
         {
-            centerPanelGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            centerPanelGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-
-            Grid.SetColumn(orderedPanels[0].Value, 0);
-            Grid.SetColumn(orderedPanels[1].Value, 1);
-            centerPanelGrid.Children.Add(orderedPanels[0].Value);
-            centerPanelGrid.Children.Add(orderedPanels[1].Value);
-        }
-        else
-        {
-            centerPanelGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            centerPanelGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             centerPanelGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
             centerPanelGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-
-            int[] cols = [0, 1, 0, 1];
-            int[] rows = [0, 0, 1, 1];
-            for (int i = 0; i < count && i < 4; i++)
-            {
-                Grid.SetColumn(orderedPanels[i].Value, cols[i]);
-                Grid.SetRow(orderedPanels[i].Value, rows[i]);
-                centerPanelGrid.Children.Add(orderedPanels[i].Value);
-            }
         }
 
-        // Animate newly added panels (fade-in + slight scale)
+        int[] cols = [0, 1, 0, 1];
+        int[] rows = [0, 0, 1, 1];
+        for (int i = 0; i < count && i < 4; i++)
+        {
+            var panel = orderedPanels[i].Value;
+            Grid.SetColumn(panel, cols[i]);
+            Grid.SetRow(panel, rows[i]);
+
+            // Only add to grid if not already there
+            if (!centerPanelGrid.Children.Contains(panel))
+                centerPanelGrid.Children.Add(panel);
+        }
+
+        // Animate only newly added panels (fade-in + slight scale + loading bar)
         foreach (var (id, panel) in orderedPanels)
         {
             if (_newlyAddedPanels.Contains(id))
@@ -247,7 +253,6 @@ public partial class MainWindow : Window
                 ((ScaleTransform)panel.RenderTransform).BeginAnimation(ScaleTransform.ScaleXProperty, scaleX);
                 ((ScaleTransform)panel.RenderTransform).BeginAnimation(ScaleTransform.ScaleYProperty, scaleY);
 
-                // Start loading count animation after fade-in
                 panel.StartLoadingAnimation();
             }
         }
@@ -260,8 +265,8 @@ public partial class MainWindow : Window
 
     private void ToggleMonitorSection(string section)
     {
-        // Show the pane if hidden
-        if (!monitorControlPane.IsVisible)
+        // Show the pane if hidden (check both IsVisible and IsHidden for AvalonDock)
+        if (!monitorControlPane.IsVisible || monitorControlPane.IsHidden || monitorControlPane.IsAutoHidden)
         {
             monitorControlPane.Show();
 
@@ -366,6 +371,10 @@ public partial class MainWindow : Window
 
         // 6. Update title bar color to match new theme
         ApplyWindowChrome(isDark);
+
+        // 7. Refresh chart colors (ScottPlot doesn't use DynamicResource)
+        if (monitorControlPane.Content is MonitorControlDialog mc)
+            mc.RefreshChartTheme();
     }
 
     // ═══════════════════════════════════════════════════════════

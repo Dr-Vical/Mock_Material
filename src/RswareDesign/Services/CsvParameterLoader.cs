@@ -1,4 +1,5 @@
 using RswareDesign.Models;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
 
@@ -64,6 +65,54 @@ public static class CsvParameterLoader
             Access   = string.IsNullOrWhiteSpace(r.DataAttribute) ? "r/w" : r.DataAttribute,
             Group    = r.Group == "(top-level)" ? "" : r.Group,
         }).ToList();
+    }
+
+    /// <summary>
+    /// Generates a parameter set for a specific panel with varied mock values.
+    /// Same parameter structure, different values per panel (simulating multi-axis internal reads).
+    /// Panel A = default (reference), B/C/D = increasing variation.
+    /// </summary>
+    public static ObservableCollection<Parameter> LoadForPanel(string nodeType, string panelId)
+    {
+        var baseParams = LoadForNodeType(nodeType);
+        if (panelId == "A")
+            return new ObservableCollection<Parameter>(baseParams);
+
+        var rng = new Random(panelId[0] * 137);
+        double variationScale = panelId switch
+        {
+            "B" => 0.15,
+            "C" => 0.35,
+            "D" => 0.60,
+            _ => 0.0,
+        };
+
+        foreach (var p in baseParams)
+        {
+            if (!double.TryParse(p.Default, out var def) ||
+                !double.TryParse(p.Min, out var min) ||
+                !double.TryParse(p.Max, out var max))
+                continue;
+
+            double range = max - min;
+            if (range < 1e-9) continue;
+
+            double offset = (rng.NextDouble() - 0.5) * 2.0 * range * variationScale;
+            double value = Math.Clamp(def + offset, min, max);
+
+            int decimals = GetDecimalPlaces(p.Default);
+            p.Value = decimals > 0
+                ? value.ToString($"F{decimals}")
+                : ((long)Math.Round(value)).ToString();
+        }
+
+        return new ObservableCollection<Parameter>(baseParams);
+    }
+
+    private static int GetDecimalPlaces(string s)
+    {
+        int dotIdx = s.IndexOf('.');
+        return dotIdx < 0 ? 0 : s.Length - dotIdx - 1;
     }
 
     private static List<CsvRow> GetAllRows()

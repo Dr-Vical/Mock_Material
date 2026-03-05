@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -55,6 +56,16 @@ public partial class CompareParameterPanel : UserControl
     {
         get => (int)GetValue(TotalCountProperty);
         set => SetValue(TotalCountProperty, value);
+    }
+
+    public static readonly DependencyProperty PanelParametersProperty =
+        DependencyProperty.Register(nameof(PanelParameters), typeof(ObservableCollection<Parameter>),
+            typeof(CompareParameterPanel), new PropertyMetadata(null));
+
+    public ObservableCollection<Parameter>? PanelParameters
+    {
+        get => (ObservableCollection<Parameter>?)GetValue(PanelParametersProperty);
+        set => SetValue(PanelParametersProperty, value);
     }
 
     public static readonly DependencyProperty ActionButtonsProperty =
