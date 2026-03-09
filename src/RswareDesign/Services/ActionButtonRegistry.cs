@@ -70,6 +70,13 @@ public static class ActionButtonRegistry
             new() { Label = "Export",    IconKind = "Export",             Style = "Outlined" },
         ],
 
+        // Favorites: save/load
+        "Favorites" =>
+        [
+            new() { Label = "Save Favorite", IconKind = "StarPlus", Style = "Primary" },
+            new() { Label = "Load Favorite", IconKind = "FolderStar", Style = "Secondary" },
+        ],
+
         // Default (container nodes, etc.): minimal
         _ =>
         [

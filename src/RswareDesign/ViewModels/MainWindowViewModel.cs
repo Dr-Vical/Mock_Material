@@ -65,7 +65,7 @@ public partial class MainWindowViewModel : ObservableObject
     [ObservableProperty]
     private bool _isErrorLogVisible = true;
 
-    // Compare panel visibility (A/B/C/D) — all panels are equal, at least 1 must remain
+    // Compare panel visibility (A/B/C/D) — all panels are equal, all can be closed
     [ObservableProperty]
     private bool _isPanelAVisible = true; // A is default-on at startup
 
@@ -210,7 +210,7 @@ public partial class MainWindowViewModel : ObservableObject
         }
     }
 
-    private void UpdateFavorites(Parameter param)
+    public void UpdateFavorites(Parameter param)
     {
         if (param.IsFavorite)
         {
@@ -338,41 +338,21 @@ public partial class MainWindowViewModel : ObservableObject
 
     partial void OnIsPanelAVisibleChanged(bool value)
     {
-        if (!value && !IsPanelBVisible && !IsPanelCVisible && !IsPanelDVisible)
-        {
-            IsPanelAVisible = true; // Can't remove last panel
-            return;
-        }
         WeakReferenceMessenger.Default.Send(new ComparePanelChangedMessage("A", value));
     }
 
     partial void OnIsPanelBVisibleChanged(bool value)
     {
-        if (!value && !IsPanelAVisible && !IsPanelCVisible && !IsPanelDVisible)
-        {
-            IsPanelBVisible = true; // Can't remove last panel
-            return;
-        }
         WeakReferenceMessenger.Default.Send(new ComparePanelChangedMessage("B", value));
     }
 
     partial void OnIsPanelCVisibleChanged(bool value)
     {
-        if (!value && !IsPanelAVisible && !IsPanelBVisible && !IsPanelDVisible)
-        {
-            IsPanelCVisible = true; // Can't remove last panel
-            return;
-        }
         WeakReferenceMessenger.Default.Send(new ComparePanelChangedMessage("C", value));
     }
 
     partial void OnIsPanelDVisibleChanged(bool value)
     {
-        if (!value && !IsPanelAVisible && !IsPanelBVisible && !IsPanelCVisible)
-        {
-            IsPanelDVisible = true; // Can't remove last panel
-            return;
-        }
         WeakReferenceMessenger.Default.Send(new ComparePanelChangedMessage("D", value));
     }
 
@@ -411,11 +391,9 @@ public partial class MainWindowViewModel : ObservableObject
                         new DriveTreeNode { Name = "Analog Outputs", IconKind = "SineWave", NodeType = "AnalogOutputs" },
                         new DriveTreeNode { Name = "ECAT Homing", IconKind = "Home", NodeType = "ECATHoming" },
                         new DriveTreeNode { Name = "Monitor", IconKind = "MonitorDashboard", NodeType = "Monitor" },
-                        new DriveTreeNode { Name = "Oscilloscope", IconKind = "ChartBellCurveCumulative", NodeType = "Oscilloscope" },
                         new DriveTreeNode { Name = "Faults", IconKind = "AlertCircle", NodeType = "Faults" },
                         new DriveTreeNode { Name = "Fully Closed System", IconKind = "LinkLock", NodeType = "FullyClosed" },
                         new DriveTreeNode { Name = "ServiceInfo", IconKind = "InformationOutline", NodeType = "ServiceInfo" },
-                        new DriveTreeNode { Name = "Control Panel", IconKind = "GamepadVariant", NodeType = "ControlPanel" },
                     ]
                 }
             ]
@@ -489,3 +467,5 @@ public record ToggleMonitorSectionMessage(string Section); // "Oscilloscope" or 
 public record FavoriteAnimationMessage(bool IsAdded);
 
 public record ShowClearFavoritesConfirmMessage();
+
+public record ActionButtonClickedMessage(string Label, string PanelId);

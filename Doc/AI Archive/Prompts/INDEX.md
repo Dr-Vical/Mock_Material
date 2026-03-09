@@ -1,13 +1,13 @@
 ﻿# Prompt Archive Index
 
-> Updated: 2026-03-09 09:19:05 | Total: 178 prompts
+> Updated: 2026-03-09 17:03:27 | Total: 265 prompts
 
 | Category | Count | Latest |
 |----------|------:|--------|| Config | 1 | 2026-02-24 |
-| Debugging | 2 | 2026-02-27 |
-| General | 157 | MonitorCon |
+| Debugging | 3 | 2026-03-09 |
+| General | 238 | MonitorCon |
 | Git-Workflow | 7 | 2026-03-05 |
-| UI | 11 | 2026-02-27 |
+| UI | 16 | 2026-03-09 |
 
 ---
 
@@ -18,7 +18,10 @@
 
 ---
 
-## Debugging (2)
+## Debugging (3)
+
+### 2026-03-09
+- `15:19` [응 그건 잘 되는데 에러로그 다시 여는 항목이 없네 views에 아이템들과 연동 해야 할것 같고, 에러 로그...](Debugging/2026-03/2026-03-09/2026-03-09_151932.md)
 
 ### 2026-02-27
 - `10:24` [현재 밸류값 수정 안됨](Debugging/2026-02/2026-02-27/2026-02-27_102457.md)
@@ -28,12 +31,93 @@
 
 ---
 
-## General (157)
+## General (238)
 
 ### MonitorCon
 - `ro:lP` [](General/2026-02/2026-02-27/MonitorControlPanel_Prompt.md)
 
 ### 2026-03-09
+- `17:03` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_170318.md)
+- `17:02` [어 잘 됐는데 파라메터 바가 감춰지면 그래프랑 컨트롤 패널도 커져야지](General/2026-03/2026-03-09/2026-03-09_170242.md)
+- `17:01` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_170127.md)
+- `17:00` [응 버튼은 잘 작동하는데 잘 티가 안나](General/2026-03/2026-03-09/2026-03-09_170007.md)
+- `16:58` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_165845.md)
+- `16:57` [파라메터 창은 왼쪽으로 닫혀야 하고 닫힌 다음에 열기 부분이 좀 남아있어야지 없어져버려](General/2026-03/2026-03-09/2026-03-09_165715.md)
+- `15:28` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_152847.md)
+- `15:24` [음.. 2번은 둘다 별로인거 같은데.. 어떻게 해야하나..](General/2026-03/2026-03-09/2026-03-09_152456.md)
+- `15:21` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_152123.md)
+- `15:15` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_151518.md)
+- `15:14` [하단 버튼 a에 대한 락은 안풀린거 같아 버튼도 x랑 동기화 되야 하는데](General/2026-03/2026-03-09/2026-03-09_151428.md)
+- `15:13` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_151341.md)
+- `14:44` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_144434.md)
+- `14:29` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_142940.md)
+- `14:18` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_141809.md)
+- `14:17` [응 다시 실행해줘](General/2026-03/2026-03-09/2026-03-09_141759.md)
+- `14:12` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_141237.md)
+- `14:08` [잘 되고 있고, 옆에 Read All 버튼 있잖아 거기에다가 Save Favorite / Load Favor...](General/2026-03/2026-03-09/2026-03-09_140851.md)
+- `14:00` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_140050.md)
+- `13:59` [잘 됐어 그리고 왼쪽 드래그 할때 처럼 스코프 화면에서도 ::: 이거 없애고 드래그 하는거 보이게 만들어줘](General/2026-03/2026-03-09/2026-03-09_135919.md)
+- `13:57` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_135755.md)
+- `13:56` [아니 그 파라메터 항목에서 순서 바꿀려는데 안바뀌어](General/2026-03/2026-03-09/2026-03-09_135609.md)
+- `13:55` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_135522.md)
+- `13:53` [아 니가 말한게 이거구나.. 자 봐봐 스코프에 있는 Favorite 부분도 그렇게 되야 하지만 이미 트리에 ...](General/2026-03/2026-03-09/2026-03-09_135324.md)
+- `13:50` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_135039.md)
+- `13:47` [뭐야 스코프 패널에도 등록이 안됐네??? 아까 이걸 말한건 아니였는데 무튼 스클린샷 찍어봐](General/2026-03/2026-03-09/2026-03-09_134738.md)
+- `13:45` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_134519.md)
+- `13:45` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_134504.md)
+- `13:43` [조금도 변화가 없는데 니가 캡쳐해봐](General/2026-03/2026-03-09/2026-03-09_134332.md)
+- `13:27` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_132743.md)
+- `13:25` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_132528.md)
+- `13:24` [안됩니다. 드래그 핸들도 안보입니다.](General/2026-03/2026-03-09/2026-03-09_132416.md)
+- `13:23` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_132350.md)
+- `13:20` [안되는데? 드래그 핸들 자체가 없어](General/2026-03/2026-03-09/2026-03-09_132040.md)
+- `13:19` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_131941.md)
+- `13:16` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_131602.md)
+- `13:12` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_131253.md)
+- `13:11` [드래그 작동 안함](General/2026-03/2026-03-09/2026-03-09_131142.md)
+- `13:11` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_131105.md)
+- `13:06` [드래그를 통한 순서 변경 부터, 그 다음으로 별표](General/2026-03/2026-03-09/2026-03-09_130658.md)
+- `12:57` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_125757.md)
+- `12:57` [다시 실행해봐 안되는데?](General/2026-03/2026-03-09/2026-03-09_125745.md)
+- `11:35` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_113522.md)
+- `11:32` [응 좋아 Favofites 항목 드래그해서 위아래 변경 가능하게 안바꼈는데?](General/2026-03/2026-03-09/2026-03-09_113213.md)
+- `11:30` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_113048.md)
+- `11:30` [5만 더 늘려줘](General/2026-03/2026-03-09/2026-03-09_113031.md)
+- `11:28` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_112834.md)
+- `11:28` [60정도?](General/2026-03/2026-03-09/2026-03-09_112805.md)
+- `11:27` [어지금은 확 바뀌었어](General/2026-03/2026-03-09/2026-03-09_112740.md)
+- `11:27` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_112728.md)
+- `11:26` [아니? 안바뀌었는데?](General/2026-03/2026-03-09/2026-03-09_112650.md)
+- `11:24` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_112442.md)
+- `11:23` [1. 빨간색은 보이는데. 크기는 왜 그대로지? 2. 다른 프로그램에서 지금 오실로스코프창이랑 컨트롤 판넬을 ...](General/2026-03/2026-03-09/2026-03-09_112319.md)
+- `11:22` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_112231.md)
+- `11:21` [아니 없어, 여기 코드 문제가 아닌거 같아](General/2026-03/2026-03-09/2026-03-09_112146.md)
+- `11:20` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_112016.md)
+- `11:19` [아니 변별력이 안보이는데 140해봐](General/2026-03/2026-03-09/2026-03-09_111957.md)
+- `11:16` [이상한데 ? width를 변경해도 해당 값은 변경되지 않는데?](General/2026-03/2026-03-09/2026-03-09_111634.md)
+- `11:04` [내가 프로그램에서 직접 수정해볼께 어디에 몇번째 줄이야?](General/2026-03/2026-03-09/2026-03-09_110401.md)
+- `11:03` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_110318.md)
+- `11:03` [다시 실행해줘](General/2026-03/2026-03-09/2026-03-09_110307.md)
+- `10:59` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_105956.md)
+- `10:59` [value도 창 생성 시 글자 폭에 맞춰주고](General/2026-03/2026-03-09/2026-03-09_105928.md)
+- `10:58` [ft num 전혀 반영 안된거 같아 글자 폭에 맞춰봐](General/2026-03/2026-03-09/2026-03-09_105852.md)
+- `10:57` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_105734.md)
+- `10:57` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_105723.md)
+- `10:56` [scope도 창을 닫았다가 다시 열면 안열리는 경우가 있는데 그것도 확인 해줄래?](General/2026-03/2026-03-09/2026-03-09_105648.md)
+- `10:42` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_104247.md)
+- `10:20` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_102011.md)
+- `10:18` [스코프 세파라트를 오른쪽으로 밀면 왼쪽 그래프가 왼쪽으로 다 밀린 뒤에 오른쪽 즐겨찾기 파라메터가 오른쪽으로...](General/2026-03/2026-03-09/2026-03-09_101803.md)
+- `10:16` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_101646.md)
+- `10:16` [안바뀐거 같아 그거는 원복 하고 FT크기를 늘리고 싶은거야. Parameter 항목 왼쪽 Ftnum을 오른쪽...](General/2026-03/2026-03-09/2026-03-09_101623.md)
+- `10:15` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_101522.md)
+- `10:15` [ft 아직 3픽셀 오른쪽으로 더 밀어봐 안바뀐거 같은데](General/2026-03/2026-03-09/2026-03-09_101500.md)
+- `09:35` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_093512.md)
+- `09:31` [실행 하시겠습니까 이렇게 다시 뜨는 확인 창들 기본 폼 아니고 어드민 옵션에 들어있는 창컨셉으로 바꿔 달라고](General/2026-03/2026-03-09/2026-03-09_093143.md)
+- `09:29` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_092944.md)
+- `09:28` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_092832.md)
+- `09:28` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_092826.md)
+- `09:28` [다시 실행 해](General/2026-03/2026-03-09/2026-03-09_092818.md)
+- `09:22` [컨트롤 패널 창을 열었다 닫고 나면 다시 안뜨는데? 그리고 그래프 띄우면 그래프 창크기 지금 2.5배로 늘려...](General/2026-03/2026-03-09/2026-03-09_092205.md)
 - `09:18` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_091859.md)
 - `09:17` [이제 컨트롤판넬 새창에서 띄우도록 했으니 Favorite Para 부분 감추기 패널 버튼 오른쪽으로 세파라트...](General/2026-03/2026-03-09/2026-03-09_091718.md)
 - `09:14` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_091437.md)
@@ -224,7 +308,14 @@
 
 ---
 
-## UI (11)
+## UI (16)
+
+### 2026-03-09
+- `15:02` [1.현재 스코프 창에 셋팅된 변수, 스케일 크기, 등을 세이브하고 불러올 수 있게 셋팅 옆에 버튼으로 만들어...](UI/2026-03/2026-03-09/2026-03-09_150204.md)
+- `14:42` [버튼 색상들좀 늘려줘 그리고 한번 클릭하면 유지되게끔 해줘. 누르고 있어야 색상 팔렛트가 유지되네?](UI/2026-03/2026-03-09/2026-03-09_144229.md)
+- `14:21` [응 채널 색상 변경 기능도 옆에 쪼그만한 동그라미 바뀌면 바뀌게 해주고 같은 명칭 Feedback/Comma...](UI/2026-03/2026-03-09/2026-03-09_142122.md)
+- `11:30` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](UI/2026-03/2026-03-09/2026-03-09_113003.md)
+- `11:16` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](UI/2026-03/2026-03-09/2026-03-09_111649.md)
 
 ### 2026-02-27
 - `09:00` [1. 둘다 통합된 환경은 괜찮은데, 패널은 한 패널에 띄우더라도 좌측 그래프 하단 제어 우측 Favorite...](UI/2026-02/2026-02-27/2026-02-27_090039.md)

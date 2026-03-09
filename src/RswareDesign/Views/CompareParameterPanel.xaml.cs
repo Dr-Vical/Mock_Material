@@ -1,9 +1,12 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
+using CommunityToolkit.Mvvm.Messaging;
 using MaterialDesignThemes.Wpf;
 using RswareDesign.Models;
 
@@ -140,10 +143,6 @@ public partial class CompareParameterPanel : UserControl
 
     private void OnCloseClick(object sender, RoutedEventArgs e)
     {
-        // Block close if this is the last panel
-        if (CanCloseCheck != null && !CanCloseCheck())
-            return;
-
         // Animate out, then fire close
         RenderTransform = new ScaleTransform(1, 1);
         RenderTransformOrigin = new Point(0.5, 0.5);
@@ -164,6 +163,74 @@ public partial class CompareParameterPanel : UserControl
     {
         if (d is CompareParameterPanel panel)
             panel.RebuildActionButtons();
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    //  DRAG-TO-REORDER (manual tracking, no DragDrop API)
+    // ═══════════════════════════════════════════════════════════
+
+    private bool _isDragging;
+    private int _dragRowIndex = -1;
+    private Point _dragStartPoint;
+
+    private void Grid_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        _isDragging = false;
+        _dragRowIndex = -1;
+
+        // Only enable drag when showing Favorites (check via ViewModel)
+        if (DataContext is not ViewModels.MainWindowViewModel vm) return;
+        if (vm.SelectedNodeType != "Favorites") return;
+
+        _dragStartPoint = e.GetPosition(parameterGrid);
+        var row = GetDataGridRowAtPoint(e);
+        if (row != null)
+            _dragRowIndex = row.GetIndex();
+    }
+
+    private void Grid_PreviewMouseMove(object sender, MouseEventArgs e)
+    {
+        if (_dragRowIndex < 0 || e.LeftButton != MouseButtonState.Pressed) return;
+
+        var pos = e.GetPosition(parameterGrid);
+        var diff = pos.Y - _dragStartPoint.Y;
+
+        if (!_isDragging && Math.Abs(diff) > SystemParameters.MinimumVerticalDragDistance)
+            _isDragging = true;
+
+        if (!_isDragging) return;
+
+        // Find which row the mouse is currently over
+        var targetRow = GetDataGridRowAtPoint(e);
+        if (targetRow == null) return;
+        int targetIndex = targetRow.GetIndex();
+
+        if (targetIndex != _dragRowIndex && targetIndex >= 0 && PanelParameters != null
+            && targetIndex < PanelParameters.Count)
+        {
+            PanelParameters.Move(_dragRowIndex, targetIndex);
+            _dragRowIndex = targetIndex;
+        }
+    }
+
+    private void Grid_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+    {
+        _isDragging = false;
+        _dragRowIndex = -1;
+    }
+
+    private DataGridRow? GetDataGridRowAtPoint(MouseEventArgs e)
+    {
+        var hit = VisualTreeHelper.HitTest(parameterGrid, e.GetPosition(parameterGrid));
+        if (hit?.VisualHit is not DependencyObject dep) return null;
+
+        var element = dep;
+        while (element != null)
+        {
+            if (element is DataGridRow row) return row;
+            element = VisualTreeHelper.GetParent(element);
+        }
+        return null;
     }
 
     public void RebuildActionButtons()
@@ -231,6 +298,9 @@ public partial class CompareParameterPanel : UserControl
                     btn.BorderThickness = new Thickness(1);
                     break;
             }
+
+            btn.Click += (_, _) => CommunityToolkit.Mvvm.Messaging.WeakReferenceMessenger.Default.Send(
+                new ViewModels.ActionButtonClickedMessage(ab.Label, PanelLabel));
 
             actionItemsControl.Items.Add(btn);
         }

@@ -140,6 +140,12 @@
                                 <TextBlock Text="Action Panel" Style="{StaticResource RibbonButtonLabel}" />
                             </StackPanel>
                         </ToggleButton>
+                        <ToggleButton Style="{StaticResource RibbonLargeRippleToggle}" IsChecked="{Binding IsErrorLogVisible, Mode=TwoWay}">
+                            <StackPanel HorizontalAlignment="Center">
+                                <materialDesign:PackIcon Kind="AlertCircleOutline" Style="{StaticResource RibbonIconOpacityPulse}" />
+                                <TextBlock Text="Error Log" Style="{StaticResource RibbonButtonLabel}" />
+                            </StackPanel>
+                        </ToggleButton>
                     </Fluent:RibbonGroupBox>
                     <Fluent:RibbonGroupBox Header="Theme">
                         <!-- Theme (Dark/Gray/Light) -->
@@ -385,40 +391,125 @@
                         </avalonDockLayout:LayoutAnchorable>
                     </avalonDockLayout:LayoutAnchorablePane>
 
-                    <!-- Center: Editor (top) + Error Log (bottom) -->
+                    <!-- Center: unified content area -->
                     <avalonDockLayout:LayoutPanel Orientation="Vertical">
                         <avalonDockLayout:LayoutDocumentPane>
                             <avalonDockLayout:LayoutDocument Title="{Binding ActiveDocumentTitle}"
                                                               ContentId="paramEditor"
                                                               CanClose="False">
-                                <Grid x:Name="centerPanelGrid" />
-                                <!-- All panels (A/B/C/D) are created dynamically from code-behind -->
+                                <Grid x:Name="centerContentGrid">
+                                    <Grid.ColumnDefinitions>
+                                        <!-- Parameter panels (collapsible) -->
+                                        <ColumnDefinition x:Name="ParamPanelColumn" Width="*" MinWidth="0" />
+                                        <!-- Splitter -->
+                                        <ColumnDefinition x:Name="CenterSplitterColumn" Width="Auto" />
+                                        <!-- Monitor & Scope -->
+                                        <ColumnDefinition x:Name="MonitorColumn" Width="0" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- Left: Parameter panels (collapsible) -->
+                                    <Grid Grid.Column="0">
+                                        <Grid.ColumnDefinitions>
+                                            <!-- Expanded content -->
+                                            <ColumnDefinition x:Name="ParamContentColumn" Width="*" />
+                                            <!-- Collapsed sidebar (always visible) -->
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <!-- Expanded: header + panels -->
+                                        <Grid x:Name="ParamExpandedArea" Grid.Column="0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="*" />
+                                            </Grid.RowDefinitions>
+                                            <Border Grid.Row="0" Background="{DynamicResource SurfaceBrush}"
+                                                    BorderBrush="{DynamicResource BorderDefault}" BorderThickness="0,0,0,1"
+                                                    Padding="4,2">
+                                                <DockPanel>
+                                                    <Button DockPanel.Dock="Right"
+                                                            Click="BtnCollapseParams_Click"
+                                                            Background="Transparent" BorderThickness="0"
+                                                            Padding="4,2" Cursor="Hand" ToolTip="Collapse parameter panels">
+                                                        <materialDesign:PackIcon Kind="ChevronLeft"
+                                                                                 Width="14" Height="14"
+                                                                                 Foreground="{DynamicResource TextSecondary}" />
+                                                    </Button>
+                                                    <TextBlock x:Name="ParamHeaderText" Text="Parameters"
+                                                               VerticalAlignment="Center"
+                                                               FontSize="{DynamicResource FontSizeXS}"
+                                                               Foreground="{DynamicResource TextSecondary}" />
+                                                </DockPanel>
+                                            </Border>
+                                            <Grid x:Name="centerPanelGrid" Grid.Row="1" />
+                                        </Grid>
+
+                                        <!-- Collapsed sidebar: vertical bar with expand button -->
+                                        <Border x:Name="ParamCollapsedBar" Grid.Column="1"
+                                                Width="28" Background="{DynamicResource SurfaceVariantBrush}"
+                                                BorderBrush="{DynamicResource PrimaryBrush}"
+                                                BorderThickness="2,0,0,0"
+                                                Visibility="Collapsed" Cursor="Hand"
+                                                MouseLeftButtonDown="ParamCollapsedBar_Click">
+                                            <Border.Triggers>
+                                                <EventTrigger RoutedEvent="MouseEnter">
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation Storyboard.TargetProperty="Width"
+                                                                             To="34" Duration="0:0:0.15" />
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </EventTrigger>
+                                                <EventTrigger RoutedEvent="MouseLeave">
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation Storyboard.TargetProperty="Width"
+                                                                             To="28" Duration="0:0:0.15" />
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </EventTrigger>
+                                            </Border.Triggers>
+                                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                <materialDesign:PackIcon Kind="ChevronDoubleRight"
+                                                                         Width="18" Height="18"
+                                                                         Foreground="{DynamicResource PrimaryBrush}"
+                                                                         HorizontalAlignment="Center"
+                                                                         Margin="0,0,0,6" />
+                                                <TextBlock Text="P&#x000A;a&#x000A;r&#x000A;a&#x000A;m"
+                                                           FontSize="{DynamicResource FontSizeSM}"
+                                                           FontWeight="SemiBold"
+                                                           Foreground="{DynamicResource TextPrimary}"
+                                                           TextAlignment="Center"
+                                                           LineHeight="14"
+                                                           HorizontalAlignment="Center" />
+                                            </StackPanel>
+                                        </Border>
+                                    </Grid>
+
+                                    <!-- Splitter between params and monitor -->
+                                    <GridSplitter x:Name="CenterSplitter" Grid.Column="1"
+                                                  Width="3" HorizontalAlignment="Center"
+                                                  VerticalAlignment="Stretch"
+                                                  Background="{DynamicResource BorderDefault}"
+                                                  Visibility="Collapsed" />
+
+                                    <!-- Right: Monitor & Scope (embedded) -->
+                                    <views:MonitorControlDialog x:Name="monitorControlView" Grid.Column="2" />
+                                </Grid>
                             </avalonDockLayout:LayoutDocument>
                         </avalonDockLayout:LayoutDocumentPane>
 
                         <!-- Error Log: center panel bottom -->
                         <avalonDockLayout:LayoutAnchorablePane DockHeight="150">
-                            <avalonDockLayout:LayoutAnchorable Title="Error Log"
+                            <avalonDockLayout:LayoutAnchorable x:Name="errorLogPane"
+                                                                Title="Error Log"
                                                                 ContentId="errorLog"
-                                                                CanClose="False"
+                                                                CanClose="True"
                                                                 CanFloat="True"
                                                                 CanAutoHide="True">
                                 <views:ErrorLogView />
                             </avalonDockLayout:LayoutAnchorable>
                         </avalonDockLayout:LayoutAnchorablePane>
                     </avalonDockLayout:LayoutPanel>
-
-                    <!-- Right: Monitor & Control (initially hidden, shown on button click) -->
-                    <avalonDockLayout:LayoutAnchorablePane DockWidth="1250">
-                        <avalonDockLayout:LayoutAnchorable x:Name="monitorControlPane"
-                                                            Title="Monitor &amp; Control"
-                                                            ContentId="monitorControl"
-                                                            CanClose="True"
-                                                            CanFloat="True"
-                                                            CanAutoHide="True">
-                            <views:MonitorControlDialog />
-                        </avalonDockLayout:LayoutAnchorable>
-                    </avalonDockLayout:LayoutAnchorablePane>
 
                 </avalonDockLayout:LayoutPanel>
 

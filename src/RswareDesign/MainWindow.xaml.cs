@@ -58,10 +58,21 @@ public partial class MainWindow : Window
         {
             // Refresh per-panel data + action buttons when tree selection changes
             var newButtons = ActionButtonRegistry.GetForNodeType(msg.NodeType);
+            var vm = DataContext as MainWindowViewModel;
             foreach (var (id, panel) in _comparePanels)
             {
-                panel.PanelParameters = CsvParameterLoader.LoadForPanel(msg.NodeType, id);
-                panel.TotalCount = panel.PanelParameters.Count;
+                if (msg.NodeType == "Favorites" && vm != null)
+                {
+                    // Favorites: bind directly to VM's FavoriteParameters (shared collection)
+                    panel.PanelParameters = vm.FavoriteParameters;
+                }
+                else
+                {
+                    panel.PanelParameters = CsvParameterLoader.LoadForPanel(msg.NodeType, id);
+                    SyncFavoriteState(panel.PanelParameters, vm);
+                    WatchPanelFavorites(panel.PanelParameters, vm);
+                }
+                panel.TotalCount = panel.PanelParameters?.Count ?? 0;
                 panel.LoadedCount = 0;
                 panel.StartLoadingAnimation();
                 panel.ActionButtons = newButtons;
@@ -76,14 +87,30 @@ public partial class MainWindow : Window
 
         WeakReferenceMessenger.Default.Register<ShowClearFavoritesConfirmMessage>(this, (_, _) =>
         {
-            var result = MessageBox.Show(
-                "Clear all favorite parameters?",
-                "Clear Favorites",
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Question);
-
-            if (result == MessageBoxResult.Yes && DataContext is MainWindowViewModel vm)
+            if (ConfirmActionDialog.Ask(this, "Clear Favorites",
+                    "즐겨찾기 파라미터를 모두 삭제하시겠습니까?",
+                    MaterialDesignThemes.Wpf.PackIconKind.StarRemoveOutline,
+                    "Clear All", "WarningBrush")
+                && DataContext is MainWindowViewModel vm)
+            {
                 vm.ExecuteClearAllFavorites();
+            }
+        });
+
+        WeakReferenceMessenger.Default.Register<ActionButtonClickedMessage>(this, (_, msg) =>
+        {
+            var vm = DataContext as MainWindowViewModel;
+            if (vm == null) return;
+
+            switch (msg.Label)
+            {
+                case "Save Favorite":
+                    SaveFavorites(vm);
+                    break;
+                case "Load Favorite":
+                    LoadFavorites(vm);
+                    break;
+            }
         });
 
         WeakReferenceMessenger.Default.Register<ShowExitConfirmMessage>(this, (_, _) =>
@@ -93,7 +120,7 @@ public partial class MainWindow : Window
                 Application.Current.Shutdown();
         });
 
-        // Intercept ControlPanel close → hide instead (so it can be reopened)
+        // Intercept pane close → hide instead (so they can be reopened)
         controlPanelPane.Closing += (s, args) =>
         {
             args.Cancel = true;
@@ -102,15 +129,93 @@ public partial class MainWindow : Window
             controlPanelPane.Hide();
         };
 
+        errorLogPane.Closing += (s, args) =>
+        {
+            args.Cancel = true;
+            errorLogPane.Hide();
+            if (DataContext is MainWindowViewModel vmErr)
+                vmErr.IsErrorLogVisible = false;
+        };
+
+        // Sync IsErrorLogVisible toggle → AvalonDock pane
+        if (DataContext is MainWindowViewModel vmInit)
+        {
+            vmInit.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == nameof(MainWindowViewModel.IsErrorLogVisible) && s is MainWindowViewModel vm2)
+                {
+                    if (vm2.IsErrorLogVisible)
+                        errorLogPane.Show();
+                    else
+                        errorLogPane.Hide();
+                }
+            };
+        }
+
         // Initialize Panel A on startup + apply window chrome
         Loaded += (_, _) =>
         {
+            // Auto-load favorites from file if exists
+            if (DataContext is MainWindowViewModel vmLoad)
+            {
+                var defaultFile = FavoriteFileService.GetDefaultFile();
+                if (defaultFile != null)
+                {
+                    var loaded = FavoriteFileService.Load(defaultFile);
+                    foreach (var p in loaded)
+                        vmLoad.FavoriteParameters.Add(p);
+                }
+            }
+
             UpdateComparePanels();
             ApplyWindowChrome(isDark: true); // default is dark theme
 
-            // Hide Monitor & Control panels on startup (show via button click)
-            monitorControlPane.Hide();
+            // Monitor starts hidden (show via Oscilloscope button click)
+            monitorControlView.Visibility = Visibility.Collapsed;
+            MonitorColumn.Width = new GridLength(0);
+            CenterSplitter.Visibility = Visibility.Collapsed;
+            CenterSplitterColumn.Width = new GridLength(0);
         };
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    //  SAVE / LOAD FAVORITES
+    // ═══════════════════════════════════════════════════════════
+
+    private void SaveFavorites(MainWindowViewModel vm)
+    {
+        if (vm.FavoriteParameters.Count == 0) return;
+
+        var folder = FavoriteFileService.GetFavoriteFolder();
+        var dlg = new Microsoft.Win32.SaveFileDialog
+        {
+            InitialDirectory = folder,
+            Filter = "Favorite files (*.ini)|*.ini",
+            DefaultExt = ".ini",
+            FileName = "favorites"
+        };
+        if (dlg.ShowDialog(this) == true)
+        {
+            FavoriteFileService.Save(dlg.FileName, vm.FavoriteParameters);
+        }
+    }
+
+    private void LoadFavorites(MainWindowViewModel vm)
+    {
+        var folder = FavoriteFileService.GetFavoriteFolder();
+        var dlg = new Microsoft.Win32.OpenFileDialog
+        {
+            InitialDirectory = folder,
+            Filter = "Favorite files (*.ini)|*.ini",
+            DefaultExt = ".ini"
+        };
+        if (dlg.ShowDialog(this) == true)
+        {
+            var loaded = FavoriteFileService.Load(dlg.FileName);
+            vm.FavoriteParameters.Clear();
+            foreach (var p in loaded)
+                vm.FavoriteParameters.Add(p);
+        }
     }
 
     // ═══════════════════════════════════════════════════════════
@@ -133,16 +238,6 @@ public partial class MainWindow : Window
             ["D"] = vm.IsPanelDVisible,
         };
 
-        // Enforce minimum 1 panel
-        int visibleCount = panelStates.Values.Count(v => v);
-        if (visibleCount == 0)
-        {
-            // Find the panel that was just turned off and turn it back on
-            // (this shouldn't normally happen due to VM guard, but just in case)
-            vm.IsPanelAVisible = true;
-            return;
-        }
-
         // Remove panels that are no longer visible
         foreach (var id in _comparePanels.Keys.ToList())
         {
@@ -158,7 +253,17 @@ public partial class MainWindow : Window
             if (visible && !_comparePanels.ContainsKey(id))
             {
                 string nodeType = vm.SelectedNodeType;
-                var panelParams = CsvParameterLoader.LoadForPanel(nodeType, id);
+                System.Collections.ObjectModel.ObservableCollection<Models.Parameter> panelParams;
+                if (nodeType == "Favorites")
+                {
+                    panelParams = vm.FavoriteParameters;
+                }
+                else
+                {
+                    panelParams = CsvParameterLoader.LoadForPanel(nodeType, id);
+                    SyncFavoriteState(panelParams, vm);
+                    WatchPanelFavorites(panelParams, vm);
+                }
                 var panel = new CompareParameterPanel
                 {
                     PanelLabel = id,
@@ -169,11 +274,6 @@ public partial class MainWindow : Window
                     TotalCount = panelParams.Count,
                     LoadedCount = 0,
                     ActionButtons = ActionButtonRegistry.GetForNodeType(nodeType),
-                };
-                panel.CanCloseCheck = () =>
-                {
-                    int count = new[] { vm.IsPanelAVisible, vm.IsPanelBVisible, vm.IsPanelCVisible, vm.IsPanelDVisible }.Count(v => v);
-                    return count > 1;
                 };
                 panel.CloseRequested += (s, _) =>
                 {
@@ -266,31 +366,64 @@ public partial class MainWindow : Window
             }
         }
         _newlyAddedPanels.Clear();
+
+        // Update monitor layout when panel count changes
+        if (_isMonitorVisible)
+            ShowMonitorArea();
     }
 
     // ═══════════════════════════════════════════════════════════
-    //  MONITOR & CONTROL PANEL (AvalonDock toggle)
+    //  FAVORITE STATE SYNC
     // ═══════════════════════════════════════════════════════════
+
+    private static void SyncFavoriteState(
+        System.Collections.ObjectModel.ObservableCollection<Models.Parameter> panelParams,
+        MainWindowViewModel? vm)
+    {
+        if (vm == null) return;
+        var favSet = new HashSet<string>(vm.FavoriteParameters.Select(f => f.FtNumber));
+        foreach (var p in panelParams)
+            p.IsFavorite = favSet.Contains(p.FtNumber);
+    }
+
+    /// <summary>
+    /// Subscribe to panel parameter IsFavorite changes → update VM FavoriteParameters.
+    /// </summary>
+    private static void WatchPanelFavorites(
+        System.Collections.ObjectModel.ObservableCollection<Models.Parameter> panelParams,
+        MainWindowViewModel vm)
+    {
+        foreach (var p in panelParams)
+        {
+            p.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == nameof(Models.Parameter.IsFavorite) && s is Models.Parameter param)
+                {
+                    vm.UpdateFavorites(param);
+                    WeakReferenceMessenger.Default.Send(new FavoriteAnimationMessage(param.IsFavorite));
+                }
+            };
+        }
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    //  MONITOR & CONTROL PANEL TOGGLE
+    // ═══════════════════════════════════════════════════════════
+
+    private bool _isMonitorVisible;
 
     private void ToggleMonitorSection(string section)
     {
         switch (section)
         {
             case "Oscilloscope":
-                // Show the monitor pane if hidden
-                if (!monitorControlPane.IsVisible || monitorControlPane.IsHidden || monitorControlPane.IsAutoHidden)
-                {
-                    monitorControlPane.Show();
-                    if (monitorControlPane.Content is MonitorControlDialog m)
-                        m.DataContext = DataContext;
-                }
+                monitorControlView.DataContext = DataContext;
+                monitorControlView.ToggleChart();
 
-                if (monitorControlPane.Content is MonitorControlDialog monitor)
-                {
-                    monitor.ToggleChart();
-                    if (!monitor.IsChartVisible)
-                        monitorControlPane.Hide();
-                }
+                if (monitorControlView.IsChartVisible)
+                    ShowMonitorArea();
+                else
+                    HideMonitorArea();
                 break;
 
             case "ControlPanel":
@@ -305,12 +438,87 @@ public partial class MainWindow : Window
                 else
                 {
                     controlPanelPane.Show();
-                    // Float it as an independent window
                     controlPanelPane.Float();
                     if (controlPanelPane.Content is ControlPanelView cpvShow)
                         cpvShow.StartUpdating();
                 }
                 break;
+        }
+    }
+
+    private void ShowMonitorArea()
+    {
+        _isMonitorVisible = true;
+        monitorControlView.Visibility = Visibility.Visible;
+
+        bool hasParams = _comparePanels.Count > 0;
+        if (hasParams && !_isParamCollapsed)
+        {
+            // Split: params left, monitor right
+            ParamPanelColumn.Width = new GridLength(1, GridUnitType.Star);
+            CenterSplitterColumn.Width = GridLength.Auto;
+            CenterSplitter.Visibility = Visibility.Visible;
+            MonitorColumn.Width = new GridLength(2, GridUnitType.Star);
+        }
+        else
+        {
+            // Monitor fills remaining space (params collapsed or no panels)
+            CenterSplitterColumn.Width = new GridLength(0);
+            CenterSplitter.Visibility = Visibility.Collapsed;
+            MonitorColumn.Width = new GridLength(1, GridUnitType.Star);
+        }
+    }
+
+    private void HideMonitorArea()
+    {
+        _isMonitorVisible = false;
+        monitorControlView.Visibility = Visibility.Collapsed;
+        MonitorColumn.Width = new GridLength(0);
+        CenterSplitterColumn.Width = new GridLength(0);
+        CenterSplitter.Visibility = Visibility.Collapsed;
+        ParamPanelColumn.Width = new GridLength(1, GridUnitType.Star);
+    }
+
+    private bool _isParamCollapsed;
+
+    private void ParamCollapsedBar_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+        BtnCollapseParams_Click(sender, e);
+    }
+
+    private void BtnCollapseParams_Click(object sender, RoutedEventArgs e)
+    {
+        if (!_isParamCollapsed)
+        {
+            // Collapse: shrink outer column to Auto (just the sidebar), expand monitor
+            _isParamCollapsed = true;
+            ParamExpandedArea.Visibility = Visibility.Collapsed;
+            ParamCollapsedBar.Visibility = Visibility.Visible;
+            ParamContentColumn.Width = new GridLength(0);
+            ParamPanelColumn.Width = GridLength.Auto;
+            ParamPanelColumn.MinWidth = 0;
+
+            CenterSplitterColumn.Width = new GridLength(0);
+            CenterSplitter.Visibility = Visibility.Collapsed;
+
+            if (_isMonitorVisible)
+                MonitorColumn.Width = new GridLength(1, GridUnitType.Star);
+        }
+        else
+        {
+            // Expand: restore outer column to Star, restore splitter
+            _isParamCollapsed = false;
+            ParamExpandedArea.Visibility = Visibility.Visible;
+            ParamCollapsedBar.Visibility = Visibility.Collapsed;
+            ParamContentColumn.Width = new GridLength(1, GridUnitType.Star);
+            ParamPanelColumn.Width = new GridLength(1, GridUnitType.Star);
+
+            if (_isMonitorVisible)
+            {
+                CenterSplitterColumn.Width = GridLength.Auto;
+                CenterSplitter.Visibility = Visibility.Visible;
+                MonitorColumn.Width = new GridLength(2, GridUnitType.Star);
+            }
         }
     }
 
@@ -393,8 +601,7 @@ public partial class MainWindow : Window
         ApplyWindowChrome(isDark);
 
         // 7. Refresh chart colors (ScottPlot doesn't use DynamicResource)
-        if (monitorControlPane.Content is MonitorControlDialog mc)
-            mc.RefreshChartTheme();
+        monitorControlView.RefreshChartTheme();
     }
 
     // ═══════════════════════════════════════════════════════════

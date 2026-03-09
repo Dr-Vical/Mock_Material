@@ -91,8 +91,12 @@
                       AutoGenerateColumns="False"
                       CanUserAddRows="False"
                       CanUserDeleteRows="False"
+                      CanUserSortColumns="False"
                       SelectionMode="Single"
                       SelectionUnit="FullRow"
+                      PreviewMouseLeftButtonDown="Grid_PreviewMouseLeftButtonDown"
+                      PreviewMouseMove="Grid_PreviewMouseMove"
+                      PreviewMouseLeftButtonUp="Grid_PreviewMouseLeftButtonUp"
                       GridLinesVisibility="Horizontal"
                       HeadersVisibility="Column"
                       RowHeight="{DynamicResource Size.GridRowHeight}"
@@ -103,7 +107,8 @@
                       FontFamily="{DynamicResource FontFamilyCode}"
                       FontSize="{DynamicResource FontSizeSM}"
                       HorizontalGridLinesBrush="{DynamicResource DividerBrush}"
-                      AlternatingRowBackground="{DynamicResource GridAlternatingRowBrush}">
+                      AlternatingRowBackground="{DynamicResource GridAlternatingRowBrush}"
+                      ScrollViewer.HorizontalScrollBarVisibility="Auto">
                 <DataGrid.ColumnHeaderStyle>
                     <Style TargetType="DataGridColumnHeader">
                         <Setter Property="Background" Value="{DynamicResource GridHeaderBrush}" />
@@ -213,7 +218,7 @@
                     <DataGridTextColumn Header="FT NUM"
                                         Binding="{Binding ShortNumber}"
                                         IsReadOnly="True"
-                                        Width="45">
+                                        Width="65" MinWidth="65">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="TextTrimming" Value="CharacterEllipsis" />
@@ -223,7 +228,7 @@
                     <DataGridTextColumn Header="PARAMETER"
                                         Binding="{Binding Name}"
                                         IsReadOnly="True"
-                                        Width="220">
+                                        Width="*">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="TextTrimming" Value="CharacterEllipsis" />
@@ -232,7 +237,7 @@
                     </DataGridTextColumn>
                     <DataGridTextColumn Header="VALUE"
                                         Binding="{Binding Value, UpdateSourceTrigger=LostFocus}"
-                                        Width="45">
+                                        Width="55" MinWidth="55">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="Foreground" Value="{DynamicResource ValueHighlightBrush}" />

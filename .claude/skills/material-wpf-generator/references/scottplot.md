@@ -1244,3 +1244,146 @@ private WpfPlot CreateChannelPlot(string label, string hexColor)
 - [User Control Configuration -- ScottPlot FAQ](https://scottplot.net/faq/configuration/)
 - [ScottPlot GitHub - DataStreamer Demo](https://github.com/ScottPlot/ScottPlot/blob/main/src/ScottPlot5/ScottPlot5%20Demos/ScottPlot5%20WinForms%20Demo/Demos/DataStreamer.cs)
 - [ScottPlot GitHub - DataLogger Demo](https://github.com/ScottPlot/ScottPlot/blob/main/src/ScottPlot5/ScottPlot5%20Demos/ScottPlot5%20WinForms%20Demo/Demos/DataLogger.cs)
+
+---
+
+## Real-Time Oscilloscope Panel Implementation
+
+> Full spec: `.claude/specs/OSCILLOSCOPE-PANEL.md`
+
+### 1. Dynamic Y-Axis Grouping
+
+Channels sharing the same category (e.g. "Position", "Velocity") share a single Y-axis.
+Create axis groups dynamically based on the channel's `Category` property.
+
+```csharp
+// Build axis per unique category
+var axisMap = new Dictionary<string, IYAxis>();
+foreach (var ch in channels.Where(c => c.IsEnabled))
+{
+    if (!axisMap.ContainsKey(ch.Category))
+    {
+        var axis = plot.Axes.AddLeftAxis();
+        axis.Label.Text = ch.Category;
+        axis.Label.ForegroundColor = GetThemeColor("TextSecondary");
+        axisMap[ch.Category] = axis;
+    }
+    var sig = plot.Add.SignalConst(ch.Buffer);
+    sig.Axes.YAxis = axisMap[ch.Category];
+}
+```
+
+When channels are toggled on/off, rebuild axis groups (remove unused axes, re-assign).
+
+### 2. Channel Color Picker
+
+Use a WPF `Popup` with `StaysOpen="True"` to keep the picker open while the user selects a color.
+Palette: 16 fixed colors from style dictionary tokens (`ChartPalette01`..`ChartPalette16`).
+
+```xml
+<Popup StaysOpen="True" IsOpen="{Binding IsColorPickerOpen}" PlacementTarget="{Binding ElementName=colorButton}">
+    <ItemsControl ItemsSource="{Binding PaletteColors}">
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <UniformGrid Columns="4" />
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                <Button Width="24" Height="24" Margin="2"
+                        Background="{Binding Brush}"
+                        Command="{Binding DataContext.SelectColorCommand,
+                                  RelativeSource={RelativeSource AncestorType=Popup}}"
+                        CommandParameter="{Binding}" />
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+    </ItemsControl>
+</Popup>
+```
+
+Close the popup explicitly via command after selection, not via `StaysOpen="False"`.
+
+### 3. Scale Panel (Programmatic UI)
+
+Each axis group gets Max/Min `TextBox` controls, generated in code-behind from the active axis list.
+Use style tokens -- never hardcode sizes or colors.
+
+```csharp
+foreach (var group in axisGroups)
+{
+    var maxBox = new TextBox
+    {
+        Text = group.MaxValue.ToString(),
+        Style = (Style)Application.Current.FindResource("ScaleTextBox"),
+        Width = (double)Application.Current.FindResource("Size.ScaleInput"),
+    };
+    maxBox.LostFocus += (_, _) =>
+    {
+        if (double.TryParse(maxBox.Text, out var val))
+            group.YAxis.Range = new CoordinateRange(group.MinValue, val);
+    };
+    scalePanel.Children.Add(maxBox);
+}
+```
+
+The Scale panel is collapsible (toggle visibility, not removal).
+
+### 4. Manual Drag-to-Reorder in ListBox
+
+Reorder channels in the sidebar ListBox using manual mouse tracking -- **not** the WPF DragDrop API (which causes focus/capture issues in docked panels).
+
+```csharp
+private bool _isDragging;
+private int _dragIndex = -1;
+
+private void OnPreviewMouseMove(object sender, MouseEventArgs e)
+{
+    if (_dragIndex < 0 || e.LeftButton != MouseButtonState.Pressed) return;
+    var pos = e.GetPosition(channelList);
+    if (Math.Abs(pos.Y - _dragStart.Y) < SystemParameters.MinimumVerticalDragDistance) return;
+
+    _isDragging = true;
+    var target = GetListBoxItemIndex(e);
+    if (target >= 0 && target != _dragIndex)
+    {
+        Channels.Move(_dragIndex, target);
+        _dragIndex = target;
+    }
+}
+```
+
+This follows the same pattern used in `CompareParameterPanel` for Favorites reordering.
+
+### 5. User Setting Save/Load (INI Format)
+
+Channel configuration (order, colors, visibility, scale ranges) persists via `ScopeSettingService` using INI format.
+
+```csharp
+public class ScopeSettingService
+{
+    private readonly string _path; // e.g. "scope_settings.ini"
+
+    public void Save(IEnumerable<ChannelConfig> channels)
+    {
+        var sb = new StringBuilder();
+        foreach (var ch in channels)
+        {
+            sb.AppendLine($"[CH{ch.Index}]");
+            sb.AppendLine($"Enabled={ch.IsEnabled}");
+            sb.AppendLine($"Color={ch.Color}");       // hex string
+            sb.AppendLine($"Category={ch.Category}");
+            sb.AppendLine($"ScaleMin={ch.ScaleMin}");
+            sb.AppendLine($"ScaleMax={ch.ScaleMax}");
+            sb.AppendLine($"Order={ch.DisplayOrder}");
+        }
+        File.WriteAllText(_path, sb.ToString());
+    }
+
+    public List<ChannelConfig> Load()
+    {
+        // Parse INI sections [CH0]..[CH7], return defaults if file missing
+    }
+}
+```
+
+Settings are loaded at panel creation and saved on close or explicit "Save" action.

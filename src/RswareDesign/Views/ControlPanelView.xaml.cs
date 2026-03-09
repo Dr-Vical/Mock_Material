@@ -116,13 +116,12 @@ public partial class ControlPanelView : UserControl
 
     private void BtnZeroSet_Click(object sender, RoutedEventArgs e)
     {
-        var result = MessageBox.Show(
-            "Zero Set 하시겠습니까?",
-            "Zero Set",
-            MessageBoxButton.YesNo,
-            MessageBoxImage.Question);
-
-        if (result != MessageBoxResult.Yes) return;
+        var owner = Window.GetWindow(this);
+        if (!ConfirmActionDialog.Ask(owner, "Zero Set",
+                "Zero Set 하시겠습니까?\n현재 위치가 0으로 초기화됩니다.",
+                MaterialDesignThemes.Wpf.PackIconKind.Numeric0CircleOutline,
+                "Zero Set", "PrimaryBrush"))
+            return;
 
         _currentPosition = 0;
         UpdateStatusMonitor();
@@ -130,27 +129,24 @@ public partial class ControlPanelView : UserControl
 
     private void BtnClearFault_Click(object sender, RoutedEventArgs e)
     {
-        var result = MessageBox.Show(
-            "Clear Fault 하시겠습니까?",
-            "Clear Fault",
-            MessageBoxButton.YesNo,
-            MessageBoxImage.Question);
+        var owner = Window.GetWindow(this);
+        if (!ConfirmActionDialog.Ask(owner, "Clear Fault",
+                "Clear Fault 하시겠습니까?\n현재 발생한 Fault를 초기화합니다.",
+                MaterialDesignThemes.Wpf.PackIconKind.AlertRemoveOutline,
+                "Clear Fault", "WarningBrush"))
+            return;
 
-        if (result == MessageBoxResult.Yes)
-        {
-            // Mock: just acknowledge
-        }
+        // Mock: just acknowledge
     }
 
     private void BtnReset_Click(object sender, RoutedEventArgs e)
     {
-        var result = MessageBox.Show(
-            "Reset 하시겠습니까?",
-            "Reset",
-            MessageBoxButton.YesNo,
-            MessageBoxImage.Question);
-
-        if (result != MessageBoxResult.Yes) return;
+        var owner = Window.GetWindow(this);
+        if (!ConfirmActionDialog.Ask(owner, "Reset",
+                "Reset 하시겠습니까?\n모든 상태가 초기화됩니다.",
+                MaterialDesignThemes.Wpf.PackIconKind.RestartAlert,
+                "Reset", "ErrorBrush"))
+            return;
 
         _isEnabled = false;
         _isJogging = false;
