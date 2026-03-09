@@ -1,12 +1,12 @@
 ﻿# Prompt Archive Index
 
-> Updated: 2026-02-27 11:14:06 | Total: 121 prompts
+> Updated: 2026-03-09 09:19:05 | Total: 178 prompts
 
 | Category | Count | Latest |
 |----------|------:|--------|| Config | 1 | 2026-02-24 |
 | Debugging | 2 | 2026-02-27 |
-| General | 102 | MonitorCon |
-| Git-Workflow | 5 | 2026-02-25 |
+| General | 157 | MonitorCon |
+| Git-Workflow | 7 | 2026-03-05 |
 | UI | 11 | 2026-02-27 |
 
 ---
@@ -28,12 +28,73 @@
 
 ---
 
-## General (102)
+## General (157)
 
 ### MonitorCon
 - `ro:lP` [](General/2026-02/2026-02-27/MonitorControlPanel_Prompt.md)
 
+### 2026-03-09
+- `09:18` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_091859.md)
+- `09:17` [이제 컨트롤판넬 새창에서 띄우도록 했으니 Favorite Para 부분 감추기 패널 버튼 오른쪽으로 세파라트...](General/2026-03/2026-03-09/2026-03-09_091718.md)
+- `09:14` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_091437.md)
+- `09:11` [1.처음에 실행될 때 기본 사이즈가 너무 작아 300*300 정도로 실행되게 해주고 포지션은 -가 없는데 -...](General/2026-03/2026-03-09/2026-03-09_091150.md)
+- `09:04` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_090400.md)
+- `08:55` [컨트롤 패널은 저기 붙이지 말고 독립 패널로 떼자](General/2026-03/2026-03-09/2026-03-09_085531.md)
+- `08:55` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_085524.md)
+- `08:54` [Zeroset 하면 현재 위치 0으로 변경해줘](General/2026-03/2026-03-09/2026-03-09_085405.md)
+- `08:53` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_085359.md)
+- `08:52` [화면에 호출 됐을 때도 최소 창 크기는 유지하게 해줘 지금 다 없어지네 세파라트 밀면](General/2026-03/2026-03-09/2026-03-09_085243.md)
+- `08:51` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_085155.md)
+- `08:48` [그래프랑 컨트롤 판넬 띄웠을 때 각 판넬이 한개만 호출 되면, 해당 패널만 화면에 꽉 차게 해줘 그리고 패널...](General/2026-03/2026-03-09/2026-03-09_084851.md)
+- `08:47` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_084743.md)
+- `08:45` [FTNUM 폭이 좀 작은거 같아 3픽셀만 옆으로 늘려줘](General/2026-03/2026-03-09/2026-03-09_084500.md)
+- `08:42` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_084215.md)
+- `08:41` [컨트롤 판넬 사이즈도 조절할 수 있게 해줘](General/2026-03/2026-03-09/2026-03-09_084115.md)
+- `08:40` [option은 setting으로 바꾸자](General/2026-03/2026-03-09/2026-03-09_084037.md)
+- `08:28` [우측에 Favorite Parameter라고 해주고 명칭을, 그래프 화면에서 상단에 해당 채널들을 누르면 항...](General/2026-03/2026-03-09/2026-03-09_082833.md)
+- `08:14` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_081454.md)
+- `08:14` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_081400.md)
+- `08:04` [어 여기서 항목 명칭은 Position이랑 Velocity 두개로 하자. Current/Command 로 각...](General/2026-03/2026-03-09/2026-03-09_080405.md)
+- `08:01` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_080108.md)
+- `07:55` [오실로스코프 차트 항목은 4개로 줄여줘](General/2026-03/2026-03-09/2026-03-09_075517.md)
+- `07:54` [프로그램 실행해줘](General/2026-03/2026-03-09/2026-03-09_075417.md)
+
+### 2026-03-05
+- `17:32` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-05/2026-03-05_173211.md)
+- `17:32` [다시 실행해줘](General/2026-03/2026-03-05/2026-03-05_173200.md)
+- `17:30` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-05/2026-03-05_173015.md)
+- `17:30` [다시 실행해줄래?](General/2026-03/2026-03-05/2026-03-05_173004.md)
+- `17:25` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-05/2026-03-05_172510.md)
+- `17:20` [그래프 창 옆에 favorite 창도 접을수 있게 해줘 그리고, 왼쪽 부분도 마찬가지](General/2026-03/2026-03-05/2026-03-05_172043.md)
+- `17:19` [오케이 좋다](General/2026-03/2026-03-05/2026-03-05_171941.md)
+- `17:17` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-05/2026-03-05_171722.md)
+- `17:15` [응 좋았어 다른거 하나는 패널이 a/b/c/d 버튼을 눌렀을 때 추가되는 것만 로딩하게 해줄래? 지금은 전체...](General/2026-03/2026-03-05/2026-03-05_171523.md)
+- `17:14` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-05/2026-03-05_171406.md)
+- `16:44` [트리 노드는 하나인데 불러올 데이터가 다름 근본 데이터는 같지만 실제로 장비에 연결 될 경우 값을 불려오는 ...](General/2026-03/2026-03-05/2026-03-05_164424.md)
+- `16:40` [현재 4분할 a/b/c/d를 눌러 나눌 수 있잖아 아이템 로딩할때 각기 다른 아이템들을 불러와야 되고 불러올...](General/2026-03/2026-03-05/2026-03-05_164001.md)
+
+### 2026-03-04
+- `17:18` [/업무기록](General/2026-03/2026-03-04/2026-03-04_171852.md)
+- `15:47` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-04/2026-03-04_154703.md)
+- `15:46` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-04/2026-03-04_154625.md)
+- `14:25` [똑같아. 그리고 토글 버튼이 커서 글자가 안보여 토글 사이즈를 좀 작게 하고 세파레터를 더 뒤로 밀어.](General/2026-03/2026-03-04/2026-03-04_142553.md)
+- `14:24` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-04/2026-03-04_142429.md)
+- `14:22` [lang은 맞게 줄여졌는데 글자가 안보이네 아예, 그리고 Theme는 전혀 바뀌지 않고있어](General/2026-03/2026-03-04/2026-03-04_142234.md)
+- `14:21` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-04/2026-03-04_142120.md)
+- `14:18` [이거 글씨가 드롭다운 누르기 전에 자꾸 밖으로 튀어 나가](General/2026-03/2026-03-04/2026-03-04_141833.md)
+- `14:17` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-04/2026-03-04_141754.md)
+- `14:16` [테마에 라이트 다크 그 드롭다운 박스 크기가 안맞아 한 10픽셀 더 늘려주고 Lang 드롭박스는 Heigh...](General/2026-03/2026-03-04/2026-03-04_141644.md)
+- `14:06` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-04/2026-03-04_140622.md)
+- `13:35` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-04/2026-03-04_133511.md)
+- `13:19` [지금것도 괜찮은데, 각자 스케일이 다 다르면 스케일 폭을 화면에 맞춰서 조정해야 하잖아?그래서 좌측스케일 크...](General/2026-03/2026-03-04/2026-03-04_131917.md)
+- `13:15` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-04/2026-03-04_131508.md)
+- `12:54` [기존 디자인에서 그래프 화면에 좌측에 스케일 항목이 지금 하나인데, 여러개를 컨트롤 할 수 있게 각 같은 항...](General/2026-03/2026-03-04/2026-03-04_125450.md)
+
 ### 2026-02-27
+- `11:32` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-02/2026-02-27/2026-02-27_113259.md)
+- `11:29` [그래프랑 컨트롤 판넬 닫기 눌렀을 때 왼쪽 하단 버튼을 눌르면 다시 실행이 안돼](General/2026-02/2026-02-27/2026-02-27_112929.md)
+- `11:28` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-02/2026-02-27/2026-02-27_112849.md)
+- `11:20` [프롬프트 문서 업데이트 해줘](General/2026-02/2026-02-27/2026-02-27_112021.md)
 - `11:13` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-02/2026-02-27/2026-02-27_111355.md)
 - `11:12` [응 잘되고 있는데, 센터 패널 화면 하나 남았을때 위에 x누르면 닫히거든? 근데 그 패널 자체는 남아서 그리...](General/2026-02/2026-02-27/2026-02-27_111224.md)
 - `11:05` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-02/2026-02-27/2026-02-27_110557.md)
@@ -144,7 +205,13 @@
 
 ---
 
-## Git-Workflow (5)
+## Git-Workflow (7)
+
+### 2026-03-05
+- `17:26` [어 좋았어 저장하고 커밋하고 푸쉬 가능해?](Git-Workflow/2026-03/2026-03-05/2026-03-05_172614.md)
+
+### 2026-02-27
+- `11:19` [일단 커밋하고 푸쉬해줘](Git-Workflow/2026-02/2026-02-27/2026-02-27_111914.md)
 
 ### 2026-02-25
 - `17:13` [커밋하고 푸쉬해줘 그리고 오늘 한 내용 정리해서 슬랙이랑 노션 내 폴더에 저장해줘](Git-Workflow/2026-02/2026-02-25/2026-02-25_171339.md)

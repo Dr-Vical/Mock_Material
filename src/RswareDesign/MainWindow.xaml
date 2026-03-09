@@ -409,7 +409,7 @@
                     </avalonDockLayout:LayoutPanel>
 
                     <!-- Right: Monitor & Control (initially hidden, shown on button click) -->
-                    <avalonDockLayout:LayoutAnchorablePane DockWidth="500">
+                    <avalonDockLayout:LayoutAnchorablePane DockWidth="1250">
                         <avalonDockLayout:LayoutAnchorable x:Name="monitorControlPane"
                                                             Title="Monitor &amp; Control"
                                                             ContentId="monitorControl"
@@ -421,6 +421,24 @@
                     </avalonDockLayout:LayoutAnchorablePane>
 
                 </avalonDockLayout:LayoutPanel>
+
+                <!-- Control Panel (hidden initially, shown as floating on toggle) -->
+                <avalonDockLayout:LayoutRoot.RightSide>
+                    <avalonDockLayout:LayoutAnchorSide>
+                        <avalonDockLayout:LayoutAnchorGroup>
+                            <avalonDockLayout:LayoutAnchorable x:Name="controlPanelPane"
+                                                                Title="Control Panel"
+                                                                ContentId="controlPanel"
+                                                                CanClose="True"
+                                                                CanFloat="True"
+                                                                CanAutoHide="True"
+                                                                FloatingWidth="620"
+                                                                FloatingHeight="380">
+                                <views:ControlPanelView />
+                            </avalonDockLayout:LayoutAnchorable>
+                        </avalonDockLayout:LayoutAnchorGroup>
+                    </avalonDockLayout:LayoutAnchorSide>
+                </avalonDockLayout:LayoutRoot.RightSide>
             </avalonDockLayout:LayoutRoot>
         </avalonDock:DockingManager>
 

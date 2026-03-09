@@ -93,13 +93,22 @@ public partial class MainWindow : Window
                 Application.Current.Shutdown();
         });
 
+        // Intercept ControlPanel close → hide instead (so it can be reopened)
+        controlPanelPane.Closing += (s, args) =>
+        {
+            args.Cancel = true;
+            if (controlPanelPane.Content is ControlPanelView cpv)
+                cpv.StopUpdating();
+            controlPanelPane.Hide();
+        };
+
         // Initialize Panel A on startup + apply window chrome
         Loaded += (_, _) =>
         {
             UpdateComparePanels();
             ApplyWindowChrome(isDark: true); // default is dark theme
 
-            // Hide Monitor & Control panel on startup (show via button click)
+            // Hide Monitor & Control panels on startup (show via button click)
             monitorControlPane.Hide();
         };
     }
@@ -265,32 +274,43 @@ public partial class MainWindow : Window
 
     private void ToggleMonitorSection(string section)
     {
-        // Show the pane if hidden (check both IsVisible and IsHidden for AvalonDock)
-        if (!monitorControlPane.IsVisible || monitorControlPane.IsHidden || monitorControlPane.IsAutoHidden)
+        switch (section)
         {
-            monitorControlPane.Show();
+            case "Oscilloscope":
+                // Show the monitor pane if hidden
+                if (!monitorControlPane.IsVisible || monitorControlPane.IsHidden || monitorControlPane.IsAutoHidden)
+                {
+                    monitorControlPane.Show();
+                    if (monitorControlPane.Content is MonitorControlDialog m)
+                        m.DataContext = DataContext;
+                }
 
-            // Set DataContext after showing
-            if (monitorControlPane.Content is MonitorControlDialog m)
-                m.DataContext = DataContext;
-        }
-
-        // Toggle the requested section
-        if (monitorControlPane.Content is MonitorControlDialog monitor)
-        {
-            switch (section)
-            {
-                case "Oscilloscope":
+                if (monitorControlPane.Content is MonitorControlDialog monitor)
+                {
                     monitor.ToggleChart();
-                    break;
-                case "ControlPanel":
-                    monitor.ToggleControlPanel();
-                    break;
-            }
+                    if (!monitor.IsChartVisible)
+                        monitorControlPane.Hide();
+                }
+                break;
 
-            // If both sections are hidden, hide the entire pane
-            if (!monitor.IsChartVisible && !monitor.IsControlPanelVisible)
-                monitorControlPane.Hide();
+            case "ControlPanel":
+                // Toggle floating control panel independently
+                bool cpVisible = controlPanelPane.IsVisible && !controlPanelPane.IsHidden && !controlPanelPane.IsAutoHidden;
+                if (cpVisible)
+                {
+                    if (controlPanelPane.Content is ControlPanelView cpvHide)
+                        cpvHide.StopUpdating();
+                    controlPanelPane.Hide();
+                }
+                else
+                {
+                    controlPanelPane.Show();
+                    // Float it as an independent window
+                    controlPanelPane.Float();
+                    if (controlPanelPane.Content is ControlPanelView cpvShow)
+                        cpvShow.StartUpdating();
+                }
+                break;
         }
     }
 
