@@ -7,6 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>RswareDesign</RootNamespace>
     <ApplicationIcon>app.ico</ApplicationIcon>
+    <SatelliteResourceLanguages>ko;en;ja;zh-Hans;zh-Hant</SatelliteResourceLanguages>
   </PropertyGroup>
   <ItemGroup>
     <Resource Include="Assets\icon-64x64.png" />
