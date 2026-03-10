@@ -7,6 +7,7 @@ using System.Windows.Media.Animation;
 using ControlzEx.Theming;
 using CommunityToolkit.Mvvm.Messaging;
 using MaterialDesignThemes.Wpf;
+using AvalonDock.Layout;
 using RswareDesign.Services;
 using RswareDesign.ViewModels;
 using RswareDesign.Views;
@@ -128,18 +129,39 @@ public partial class MainWindow : Window
                 vmErr.IsErrorLogVisible = false;
         };
 
-        // Sync IsErrorLogVisible toggle → AvalonDock pane
+        // Sync VM toggle properties → AvalonDock panes & layout
         if (DataContext is MainWindowViewModel vmInit)
         {
             vmInit.PropertyChanged += (s, e) =>
             {
-                if (e.PropertyName == nameof(MainWindowViewModel.IsErrorLogVisible) && s is MainWindowViewModel vm2)
+                if (s is not MainWindowViewModel vm2) return;
+
+                switch (e.PropertyName)
                 {
-                    if (vm2.IsErrorLogVisible)
-                        errorLogPane.Show();
-                    else
-                        errorLogPane.Hide();
+                    case nameof(MainWindowViewModel.IsErrorLogVisible):
+                        if (vm2.IsErrorLogVisible) errorLogPane.Show();
+                        else errorLogPane.Hide();
+                        break;
+
+                    case nameof(MainWindowViewModel.IsDriveTreeVisible):
+                        if (vm2.IsDriveTreeVisible) driveTreePane.Show();
+                        else driveTreePane.Hide();
+                        break;
+
+                    case nameof(MainWindowViewModel.IsMainPanelVisible):
+                        // Only act if state doesn't match
+                        if (vm2.IsMainPanelVisible && _isParamCollapsed)
+                            BtnCollapseParams_Click(this, new RoutedEventArgs()); // expand
+                        else if (!vm2.IsMainPanelVisible && !_isParamCollapsed)
+                            BtnCollapseParams_Click(this, new RoutedEventArgs()); // collapse
+                        break;
                 }
+            };
+
+            // Sync DriveTree pane hide → VM toggle off
+            driveTreePane.Hiding += (_, args) =>
+            {
+                vmInit.IsDriveTreeVisible = false;
             };
         }
 
@@ -283,6 +305,23 @@ public partial class MainWindow : Window
         }
 
         RebuildCenterLayout();
+
+        // Auto-expand param area when panels are added while collapsed
+        if (_comparePanels.Count > 0 && _isParamCollapsed)
+        {
+            _isParamCollapsed = false;
+            ParamExpandedArea.Visibility = Visibility.Visible;
+            ParamCollapsedBar.Visibility = Visibility.Collapsed;
+            ParamContentColumn.Width = new GridLength(1, GridUnitType.Star);
+            ParamPanelColumn.Width = new GridLength(1, GridUnitType.Star);
+
+            if (_isMonitorVisible)
+            {
+                CenterSplitterColumn.Width = GridLength.Auto;
+                CenterSplitter.Visibility = Visibility.Visible;
+                MonitorColumn.Width = new GridLength(2, GridUnitType.Star);
+            }
+        }
     }
 
     private void RebuildCenterLayout()
@@ -481,7 +520,7 @@ public partial class MainWindow : Window
 
     private bool _isMonitorVisible;
     private readonly Dictionary<string, MonitorControlDialog> _oscilloInstances = new();
-    private readonly Dictionary<string, Window> _controlWindows = new();
+    private readonly Dictionary<string, LayoutAnchorable> _controlPanes = new();
 
     private void ToggleMonitorSection(string section, string driveId)
     {
@@ -503,48 +542,56 @@ public partial class MainWindow : Window
                 break;
 
             case "ControlPanel":
-                if (_controlWindows.TryGetValue(driveId, out var existingWin))
+                if (_controlPanes.TryGetValue(driveId, out var existingPane))
                 {
-                    // Same drive → close window
-                    existingWin.Close();
-                    _controlWindows.Remove(driveId);
+                    if (existingPane.Content is ControlPanelView oldCpv)
+                        oldCpv.StopUpdating();
+                    existingPane.Close();
+                    _controlPanes.Remove(driveId);
                 }
                 else
                 {
-                    // Open floating window
                     var cpv = new ControlPanelView();
                     cpv.SetDriveIdentity(driveId);
                     cpv.StartUpdating();
 
-                    var accentBrush = Application.Current.TryFindResource($"Panel{driveId}Accent") as SolidColorBrush;
-                    var win = new Window
+                    var pane = new LayoutAnchorable
                     {
                         Title = $"Control Panel - Drive {driveId}",
-                        Width = 390,
-                        Height = 400,
+                        ContentId = $"controlPanel_{driveId}",
                         Content = cpv,
-                        Owner = this,
-                        WindowStyle = WindowStyle.None,
-                        ResizeMode = ResizeMode.CanResizeWithGrip,
-                        AllowsTransparency = true,
-                        WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                        Background = Application.Current.TryFindResource("SurfaceBrush") as Brush,
+                        CanClose = true,
+                        CanFloat = true,
+                        CanAutoHide = true,
+                        FloatingWidth = 390,
+                        FloatingHeight = 420,
                     };
-                    win.Closed += (_, _) =>
+                    pane.Closed += (_, _) =>
                     {
-                        cpv.StopUpdating();
-                        _controlWindows.Remove(driveId);
+                        if (pane.Content is ControlPanelView closedCpv)
+                            closedCpv.StopUpdating();
+                        _controlPanes.Remove(driveId);
                         SyncDriveVisibility();
                     };
 
-                    // Offset each window slightly so they don't stack exactly
-                    int offset = _controlWindows.Count * 30;
-                    win.WindowStartupLocation = WindowStartupLocation.Manual;
-                    win.Left = Left + Width / 2 - 280 + offset;
-                    win.Top = Top + Height / 2 - 200 + offset;
+                    // Add to layout and float
+                    var layoutRoot = dockManager.Layout;
+                    var mainPanel = layoutRoot.Descendents().OfType<LayoutPanel>().First();
+                    var anchorGroup = mainPanel.Descendents().OfType<LayoutAnchorablePane>().FirstOrDefault();
+                    if (anchorGroup != null)
+                        anchorGroup.Children.Add(pane);
+                    else
+                    {
+                        var newAnchorPane = new LayoutAnchorablePane(pane);
+                        mainPanel.Children.Add(newAnchorPane);
+                    }
 
-                    _controlWindows[driveId] = win;
-                    win.Show();
+                    int offset = _controlPanes.Count * 30;
+                    pane.Float();
+                    pane.FloatingLeft = Left + Width / 2 - 195 + offset;
+                    pane.FloatingTop = Top + Height / 2 - 210 + offset;
+
+                    _controlPanes[driveId] = pane;
                 }
                 SyncDriveVisibility();
                 break;
@@ -557,7 +604,7 @@ public partial class MainWindow : Window
         vm.ActiveGraphDrives.Clear();
         foreach (var key in _oscilloInstances.Keys) vm.ActiveGraphDrives.Add(key);
         vm.ActiveControlDrives.Clear();
-        foreach (var key in _controlWindows.Keys) vm.ActiveControlDrives.Add(key);
+        foreach (var key in _controlPanes.Keys) vm.ActiveControlDrives.Add(key);
         // Notify DriveTreeView to update indicators
         WeakReferenceMessenger.Default.Send(new ComparePanelChangedMessage("", false));
     }
@@ -708,6 +755,7 @@ public partial class MainWindow : Window
         {
             // Collapse: shrink outer column to Auto (just the sidebar), expand monitor
             _isParamCollapsed = true;
+            if (DataContext is MainWindowViewModel vmSync) vmSync.IsMainPanelVisible = false;
             ParamExpandedArea.Visibility = Visibility.Collapsed;
             ParamCollapsedBar.Visibility = Visibility.Visible;
             ParamContentColumn.Width = new GridLength(0);
@@ -724,6 +772,7 @@ public partial class MainWindow : Window
         {
             // Expand: restore outer column to Star, restore splitter
             _isParamCollapsed = false;
+            if (DataContext is MainWindowViewModel vmSync2) vmSync2.IsMainPanelVisible = true;
             ParamExpandedArea.Visibility = Visibility.Visible;
             ParamCollapsedBar.Visibility = Visibility.Collapsed;
             ParamContentColumn.Width = new GridLength(1, GridUnitType.Star);

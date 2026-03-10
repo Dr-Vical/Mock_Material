@@ -2,36 +2,10 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             Background="{DynamicResource SurfaceBrush}">
+             Background="{DynamicResource SurfaceVariantBrush}">
 
     <Grid>
-        <!-- Drive Identity Header -->
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-
-        <Border x:Name="DriveIdentityHeader" Grid.Row="0" Height="28"
-                Background="{DynamicResource SurfaceVariantBrush}"
-                MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
-            <DockPanel>
-                <!-- Close button -->
-                <Button DockPanel.Dock="Right" Click="TitleBar_Close"
-                        Background="Transparent" BorderThickness="0"
-                        Padding="6,0" Cursor="Hand" ToolTip="Close"
-                        VerticalAlignment="Center">
-                    <materialDesign:PackIcon Kind="Close" Width="14" Height="14"
-                                             Foreground="{DynamicResource TextSecondary}" />
-                </Button>
-                <!-- Title -->
-                <TextBlock x:Name="TxtDriveIdentity" Text="Drive A"
-                           FontSize="{DynamicResource FontSizeSM}" FontWeight="SemiBold"
-                           Foreground="{DynamicResource TextSecondary}"
-                           VerticalAlignment="Center" Margin="8,0,0,0" />
-            </DockPanel>
-        </Border>
-
-    <Border x:Name="EnableBorder" Grid.Row="1" BorderThickness="2" BorderBrush="Transparent"
+    <Border x:Name="EnableBorder" BorderThickness="2" BorderBrush="Transparent"
             CornerRadius="{StaticResource Radius.MD}">
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
         <StackPanel Margin="8,6">

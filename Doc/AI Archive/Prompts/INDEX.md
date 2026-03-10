@@ -1,13 +1,13 @@
 ﻿# Prompt Archive Index
 
-> Updated: 2026-03-09 17:03:27 | Total: 265 prompts
+> Updated: 2026-03-10 15:09:09 | Total: 362 prompts
 
 | Category | Count | Latest |
 |----------|------:|--------|| Config | 1 | 2026-02-24 |
-| Debugging | 3 | 2026-03-09 |
-| General | 238 | MonitorCon |
-| Git-Workflow | 7 | 2026-03-05 |
-| UI | 16 | 2026-03-09 |
+| Debugging | 4 | 2026-03-10 |
+| General | 328 | MonitorCon |
+| Git-Workflow | 10 | 2026-03-10 |
+| UI | 19 | 2026-03-10 |
 
 ---
 
@@ -18,7 +18,10 @@
 
 ---
 
-## Debugging (3)
+## Debugging (4)
+
+### 2026-03-10
+- `10:57` [1. 아이템이 chat가 아니라 control이야 가운데 버튼 2. a/b/c/d 아이템이 하나라도 화면에 ...](Debugging/2026-03/2026-03-10/2026-03-10_105752.md)
 
 ### 2026-03-09
 - `15:19` [응 그건 잘 되는데 에러로그 다시 여는 항목이 없네 views에 아이템들과 연동 해야 할것 같고, 에러 로그...](Debugging/2026-03/2026-03-09/2026-03-09_151932.md)
@@ -31,10 +34,102 @@
 
 ---
 
-## General (238)
+## General (328)
 
 ### MonitorCon
 - `ro:lP` [](General/2026-02/2026-02-27/MonitorControlPanel_Prompt.md)
+
+### 2026-03-10
+- `15:09` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_150904.md)
+- `15:06` [VIEWS 에서 드라이브 트리 누르면 왼쪽 패널 보이거나 안보이게 연동하고, 메인 패널 버튼은 확장이냐 축소...](General/2026-03/2026-03-10/2026-03-10_150646.md)
+- `15:05` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_150515.md)
+- `15:05` [다시 실행해줘](General/2026-03/2026-03-10/2026-03-10_150505.md)
+- `15:01` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_150106.md)
+- `15:00` [무조건 아발론으로 만들고](General/2026-03/2026-03-10/2026-03-10_150004.md)
+- `14:59` [이게 지금 아발론이적용 된거야?](General/2026-03/2026-03-10/2026-03-10_145935.md)
+- `14:59` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_145918.md)
+- `14:56` [이렇게 하면 또 도킹이 안EHO](General/2026-03/2026-03-10/2026-03-10_145642.md)
+- `14:56` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_145605.md)
+- `14:52` [이게 웃긴게 독립창으로 떼 놓으면 타이틀바 위에 또 파란색으로 줄쳐지고 타이틀바도 생겨 이거 못없애냐?](General/2026-03/2026-03-10/2026-03-10_145227.md)
+- `14:51` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_145113.md)
+- `14:50` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_145031.md)
+- `14:50` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_145003.md)
+- `14:45` [컨트롤 패널 도킹 안돼?](General/2026-03/2026-03-10/2026-03-10_144533.md)
+- `14:35` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_143511.md)
+- `14:34` [컨트롤 패널 배경색 바뀐거 맞아? 아닌거 같은데 컨트롤 패널 백그라운드 자체를 흰 회색으로 해줘](General/2026-03/2026-03-10/2026-03-10_143431.md)
+- `14:34` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_143407.md)
+- `14:33` [야이씨 파라메터 패널 버튼 눌리면 그래도 닫혀 있던 파라메터 창은 열려야지](General/2026-03/2026-03-10/2026-03-10_143302.md)
+- `14:31` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_143115.md)
+- `14:30` [컨트롤패널 배경 색을 좀 회색으로 해줄래?](General/2026-03/2026-03-10/2026-03-10_143042.md)
+- `14:29` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_142948.md)
+- `14:09` [그래프에도 닫기 버튼 만들어주고, 파라메터 항목에 패널 열린게 하나도 없으면 자동으로 왼쪽으로 축소되게 해줘](General/2026-03/2026-03-10/2026-03-10_140925.md)
+- `14:05` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_140511.md)
+- `14:03` [컨트롤 판넬 뜨는거 상단에 타이틀바가 지금 흰색 이잖아. 이거 Drive A drive B 있는곳 디자인으로...](General/2026-03/2026-03-10/2026-03-10_140359.md)
+- `13:58` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_135844.md)
+- `13:56` [아니 a/b/c/d/버튼에 들어오지 말고 각 Param Graph Control 요기에 들어오게 해달라고](General/2026-03/2026-03-10/2026-03-10_135650.md)
+- `13:56` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_135614.md)
+- `13:50` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_135044.md)
+- `13:48` [A/B/C/D 눌렀을때 뜨는 팝업 버튼에 화면에 배치되어있으면 a/b/c/d/ 색깔로 불들어오게 해놔라 켜진...](General/2026-03/2026-03-10/2026-03-10_134802.md)
+- `13:44` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_134455.md)
+- `13:44` [다시 실행해줘](General/2026-03/2026-03-10/2026-03-10_134447.md)
+- `13:39` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_133924.md)
+- `13:38` [그래프 내 목차항목 더 투명하게 해주고 상단 버튼들이 작아지면 목차항목도 안보이게 해줘](General/2026-03/2026-03-10/2026-03-10_133828.md)
+- `13:36` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_133650.md)
+- `13:36` [컨트롤 패널 enable 버튼 크기 좀 줄여줘 세로로 15프로 정도](General/2026-03/2026-03-10/2026-03-10_133604.md)
+- `13:26` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_132646.md)
+- `13:25` [항목에서 축소 될 때Velocity 버튼이 아래로 내려가서 2단이 되니까 좌측 아이콘들이 작아졌다가 그럼 공...](General/2026-03/2026-03-10/2026-03-10_132513.md)
+- `13:19` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_131918.md)
+- `13:18` [AutoSacle 항목도 원래 Auto scale로 쓰다가 너무 좁아지면 저 아이콘 만으로 바꿔줄래? 다른 ...](General/2026-03/2026-03-10/2026-03-10_131823.md)
+- `13:18` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_131807.md)
+- `13:17` [파라메터 상단에 닫기 버튼도 세로로 길게 숨겼을 때 처럼 표기해 줄래? 잘안보여](General/2026-03/2026-03-10/2026-03-10_131714.md)
+- `13:17` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_131710.md)
+- `13:15` [single 이부분 버튼들 글씨는 그냥 흰색으로 해줘 셋팅 아이콘은 원래 setting이라고 되어있다가 옆...](General/2026-03/2026-03-10/2026-03-10_131553.md)
+- `13:11` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_131136.md)
+- `13:10` [좌측 하단 아이템 그래프 컨트롤 파라메터 순인데 순서 ㅂ바꾸자 파라메터 그래프 컨트롤로](General/2026-03/2026-03-10/2026-03-10_131050.md)
+- `13:09` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_130910.md)
+- `13:06` [파라메터 창에 처음 기본으로 분할되어있는 바가 있는데 (아무것도 없을떄도 보이고 ) 이거 없애 줄 수 있어?...](General/2026-03/2026-03-10/2026-03-10_130639.md)
+- `13:04` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_130441.md)
+- `11:44` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_114439.md)
+- `11:27` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_112738.md)
+- `11:26` [컨트롤 판넬은 저기 붙으면 안되는데 플로팅이야(독립창) 그리고 스코프도 4등분 하자 세로 배치하니까 버튼 때...](General/2026-03/2026-03-10/2026-03-10_112612.md)
+- `11:22` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_112256.md)
+- `11:18` [응 추가해 주고 지금 창이 완전 이상해졌어](General/2026-03/2026-03-10/2026-03-10_111824.md)
+- `11:17` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_111705.md)
+- `11:13` [아니 헤더만 변경이 아니고 ㅎㅎ 똑같은걸 유저 컨트롤 같이 만들까? 해서 화면 분할 해서 보여줘](General/2026-03/2026-03-10/2026-03-10_111330.md)
+- `11:09` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_110930.md)
+- `10:45` [버튼 완전 다꼬였다](General/2026-03/2026-03-10/2026-03-10_104541.md)
+- `10:40` [2번으로 다시 적용해볼까?](General/2026-03/2026-03-10/2026-03-10_104057.md)
+- `10:37` [일단 3안을 먼저 해보자](General/2026-03/2026-03-10/2026-03-10_103704.md)
+- `10:35` [이게 다축을 이렇게 하나로 하고은데.. 지금은 너무 지저분해 보이고 어떻게 하면 좋을까?](General/2026-03/2026-03-10/2026-03-10_103531.md)
+- `10:20` [그래프랑 컨트롤 판넬도 멀티로 만들꺼야 우선 좌 하단에 버튼을 a/b/c/d로 분기해서 그래프 a/b/c/d...](General/2026-03/2026-03-10/2026-03-10_102003.md)
+- `09:43` [로고라는건 아이콘이야. 아이콘 로고 말하는거야 상단에 비치된게 아니고 그리고 지금까지 그래프에 사용된 내용들...](General/2026-03/2026-03-10/2026-03-10_094321.md)
+- `09:40` [다시 실행해줘](General/2026-03/2026-03-10/2026-03-10_094003.md)
+- `09:32` [실행 안된다고](General/2026-03/2026-03-10/2026-03-10_093202.md)
+- `09:30` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_093041.md)
+- `09:29` [실행 안됐어](General/2026-03/2026-03-10/2026-03-10_092948.md)
+- `09:24` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_092439.md)
+- `09:24` [실행 안됐는데](General/2026-03/2026-03-10/2026-03-10_092412.md)
+- `09:23` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_092302.md)
+- `09:20` [그럼 그냥 사이즈를 아까처럼 돌리고 처음 그위치에 둬줘 그리고 이거 아이콘을 저 로고로 변경 할 수 있어? ...](General/2026-03/2026-03-10/2026-03-10_092016.md)
+- `09:18` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_091837.md)
+- `09:18` [보이는데 더 위로 올라가야 하는데](General/2026-03/2026-03-10/2026-03-10_091822.md)
+- `09:18` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_091803.md)
+- `09:17` [로고가 아예 사라졌어 0으로 해볼래? 오프셋](General/2026-03/2026-03-10/2026-03-10_091745.md)
+- `09:15` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_091534.md)
+- `09:14` [1. 플로팅 된 창의 상단 라인이 선택되면 아직도 파랑색이야 2. 돌아가는 속도를 지금의 3배정도 느리게 해...](General/2026-03/2026-03-10/2026-03-10_091447.md)
+- `09:10` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_091047.md)
+- `09:07` [2. 초록색 너무 옅어서 안보여 채도 140 정도로 해줘 1.활성 탭해더는 아직도 파랑색인데? 파랑색으로 셋...](General/2026-03/2026-03-10/2026-03-10_090720.md)
+- `09:02` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_090223.md)
+- `08:50` [컨트롤 패널이 눌려졌을 때 파란색으로 헤더가 칠해지는데 이거 바꿀 수 이썽?](General/2026-03/2026-03-10/2026-03-10_085009.md)
+- `08:47` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_084713.md)
+- `08:34` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_083419.md)
+- `08:31` [컨트롤 패널에 ClearFalult는 노란색 버튼으로, Zeroset은 Jog와 같이 투명? 검정? 색으로 ...](General/2026-03/2026-03-10/2026-03-10_083117.md)
+- `08:23` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_082347.md)
+- `08:18` [오른쪽 위 버튼 중에 Enable은 빼주고, 컨트롤 판넬에서 각 버튼의 크기를 지금보다 위아래를 1/3 정도...](General/2026-03/2026-03-10/2026-03-10_081803.md)
+- `08:08` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_080847.md)
+- `08:08` [우측 favorite parameter는 최대 지금 크기의 두배까지만 키울수 있게 해줘](General/2026-03/2026-03-10/2026-03-10_080818.md)
+- `08:07` [4분할 패널 있잖아 이것도 서로간의 간격을 조절 할 수 있을까?](General/2026-03/2026-03-10/2026-03-10_080715.md)
+- `08:00` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-10/2026-03-10_080021.md)
 
 ### 2026-03-09
 - `17:03` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-09/2026-03-09_170318.md)
@@ -289,7 +384,14 @@
 
 ---
 
-## Git-Workflow (7)
+## Git-Workflow (10)
+
+### 2026-03-10
+- `10:16` [지금꺼 까지 적용한거 정리해서 업데이트 하고 커밋하고 푸쉬해줘](Git-Workflow/2026-03/2026-03-10/2026-03-10_101630.md)
+- `07:52` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](Git-Workflow/2026-03/2026-03-10/2026-03-10_075249.md)
+
+### 2026-03-09
+- `17:05` [응 잘됐어 지금까지 한 내용 정리해서 업로드하고 저장해줘 커밋 푸쉬 알지?](Git-Workflow/2026-03/2026-03-09/2026-03-09_170506.md)
 
 ### 2026-03-05
 - `17:26` [어 좋았어 저장하고 커밋하고 푸쉬 가능해?](Git-Workflow/2026-03/2026-03-05/2026-03-05_172614.md)
@@ -308,7 +410,12 @@
 
 ---
 
-## UI (16)
+## UI (19)
+
+### 2026-03-10
+- `12:57` [1. 상단 버튼 색상아직도 파란색인데? single contin stop setting 이거 2. 그리고 ...](UI/2026-03/2026-03-10/2026-03-10_125720.md)
+- `11:42` [1.컨트롤 패널 시작할때 가로 폭을 30% 정도 줄여줘 2.a,b,c,d 파라메터 값은 각각 다른 값이야 공...](UI/2026-03/2026-03-10/2026-03-10_114255.md)
+- `08:43` [1. clear fault 글씨 색 검정색으로 바꿔줘 안보이네, 그리고 컨트롤 판넬 사이즈는 지금보다 10%...](UI/2026-03/2026-03-10/2026-03-10_084352.md)
 
 ### 2026-03-09
 - `15:02` [1.현재 스코프 창에 셋팅된 변수, 스케일 크기, 등을 세이브하고 불러올 수 있게 셋팅 옆에 버튼으로 만들어...](UI/2026-03/2026-03-09/2026-03-09_150204.md)

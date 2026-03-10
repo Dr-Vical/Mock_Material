@@ -389,7 +389,8 @@
 
                     <!-- Left: Drive Tree -->
                     <avalonDockLayout:LayoutAnchorablePane DockWidth="250">
-                        <avalonDockLayout:LayoutAnchorable Title="Drive Tree"
+                        <avalonDockLayout:LayoutAnchorable x:Name="driveTreePane"
+                                                            Title="Drive Tree"
                                                             ContentId="driveTree"
                                                             CanClose="False"
                                                             CanFloat="True"
