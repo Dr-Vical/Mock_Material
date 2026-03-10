@@ -17,7 +17,7 @@
             <DockPanel>
                 <Button x:Name="BtnCloseGraph" DockPanel.Dock="Right" Click="BtnCloseGraph_Click"
                         Background="Transparent" BorderThickness="0"
-                        Padding="5,0" Cursor="Hand" ToolTip="Close">
+                        Padding="5,0" Cursor="Hand" ToolTip="{DynamicResource loc.monitor.tooltip.close}">
                     <materialDesign:PackIcon Kind="Close" Width="12" Height="12"
                                              Foreground="{DynamicResource TextSecondary}" />
                 </Button>
@@ -59,27 +59,27 @@
                     <Button x:Name="BtnSettingsMenu" DockPanel.Dock="Right" Height="18"
                             Padding="3,1" Background="Transparent"
                             BorderBrush="{DynamicResource BorderDefault}" BorderThickness="1"
-                            Foreground="{DynamicResource ErrorBrush}" ToolTip="Settings"
+                            Foreground="{DynamicResource ErrorBrush}" ToolTip="{DynamicResource loc.monitor.tooltip.settings}"
                             Click="BtnSettingsMenu_Click">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Cog" Width="9" Height="9" VerticalAlignment="Center" Margin="0,0,2,0" />
-                            <TextBlock x:Name="TxtSettingLabel" Text="Setting" VerticalAlignment="Center"
+                            <TextBlock x:Name="TxtSettingLabel" Text="{DynamicResource loc.monitor.setting}" VerticalAlignment="Center"
                                        FontSize="{DynamicResource FontSizeXS}" Foreground="{DynamicResource TextPrimary}" />
                         </StackPanel>
                         <Button.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Header="Settings" Click="BtnOption_Click">
+                                <MenuItem Header="{DynamicResource loc.monitor.menu.settings}" Click="BtnOption_Click">
                                     <MenuItem.Icon>
                                         <materialDesign:PackIcon Kind="Cog" Width="14" Height="14" />
                                     </MenuItem.Icon>
                                 </MenuItem>
                                 <Separator />
-                                <MenuItem Header="Save" Click="BtnSaveSetting_Click">
+                                <MenuItem Header="{DynamicResource loc.monitor.menu.save}" Click="BtnSaveSetting_Click">
                                     <MenuItem.Icon>
                                         <materialDesign:PackIcon Kind="ContentSave" Width="14" Height="14" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem Header="Load" Click="BtnLoadSetting_Click">
+                                <MenuItem Header="{DynamicResource loc.monitor.menu.load}" Click="BtnLoadSetting_Click">
                                     <MenuItem.Icon>
                                         <materialDesign:PackIcon Kind="FolderOpen" Width="14" Height="14" />
                                     </MenuItem.Icon>
@@ -92,40 +92,40 @@
                         <Button Click="BtnSingle_Click" Height="18"
                                 Padding="2,1" Margin="0,0,2,0" Background="Transparent"
                                 BorderBrush="{DynamicResource BorderDefault}" BorderThickness="1"
-                                Foreground="{DynamicResource ErrorBrush}" ToolTip="Single Capture">
+                                Foreground="{DynamicResource ErrorBrush}" ToolTip="{DynamicResource loc.monitor.tooltip.single}">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="ChartLine" Width="9" Height="9" VerticalAlignment="Center" Margin="0,0,2,0" />
-                                <TextBlock x:Name="TxtSingleLabel" Text="Single" VerticalAlignment="Center" FontSize="{DynamicResource FontSizeXS}"
+                                <TextBlock x:Name="TxtSingleLabel" Text="{DynamicResource loc.monitor.single}" VerticalAlignment="Center" FontSize="{DynamicResource FontSizeXS}"
                                            Foreground="{DynamicResource TextPrimary}" />
                             </StackPanel>
                         </Button>
                         <Button Click="BtnContinuous_Click" Height="18"
                                 Padding="2,1" Margin="0,0,2,0" Background="Transparent"
                                 BorderBrush="{DynamicResource BorderDefault}" BorderThickness="1"
-                                Foreground="{DynamicResource ErrorBrush}" ToolTip="Continuous">
+                                Foreground="{DynamicResource ErrorBrush}" ToolTip="{DynamicResource loc.monitor.tooltip.continuous}">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Refresh" Width="9" Height="9" VerticalAlignment="Center" Margin="0,0,2,0" />
-                                <TextBlock x:Name="TxtContinLabel" Text="Contin" VerticalAlignment="Center" FontSize="{DynamicResource FontSizeXS}"
+                                <TextBlock x:Name="TxtContinLabel" Text="{DynamicResource loc.monitor.continuous}" VerticalAlignment="Center" FontSize="{DynamicResource FontSizeXS}"
                                            Foreground="{DynamicResource TextPrimary}" />
                             </StackPanel>
                         </Button>
                         <Button Click="BtnStop_Click" Height="18"
                                 Padding="2,1" Margin="0,0,2,0" Background="Transparent"
                                 BorderBrush="{DynamicResource BorderDefault}" BorderThickness="1"
-                                Foreground="{DynamicResource ErrorBrush}" ToolTip="Stop">
+                                Foreground="{DynamicResource ErrorBrush}" ToolTip="{DynamicResource loc.monitor.tooltip.stop}">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Stop" Width="9" Height="9" VerticalAlignment="Center" Margin="0,0,2,0" />
-                                <TextBlock x:Name="TxtStopLabel" Text="Stop" VerticalAlignment="Center" FontSize="{DynamicResource FontSizeXS}"
+                                <TextBlock x:Name="TxtStopLabel" Text="{DynamicResource loc.monitor.stop}" VerticalAlignment="Center" FontSize="{DynamicResource FontSizeXS}"
                                            Foreground="{DynamicResource TextPrimary}" />
                             </StackPanel>
                         </Button>
                         <Button Click="BtnAutoScale_Click" Height="18"
                                 Padding="2,1" Margin="0,0,4,0" Background="Transparent"
                                 BorderBrush="{DynamicResource BorderDefault}" BorderThickness="1"
-                                Foreground="{DynamicResource ErrorBrush}" ToolTip="Auto Scale">
+                                Foreground="{DynamicResource ErrorBrush}" ToolTip="{DynamicResource loc.monitor.tooltip.autoscale}">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="ArrowExpandVertical" Width="9" Height="9" VerticalAlignment="Center" Margin="0,0,2,0" />
-                                <TextBlock x:Name="TxtAutoScaleLabel" Text="Auto Scale" VerticalAlignment="Center" FontSize="{DynamicResource FontSizeXS}"
+                                <TextBlock x:Name="TxtAutoScaleLabel" Text="{DynamicResource loc.monitor.autoscale}" VerticalAlignment="Center" FontSize="{DynamicResource FontSizeXS}"
                                            Foreground="{DynamicResource TextPrimary}" />
                             </StackPanel>
                         </Button>
@@ -207,7 +207,7 @@
                 <Button x:Name="BtnToggleScale" Grid.Column="1" Click="ToggleScalePanel_Click"
                         Width="18" Background="{DynamicResource SurfaceVariantBrush}"
                         BorderBrush="{DynamicResource DividerBrush}" BorderThickness="0,0,1,0"
-                        Cursor="Hand" ToolTip="Toggle Scale Panel" Padding="0">
+                        Cursor="Hand" ToolTip="{DynamicResource loc.monitor.tooltip.togglescale}" Padding="0">
                     <materialDesign:PackIcon x:Name="ScaleToggleIcon" Kind="ChevronLeft"
                         Width="14" Height="14" Foreground="{DynamicResource TextSecondary}" />
                 </Button>
@@ -238,7 +238,7 @@
                 <DockPanel>
                     <!-- Right: progress bar -->
                     <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock x:Name="TxtCollecting" Text="Collecting..." Visibility="Collapsed"
+                        <TextBlock x:Name="TxtCollecting" Text="{DynamicResource loc.monitor.status.collecting}" Visibility="Collapsed"
                                    Foreground="{DynamicResource ErrorBrush}" FontSize="{DynamicResource FontSizeXS}"
                                    VerticalAlignment="Center" Margin="0,0,4,0" />
                         <ProgressBar x:Name="CollectingProgress" Visibility="Collapsed"
@@ -248,8 +248,8 @@
                     </StackPanel>
                     <!-- Left: status info -->
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="4 CH | 10 kHz | " Foreground="{DynamicResource TextSecondary}" FontSize="{DynamicResource FontSizeXS}" />
-                        <TextBlock x:Name="TxtStatus" Text="Stopped" Foreground="{DynamicResource SecondaryBrush}" FontSize="{DynamicResource FontSizeXS}" />
+                        <TextBlock Text="{DynamicResource loc.monitor.status.channels}" Foreground="{DynamicResource TextSecondary}" FontSize="{DynamicResource FontSizeXS}" />
+                        <TextBlock x:Name="TxtStatus" Text="{DynamicResource loc.monitor.status.stopped}" Foreground="{DynamicResource SecondaryBrush}" FontSize="{DynamicResource FontSizeXS}" />
                     </StackPanel>
                 </DockPanel>
             </Border>
@@ -273,7 +273,7 @@
             <Button x:Name="BtnToggleFavorites" Grid.Column="0" Click="ToggleFavoritesPanel_Click"
                     Width="18" Background="{DynamicResource SurfaceVariantBrush}"
                     BorderBrush="{DynamicResource DividerBrush}" BorderThickness="0,0,1,0"
-                    Cursor="Hand" ToolTip="Toggle Favorite Parameter" Padding="0">
+                    Cursor="Hand" ToolTip="{DynamicResource loc.monitor.tooltip.togglefav}" Padding="0">
                 <materialDesign:PackIcon x:Name="FavoritesToggleIcon" Kind="ChevronRight"
                     Width="14" Height="14" Foreground="{DynamicResource WarningBrush}" />
             </Button>
@@ -296,11 +296,11 @@
                         <Button DockPanel.Dock="Left" Click="ClearAllFavorites_Click"
                                 Background="Transparent" BorderThickness="0"
                                 Cursor="Hand" Padding="2" Margin="0,0,4,0"
-                                ToolTip="Clear all favorites">
+                                ToolTip="{DynamicResource loc.monitor.tooltip.clearfav}">
                             <materialDesign:PackIcon Kind="Star" Width="14" Height="14"
                                                      Foreground="{DynamicResource WarningBrush}" />
                         </Button>
-                        <TextBlock Text="Favorite Parameter"
+                        <TextBlock Text="{DynamicResource loc.monitor.favorites}"
                                    FontSize="{DynamicResource FontSizeSM}"
                                    FontWeight="SemiBold"
                                    Foreground="{DynamicResource WarningBrush}"

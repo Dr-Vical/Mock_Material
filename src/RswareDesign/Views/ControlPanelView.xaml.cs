@@ -4,6 +4,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
+using RswareDesign.Services;
 
 namespace RswareDesign.Views;
 
@@ -82,13 +83,13 @@ public partial class ControlPanelView : UserControl
     {
         if (_isEnabled)
         {
-            TxtEnableStatus.Text = "● Enabled";
+            TxtEnableStatus.Text = LocalizationService.Get("loc.control.status.enabled");
             TxtEnableStatus.Foreground = GetWpfBrush("SuccessBrush");
             StartEnableBorderAnimation();
         }
         else
         {
-            TxtEnableStatus.Text = "● Disabled";
+            TxtEnableStatus.Text = LocalizationService.Get("loc.control.status.disabled");
             TxtEnableStatus.Foreground = GetWpfBrush("ErrorBrush");
             StopEnableBorderAnimation();
         }
@@ -165,10 +166,11 @@ public partial class ControlPanelView : UserControl
     private void BtnZeroSet_Click(object sender, RoutedEventArgs e)
     {
         var owner = Window.GetWindow(this);
-        if (!ConfirmActionDialog.Ask(owner, "Zero Set",
-                "Zero Set 하시겠습니까?\n현재 위치가 0으로 초기화됩니다.",
+        if (!ConfirmActionDialog.Ask(owner,
+                LocalizationService.Get("loc.control.confirm.zeroset.title"),
+                LocalizationService.Get("loc.control.confirm.zeroset.msg"),
                 MaterialDesignThemes.Wpf.PackIconKind.Numeric0CircleOutline,
-                "Zero Set", "WarningBrush"))
+                LocalizationService.Get("loc.control.confirm.zeroset.btn"), "WarningBrush"))
             return;
 
         _currentPosition = 0;
@@ -178,10 +180,11 @@ public partial class ControlPanelView : UserControl
     private void BtnClearFault_Click(object sender, RoutedEventArgs e)
     {
         var owner = Window.GetWindow(this);
-        if (!ConfirmActionDialog.Ask(owner, "Clear Fault",
-                "Clear Fault 하시겠습니까?\n현재 발생한 Fault를 초기화합니다.",
+        if (!ConfirmActionDialog.Ask(owner,
+                LocalizationService.Get("loc.control.confirm.clearfault.title"),
+                LocalizationService.Get("loc.control.confirm.clearfault.msg"),
                 MaterialDesignThemes.Wpf.PackIconKind.AlertRemoveOutline,
-                "Clear Fault", "WarningBrush"))
+                LocalizationService.Get("loc.control.confirm.clearfault.btn"), "WarningBrush"))
             return;
 
         // Mock: just acknowledge
@@ -190,10 +193,11 @@ public partial class ControlPanelView : UserControl
     private void BtnReset_Click(object sender, RoutedEventArgs e)
     {
         var owner = Window.GetWindow(this);
-        if (!ConfirmActionDialog.Ask(owner, "Reset",
-                "Reset 하시겠습니까?\n모든 상태가 초기화됩니다.",
+        if (!ConfirmActionDialog.Ask(owner,
+                LocalizationService.Get("loc.control.confirm.reset.title"),
+                LocalizationService.Get("loc.control.confirm.reset.msg"),
                 MaterialDesignThemes.Wpf.PackIconKind.RestartAlert,
-                "Reset", "WarningBrush"))
+                LocalizationService.Get("loc.control.confirm.reset.btn"), "WarningBrush"))
             return;
 
         _isEnabled = false;

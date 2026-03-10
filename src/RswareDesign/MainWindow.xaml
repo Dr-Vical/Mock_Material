@@ -53,56 +53,56 @@
                 <!-- ══════════════════════════════════════════════════════ -->
                 <!--  [File] Tab                                            -->
                 <!-- ══════════════════════════════════════════════════════ -->
-                <Fluent:RibbonTabItem Header="File" KeyTip="F" Margin="4,0,0,0">
-                    <Fluent:RibbonGroupBox Header="File">
+                <Fluent:RibbonTabItem Header="{DynamicResource loc.ribbon.tab.file}" KeyTip="F" Margin="4,0,0,0">
+                    <Fluent:RibbonGroupBox Header="{DynamicResource loc.ribbon.group.file}">
                         <Button Style="{StaticResource RibbonLargeRipple}">
                             <StackPanel HorizontalAlignment="Center">
                                 <materialDesign:PackIcon Kind="FileDocumentPlus" Style="{StaticResource RibbonIconOpacityPulse}" />
-                                <TextBlock Text="New" Style="{StaticResource RibbonButtonLabel}" />
+                                <TextBlock Text="{DynamicResource loc.ribbon.btn.new}" Style="{StaticResource RibbonButtonLabel}" />
                             </StackPanel>
                         </Button>
                         <Button Style="{StaticResource RibbonLargeRipple}">
                             <StackPanel HorizontalAlignment="Center">
                                 <materialDesign:PackIcon Kind="FolderOpen" Style="{StaticResource RibbonIconOpacityPulse}" />
-                                <TextBlock Text="Open" Style="{StaticResource RibbonButtonLabel}" />
+                                <TextBlock Text="{DynamicResource loc.ribbon.btn.open}" Style="{StaticResource RibbonButtonLabel}" />
                             </StackPanel>
                         </Button>
                         <Button Style="{StaticResource RibbonLargeRipple}" Command="{Binding SaveParametersCommand}">
                             <StackPanel HorizontalAlignment="Center">
                                 <materialDesign:PackIcon Kind="ContentSave" Style="{StaticResource RibbonIconOpacityPulse}" />
-                                <TextBlock Text="Save" Style="{StaticResource RibbonButtonLabel}" />
+                                <TextBlock Text="{DynamicResource loc.ribbon.btn.save}" Style="{StaticResource RibbonButtonLabel}" />
                             </StackPanel>
                         </Button>
                         <Button Style="{StaticResource RibbonLargeRipple}">
                             <StackPanel HorizontalAlignment="Center">
                                 <materialDesign:PackIcon Kind="ContentSaveEdit" Style="{StaticResource RibbonIconOpacityPulse}" />
-                                <TextBlock Text="Save As" Style="{StaticResource RibbonButtonLabel}" />
+                                <TextBlock Text="{DynamicResource loc.ribbon.btn.saveas}" Style="{StaticResource RibbonButtonLabel}" />
                             </StackPanel>
                         </Button>
                     </Fluent:RibbonGroupBox>
-                    <Fluent:RibbonGroupBox Header="Print">
+                    <Fluent:RibbonGroupBox Header="{DynamicResource loc.ribbon.group.print}">
                         <Button Style="{StaticResource RibbonLargeRipple}">
                             <StackPanel HorizontalAlignment="Center">
                                 <materialDesign:PackIcon Kind="Printer" Style="{StaticResource RibbonIconOpacityPulse}" />
-                                <TextBlock Text="Print" Style="{StaticResource RibbonButtonLabel}" />
+                                <TextBlock Text="{DynamicResource loc.ribbon.btn.print}" Style="{StaticResource RibbonButtonLabel}" />
                             </StackPanel>
                         </Button>
                         <Button Style="{StaticResource RibbonLargeRipple}">
                             <StackPanel HorizontalAlignment="Center">
                                 <materialDesign:PackIcon Kind="FileDocumentEdit" Style="{StaticResource RibbonIconOpacityPulse}" />
-                                <TextBlock Text="Page Setup" Style="{StaticResource RibbonButtonLabel}" />
+                                <TextBlock Text="{DynamicResource loc.ribbon.btn.pagesetup}" Style="{StaticResource RibbonButtonLabel}" />
                             </StackPanel>
                         </Button>
                         <Button Style="{StaticResource RibbonLargeRipple}">
                             <StackPanel HorizontalAlignment="Center">
                                 <materialDesign:PackIcon Kind="PrinterSettings" Style="{StaticResource RibbonIconOpacityPulse}" />
-                                <TextBlock Text="Print Setup" Style="{StaticResource RibbonButtonLabel}" />
+                                <TextBlock Text="{DynamicResource loc.ribbon.btn.printsetup}" Style="{StaticResource RibbonButtonLabel}" />
                             </StackPanel>
                         </Button>
                         <Button Style="{StaticResource RibbonLargeRipple}" Command="{Binding ExitAppCommand}">
                             <StackPanel HorizontalAlignment="Center">
                                 <materialDesign:PackIcon Kind="ExitToApp" Style="{StaticResource RibbonIconShake}" />
-                                <TextBlock Text="Exit" Style="{StaticResource RibbonButtonLabel}" />
+                                <TextBlock Text="{DynamicResource loc.ribbon.btn.exit}" Style="{StaticResource RibbonButtonLabel}" />
                             </StackPanel>
                         </Button>
                     </Fluent:RibbonGroupBox>
@@ -111,26 +111,26 @@
                 <!-- ══════════════════════════════════════════════════════ -->
                 <!--  [Tools] Tab                                           -->
                 <!-- ══════════════════════════════════════════════════════ -->
-                <Fluent:RibbonTabItem Header="Tools" KeyTip="T">
-                    <Fluent:RibbonGroupBox Header="Scan">
+                <Fluent:RibbonTabItem Header="{DynamicResource loc.ribbon.tab.tools}" KeyTip="T">
+                    <Fluent:RibbonGroupBox Header="{DynamicResource loc.ribbon.group.scan}">
                         <Button Style="{StaticResource RibbonLargeRipple}" Command="{Binding RescanCommand}">
                             <StackPanel HorizontalAlignment="Center">
                                 <materialDesign:PackIcon Kind="Refresh" Style="{StaticResource RibbonIconOpacityPulse}" />
-                                <TextBlock Text="ReScan" Style="{StaticResource RibbonButtonLabel}" />
+                                <TextBlock Text="{DynamicResource loc.ribbon.btn.rescan}" Style="{StaticResource RibbonButtonLabel}" />
                             </StackPanel>
                         </Button>
                         <Button Style="{StaticResource RibbonLargeRipple}">
                             <StackPanel HorizontalAlignment="Center">
                                 <materialDesign:PackIcon Kind="CogRefresh" Style="{StaticResource RibbonIconOpacityPulse}" />
-                                <TextBlock Text="ReScan Option" Style="{StaticResource RibbonButtonLabel}" />
+                                <TextBlock Text="{DynamicResource loc.ribbon.btn.rescanoption}" Style="{StaticResource RibbonButtonLabel}" />
                             </StackPanel>
                         </Button>
                     </Fluent:RibbonGroupBox>
-                    <Fluent:RibbonGroupBox Header="Communication">
+                    <Fluent:RibbonGroupBox Header="{DynamicResource loc.ribbon.group.comm}">
                         <Button Style="{StaticResource RibbonLargeRipple}">
                             <StackPanel HorizontalAlignment="Center">
                                 <materialDesign:PackIcon Kind="SerialPort" Style="{StaticResource RibbonIconOpacityPulse}" />
-                                <TextBlock Text="Com Setting" Style="{StaticResource RibbonButtonLabel}" />
+                                <TextBlock Text="{DynamicResource loc.ribbon.btn.comsetting}" Style="{StaticResource RibbonButtonLabel}" />
                             </StackPanel>
                         </Button>
                     </Fluent:RibbonGroupBox>
@@ -139,59 +139,59 @@
                 <!-- ══════════════════════════════════════════════════════ -->
                 <!--  [Views] Tab (Default Selected)                        -->
                 <!-- ══════════════════════════════════════════════════════ -->
-                <Fluent:RibbonTabItem Header="Views" KeyTip="V" IsSelected="True">
-                    <Fluent:RibbonGroupBox Header="Panels">
+                <Fluent:RibbonTabItem Header="{DynamicResource loc.ribbon.tab.views}" KeyTip="V" IsSelected="True">
+                    <Fluent:RibbonGroupBox Header="{DynamicResource loc.ribbon.group.panels}">
                         <ToggleButton Style="{StaticResource RibbonLargeRippleToggle}" IsChecked="{Binding IsDriveTreeVisible, Mode=TwoWay}">
                             <StackPanel HorizontalAlignment="Center">
                                 <materialDesign:PackIcon Kind="FileTree" Style="{StaticResource RibbonIconOpacityPulse}" />
-                                <TextBlock Text="DriveTree" Style="{StaticResource RibbonButtonLabel}" />
+                                <TextBlock Text="{DynamicResource loc.ribbon.btn.drivetree}" Style="{StaticResource RibbonButtonLabel}" />
                             </StackPanel>
                         </ToggleButton>
                         <ToggleButton Style="{StaticResource RibbonLargeRippleToggle}" IsChecked="{Binding IsMainPanelVisible, Mode=TwoWay}">
                             <StackPanel HorizontalAlignment="Center">
                                 <materialDesign:PackIcon Kind="ViewDashboard" Style="{StaticResource RibbonIconOpacityPulse}" />
-                                <TextBlock Text="Main Panel" Style="{StaticResource RibbonButtonLabel}" />
+                                <TextBlock Text="{DynamicResource loc.ribbon.btn.mainpanel}" Style="{StaticResource RibbonButtonLabel}" />
                             </StackPanel>
                         </ToggleButton>
                         <ToggleButton Style="{StaticResource RibbonLargeRippleToggle}" IsChecked="{Binding IsErrorLogVisible, Mode=TwoWay}">
                             <StackPanel HorizontalAlignment="Center">
                                 <materialDesign:PackIcon Kind="AlertCircleOutline" Style="{StaticResource RibbonIconOpacityPulse}" />
-                                <TextBlock Text="Warning/Error" Style="{StaticResource RibbonButtonLabel}" />
+                                <TextBlock Text="{DynamicResource loc.ribbon.btn.warningerror}" Style="{StaticResource RibbonButtonLabel}" />
                             </StackPanel>
                         </ToggleButton>
                     </Fluent:RibbonGroupBox>
-                    <Fluent:RibbonGroupBox Header="Theme">
+                    <Fluent:RibbonGroupBox Header="{DynamicResource loc.ribbon.group.theme}">
                         <!-- Theme (Dark/Gray/Light) -->
                         <StackPanel VerticalAlignment="Center" Width="120" Margin="4,2" ClipToBounds="True">
-                            <TextBlock Text="Theme" Style="{StaticResource RibbonInlineLabel}" />
+                            <TextBlock Text="{DynamicResource loc.ribbon.label.theme}" Style="{StaticResource RibbonInlineLabel}" />
                             <ComboBox Style="{StaticResource RibbonDarkComboBox}"
                                       ItemsSource="{Binding AvailableThemes}"
                                       SelectedItem="{Binding SelectedTheme, Mode=TwoWay}" />
                         </StackPanel>
                         <!-- Font Size -->
                         <StackPanel VerticalAlignment="Center" Width="58" Margin="4,2" ClipToBounds="True">
-                            <TextBlock Text="Font" Style="{StaticResource RibbonInlineLabel}" />
+                            <TextBlock Text="{DynamicResource loc.ribbon.label.font}" Style="{StaticResource RibbonInlineLabel}" />
                             <ComboBox Style="{StaticResource RibbonDarkComboBox}"
                                       ItemsSource="{Binding AvailableFontSizes}"
                                       SelectedItem="{Binding SelectedFontSize, Mode=TwoWay}" />
                         </StackPanel>
                         <!-- Color (Hue Slider) -->
                         <StackPanel VerticalAlignment="Center" Width="110" Margin="4,2" ClipToBounds="True">
-                            <TextBlock Text="Color" Style="{StaticResource RibbonInlineLabel}" />
+                            <TextBlock Text="{DynamicResource loc.ribbon.label.color}" Style="{StaticResource RibbonInlineLabel}" />
                             <Slider Style="{StaticResource HueSliderStyle}"
                                     Minimum="0" Maximum="360"
                                     Value="{Binding HueValue, Mode=TwoWay}" />
                         </StackPanel>
                         <!-- Saturation Slider -->
                         <StackPanel VerticalAlignment="Center" Width="110" Margin="4,2" ClipToBounds="True">
-                            <TextBlock Text="Saturation" Style="{StaticResource RibbonInlineLabel}" TextTrimming="CharacterEllipsis" />
+                            <TextBlock Text="{DynamicResource loc.ribbon.label.saturation}" Style="{StaticResource RibbonInlineLabel}" TextTrimming="CharacterEllipsis" />
                             <Slider Style="{StaticResource SaturationSliderStyle}"
                                     Minimum="0" Maximum="100"
                                     Value="{Binding SaturationValue, Mode=TwoWay}" />
                         </StackPanel>
                         <!-- 한영 Toggle -->
                         <StackPanel VerticalAlignment="Center" Width="46" Margin="8,2,4,2" ClipToBounds="True">
-                            <TextBlock Text="Lang" Style="{StaticResource RibbonInlineLabel}" />
+                            <TextBlock Text="{DynamicResource loc.ribbon.label.lang}" Style="{StaticResource RibbonInlineLabel}" />
                             <ToggleButton IsChecked="{Binding IsKorean, Mode=TwoWay}"
                                           OverridesDefaultStyle="True"
                                           Cursor="Hand" Focusable="False"
@@ -237,18 +237,18 @@
                 <!-- ══════════════════════════════════════════════════════ -->
                 <!--  [Help] Tab                                            -->
                 <!-- ══════════════════════════════════════════════════════ -->
-                <Fluent:RibbonTabItem Header="Help" KeyTip="H">
-                    <Fluent:RibbonGroupBox Header="Info">
+                <Fluent:RibbonTabItem Header="{DynamicResource loc.ribbon.tab.help}" KeyTip="H">
+                    <Fluent:RibbonGroupBox Header="{DynamicResource loc.ribbon.group.info}">
                         <Button Style="{StaticResource RibbonLargeRipple}">
                             <StackPanel HorizontalAlignment="Center">
                                 <materialDesign:PackIcon Kind="ClipboardTextOutline" Style="{StaticResource RibbonIconOpacityPulse}" />
-                                <TextBlock Text="Release List" Style="{StaticResource RibbonButtonLabel}" />
+                                <TextBlock Text="{DynamicResource loc.ribbon.btn.releaselist}" Style="{StaticResource RibbonButtonLabel}" />
                             </StackPanel>
                         </Button>
                     </Fluent:RibbonGroupBox>
-                    <Fluent:RibbonGroupBox Header="About">
+                    <Fluent:RibbonGroupBox Header="{DynamicResource loc.ribbon.group.about}">
                         <StackPanel VerticalAlignment="Center" Margin="{StaticResource Padding.RibbonInline}">
-                            <TextBlock Text="Version" Style="{StaticResource RibbonInlineLabel}" />
+                            <TextBlock Text="{DynamicResource loc.ribbon.label.version}" Style="{StaticResource RibbonInlineLabel}" />
                             <TextBlock Text="Rsware 1.2.1"
                                        Foreground="{DynamicResource TextPrimary}"
                                        FontSize="{DynamicResource FontSizeSM}"
@@ -260,18 +260,18 @@
                 <!-- ══════════════════════════════════════════════════════ -->
                 <!--  [Admin Option] Tab — password protected                -->
                 <!-- ══════════════════════════════════════════════════════ -->
-                <Fluent:RibbonTabItem Header="Admin Option" KeyTip="A">
-                    <Fluent:RibbonGroupBox Header="Settings">
+                <Fluent:RibbonTabItem Header="{DynamicResource loc.ribbon.tab.admin}" KeyTip="A">
+                    <Fluent:RibbonGroupBox Header="{DynamicResource loc.ribbon.group.settings}">
                         <Button Style="{StaticResource RibbonLargeRipple}" Command="{Binding AdminMotorDbCommand}">
                             <StackPanel HorizontalAlignment="Center">
                                 <materialDesign:PackIcon Kind="DatabaseCog" Style="{StaticResource RibbonIconOpacityPulse}" />
-                                <TextBlock Text="Motor DB" Style="{StaticResource RibbonButtonLabel}" />
+                                <TextBlock Text="{DynamicResource loc.ribbon.btn.motordb}" Style="{StaticResource RibbonButtonLabel}" />
                             </StackPanel>
                         </Button>
                         <Button Style="{StaticResource RibbonLargeRipple}" Command="{Binding AdminParamSettingCommand}">
                             <StackPanel HorizontalAlignment="Center">
                                 <materialDesign:PackIcon Kind="TuneVertical" Style="{StaticResource RibbonIconOpacityPulse}" />
-                                <TextBlock Text="Param Setting" Style="{StaticResource RibbonButtonLabel}" />
+                                <TextBlock Text="{DynamicResource loc.ribbon.btn.paramsetting}" Style="{StaticResource RibbonButtonLabel}" />
                             </StackPanel>
                         </Button>
                     </Fluent:RibbonGroupBox>
@@ -298,7 +298,7 @@
                                 <DropShadowEffect Color="{Binding Color, Source={StaticResource ErrorBrush}}" ShadowDepth="0" BlurRadius="8" Opacity="0.6" />
                             </materialDesign:PackIcon.Effect>
                         </materialDesign:PackIcon>
-                        <TextBlock Text="Disable All" Style="{StaticResource QuickActionLabel}"
+                        <TextBlock Text="{DynamicResource loc.quickaction.disableall}" Style="{StaticResource QuickActionLabel}"
                                    FontSize="{DynamicResource FontSizeSM}" Margin="8,0,0,0" />
                     </StackPanel>
                 </Button>
@@ -316,7 +316,7 @@
                                 <DropShadowEffect Color="{Binding Color, Source={StaticResource WarningBrush}}" ShadowDepth="0" BlurRadius="8" Opacity="0.6" />
                             </materialDesign:PackIcon.Effect>
                         </materialDesign:PackIcon>
-                        <TextBlock Text="Clear Fault All" Style="{StaticResource QuickActionLabel}"
+                        <TextBlock Text="{DynamicResource loc.quickaction.clearfaultall}" Style="{StaticResource QuickActionLabel}"
                                    FontSize="{DynamicResource FontSizeSM}" Margin="8,0,0,0" />
                     </StackPanel>
                 </Button>
@@ -390,7 +390,7 @@
                     <!-- Left: Drive Tree -->
                     <avalonDockLayout:LayoutAnchorablePane DockWidth="250">
                         <avalonDockLayout:LayoutAnchorable x:Name="driveTreePane"
-                                                            Title="Drive Tree"
+                                                            Title="{DynamicResource loc.dock.drivetree}"
                                                             ContentId="driveTree"
                                                             CanClose="False"
                                                             CanFloat="True"
@@ -438,7 +438,7 @@
                                                 <Border Grid.Row="0" Background="{DynamicResource SurfaceBrush}"
                                                         BorderBrush="{DynamicResource BorderDefault}" BorderThickness="0,0,0,1"
                                                         Padding="4,2">
-                                                    <TextBlock x:Name="ParamHeaderText" Text="Parameters"
+                                                    <TextBlock x:Name="ParamHeaderText" Text="{DynamicResource loc.param.header}"
                                                                VerticalAlignment="Center"
                                                                FontSize="{DynamicResource FontSizeXS}"
                                                                Foreground="{DynamicResource TextSecondary}" />
@@ -450,7 +450,7 @@
                                                     Background="{DynamicResource SurfaceVariantBrush}"
                                                     BorderBrush="{DynamicResource PrimaryBrush}"
                                                     BorderThickness="2,0,0,0"
-                                                    Cursor="Hand" ToolTip="Collapse parameter panels"
+                                                    Cursor="Hand" ToolTip="{DynamicResource loc.param.collapse.tooltip}"
                                                     MouseLeftButtonDown="BtnCollapseParams_Click">
                                                 <Border.Triggers>
                                                     <EventTrigger RoutedEvent="MouseEnter">
@@ -476,7 +476,7 @@
                                                                              Foreground="{DynamicResource PrimaryBrush}"
                                                                              HorizontalAlignment="Center"
                                                                              Margin="0,0,0,6" />
-                                                    <TextBlock Text="C&#x000A;l&#x000A;o&#x000A;s&#x000A;e"
+                                                    <TextBlock Text="{DynamicResource loc.param.close.vertical}"
                                                                FontSize="{DynamicResource FontSizeSM}"
                                                                FontWeight="SemiBold"
                                                                Foreground="{DynamicResource TextPrimary}"
@@ -518,7 +518,7 @@
                                                                          Foreground="{DynamicResource PrimaryBrush}"
                                                                          HorizontalAlignment="Center"
                                                                          Margin="0,0,0,6" />
-                                                <TextBlock Text="P&#x000A;a&#x000A;r&#x000A;a&#x000A;m"
+                                                <TextBlock Text="{DynamicResource loc.param.expand.vertical}"
                                                            FontSize="{DynamicResource FontSizeSM}"
                                                            FontWeight="SemiBold"
                                                            Foreground="{DynamicResource TextPrimary}"
@@ -545,7 +545,7 @@
                         <!-- Error Log: center panel bottom -->
                         <avalonDockLayout:LayoutAnchorablePane DockHeight="150">
                             <avalonDockLayout:LayoutAnchorable x:Name="errorLogPane"
-                                                                Title="Error Log"
+                                                                Title="{DynamicResource loc.dock.errorlog}"
                                                                 ContentId="errorLog"
                                                                 CanClose="True"
                                                                 CanFloat="True"

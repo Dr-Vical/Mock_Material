@@ -1,0 +1,220 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  Ribbon Tabs                                                -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <sys:String x:Key="loc.ribbon.tab.file">파일</sys:String>
+    <sys:String x:Key="loc.ribbon.tab.tools">도구</sys:String>
+    <sys:String x:Key="loc.ribbon.tab.views">보기</sys:String>
+    <sys:String x:Key="loc.ribbon.tab.help">도움말</sys:String>
+    <sys:String x:Key="loc.ribbon.tab.admin">관리자 설정</sys:String>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  Ribbon Groups                                              -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <sys:String x:Key="loc.ribbon.group.file">파일</sys:String>
+    <sys:String x:Key="loc.ribbon.group.print">인쇄</sys:String>
+    <sys:String x:Key="loc.ribbon.group.scan">검색</sys:String>
+    <sys:String x:Key="loc.ribbon.group.comm">통신</sys:String>
+    <sys:String x:Key="loc.ribbon.group.panels">패널</sys:String>
+    <sys:String x:Key="loc.ribbon.group.theme">테마</sys:String>
+    <sys:String x:Key="loc.ribbon.group.info">정보</sys:String>
+    <sys:String x:Key="loc.ribbon.group.about">정보</sys:String>
+    <sys:String x:Key="loc.ribbon.group.settings">설정</sys:String>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  Ribbon Buttons — File Tab                                  -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <sys:String x:Key="loc.ribbon.btn.new">새 파일</sys:String>
+    <sys:String x:Key="loc.ribbon.btn.open">열기</sys:String>
+    <sys:String x:Key="loc.ribbon.btn.save">저장</sys:String>
+    <sys:String x:Key="loc.ribbon.btn.saveas">다른이름저장</sys:String>
+    <sys:String x:Key="loc.ribbon.btn.print">인쇄</sys:String>
+    <sys:String x:Key="loc.ribbon.btn.pagesetup">페이지 설정</sys:String>
+    <sys:String x:Key="loc.ribbon.btn.printsetup">인쇄 설정</sys:String>
+    <sys:String x:Key="loc.ribbon.btn.exit">종료</sys:String>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  Ribbon Buttons — Tools Tab                                 -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <sys:String x:Key="loc.ribbon.btn.rescan">재검색</sys:String>
+    <sys:String x:Key="loc.ribbon.btn.rescanoption">재검색 옵션</sys:String>
+    <sys:String x:Key="loc.ribbon.btn.comsetting">통신 설정</sys:String>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  Ribbon Buttons — Views Tab                                 -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <sys:String x:Key="loc.ribbon.btn.drivetree">드라이브 트리</sys:String>
+    <sys:String x:Key="loc.ribbon.btn.mainpanel">메인 패널</sys:String>
+    <sys:String x:Key="loc.ribbon.btn.warningerror">경고/에러</sys:String>
+    <sys:String x:Key="loc.ribbon.label.theme">테마</sys:String>
+    <sys:String x:Key="loc.ribbon.label.font">글꼴</sys:String>
+    <sys:String x:Key="loc.ribbon.label.color">색상</sys:String>
+    <sys:String x:Key="loc.ribbon.label.saturation">채도</sys:String>
+    <sys:String x:Key="loc.ribbon.label.lang">언어</sys:String>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  Ribbon Buttons — Help Tab                                  -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <sys:String x:Key="loc.ribbon.btn.releaselist">릴리스 목록</sys:String>
+    <sys:String x:Key="loc.ribbon.label.version">버전</sys:String>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  Ribbon Buttons — Admin Tab                                 -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <sys:String x:Key="loc.ribbon.btn.motordb">모터 DB</sys:String>
+    <sys:String x:Key="loc.ribbon.btn.paramsetting">파라미터 설정</sys:String>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  Quick Actions                                              -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <sys:String x:Key="loc.quickaction.disableall">전체 비활성화</sys:String>
+    <sys:String x:Key="loc.quickaction.clearfaultall">전체 오류 클리어</sys:String>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  Dock Panels / Center Layout                                -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <sys:String x:Key="loc.dock.drivetree">드라이브 트리</sys:String>
+    <sys:String x:Key="loc.dock.errorlog">에러 로그</sys:String>
+    <sys:String x:Key="loc.param.header">파라미터</sys:String>
+    <sys:String x:Key="loc.param.collapse.tooltip">파라미터 패널 접기</sys:String>
+    <sys:String x:Key="loc.param.close.vertical">닫&#x000A;기</sys:String>
+    <sys:String x:Key="loc.param.expand.vertical">열&#x000A;기</sys:String>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  Drive Tree View                                            -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <sys:String x:Key="loc.drivetree.param">파라미터</sys:String>
+    <sys:String x:Key="loc.drivetree.graph">그래프</sys:String>
+    <sys:String x:Key="loc.drivetree.control">제어</sys:String>
+    <sys:String x:Key="loc.drivetree.tooltip.drivea">드라이브 A</sys:String>
+    <sys:String x:Key="loc.drivetree.tooltip.driveb">드라이브 B</sys:String>
+    <sys:String x:Key="loc.drivetree.tooltip.drivec">드라이브 C</sys:String>
+    <sys:String x:Key="loc.drivetree.tooltip.drived">드라이브 D</sys:String>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  Control Panel View                                         -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <sys:String x:Key="loc.control.axismonitor">축 상태 모니터</sys:String>
+    <sys:String x:Key="loc.control.position">실제 위치</sys:String>
+    <sys:String x:Key="loc.control.velocity">실제 속도</sys:String>
+    <sys:String x:Key="loc.control.load">실제 부하</sys:String>
+    <sys:String x:Key="loc.control.title">제어</sys:String>
+    <sys:String x:Key="loc.control.status.disabled">● 비활성화</sys:String>
+    <sys:String x:Key="loc.control.enable">활성화</sys:String>
+    <sys:String x:Key="loc.control.disable">비활성화</sys:String>
+    <sys:String x:Key="loc.control.clearfault">오류 클리어</sys:String>
+    <sys:String x:Key="loc.control.jogminus">조그 -</sys:String>
+    <sys:String x:Key="loc.control.jogplus">조그 +</sys:String>
+    <sys:String x:Key="loc.control.zeroset">원점 설정</sys:String>
+    <sys:String x:Key="loc.control.targetspeed">목표 속도 :</sys:String>
+    <sys:String x:Key="loc.control.targetposition">목표 위치 :</sys:String>
+    <sys:String x:Key="loc.control.currentlimit">전류 제한 :</sys:String>
+    <sys:String x:Key="loc.control.reciprocate">왕복</sys:String>
+    <sys:String x:Key="loc.control.moveabs">절대 이동</sys:String>
+    <sys:String x:Key="loc.control.moverel">상대 이동</sys:String>
+    <sys:String x:Key="loc.control.movezero">원점 이동</sys:String>
+    <!-- Code-behind strings -->
+    <sys:String x:Key="loc.control.status.enabled">● 활성화됨</sys:String>
+    <sys:String x:Key="loc.control.confirm.zeroset.title">원점 설정</sys:String>
+    <sys:String x:Key="loc.control.confirm.zeroset.msg">Zero Set 하시겠습니까?&#x000A;현재 위치가 0으로 초기화됩니다.</sys:String>
+    <sys:String x:Key="loc.control.confirm.zeroset.btn">원점 설정</sys:String>
+    <sys:String x:Key="loc.control.confirm.clearfault.title">오류 클리어</sys:String>
+    <sys:String x:Key="loc.control.confirm.clearfault.msg">Clear Fault 하시겠습니까?&#x000A;현재 발생한 Fault를 초기화합니다.</sys:String>
+    <sys:String x:Key="loc.control.confirm.clearfault.btn">오류 클리어</sys:String>
+    <sys:String x:Key="loc.control.confirm.reset.title">리셋</sys:String>
+    <sys:String x:Key="loc.control.confirm.reset.msg">Reset 하시겠습니까?&#x000A;모든 상태가 초기화됩니다.</sys:String>
+    <sys:String x:Key="loc.control.confirm.reset.btn">리셋</sys:String>
+    <sys:String x:Key="loc.control.panel.title">제어 패널 - 드라이브 {0}</sys:String>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  Monitor Control Dialog                                     -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <sys:String x:Key="loc.monitor.tooltip.close">닫기</sys:String>
+    <sys:String x:Key="loc.monitor.tooltip.settings">설정</sys:String>
+    <sys:String x:Key="loc.monitor.setting">설정</sys:String>
+    <sys:String x:Key="loc.monitor.menu.settings">설정</sys:String>
+    <sys:String x:Key="loc.monitor.menu.save">저장</sys:String>
+    <sys:String x:Key="loc.monitor.menu.load">불러오기</sys:String>
+    <sys:String x:Key="loc.monitor.tooltip.single">단일 캡처</sys:String>
+    <sys:String x:Key="loc.monitor.single">단일</sys:String>
+    <sys:String x:Key="loc.monitor.tooltip.continuous">연속</sys:String>
+    <sys:String x:Key="loc.monitor.continuous">연속</sys:String>
+    <sys:String x:Key="loc.monitor.tooltip.stop">정지</sys:String>
+    <sys:String x:Key="loc.monitor.stop">정지</sys:String>
+    <sys:String x:Key="loc.monitor.tooltip.autoscale">자동 스케일</sys:String>
+    <sys:String x:Key="loc.monitor.autoscale">자동 스케일</sys:String>
+    <sys:String x:Key="loc.monitor.tooltip.togglescale">스케일 패널 토글</sys:String>
+    <sys:String x:Key="loc.monitor.status.channels">4 CH | 10 kHz | </sys:String>
+    <sys:String x:Key="loc.monitor.status.stopped">정지됨</sys:String>
+    <sys:String x:Key="loc.monitor.status.collecting">수집 중...</sys:String>
+    <sys:String x:Key="loc.monitor.tooltip.togglefav">즐겨찾기 파라미터 토글</sys:String>
+    <sys:String x:Key="loc.monitor.tooltip.clearfav">즐겨찾기 전체 삭제</sys:String>
+    <sys:String x:Key="loc.monitor.favorites">즐겨찾기 파라미터</sys:String>
+    <!-- Code-behind: Clear Favorites confirm -->
+    <sys:String x:Key="loc.monitor.confirm.clearfav.title">즐겨찾기 삭제</sys:String>
+    <sys:String x:Key="loc.monitor.confirm.clearfav.msg">즐겨찾기 파라미터를 모두 삭제하시겠습니까?</sys:String>
+    <sys:String x:Key="loc.monitor.confirm.clearfav.btn">전체 삭제</sys:String>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  Error Log View                                             -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <sys:String x:Key="loc.errorlog.title">상태 / 에러 로그</sys:String>
+    <sys:String x:Key="loc.errorlog.col.status">상태</sys:String>
+    <sys:String x:Key="loc.errorlog.col.value">값</sys:String>
+    <sys:String x:Key="loc.errorlog.col.units">단위</sys:String>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  Compare Parameter Panel                                    -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <sys:String x:Key="loc.compare.tooltip.close">패널 닫기</sys:String>
+    <sys:String x:Key="loc.compare.col.ftnum">FT 번호</sys:String>
+    <sys:String x:Key="loc.compare.col.parameter">파라미터</sys:String>
+    <sys:String x:Key="loc.compare.col.value">값</sys:String>
+    <sys:String x:Key="loc.compare.col.units">단위</sys:String>
+    <sys:String x:Key="loc.compare.col.default">기본값</sys:String>
+    <sys:String x:Key="loc.compare.col.min">최소</sys:String>
+    <sys:String x:Key="loc.compare.col.max">최대</sys:String>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  Dialogs                                                    -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <sys:String x:Key="loc.dialog.confirm">확인</sys:String>
+    <sys:String x:Key="loc.dialog.confirmexit">종료 확인</sys:String>
+    <sys:String x:Key="loc.dialog.confirmexit.message">종료하시겠습니까? 저장하지 않은 변경사항은 손실됩니다.</sys:String>
+    <sys:String x:Key="loc.dialog.adminauth">관리자 비밀번호 입력</sys:String>
+    <sys:String x:Key="loc.dialog.adminauth.title">관리자 인증</sys:String>
+    <sys:String x:Key="loc.dialog.adminauth.hint">비밀번호</sys:String>
+    <sys:String x:Key="loc.btn.cancel">취소</sys:String>
+    <sys:String x:Key="loc.btn.ok">확인</sys:String>
+    <sys:String x:Key="loc.btn.exit">종료</sys:String>
+    <sys:String x:Key="loc.btn.close">닫기</sys:String>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  Oscilloscope Dialog                                        -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <sys:String x:Key="loc.scope.title">오실로스코프 - 스텝 응답 모니터</sys:String>
+    <sys:String x:Key="loc.scope.timediv">시간/분할:</sys:String>
+    <sys:String x:Key="loc.scope.trigger">트리거:</sys:String>
+    <sys:String x:Key="loc.scope.start">시작</sys:String>
+    <sys:String x:Key="loc.scope.stop">정지</sys:String>
+    <sys:String x:Key="loc.scope.ch1">CH1 위치</sys:String>
+    <sys:String x:Key="loc.scope.ch2">CH2 속도</sys:String>
+    <sys:String x:Key="loc.scope.ch3">CH3 전류</sys:String>
+    <sys:String x:Key="loc.scope.ch4">CH4 에러</sys:String>
+    <sys:String x:Key="loc.scope.samplerate">샘플 레이트: 10 kHz</sys:String>
+    <sys:String x:Key="loc.scope.points">포인트: 500</sys:String>
+    <sys:String x:Key="loc.scope.duration">시간: 50 ms</sys:String>
+    <sys:String x:Key="loc.scope.status.stopped">정지됨</sys:String>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  VM Status Strings                                          -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <sys:String x:Key="loc.status.connected">연결됨</sys:String>
+    <sys:String x:Key="loc.status.disconnected">연결 끊김</sys:String>
+    <sys:String x:Key="loc.status.online">온라인</sys:String>
+    <sys:String x:Key="loc.status.offline">오프라인</sys:String>
+
+</ResourceDictionary>

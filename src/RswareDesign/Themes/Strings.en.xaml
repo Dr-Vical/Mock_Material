@@ -1,0 +1,220 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  Ribbon Tabs                                                -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <sys:String x:Key="loc.ribbon.tab.file">File</sys:String>
+    <sys:String x:Key="loc.ribbon.tab.tools">Tools</sys:String>
+    <sys:String x:Key="loc.ribbon.tab.views">Views</sys:String>
+    <sys:String x:Key="loc.ribbon.tab.help">Help</sys:String>
+    <sys:String x:Key="loc.ribbon.tab.admin">Admin Option</sys:String>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  Ribbon Groups                                              -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <sys:String x:Key="loc.ribbon.group.file">File</sys:String>
+    <sys:String x:Key="loc.ribbon.group.print">Print</sys:String>
+    <sys:String x:Key="loc.ribbon.group.scan">Scan</sys:String>
+    <sys:String x:Key="loc.ribbon.group.comm">Communication</sys:String>
+    <sys:String x:Key="loc.ribbon.group.panels">Panels</sys:String>
+    <sys:String x:Key="loc.ribbon.group.theme">Theme</sys:String>
+    <sys:String x:Key="loc.ribbon.group.info">Info</sys:String>
+    <sys:String x:Key="loc.ribbon.group.about">About</sys:String>
+    <sys:String x:Key="loc.ribbon.group.settings">Settings</sys:String>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  Ribbon Buttons — File Tab                                  -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <sys:String x:Key="loc.ribbon.btn.new">New</sys:String>
+    <sys:String x:Key="loc.ribbon.btn.open">Open</sys:String>
+    <sys:String x:Key="loc.ribbon.btn.save">Save</sys:String>
+    <sys:String x:Key="loc.ribbon.btn.saveas">Save As</sys:String>
+    <sys:String x:Key="loc.ribbon.btn.print">Print</sys:String>
+    <sys:String x:Key="loc.ribbon.btn.pagesetup">Page Setup</sys:String>
+    <sys:String x:Key="loc.ribbon.btn.printsetup">Print Setup</sys:String>
+    <sys:String x:Key="loc.ribbon.btn.exit">Exit</sys:String>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  Ribbon Buttons — Tools Tab                                 -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <sys:String x:Key="loc.ribbon.btn.rescan">ReScan</sys:String>
+    <sys:String x:Key="loc.ribbon.btn.rescanoption">ReScan Option</sys:String>
+    <sys:String x:Key="loc.ribbon.btn.comsetting">Com Setting</sys:String>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  Ribbon Buttons — Views Tab                                 -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <sys:String x:Key="loc.ribbon.btn.drivetree">DriveTree</sys:String>
+    <sys:String x:Key="loc.ribbon.btn.mainpanel">Main Panel</sys:String>
+    <sys:String x:Key="loc.ribbon.btn.warningerror">Warning/Error</sys:String>
+    <sys:String x:Key="loc.ribbon.label.theme">Theme</sys:String>
+    <sys:String x:Key="loc.ribbon.label.font">Font</sys:String>
+    <sys:String x:Key="loc.ribbon.label.color">Color</sys:String>
+    <sys:String x:Key="loc.ribbon.label.saturation">Saturation</sys:String>
+    <sys:String x:Key="loc.ribbon.label.lang">Lang</sys:String>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  Ribbon Buttons — Help Tab                                  -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <sys:String x:Key="loc.ribbon.btn.releaselist">Release List</sys:String>
+    <sys:String x:Key="loc.ribbon.label.version">Version</sys:String>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  Ribbon Buttons — Admin Tab                                 -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <sys:String x:Key="loc.ribbon.btn.motordb">Motor DB</sys:String>
+    <sys:String x:Key="loc.ribbon.btn.paramsetting">Param Setting</sys:String>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  Quick Actions                                              -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <sys:String x:Key="loc.quickaction.disableall">Disable All</sys:String>
+    <sys:String x:Key="loc.quickaction.clearfaultall">Clear Fault All</sys:String>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  Dock Panels / Center Layout                                -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <sys:String x:Key="loc.dock.drivetree">Drive Tree</sys:String>
+    <sys:String x:Key="loc.dock.errorlog">Error Log</sys:String>
+    <sys:String x:Key="loc.param.header">Parameters</sys:String>
+    <sys:String x:Key="loc.param.collapse.tooltip">Collapse parameter panels</sys:String>
+    <sys:String x:Key="loc.param.close.vertical">C&#x000A;l&#x000A;o&#x000A;s&#x000A;e</sys:String>
+    <sys:String x:Key="loc.param.expand.vertical">P&#x000A;a&#x000A;r&#x000A;a&#x000A;m</sys:String>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  Drive Tree View                                            -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <sys:String x:Key="loc.drivetree.param">Param</sys:String>
+    <sys:String x:Key="loc.drivetree.graph">Graph</sys:String>
+    <sys:String x:Key="loc.drivetree.control">Control</sys:String>
+    <sys:String x:Key="loc.drivetree.tooltip.drivea">Drive A</sys:String>
+    <sys:String x:Key="loc.drivetree.tooltip.driveb">Drive B</sys:String>
+    <sys:String x:Key="loc.drivetree.tooltip.drivec">Drive C</sys:String>
+    <sys:String x:Key="loc.drivetree.tooltip.drived">Drive D</sys:String>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  Control Panel View                                         -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <sys:String x:Key="loc.control.axismonitor">Axis Status Monitor</sys:String>
+    <sys:String x:Key="loc.control.position">ACTUAL POSITION</sys:String>
+    <sys:String x:Key="loc.control.velocity">ACTUAL VELOCITY</sys:String>
+    <sys:String x:Key="loc.control.load">ACTUAL LOAD</sys:String>
+    <sys:String x:Key="loc.control.title">Control</sys:String>
+    <sys:String x:Key="loc.control.status.disabled">● Disabled</sys:String>
+    <sys:String x:Key="loc.control.enable">Enable</sys:String>
+    <sys:String x:Key="loc.control.disable">Disable</sys:String>
+    <sys:String x:Key="loc.control.clearfault">Clear Fault</sys:String>
+    <sys:String x:Key="loc.control.jogminus">Jog -</sys:String>
+    <sys:String x:Key="loc.control.jogplus">Jog +</sys:String>
+    <sys:String x:Key="loc.control.zeroset">Zero Set</sys:String>
+    <sys:String x:Key="loc.control.targetspeed">Target Speed :</sys:String>
+    <sys:String x:Key="loc.control.targetposition">Target Position :</sys:String>
+    <sys:String x:Key="loc.control.currentlimit">Current Limit :</sys:String>
+    <sys:String x:Key="loc.control.reciprocate">Recipro</sys:String>
+    <sys:String x:Key="loc.control.moveabs">Move ABS</sys:String>
+    <sys:String x:Key="loc.control.moverel">Move Rel</sys:String>
+    <sys:String x:Key="loc.control.movezero">Move Zero</sys:String>
+    <!-- Code-behind strings -->
+    <sys:String x:Key="loc.control.status.enabled">● Enabled</sys:String>
+    <sys:String x:Key="loc.control.confirm.zeroset.title">Zero Set</sys:String>
+    <sys:String x:Key="loc.control.confirm.zeroset.msg">Proceed with Zero Set?&#x000A;Current position will be reset to 0.</sys:String>
+    <sys:String x:Key="loc.control.confirm.zeroset.btn">Zero Set</sys:String>
+    <sys:String x:Key="loc.control.confirm.clearfault.title">Clear Fault</sys:String>
+    <sys:String x:Key="loc.control.confirm.clearfault.msg">Proceed with Clear Fault?&#x000A;All current faults will be cleared.</sys:String>
+    <sys:String x:Key="loc.control.confirm.clearfault.btn">Clear Fault</sys:String>
+    <sys:String x:Key="loc.control.confirm.reset.title">Reset</sys:String>
+    <sys:String x:Key="loc.control.confirm.reset.msg">Proceed with Reset?&#x000A;All states will be initialized.</sys:String>
+    <sys:String x:Key="loc.control.confirm.reset.btn">Reset</sys:String>
+    <sys:String x:Key="loc.control.panel.title">Control Panel - Drive {0}</sys:String>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  Monitor Control Dialog                                     -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <sys:String x:Key="loc.monitor.tooltip.close">Close</sys:String>
+    <sys:String x:Key="loc.monitor.tooltip.settings">Settings</sys:String>
+    <sys:String x:Key="loc.monitor.setting">Setting</sys:String>
+    <sys:String x:Key="loc.monitor.menu.settings">Settings</sys:String>
+    <sys:String x:Key="loc.monitor.menu.save">Save</sys:String>
+    <sys:String x:Key="loc.monitor.menu.load">Load</sys:String>
+    <sys:String x:Key="loc.monitor.tooltip.single">Single Capture</sys:String>
+    <sys:String x:Key="loc.monitor.single">Single</sys:String>
+    <sys:String x:Key="loc.monitor.tooltip.continuous">Continuous</sys:String>
+    <sys:String x:Key="loc.monitor.continuous">Contin</sys:String>
+    <sys:String x:Key="loc.monitor.tooltip.stop">Stop</sys:String>
+    <sys:String x:Key="loc.monitor.stop">Stop</sys:String>
+    <sys:String x:Key="loc.monitor.tooltip.autoscale">Auto Scale</sys:String>
+    <sys:String x:Key="loc.monitor.autoscale">Auto Scale</sys:String>
+    <sys:String x:Key="loc.monitor.tooltip.togglescale">Toggle Scale Panel</sys:String>
+    <sys:String x:Key="loc.monitor.status.channels">4 CH | 10 kHz | </sys:String>
+    <sys:String x:Key="loc.monitor.status.stopped">Stopped</sys:String>
+    <sys:String x:Key="loc.monitor.status.collecting">Collecting...</sys:String>
+    <sys:String x:Key="loc.monitor.tooltip.togglefav">Toggle Favorite Parameter</sys:String>
+    <sys:String x:Key="loc.monitor.tooltip.clearfav">Clear all favorites</sys:String>
+    <sys:String x:Key="loc.monitor.favorites">Favorite Parameter</sys:String>
+    <!-- Code-behind: Clear Favorites confirm -->
+    <sys:String x:Key="loc.monitor.confirm.clearfav.title">Clear Favorites</sys:String>
+    <sys:String x:Key="loc.monitor.confirm.clearfav.msg">Clear all favorite parameters?</sys:String>
+    <sys:String x:Key="loc.monitor.confirm.clearfav.btn">Clear All</sys:String>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  Error Log View                                             -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <sys:String x:Key="loc.errorlog.title">Status / Error Log</sys:String>
+    <sys:String x:Key="loc.errorlog.col.status">STATUS</sys:String>
+    <sys:String x:Key="loc.errorlog.col.value">VALUE</sys:String>
+    <sys:String x:Key="loc.errorlog.col.units">UNITS</sys:String>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  Compare Parameter Panel                                    -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <sys:String x:Key="loc.compare.tooltip.close">Close Panel</sys:String>
+    <sys:String x:Key="loc.compare.col.ftnum">FT NUM</sys:String>
+    <sys:String x:Key="loc.compare.col.parameter">PARAMETER</sys:String>
+    <sys:String x:Key="loc.compare.col.value">VALUE</sys:String>
+    <sys:String x:Key="loc.compare.col.units">UNITS</sys:String>
+    <sys:String x:Key="loc.compare.col.default">DEFAULT</sys:String>
+    <sys:String x:Key="loc.compare.col.min">MIN</sys:String>
+    <sys:String x:Key="loc.compare.col.max">MAX</sys:String>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  Dialogs                                                    -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <sys:String x:Key="loc.dialog.confirm">Confirm</sys:String>
+    <sys:String x:Key="loc.dialog.confirmexit">Confirm Exit</sys:String>
+    <sys:String x:Key="loc.dialog.confirmexit.message">Are you sure you want to exit? Any unsaved changes will be lost.</sys:String>
+    <sys:String x:Key="loc.dialog.adminauth">Enter Admin Password</sys:String>
+    <sys:String x:Key="loc.dialog.adminauth.title">Admin Authentication</sys:String>
+    <sys:String x:Key="loc.dialog.adminauth.hint">Password</sys:String>
+    <sys:String x:Key="loc.btn.cancel">Cancel</sys:String>
+    <sys:String x:Key="loc.btn.ok">OK</sys:String>
+    <sys:String x:Key="loc.btn.exit">Exit</sys:String>
+    <sys:String x:Key="loc.btn.close">Close</sys:String>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  Oscilloscope Dialog                                        -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <sys:String x:Key="loc.scope.title">Oscilloscope - Step Response Monitor</sys:String>
+    <sys:String x:Key="loc.scope.timediv">Time/Div:</sys:String>
+    <sys:String x:Key="loc.scope.trigger">Trigger:</sys:String>
+    <sys:String x:Key="loc.scope.start">Start</sys:String>
+    <sys:String x:Key="loc.scope.stop">Stop</sys:String>
+    <sys:String x:Key="loc.scope.ch1">CH1 Position</sys:String>
+    <sys:String x:Key="loc.scope.ch2">CH2 Velocity</sys:String>
+    <sys:String x:Key="loc.scope.ch3">CH3 Current</sys:String>
+    <sys:String x:Key="loc.scope.ch4">CH4 Error</sys:String>
+    <sys:String x:Key="loc.scope.samplerate">Sample Rate: 10 kHz</sys:String>
+    <sys:String x:Key="loc.scope.points">Points: 500</sys:String>
+    <sys:String x:Key="loc.scope.duration">Duration: 50 ms</sys:String>
+    <sys:String x:Key="loc.scope.status.stopped">Stopped</sys:String>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  VM Status Strings                                          -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <sys:String x:Key="loc.status.connected">Connected</sys:String>
+    <sys:String x:Key="loc.status.disconnected">Disconnected</sys:String>
+    <sys:String x:Key="loc.status.online">Online</sys:String>
+    <sys:String x:Key="loc.status.offline">Offline</sys:String>
+
+</ResourceDictionary>

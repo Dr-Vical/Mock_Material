@@ -21,7 +21,7 @@
                                          Foreground="{DynamicResource WarningBrush}"
                                          VerticalAlignment="Center"
                                          Margin="0,0,6,0" />
-                <TextBlock Text="Status / Error Log"
+                <TextBlock Text="{DynamicResource loc.errorlog.title}"
                            Foreground="{DynamicResource TextPrimary}"
                            FontWeight="SemiBold"
                            FontSize="{DynamicResource FontSizeSM}"
@@ -80,13 +80,13 @@
             </DataGrid.CellStyle>
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="STATUS"
+                <DataGridTextColumn Header="{DynamicResource loc.errorlog.col.status}"
                                     Binding="{Binding Status}"
                                     Width="*" />
-                <DataGridTextColumn Header="VALUE"
+                <DataGridTextColumn Header="{DynamicResource loc.errorlog.col.value}"
                                     Binding="{Binding Value}"
                                     Width="200" />
-                <DataGridTextColumn Header="UNITS"
+                <DataGridTextColumn Header="{DynamicResource loc.errorlog.col.units}"
                                     Binding="{Binding Units}"
                                     Width="100" />
             </DataGrid.Columns>

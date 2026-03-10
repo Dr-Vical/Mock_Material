@@ -1,0 +1,178 @@
+﻿Key,ko,en
+loc.ribbon.tab.file,파일,File
+loc.ribbon.tab.tools,도구,Tools
+loc.ribbon.tab.views,보기,Views
+loc.ribbon.tab.help,도움말,Help
+loc.ribbon.tab.admin,관리자 설정,Admin Option
+loc.ribbon.group.file,파일,File
+loc.ribbon.group.print,인쇄,Print
+loc.ribbon.group.scan,검색,Scan
+loc.ribbon.group.comm,통신,Communication
+loc.ribbon.group.panels,패널,Panels
+loc.ribbon.group.theme,테마,Theme
+loc.ribbon.group.info,정보,Info
+loc.ribbon.group.about,정보,About
+loc.ribbon.group.settings,설정,Settings
+loc.ribbon.btn.new,새 파일,New
+loc.ribbon.btn.open,열기,Open
+loc.ribbon.btn.save,저장,Save
+loc.ribbon.btn.saveas,다른이름저장,Save As
+loc.ribbon.btn.print,인쇄,Print
+loc.ribbon.btn.pagesetup,페이지 설정,Page Setup
+loc.ribbon.btn.printsetup,인쇄 설정,Print Setup
+loc.ribbon.btn.exit,종료,Exit
+loc.ribbon.btn.rescan,재검색,ReScan
+loc.ribbon.btn.rescanoption,재검색 옵션,ReScan Option
+loc.ribbon.btn.comsetting,통신 설정,Com Setting
+loc.ribbon.btn.drivetree,드라이브 트리,DriveTree
+loc.ribbon.btn.mainpanel,메인 패널,Main Panel
+loc.ribbon.btn.warningerror,경고/에러,Warning/Error
+loc.ribbon.label.theme,테마,Theme
+loc.ribbon.label.font,글꼴,Font
+loc.ribbon.label.color,색상,Color
+loc.ribbon.label.saturation,채도,Saturation
+loc.ribbon.label.lang,언어,Lang
+loc.ribbon.btn.releaselist,릴리스 목록,Release List
+loc.ribbon.label.version,버전,Version
+loc.ribbon.btn.motordb,모터 DB,Motor DB
+loc.ribbon.btn.paramsetting,파라미터 설정,Param Setting
+loc.quickaction.disableall,전체 비활성화,Disable All
+loc.quickaction.clearfaultall,전체 오류 클리어,Clear Fault All
+loc.dock.drivetree,드라이브 트리,Drive Tree
+loc.dock.errorlog,에러 로그,Error Log
+loc.param.header,파라미터,Parameters
+loc.param.collapse.tooltip,파라미터 패널 접기,Collapse parameter panels
+loc.param.close.vertical,닫\n기,C\nl\no\ns\ne
+loc.param.expand.vertical,열\n기,P\na\nr\na\nm
+loc.drivetree.param,파라미터,Param
+loc.drivetree.graph,그래프,Graph
+loc.drivetree.control,제어,Control
+loc.drivetree.tooltip.drivea,드라이브 A,Drive A
+loc.drivetree.tooltip.driveb,드라이브 B,Drive B
+loc.drivetree.tooltip.drivec,드라이브 C,Drive C
+loc.drivetree.tooltip.drived,드라이브 D,Drive D
+loc.control.axismonitor,축 상태 모니터,Axis Status Monitor
+loc.control.position,실제 위치,ACTUAL POSITION
+loc.control.velocity,실제 속도,ACTUAL VELOCITY
+loc.control.load,실제 부하,ACTUAL LOAD
+loc.control.title,제어,Control
+loc.control.status.disabled,● 비활성화,● Disabled
+loc.control.status.enabled,● 활성화됨,● Enabled
+loc.control.enable,활성화,Enable
+loc.control.disable,비활성화,Disable
+loc.control.clearfault,오류 클리어,Clear Fault
+loc.control.jogminus,조그 -,Jog -
+loc.control.jogplus,조그 +,Jog +
+loc.control.zeroset,원점 설정,Zero Set
+loc.control.targetspeed,목표 속도 :,Target Speed :
+loc.control.targetposition,목표 위치 :,Target Position :
+loc.control.currentlimit,전류 제한 :,Current Limit :
+loc.control.reciprocate,왕복,Recipro
+loc.control.moveabs,절대 이동,Move ABS
+loc.control.moverel,상대 이동,Move Rel
+loc.control.movezero,원점 이동,Move Zero
+loc.control.confirm.zeroset.title,원점 설정,Zero Set
+loc.control.confirm.zeroset.msg,Zero Set 하시겠습니까?\n현재 위치가 0으로 초기화됩니다.,Proceed with Zero Set?\nCurrent position will be reset to 0.
+loc.control.confirm.clearfault.title,오류 클리어,Clear Fault
+loc.control.confirm.clearfault.msg,Clear Fault 하시겠습니까?\n현재 발생한 Fault를 초기화합니다.,Proceed with Clear Fault?\nAll current faults will be cleared.
+loc.control.confirm.clearfault.btn,오류 클리어,Clear Fault
+loc.control.confirm.reset.title,리셋,Reset
+loc.control.confirm.reset.msg,Reset 하시겠습니까?\n모든 상태가 초기화됩니다.,Proceed with Reset?\nAll states will be initialized.
+loc.control.confirm.reset.btn,리셋,Reset
+loc.control.panel.title,제어 패널 - 드라이브 {0},Control Panel - Drive {0}
+loc.monitor.tooltip.close,닫기,Close
+loc.monitor.tooltip.settings,설정,Settings
+loc.monitor.setting,설정,Setting
+loc.monitor.menu.settings,설정,Settings
+loc.monitor.menu.save,저장,Save
+loc.monitor.menu.load,불러오기,Load
+loc.monitor.tooltip.single,단일 캡처,Single Capture
+loc.monitor.single,단일,Single
+loc.monitor.tooltip.continuous,연속,Continuous
+loc.monitor.continuous,연속,Contin
+loc.monitor.tooltip.stop,정지,Stop
+loc.monitor.stop,정지,Stop
+loc.monitor.tooltip.autoscale,자동 스케일,Auto Scale
+loc.monitor.autoscale,자동 스케일,Auto Scale
+loc.monitor.tooltip.togglescale,스케일 패널 토글,Toggle Scale Panel
+loc.monitor.status.channels,4 CH | 10 kHz | ,4 CH | 10 kHz |
+loc.monitor.status.stopped,정지됨,Stopped
+loc.monitor.status.collecting,수집 중...,Collecting...
+loc.monitor.tooltip.togglefav,즐겨찾기 파라미터 토글,Toggle Favorite Parameter
+loc.monitor.tooltip.clearfav,즐겨찾기 전체 삭제,Clear all favorites
+loc.monitor.favorites,즐겨찾기 파라미터,Favorite Parameter
+loc.monitor.confirm.clearfav.title,즐겨찾기 삭제,Clear Favorites
+loc.monitor.confirm.clearfav.msg,즐겨찾기 파라미터를 모두 삭제하시겠습니까?,Clear all favorite parameters?
+loc.monitor.confirm.clearfav.btn,전체 삭제,Clear All
+loc.errorlog.title,상태 / 에러 로그,Status / Error Log
+loc.errorlog.col.status,상태,STATUS
+loc.errorlog.col.value,값,VALUE
+loc.errorlog.col.units,단위,UNITS
+loc.compare.tooltip.close,패널 닫기,Close Panel
+loc.compare.col.ftnum,FT 번호,FT NUM
+loc.compare.col.parameter,파라미터,PARAMETER
+loc.compare.col.value,값,VALUE
+loc.compare.col.units,단위,UNITS
+loc.compare.col.default,기본값,DEFAULT
+loc.compare.col.min,최소,MIN
+loc.compare.col.max,최대,MAX
+loc.dialog.confirm,확인,Confirm
+loc.dialog.confirmexit,종료 확인,Confirm Exit
+loc.dialog.confirmexit.message,종료하시겠습니까? 저장하지 않은 변경사항은 손실됩니다.,Are you sure you want to exit? Any unsaved changes will be lost.
+loc.dialog.adminauth,관리자 비밀번호 입력,Enter Admin Password
+loc.dialog.adminauth.title,관리자 인증,Admin Authentication
+loc.dialog.adminauth.hint,비밀번호,Password
+loc.btn.cancel,취소,Cancel
+loc.btn.ok,확인,OK
+loc.btn.exit,종료,Exit
+loc.btn.close,닫기,Close
+loc.scope.title,오실로스코프 - 스텝 응답 모니터,Oscilloscope - Step Response Monitor
+loc.scope.timediv,시간/분할:,Time/Div:
+loc.scope.trigger,트리거:,Trigger:
+loc.scope.start,시작,Start
+loc.scope.stop,정지,Stop
+loc.scope.ch1,CH1 위치,CH1 Position
+loc.scope.ch2,CH2 속도,CH2 Velocity
+loc.scope.ch3,CH3 전류,CH3 Current
+loc.scope.ch4,CH4 에러,CH4 Error
+loc.scope.samplerate,샘플 레이트: 10 kHz,Sample Rate: 10 kHz
+loc.scope.points,포인트: 500,Points: 500
+loc.scope.duration,시간: 50 ms,Duration: 50 ms
+loc.scope.status.stopped,정지됨,Stopped
+loc.status.connected,연결됨,Connected
+loc.status.disconnected,연결 끊김,Disconnected
+loc.status.online,온라인,Online
+loc.status.offline,오프라인,Offline
+loc.tree.online,온라인 드라이브,On Line Drives
+loc.tree.drive,드라이브,Drive
+loc.tree.modeconfig,모드 설정,Mode Configuration
+loc.tree.favorites,즐겨찾기,Favorites
+loc.tree.motor,모터,Motor
+loc.tree.pidtuning,PID 튜닝,PID Tuning
+loc.tree.tuningless,튜닝리스,Tuningless
+loc.tree.resonant,공진 억제,Resonant Suppression
+loc.tree.vibration,진동 억제,Vibration Suppression
+loc.tree.encoders,엔코더,Encoders
+loc.tree.digitalinputs,디지털 입력,Digital Inputs
+loc.tree.digitaloutputs,디지털 출력,Digital Outputs
+loc.tree.analogoutputs,아날로그 출력,Analog Outputs
+loc.tree.ecathoming,ECAT 원점복귀,ECAT Homing
+loc.tree.monitor,모니터,Monitor
+loc.tree.faults,오류,Faults
+loc.tree.fullyclosed,풀클로즈드 시스템,Fully Closed System
+loc.tree.serviceinfo,서비스 정보,ServiceInfo
+loc.tree.offline,오프라인 : 미저장,Off Line : Unsaved
+loc.tree.group,그룹,Group
+loc.tree.group0,그룹 0 : 기본,Group 0 : Basic
+loc.tree.group1,그룹 1 : 게인,Group 1 : Gain
+loc.tree.group2,그룹 2 : 속도,Group 2 : Velocity
+loc.tree.group3,그룹 3 : 위치,Group 3 : Position
+loc.tree.group4,그룹 4 : 전류,Group 4 : Current
+loc.tree.group5,그룹 5 : 보조,Group 5 : Auxiliary
+loc.status.entry.status,{0} 상태,{0} Status
+loc.status.entry.error,{0} 에러,{0} Error
+loc.status.noerror,에러 없음,No Error
+loc.status.idle,0:대기,0:IDLE
+loc.status.warning,경고,Warning
+loc.status.warning.value.min,최소값({0})으로 제한됨,Value clamped to Min ({0})
+loc.status.warning.value.max,최대값({0})으로 제한됨,Value clamped to Max ({0})

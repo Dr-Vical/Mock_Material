@@ -88,10 +88,11 @@ public partial class MainWindow : Window
 
         WeakReferenceMessenger.Default.Register<ShowClearFavoritesConfirmMessage>(this, (_, _) =>
         {
-            if (ConfirmActionDialog.Ask(this, "Clear Favorites",
-                    "즐겨찾기 파라미터를 모두 삭제하시겠습니까?",
+            if (ConfirmActionDialog.Ask(this,
+                    LocalizationService.Get("loc.monitor.confirm.clearfav.title"),
+                    LocalizationService.Get("loc.monitor.confirm.clearfav.msg"),
                     MaterialDesignThemes.Wpf.PackIconKind.StarRemoveOutline,
-                    "Clear All", "WarningBrush")
+                    LocalizationService.Get("loc.monitor.confirm.clearfav.btn"), "WarningBrush")
                 && DataContext is MainWindowViewModel vm)
             {
                 vm.ExecuteClearAllFavorites();
@@ -112,6 +113,11 @@ public partial class MainWindow : Window
                     LoadFavorites(vm);
                     break;
             }
+        });
+
+        WeakReferenceMessenger.Default.Register<LanguageChangedMessage>(this, (_, msg) =>
+        {
+            LocalizationService.ApplyLanguage(msg.IsKorean);
         });
 
         WeakReferenceMessenger.Default.Register<ShowExitConfirmMessage>(this, (_, _) =>
@@ -557,7 +563,7 @@ public partial class MainWindow : Window
 
                     var pane = new LayoutAnchorable
                     {
-                        Title = $"Control Panel - Drive {driveId}",
+                        Title = LocalizationService.GetFormat("loc.control.panel.title", driveId),
                         ContentId = $"controlPanel_{driveId}",
                         Content = cpv,
                         CanClose = true,

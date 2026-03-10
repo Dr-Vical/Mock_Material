@@ -21,6 +21,7 @@
                 <ResourceDictionary Source="Themes/Fonts.xaml" />
                 <ResourceDictionary Source="Themes/Styles.xaml" />
                 <ResourceDictionary Source="Themes/Buttons.xaml" />
+                <!-- i18n strings: loaded from Localization/Strings.csv at runtime by LocalizationService -->
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

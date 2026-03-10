@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:scottPlot="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
-        Title="Oscilloscope - Step Response Monitor"
+        Title="{DynamicResource loc.scope.title}"
         Width="1100" Height="700"
         WindowStartupLocation="CenterOwner"
         Background="{DynamicResource BackgroundBrush}"
@@ -30,7 +30,7 @@
                 <!-- Right side controls -->
                 <StackPanel DockPanel.Dock="Right" Orientation="Horizontal"
                             VerticalAlignment="Center">
-                    <TextBlock Text="Time/Div:"
+                    <TextBlock Text="{DynamicResource loc.scope.timediv}"
                                Foreground="{DynamicResource TextSecondary}"
                                VerticalAlignment="Center"
                                Margin="{StaticResource Margin.Inline}" />
@@ -46,7 +46,7 @@
                     </ComboBox>
                     <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"
                                Margin="8,2" />
-                    <TextBlock Text="Trigger:"
+                    <TextBlock Text="{DynamicResource loc.scope.trigger}"
                                Foreground="{DynamicResource TextSecondary}"
                                VerticalAlignment="Center"
                                Margin="{StaticResource Margin.Inline}" />
@@ -72,27 +72,27 @@
                                                      VerticalAlignment="Center"
                                                      Margin="0,0,4,0" />
                             <TextBlock x:Name="StartStopText"
-                                       Text="Start" VerticalAlignment="Center" />
+                                       Text="{DynamicResource loc.scope.start}" VerticalAlignment="Center" />
                         </StackPanel>
                     </Button>
                     <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"
                                Margin="8,2" />
-                    <CheckBox x:Name="ChkCh1" Content="CH1 Position"
+                    <CheckBox x:Name="ChkCh1" Content="{DynamicResource loc.scope.ch1}"
                               IsChecked="True"
                               Foreground="{DynamicResource ChartCH1Brush}"
                               Margin="{StaticResource Margin.Inline}"
                               Checked="Channel_Changed" Unchecked="Channel_Changed" />
-                    <CheckBox x:Name="ChkCh2" Content="CH2 Velocity"
+                    <CheckBox x:Name="ChkCh2" Content="{DynamicResource loc.scope.ch2}"
                               IsChecked="True"
                               Foreground="{DynamicResource ChartCH2Brush}"
                               Margin="{StaticResource Margin.Inline}"
                               Checked="Channel_Changed" Unchecked="Channel_Changed" />
-                    <CheckBox x:Name="ChkCh3" Content="CH3 Current"
+                    <CheckBox x:Name="ChkCh3" Content="{DynamicResource loc.scope.ch3}"
                               IsChecked="True"
                               Foreground="{DynamicResource ChartCH3Brush}"
                               Margin="{StaticResource Margin.Inline}"
                               Checked="Channel_Changed" Unchecked="Channel_Changed" />
-                    <CheckBox x:Name="ChkCh4" Content="CH4 Error"
+                    <CheckBox x:Name="ChkCh4" Content="{DynamicResource loc.scope.ch4}"
                               IsChecked="True"
                               Foreground="{DynamicResource ChartCH4Brush}"
                               Margin="{StaticResource Margin.Inline}"
@@ -116,7 +116,7 @@
                 Padding="{StaticResource Padding.ToolWindow}">
             <DockPanel>
                 <Button DockPanel.Dock="Right"
-                        Content="Close"
+                        Content="{DynamicResource loc.btn.close}"
                         Click="BtnClose_Click"
                         Padding="{StaticResource Padding.Button.Small}"
                         MinWidth="80" />
@@ -126,26 +126,26 @@
                                              Foreground="{DynamicResource TextSecondary}"
                                              VerticalAlignment="Center"
                                              Margin="0,0,6,0" />
-                    <TextBlock Text="Sample Rate: 10 kHz"
+                    <TextBlock Text="{DynamicResource loc.scope.samplerate}"
                                Foreground="{DynamicResource TextSecondary}"
                                Margin="{StaticResource Margin.Inline}" />
                     <TextBlock Text="|"
                                Foreground="{DynamicResource BorderDefault}"
                                Margin="{StaticResource Margin.Inline}" />
-                    <TextBlock Text="Points: 500"
+                    <TextBlock Text="{DynamicResource loc.scope.points}"
                                Foreground="{DynamicResource TextSecondary}"
                                Margin="{StaticResource Margin.Inline}" />
                     <TextBlock Text="|"
                                Foreground="{DynamicResource BorderDefault}"
                                Margin="{StaticResource Margin.Inline}" />
-                    <TextBlock Text="Duration: 50 ms"
+                    <TextBlock Text="{DynamicResource loc.scope.duration}"
                                Foreground="{DynamicResource TextSecondary}"
                                Margin="{StaticResource Margin.Inline}" />
                     <TextBlock Text="|"
                                Foreground="{DynamicResource BorderDefault}"
                                Margin="{StaticResource Margin.Inline}" />
                     <TextBlock x:Name="TxtStatus"
-                               Text="Stopped"
+                               Text="{DynamicResource loc.scope.status.stopped}"
                                Foreground="{DynamicResource SecondaryBrush}" />
                 </StackPanel>
             </DockPanel>

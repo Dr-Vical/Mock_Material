@@ -21,6 +21,10 @@ public partial class App : Application
 
         base.OnStartup(e);
         ThemeManager.Current.ChangeTheme(this, "Dark.Blue");
+
+        // i18n: CSV 기반 다국어 로드 (기본: 한국어)
+        Services.LocalizationService.Initialize();
+        Services.LocalizationService.ApplyLanguage(isKorean: true);
     }
 
     private static void OnFirstChanceException(object? sender, FirstChanceExceptionEventArgs e)

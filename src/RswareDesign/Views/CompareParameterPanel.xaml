@@ -33,7 +33,7 @@
                         BorderThickness="0"
                         Padding="4,2"
                         Cursor="Hand"
-                        ToolTip="Close Panel"
+                        ToolTip="{DynamicResource loc.compare.tooltip.close}"
                         VerticalAlignment="Center">
                     <materialDesign:PackIcon Kind="Close"
                                              Width="14" Height="14"
@@ -215,7 +215,7 @@
                     </DataGridCheckBoxColumn>
 
                     <!-- FT NUM -->
-                    <DataGridTextColumn Header="FT NUM"
+                    <DataGridTextColumn Header="{DynamicResource loc.compare.col.ftnum}"
                                         Binding="{Binding ShortNumber}"
                                         IsReadOnly="True"
                                         Width="65" MinWidth="65">
@@ -225,7 +225,7 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="PARAMETER"
+                    <DataGridTextColumn Header="{DynamicResource loc.compare.col.parameter}"
                                         Binding="{Binding Name}"
                                         IsReadOnly="True"
                                         Width="*">
@@ -235,7 +235,7 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="VALUE"
+                    <DataGridTextColumn Header="{DynamicResource loc.compare.col.value}"
                                         Binding="{Binding Value, UpdateSourceTrigger=LostFocus}"
                                         Width="55" MinWidth="55">
                         <DataGridTextColumn.ElementStyle>
@@ -248,7 +248,7 @@
                     </DataGridTextColumn>
 
                     <!-- UNITS, DEFAULT, MIN, MAX -->
-                    <DataGridTextColumn Header="UNITS"
+                    <DataGridTextColumn Header="{DynamicResource loc.compare.col.units}"
                                         Binding="{Binding Unit}"
                                         IsReadOnly="True"
                                         Width="80">
@@ -258,7 +258,7 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="DEFAULT"
+                    <DataGridTextColumn Header="{DynamicResource loc.compare.col.default}"
                                         Binding="{Binding Default}"
                                         IsReadOnly="True"
                                         Width="65">
@@ -268,7 +268,7 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="MIN"
+                    <DataGridTextColumn Header="{DynamicResource loc.compare.col.min}"
                                         Binding="{Binding Min}"
                                         IsReadOnly="True"
                                         Width="80">
@@ -278,7 +278,7 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="MAX"
+                    <DataGridTextColumn Header="{DynamicResource loc.compare.col.max}"
                                         Binding="{Binding Max}"
                                         IsReadOnly="True"
                                         Width="80">
