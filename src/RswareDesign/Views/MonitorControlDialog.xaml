@@ -6,6 +6,29 @@
              Background="{DynamicResource BackgroundBrush}">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Drive Identity Header (spans full width) -->
+        <Border x:Name="DriveIdentityHeader" Grid.Row="0" Height="22"
+                Background="{DynamicResource SurfaceVariantBrush}">
+            <DockPanel>
+                <Button x:Name="BtnCloseGraph" DockPanel.Dock="Right" Click="BtnCloseGraph_Click"
+                        Background="Transparent" BorderThickness="0"
+                        Padding="5,0" Cursor="Hand" ToolTip="Close">
+                    <materialDesign:PackIcon Kind="Close" Width="12" Height="12"
+                                             Foreground="{DynamicResource TextSecondary}" />
+                </Button>
+                <TextBlock x:Name="TxtDriveIdentity" Text="Drive A"
+                           FontSize="{DynamicResource FontSizeSM}" FontWeight="SemiBold"
+                           Foreground="{DynamicResource TextSecondary}"
+                           VerticalAlignment="Center" Margin="8,0,0,0" />
+            </DockPanel>
+        </Border>
+
+        <Grid Grid.Row="1">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" MinWidth="200" />
             <ColumnDefinition Width="Auto" />
@@ -29,137 +52,123 @@
                     Background="{DynamicResource SurfaceBrush}"
                     BorderBrush="{DynamicResource BorderDefault}"
                     BorderThickness="0,0,0,1"
+                    SizeChanged="ChartToolbar_SizeChanged"
                     Padding="6,3">
-                <StackPanel>
-                    <!-- Row 1: Controls + Progress -->
-                    <DockPanel>
-                        <!-- Right: Progress Bar -->
-                        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Margin="8,0,0,0" VerticalAlignment="Center">
-                            <ProgressBar x:Name="CollectingProgress" Width="100" Height="10"
-                                         Minimum="0" Maximum="100" Value="0"
-                                         Visibility="Collapsed" Margin="0,0,4,0"
-                                         Foreground="{DynamicResource SecondaryBrush}"
-                                         Background="{DynamicResource SurfaceVariantBrush}" />
-                            <TextBlock x:Name="TxtCollecting" Text="Collecting..."
-                                       FontSize="{DynamicResource FontSizeXS}"
-                                       Foreground="{DynamicResource SecondaryBrush}"
-                                       VerticalAlignment="Center"
-                                       Visibility="Collapsed" />
+                <DockPanel>
+                    <!-- Right: Settings menu (Settings/Save/Load) -->
+                    <Button x:Name="BtnSettingsMenu" DockPanel.Dock="Right" Height="18"
+                            Padding="3,1" Background="Transparent"
+                            BorderBrush="{DynamicResource BorderDefault}" BorderThickness="1"
+                            Foreground="{DynamicResource ErrorBrush}" ToolTip="Settings"
+                            Click="BtnSettingsMenu_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Cog" Width="9" Height="9" VerticalAlignment="Center" Margin="0,0,2,0" />
+                            <TextBlock x:Name="TxtSettingLabel" Text="Setting" VerticalAlignment="Center"
+                                       FontSize="{DynamicResource FontSizeXS}" Foreground="{DynamicResource TextPrimary}" />
                         </StackPanel>
-                        <!-- Left: Buttons -->
-                        <WrapPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <Button Click="BtnSingle_Click" Height="22"
-                                    Padding="4,1" Margin="0,0,3,0"
-                                    ToolTip="Single Capture">
-                                <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon Kind="ChartLine" Width="12" Height="12" VerticalAlignment="Center" Margin="0,0,3,0" />
-                                    <TextBlock Text="Single" VerticalAlignment="Center" FontSize="{DynamicResource FontSizeXS}" />
-                                </StackPanel>
-                            </Button>
-                            <Button Click="BtnContinuous_Click" Height="22"
-                                    Padding="4,1" Margin="0,0,3,0"
-                                    ToolTip="Continuous Capture">
-                                <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon Kind="Refresh" Width="12" Height="12" VerticalAlignment="Center" Margin="0,0,3,0" />
-                                    <TextBlock Text="Contin" VerticalAlignment="Center" FontSize="{DynamicResource FontSizeXS}" />
-                                </StackPanel>
-                            </Button>
-                            <Button Click="BtnStop_Click" Height="22"
-                                    Padding="4,1" Margin="0,0,3,0"
-                                    ToolTip="Stop">
-                                <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon Kind="Stop" Width="12" Height="12" VerticalAlignment="Center" Margin="0,0,3,0" />
-                                    <TextBlock Text="Stop" VerticalAlignment="Center" FontSize="{DynamicResource FontSizeXS}" />
-                                </StackPanel>
-                            </Button>
-                            <Button Click="BtnAutoScale_Click" Height="22"
-                                    Padding="4,1" Margin="0,0,3,0"
-                                    ToolTip="Auto Scale">
-                                <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon Kind="ArrowExpandVertical" Width="12" Height="12" VerticalAlignment="Center" Margin="0,0,3,0" />
-                                    <TextBlock Text="Auto" VerticalAlignment="Center" FontSize="{DynamicResource FontSizeXS}" />
-                                </StackPanel>
-                            </Button>
-                            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="3,2,6,2" />
-                            <Button Click="BtnOption_Click" Height="22"
-                                    Padding="4,1" Margin="0,0,3,0"
-                                    ToolTip="Oscilloscope Settings">
-                                <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon Kind="Cog" Width="12" Height="12" VerticalAlignment="Center" Margin="0,0,3,0" />
-                                    <TextBlock Text="Setting" VerticalAlignment="Center" FontSize="{DynamicResource FontSizeXS}" />
-                                </StackPanel>
-                            </Button>
-                            <Button Click="BtnSaveSetting_Click" Height="22"
-                                    Padding="4,1" Margin="0,0,3,0"
-                                    ToolTip="Save Scope Setting">
-                                <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon Kind="ContentSave" Width="12" Height="12" VerticalAlignment="Center" Margin="0,0,3,0" />
-                                    <TextBlock Text="Save" VerticalAlignment="Center" FontSize="{DynamicResource FontSizeXS}" />
-                                </StackPanel>
-                            </Button>
-                            <Button Click="BtnLoadSetting_Click" Height="22"
-                                    Padding="4,1" Margin="0,0,0,0"
-                                    ToolTip="Load Scope Setting">
-                                <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon Kind="FolderOpen" Width="12" Height="12" VerticalAlignment="Center" Margin="0,0,3,0" />
-                                    <TextBlock Text="Load" VerticalAlignment="Center" FontSize="{DynamicResource FontSizeXS}" />
-                                </StackPanel>
-                            </Button>
-                        </WrapPanel>
-                    </DockPanel>
-
-                    <!-- Row 2: Channel Selectors -->
-                    <WrapPanel Orientation="Horizontal" Margin="0,4,0,0">
-                        <!-- CH1 -->
-                        <StackPanel Orientation="Horizontal" Margin="0,0,6,0">
-                            <CheckBox x:Name="ChkCh1" IsChecked="True" VerticalAlignment="Center" Margin="0,0,2,0"
-                                      Checked="Channel_Changed" Unchecked="Channel_Changed" />
+                        <Button.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Settings" Click="BtnOption_Click">
+                                    <MenuItem.Icon>
+                                        <materialDesign:PackIcon Kind="Cog" Width="14" Height="14" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <Separator />
+                                <MenuItem Header="Save" Click="BtnSaveSetting_Click">
+                                    <MenuItem.Icon>
+                                        <materialDesign:PackIcon Kind="ContentSave" Width="14" Height="14" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Load" Click="BtnLoadSetting_Click">
+                                    <MenuItem.Icon>
+                                        <materialDesign:PackIcon Kind="FolderOpen" Width="14" Height="14" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </Button.ContextMenu>
+                    </Button>
+                    <!-- Left: Capture buttons + Channel selectors (single row) -->
+                    <WrapPanel x:Name="ToolbarWrapPanel" Orientation="Horizontal" VerticalAlignment="Center">
+                        <Button Click="BtnSingle_Click" Height="18"
+                                Padding="2,1" Margin="0,0,2,0" Background="Transparent"
+                                BorderBrush="{DynamicResource BorderDefault}" BorderThickness="1"
+                                Foreground="{DynamicResource ErrorBrush}" ToolTip="Single Capture">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="ChartLine" Width="9" Height="9" VerticalAlignment="Center" Margin="0,0,2,0" />
+                                <TextBlock x:Name="TxtSingleLabel" Text="Single" VerticalAlignment="Center" FontSize="{DynamicResource FontSizeXS}"
+                                           Foreground="{DynamicResource TextPrimary}" />
+                            </StackPanel>
+                        </Button>
+                        <Button Click="BtnContinuous_Click" Height="18"
+                                Padding="2,1" Margin="0,0,2,0" Background="Transparent"
+                                BorderBrush="{DynamicResource BorderDefault}" BorderThickness="1"
+                                Foreground="{DynamicResource ErrorBrush}" ToolTip="Continuous">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Refresh" Width="9" Height="9" VerticalAlignment="Center" Margin="0,0,2,0" />
+                                <TextBlock x:Name="TxtContinLabel" Text="Contin" VerticalAlignment="Center" FontSize="{DynamicResource FontSizeXS}"
+                                           Foreground="{DynamicResource TextPrimary}" />
+                            </StackPanel>
+                        </Button>
+                        <Button Click="BtnStop_Click" Height="18"
+                                Padding="2,1" Margin="0,0,2,0" Background="Transparent"
+                                BorderBrush="{DynamicResource BorderDefault}" BorderThickness="1"
+                                Foreground="{DynamicResource ErrorBrush}" ToolTip="Stop">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Stop" Width="9" Height="9" VerticalAlignment="Center" Margin="0,0,2,0" />
+                                <TextBlock x:Name="TxtStopLabel" Text="Stop" VerticalAlignment="Center" FontSize="{DynamicResource FontSizeXS}"
+                                           Foreground="{DynamicResource TextPrimary}" />
+                            </StackPanel>
+                        </Button>
+                        <Button Click="BtnAutoScale_Click" Height="18"
+                                Padding="2,1" Margin="0,0,4,0" Background="Transparent"
+                                BorderBrush="{DynamicResource BorderDefault}" BorderThickness="1"
+                                Foreground="{DynamicResource ErrorBrush}" ToolTip="Auto Scale">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="ArrowExpandVertical" Width="9" Height="9" VerticalAlignment="Center" Margin="0,0,2,0" />
+                                <TextBlock x:Name="TxtAutoScaleLabel" Text="Auto Scale" VerticalAlignment="Center" FontSize="{DynamicResource FontSizeXS}"
+                                           Foreground="{DynamicResource TextPrimary}" />
+                            </StackPanel>
+                        </Button>
+                        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="0,2,4,2" />
+                        <!-- CH1-4: Color dot + short ComboBox (no checkbox) -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,3,0">
                             <Ellipse x:Name="EllipseCh1" Fill="{DynamicResource ChartCH1Brush}" Width="8" Height="8"
-                                     VerticalAlignment="Center" Margin="0,0,3,0" Cursor="Hand"
+                                     VerticalAlignment="Center" Margin="0,0,2,0" Cursor="Hand"
                                      Tag="0" MouseLeftButtonDown="ChannelColor_Click" />
-                            <ComboBox x:Name="CmbCh1" Tag="0" Width="175" MaxDropDownHeight="300"
+                            <ComboBox x:Name="CmbCh1" Tag="0" Width="100" Height="18" MaxDropDownHeight="300"
                                       FontSize="{DynamicResource FontSizeXS}"
                                       Background="{DynamicResource SurfaceVariantBrush}"
                                       Foreground="{DynamicResource ChartCH1Brush}"
                                       BorderBrush="{DynamicResource BorderDefault}"
                                       SelectionChanged="ChannelCombo_SelectionChanged" />
                         </StackPanel>
-                        <!-- CH2 -->
-                        <StackPanel Orientation="Horizontal" Margin="0,0,6,0">
-                            <CheckBox x:Name="ChkCh2" IsChecked="True" VerticalAlignment="Center" Margin="0,0,2,0"
-                                      Checked="Channel_Changed" Unchecked="Channel_Changed" />
+                        <StackPanel Orientation="Horizontal" Margin="0,0,3,0">
                             <Ellipse x:Name="EllipseCh2" Fill="{DynamicResource ChartCH2Brush}" Width="8" Height="8"
-                                     VerticalAlignment="Center" Margin="0,0,3,0" Cursor="Hand"
+                                     VerticalAlignment="Center" Margin="0,0,2,0" Cursor="Hand"
                                      Tag="1" MouseLeftButtonDown="ChannelColor_Click" />
-                            <ComboBox x:Name="CmbCh2" Tag="1" Width="175" MaxDropDownHeight="300"
+                            <ComboBox x:Name="CmbCh2" Tag="1" Width="100" Height="18" MaxDropDownHeight="300"
                                       FontSize="{DynamicResource FontSizeXS}"
                                       Background="{DynamicResource SurfaceVariantBrush}"
                                       Foreground="{DynamicResource ChartCH2Brush}"
                                       BorderBrush="{DynamicResource BorderDefault}"
                                       SelectionChanged="ChannelCombo_SelectionChanged" />
                         </StackPanel>
-                        <!-- CH3 -->
-                        <StackPanel Orientation="Horizontal" Margin="0,0,6,0">
-                            <CheckBox x:Name="ChkCh3" IsChecked="True" VerticalAlignment="Center" Margin="0,0,2,0"
-                                      Checked="Channel_Changed" Unchecked="Channel_Changed" />
+                        <StackPanel Orientation="Horizontal" Margin="0,0,3,0">
                             <Ellipse x:Name="EllipseCh3" Fill="{DynamicResource ChartCH3Brush}" Width="8" Height="8"
-                                     VerticalAlignment="Center" Margin="0,0,3,0" Cursor="Hand"
+                                     VerticalAlignment="Center" Margin="0,0,2,0" Cursor="Hand"
                                      Tag="2" MouseLeftButtonDown="ChannelColor_Click" />
-                            <ComboBox x:Name="CmbCh3" Tag="2" Width="175" MaxDropDownHeight="300"
+                            <ComboBox x:Name="CmbCh3" Tag="2" Width="100" Height="18" MaxDropDownHeight="300"
                                       FontSize="{DynamicResource FontSizeXS}"
                                       Background="{DynamicResource SurfaceVariantBrush}"
                                       Foreground="{DynamicResource ChartCH3Brush}"
                                       BorderBrush="{DynamicResource BorderDefault}"
                                       SelectionChanged="ChannelCombo_SelectionChanged" />
                         </StackPanel>
-                        <!-- CH4 -->
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
-                            <CheckBox x:Name="ChkCh4" IsChecked="True" VerticalAlignment="Center" Margin="0,0,2,0"
-                                      Checked="Channel_Changed" Unchecked="Channel_Changed" />
                             <Ellipse x:Name="EllipseCh4" Fill="{DynamicResource ChartCH4Brush}" Width="8" Height="8"
-                                     VerticalAlignment="Center" Margin="0,0,3,0" Cursor="Hand"
+                                     VerticalAlignment="Center" Margin="0,0,2,0" Cursor="Hand"
                                      Tag="3" MouseLeftButtonDown="ChannelColor_Click" />
-                            <ComboBox x:Name="CmbCh4" Tag="3" Width="175" MaxDropDownHeight="300"
+                            <ComboBox x:Name="CmbCh4" Tag="3" Width="100" Height="18" MaxDropDownHeight="300"
                                       FontSize="{DynamicResource FontSizeXS}"
                                       Background="{DynamicResource SurfaceVariantBrush}"
                                       Foreground="{DynamicResource ChartCH4Brush}"
@@ -167,7 +176,12 @@
                                       SelectionChanged="ChannelCombo_SelectionChanged" />
                         </StackPanel>
                     </WrapPanel>
-                </StackPanel>
+                    <!-- Hidden checkboxes (state still used in code) -->
+                    <CheckBox x:Name="ChkCh1" IsChecked="True" Visibility="Collapsed" Checked="Channel_Changed" Unchecked="Channel_Changed" />
+                    <CheckBox x:Name="ChkCh2" IsChecked="True" Visibility="Collapsed" Checked="Channel_Changed" Unchecked="Channel_Changed" />
+                    <CheckBox x:Name="ChkCh3" IsChecked="True" Visibility="Collapsed" Checked="Channel_Changed" Unchecked="Channel_Changed" />
+                    <CheckBox x:Name="ChkCh4" IsChecked="True" Visibility="Collapsed" Checked="Channel_Changed" Unchecked="Channel_Changed" />
+                </DockPanel>
             </Border>
 
             <!-- Chart area with Scale Groups -->
@@ -179,12 +193,12 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- ═══ Scale Panel ═══ -->
-                <Border x:Name="ScalePanel" Grid.Column="0" Width="148"
+                <Border x:Name="ScalePanel" Grid.Column="0" Width="110"
                         Background="{DynamicResource SurfaceBrush}"
                         BorderBrush="{DynamicResource DividerBrush}"
                         BorderThickness="0,0,1,0">
                     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
-                                  Padding="6,4">
+                                  Padding="4,3">
                         <StackPanel x:Name="ScaleGroupsPanel" />
                     </ScrollViewer>
                 </Border>
@@ -198,16 +212,46 @@
                         Width="14" Height="14" Foreground="{DynamicResource TextSecondary}" />
                 </Button>
 
-                <!-- Chart -->
-                <scottPlot:WpfPlot x:Name="MonitorPlot" Grid.Column="2" />
+                <!-- Chart + Crosshair Tooltip -->
+                <Grid Grid.Column="2">
+                    <scottPlot:WpfPlot x:Name="MonitorPlot" />
+                    <Border x:Name="CrosshairTooltip" Visibility="Collapsed"
+                            IsHitTestVisible="False" Panel.ZIndex="10"
+                            Background="{DynamicResource SurfaceBrush}"
+                            BorderBrush="{DynamicResource BorderDefault}" BorderThickness="1"
+                            CornerRadius="{StaticResource Radius.SM}" Padding="6,3"
+                            Opacity="0.92"
+                            HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <Border.RenderTransform>
+                            <TranslateTransform x:Name="CrosshairTranslate" />
+                        </Border.RenderTransform>
+                        <TextBlock x:Name="CrosshairValueText"
+                                   FontFamily="{DynamicResource FontFamilyCode}"
+                                   FontSize="{DynamicResource FontSizeXS}"
+                                   Foreground="{DynamicResource TextPrimary}" />
+                    </Border>
+                </Grid>
             </Grid>
 
             <!-- Status bar -->
             <Border x:Name="ChartStatusBar" Grid.Row="2" Background="{DynamicResource SurfaceBrush}" BorderBrush="{DynamicResource BorderDefault}" BorderThickness="0,1,0,0" Padding="6,2">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="4 CH | 10 kHz | " Foreground="{DynamicResource TextSecondary}" FontSize="{DynamicResource FontSizeXS}" />
-                    <TextBlock x:Name="TxtStatus" Text="Stopped" Foreground="{DynamicResource SecondaryBrush}" FontSize="{DynamicResource FontSizeXS}" />
-                </StackPanel>
+                <DockPanel>
+                    <!-- Right: progress bar -->
+                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock x:Name="TxtCollecting" Text="Collecting..." Visibility="Collapsed"
+                                   Foreground="{DynamicResource ErrorBrush}" FontSize="{DynamicResource FontSizeXS}"
+                                   VerticalAlignment="Center" Margin="0,0,4,0" />
+                        <ProgressBar x:Name="CollectingProgress" Visibility="Collapsed"
+                                     Width="80" Height="4" Minimum="0" Maximum="100"
+                                     Foreground="{DynamicResource ErrorBrush}"
+                                     Background="{DynamicResource SurfaceVariantBrush}" />
+                    </StackPanel>
+                    <!-- Left: status info -->
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="4 CH | 10 kHz | " Foreground="{DynamicResource TextSecondary}" FontSize="{DynamicResource FontSizeXS}" />
+                        <TextBlock x:Name="TxtStatus" Text="Stopped" Foreground="{DynamicResource SecondaryBrush}" FontSize="{DynamicResource FontSizeXS}" />
+                    </StackPanel>
+                </DockPanel>
             </Border>
         </Grid>
 
@@ -351,5 +395,6 @@
                 <WrapPanel x:Name="ColorSwatches" Width="160" />
             </Border>
         </Popup>
-    </Grid>
+        </Grid><!-- close content Grid (row=1) -->
+    </Grid><!-- close root Grid -->
 </UserControl>

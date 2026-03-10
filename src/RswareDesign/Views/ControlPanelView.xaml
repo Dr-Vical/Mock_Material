@@ -4,7 +4,34 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              Background="{DynamicResource SurfaceBrush}">
 
-    <Border x:Name="EnableBorder" BorderThickness="2" BorderBrush="Transparent"
+    <Grid>
+        <!-- Drive Identity Header -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Border x:Name="DriveIdentityHeader" Grid.Row="0" Height="28"
+                Background="{DynamicResource SurfaceVariantBrush}"
+                MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+            <DockPanel>
+                <!-- Close button -->
+                <Button DockPanel.Dock="Right" Click="TitleBar_Close"
+                        Background="Transparent" BorderThickness="0"
+                        Padding="6,0" Cursor="Hand" ToolTip="Close"
+                        VerticalAlignment="Center">
+                    <materialDesign:PackIcon Kind="Close" Width="14" Height="14"
+                                             Foreground="{DynamicResource TextSecondary}" />
+                </Button>
+                <!-- Title -->
+                <TextBlock x:Name="TxtDriveIdentity" Text="Drive A"
+                           FontSize="{DynamicResource FontSizeSM}" FontWeight="SemiBold"
+                           Foreground="{DynamicResource TextSecondary}"
+                           VerticalAlignment="Center" Margin="8,0,0,0" />
+            </DockPanel>
+        </Border>
+
+    <Border x:Name="EnableBorder" Grid.Row="1" BorderThickness="2" BorderBrush="Transparent"
             CornerRadius="{StaticResource Radius.MD}">
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
         <StackPanel Margin="8,6">
@@ -140,14 +167,14 @@
 
             <!-- Row 1: Enable / Disable / Clear Fault -->
             <UniformGrid Columns="3" Margin="0,0,0,2">
-                <Button Margin="2,1" Padding="4,2" Cursor="Hand" Background="{DynamicResource SuccessBrush}" Foreground="{DynamicResource TextOnPrimary}" BorderThickness="0" Click="BtnEnable_Click">
-                    <StackPanel Orientation="Horizontal"><materialDesign:PackIcon Kind="Play" Width="12" Height="12" VerticalAlignment="Center" Margin="0,0,2,0" /><TextBlock Text="Enable" FontSize="{DynamicResource FontSizeXS}" VerticalAlignment="Center" /></StackPanel>
+                <Button Margin="2,1" Padding="4,1" Cursor="Hand" Background="{DynamicResource SuccessBrush}" Foreground="{DynamicResource TextOnPrimary}" BorderThickness="0" Click="BtnEnable_Click">
+                    <StackPanel Orientation="Horizontal"><materialDesign:PackIcon Kind="Play" Width="11" Height="11" VerticalAlignment="Center" Margin="0,0,2,0" /><TextBlock Text="Enable" FontSize="{DynamicResource FontSizeXS}" VerticalAlignment="Center" /></StackPanel>
                 </Button>
-                <Button Margin="2,1" Padding="4,2" Cursor="Hand" Background="{DynamicResource ErrorBrush}" Foreground="{DynamicResource TextOnPrimary}" BorderThickness="0" Click="BtnDisable_Click">
-                    <StackPanel Orientation="Horizontal"><materialDesign:PackIcon Kind="Stop" Width="12" Height="12" VerticalAlignment="Center" Margin="0,0,2,0" /><TextBlock Text="Disable" FontSize="{DynamicResource FontSizeXS}" VerticalAlignment="Center" /></StackPanel>
+                <Button Margin="2,1" Padding="4,1" Cursor="Hand" Background="{DynamicResource ErrorBrush}" Foreground="{DynamicResource TextOnPrimary}" BorderThickness="0" Click="BtnDisable_Click">
+                    <StackPanel Orientation="Horizontal"><materialDesign:PackIcon Kind="Stop" Width="11" Height="11" VerticalAlignment="Center" Margin="0,0,2,0" /><TextBlock Text="Disable" FontSize="{DynamicResource FontSizeXS}" VerticalAlignment="Center" /></StackPanel>
                 </Button>
-                <Button Margin="2,1" Padding="4,2" Cursor="Hand" Background="{DynamicResource WarningBrush}" Foreground="#212121" BorderThickness="0" Click="BtnClearFault_Click">
-                    <StackPanel Orientation="Horizontal"><materialDesign:PackIcon Kind="AlertRemove" Width="12" Height="12" VerticalAlignment="Center" Margin="0,0,2,0" /><TextBlock Text="Clear Fault" FontSize="{DynamicResource FontSizeXS}" VerticalAlignment="Center" /></StackPanel>
+                <Button Margin="2,1" Padding="4,1" Cursor="Hand" Background="{DynamicResource WarningBrush}" Foreground="#212121" BorderThickness="0" Click="BtnClearFault_Click">
+                    <StackPanel Orientation="Horizontal"><materialDesign:PackIcon Kind="AlertRemove" Width="11" Height="11" VerticalAlignment="Center" Margin="0,0,2,0" /><TextBlock Text="Clear Fault" FontSize="{DynamicResource FontSizeXS}" VerticalAlignment="Center" /></StackPanel>
                 </Button>
             </UniformGrid>
 
@@ -222,4 +249,5 @@
         </StackPanel>
     </ScrollViewer>
     </Border>
+    </Grid>
 </UserControl>

@@ -82,7 +82,7 @@ public partial class MainWindow : Window
 
         WeakReferenceMessenger.Default.Register<ToggleMonitorSectionMessage>(this, (_, msg) =>
         {
-            ToggleMonitorSection(msg.Section);
+            ToggleMonitorSection(msg.Section, msg.DriveId);
         });
 
         WeakReferenceMessenger.Default.Register<ShowClearFavoritesConfirmMessage>(this, (_, _) =>
@@ -119,15 +119,6 @@ public partial class MainWindow : Window
             if (dialog.ShowDialog() == true)
                 Application.Current.Shutdown();
         });
-
-        // Intercept pane close → hide instead (so they can be reopened)
-        controlPanelPane.Closing += (s, args) =>
-        {
-            args.Cancel = true;
-            if (controlPanelPane.Content is ControlPanelView cpv)
-                cpv.StopUpdating();
-            controlPanelPane.Hide();
-        };
 
         errorLogPane.Closing += (s, args) =>
         {
@@ -171,8 +162,8 @@ public partial class MainWindow : Window
             ApplyWindowChrome(isDark: true); // default is dark theme
             ApplyAvalonDockHeaderColor();
 
-            // Monitor starts hidden (show via Oscilloscope button click)
-            monitorControlView.Visibility = Visibility.Collapsed;
+            // Monitor area starts hidden (show via Graph/Control button click)
+            monitorPanelGrid.Visibility = Visibility.Collapsed;
             MonitorColumn.Width = new GridLength(0);
             CenterSplitter.Visibility = Visibility.Collapsed;
             CenterSplitterColumn.Width = new GridLength(0);
@@ -300,18 +291,37 @@ public partial class MainWindow : Window
         int count = orderedPanels.Count;
         var activeSet = new HashSet<CompareParameterPanel>(orderedPanels.Select(p => p.Value));
 
-        // Remove only panels that are no longer active (keep existing ones in place)
+        // Remove panels that are no longer active + old splitters
         foreach (var child in centerPanelGrid.Children.OfType<CompareParameterPanel>().ToList())
         {
             if (!activeSet.Contains(child))
                 centerPanelGrid.Children.Remove(child);
         }
+        foreach (var child in centerPanelGrid.Children.OfType<GridSplitter>().ToList())
+            centerPanelGrid.Children.Remove(child);
 
         // Rebuild grid definitions
         centerPanelGrid.RowDefinitions.Clear();
         centerPanelGrid.ColumnDefinitions.Clear();
 
-        if (count == 0) return;
+        if (count == 0)
+        {
+            // Auto-collapse param area when no panels remain
+            if (!_isParamCollapsed)
+            {
+                _isParamCollapsed = true;
+                ParamExpandedArea.Visibility = Visibility.Collapsed;
+                ParamCollapsedBar.Visibility = Visibility.Visible;
+                ParamContentColumn.Width = new GridLength(0);
+                ParamPanelColumn.Width = GridLength.Auto;
+                ParamPanelColumn.MinWidth = 0;
+                CenterSplitterColumn.Width = new GridLength(0);
+                CenterSplitter.Visibility = Visibility.Collapsed;
+                if (_isMonitorVisible)
+                    MonitorColumn.Width = new GridLength(1, GridUnitType.Star);
+            }
+            return;
+        }
 
         var splitterBrush = Application.Current.TryFindResource("BorderDefault") as Brush
                             ?? Brushes.Gray;
@@ -470,45 +480,181 @@ public partial class MainWindow : Window
     // ═══════════════════════════════════════════════════════════
 
     private bool _isMonitorVisible;
+    private readonly Dictionary<string, MonitorControlDialog> _oscilloInstances = new();
+    private readonly Dictionary<string, Window> _controlWindows = new();
 
-    private void ToggleMonitorSection(string section)
+    private void ToggleMonitorSection(string section, string driveId)
     {
         switch (section)
         {
             case "Oscilloscope":
-                monitorControlView.DataContext = DataContext;
-                monitorControlView.ToggleChart();
-
-                if (monitorControlView.IsChartVisible)
-                    ShowMonitorArea();
+                if (_oscilloInstances.ContainsKey(driveId))
+                {
+                    _oscilloInstances.Remove(driveId);
+                }
                 else
-                    HideMonitorArea();
+                {
+                    var view = new MonitorControlDialog { DataContext = DataContext };
+                    view.SetDriveIdentity(driveId);
+                    _oscilloInstances[driveId] = view;
+                }
+                RebuildMonitorLayout();
+                SyncDriveVisibility();
                 break;
 
             case "ControlPanel":
-                // Toggle floating control panel independently
-                bool cpVisible = controlPanelPane.IsVisible && !controlPanelPane.IsHidden && !controlPanelPane.IsAutoHidden;
-                if (cpVisible)
+                if (_controlWindows.TryGetValue(driveId, out var existingWin))
                 {
-                    if (controlPanelPane.Content is ControlPanelView cpvHide)
-                        cpvHide.StopUpdating();
-                    controlPanelPane.Hide();
+                    // Same drive → close window
+                    existingWin.Close();
+                    _controlWindows.Remove(driveId);
                 }
                 else
                 {
-                    controlPanelPane.Show();
-                    controlPanelPane.Float();
-                    if (controlPanelPane.Content is ControlPanelView cpvShow)
-                        cpvShow.StartUpdating();
+                    // Open floating window
+                    var cpv = new ControlPanelView();
+                    cpv.SetDriveIdentity(driveId);
+                    cpv.StartUpdating();
+
+                    var accentBrush = Application.Current.TryFindResource($"Panel{driveId}Accent") as SolidColorBrush;
+                    var win = new Window
+                    {
+                        Title = $"Control Panel - Drive {driveId}",
+                        Width = 390,
+                        Height = 400,
+                        Content = cpv,
+                        Owner = this,
+                        WindowStyle = WindowStyle.None,
+                        ResizeMode = ResizeMode.CanResizeWithGrip,
+                        AllowsTransparency = true,
+                        WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                        Background = Application.Current.TryFindResource("SurfaceBrush") as Brush,
+                    };
+                    win.Closed += (_, _) =>
+                    {
+                        cpv.StopUpdating();
+                        _controlWindows.Remove(driveId);
+                        SyncDriveVisibility();
+                    };
+
+                    // Offset each window slightly so they don't stack exactly
+                    int offset = _controlWindows.Count * 30;
+                    win.WindowStartupLocation = WindowStartupLocation.Manual;
+                    win.Left = Left + Width / 2 - 280 + offset;
+                    win.Top = Top + Height / 2 - 200 + offset;
+
+                    _controlWindows[driveId] = win;
+                    win.Show();
                 }
+                SyncDriveVisibility();
                 break;
         }
+    }
+
+    private void SyncDriveVisibility()
+    {
+        if (DataContext is not MainWindowViewModel vm) return;
+        vm.ActiveGraphDrives.Clear();
+        foreach (var key in _oscilloInstances.Keys) vm.ActiveGraphDrives.Add(key);
+        vm.ActiveControlDrives.Clear();
+        foreach (var key in _controlWindows.Keys) vm.ActiveControlDrives.Add(key);
+        // Notify DriveTreeView to update indicators
+        WeakReferenceMessenger.Default.Send(new ComparePanelChangedMessage("", false));
+    }
+
+    private void RebuildMonitorLayout()
+    {
+        monitorPanelGrid.Children.Clear();
+        monitorPanelGrid.RowDefinitions.Clear();
+        monitorPanelGrid.ColumnDefinitions.Clear();
+
+        var panels = _oscilloInstances.OrderBy(x => x.Key).ToList();
+        int count = panels.Count;
+
+        if (count == 0)
+        {
+            HideMonitorArea();
+            return;
+        }
+
+        var splitterBrush = Application.Current.TryFindResource("BorderDefault") as Brush
+                            ?? Brushes.Gray;
+
+        if (count == 1)
+        {
+            // Single: full area
+            monitorPanelGrid.Children.Add(panels[0].Value);
+        }
+        else if (count == 2)
+        {
+            // 2 panels: top/bottom (2 rows)
+            monitorPanelGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+            monitorPanelGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            monitorPanelGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+
+            Grid.SetRow(panels[0].Value, 0);
+            Grid.SetRow(panels[1].Value, 2);
+            monitorPanelGrid.Children.Add(panels[0].Value);
+            monitorPanelGrid.Children.Add(panels[1].Value);
+
+            var hSplitter = new GridSplitter
+            {
+                Height = 4, HorizontalAlignment = HorizontalAlignment.Stretch,
+                VerticalAlignment = VerticalAlignment.Center,
+                Background = splitterBrush, Cursor = System.Windows.Input.Cursors.SizeNS,
+            };
+            Grid.SetRow(hSplitter, 1);
+            monitorPanelGrid.Children.Add(hSplitter);
+        }
+        else // 3 or 4: 2×2 grid
+        {
+            monitorPanelGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            monitorPanelGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            monitorPanelGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            monitorPanelGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+            monitorPanelGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            monitorPanelGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+
+            int[] cols = [0, 2, 0, 2];
+            int[] rows = [0, 0, 2, 2];
+
+            for (int i = 0; i < count && i < 4; i++)
+            {
+                Grid.SetColumn(panels[i].Value, cols[i]);
+                Grid.SetRow(panels[i].Value, rows[i]);
+                monitorPanelGrid.Children.Add(panels[i].Value);
+            }
+
+            // Vertical splitter (spans all rows)
+            var vSplitter = new GridSplitter
+            {
+                Width = 4, HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Stretch,
+                Background = splitterBrush, Cursor = System.Windows.Input.Cursors.SizeWE,
+            };
+            Grid.SetColumn(vSplitter, 1);
+            Grid.SetRowSpan(vSplitter, 3);
+            monitorPanelGrid.Children.Add(vSplitter);
+
+            // Horizontal splitter (spans all columns)
+            var hSplitter = new GridSplitter
+            {
+                Height = 4, HorizontalAlignment = HorizontalAlignment.Stretch,
+                VerticalAlignment = VerticalAlignment.Center,
+                Background = splitterBrush, Cursor = System.Windows.Input.Cursors.SizeNS,
+            };
+            Grid.SetRow(hSplitter, 1);
+            Grid.SetColumnSpan(hSplitter, 3);
+            monitorPanelGrid.Children.Add(hSplitter);
+        }
+
+        ShowMonitorArea();
     }
 
     private void ShowMonitorArea()
     {
         _isMonitorVisible = true;
-        monitorControlView.Visibility = Visibility.Visible;
+        monitorPanelGrid.Visibility = Visibility.Visible;
 
         bool hasParams = _comparePanels.Count > 0;
         if (hasParams && !_isParamCollapsed)
@@ -521,7 +667,18 @@ public partial class MainWindow : Window
         }
         else
         {
-            // Monitor fills remaining space (params collapsed or no panels)
+            // No params → auto-collapse param area
+            if (!hasParams && !_isParamCollapsed)
+            {
+                _isParamCollapsed = true;
+                ParamExpandedArea.Visibility = Visibility.Collapsed;
+                ParamCollapsedBar.Visibility = Visibility.Visible;
+                ParamContentColumn.Width = new GridLength(0);
+                ParamPanelColumn.Width = GridLength.Auto;
+                ParamPanelColumn.MinWidth = 0;
+            }
+
+            // Monitor fills remaining space
             CenterSplitterColumn.Width = new GridLength(0);
             CenterSplitter.Visibility = Visibility.Collapsed;
             MonitorColumn.Width = new GridLength(1, GridUnitType.Star);
@@ -531,7 +688,7 @@ public partial class MainWindow : Window
     private void HideMonitorArea()
     {
         _isMonitorVisible = false;
-        monitorControlView.Visibility = Visibility.Collapsed;
+        monitorPanelGrid.Visibility = Visibility.Collapsed;
         MonitorColumn.Width = new GridLength(0);
         CenterSplitterColumn.Width = new GridLength(0);
         CenterSplitter.Visibility = Visibility.Collapsed;
@@ -661,7 +818,8 @@ public partial class MainWindow : Window
         ApplyWindowChrome(isDark);
 
         // 7. Refresh chart colors (ScottPlot doesn't use DynamicResource)
-        monitorControlView.RefreshChartTheme();
+        foreach (var view in _oscilloInstances.Values)
+            view.RefreshChartTheme();
     }
 
     // ═══════════════════════════════════════════════════════════

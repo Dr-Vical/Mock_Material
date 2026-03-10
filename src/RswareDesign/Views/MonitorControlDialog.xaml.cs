@@ -40,6 +40,9 @@ public partial class MonitorControlDialog : UserControl
     // Per-channel colors (initialized from theme, updated by color picker)
     private readonly ScottPlot.Color[] _channelColors = new ScottPlot.Color[4];
 
+    // Crosshair
+    private ScottPlot.Plottables.Crosshair? _crosshair;
+
     // Preset palette colors (the 8 ChartCH brush hex values)
     private static readonly System.Windows.Media.Color[] PaletteColors =
     [
@@ -138,10 +141,7 @@ public partial class MonitorControlDialog : UserControl
         _timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(50) };
         _timer.Tick += OnTimerTick;
 
-        // Start with chart hidden (shown via button click)
-        ChartToolbar.Visibility = Visibility.Collapsed;
-        ChartArea.Visibility = Visibility.Collapsed;
-        ChartStatusBar.Visibility = Visibility.Collapsed;
+        // Chart starts visible (multi-instance: each instance shows chart immediately)
 
         // Bind favorites to VM when DataContext is set
         DataContextChanged += OnDataContextChanged;
@@ -173,6 +173,29 @@ public partial class MonitorControlDialog : UserControl
     // ═══════════════════════════════════════════════════════════
 
     public bool IsChartVisible => ChartToolbar.Visibility == Visibility.Visible;
+
+    private string _driveId = "A";
+
+    private void BtnCloseGraph_Click(object sender, RoutedEventArgs e)
+    {
+        // Toggle off this graph instance via the same message used to open it
+        WeakReferenceMessenger.Default.Send(
+            new ToggleMonitorSectionMessage("Oscilloscope", _driveId));
+    }
+
+    public void SetDriveIdentity(string driveId)
+    {
+        _driveId = driveId;
+        TxtDriveIdentity.Text = $"Drive {driveId}";
+        var headerBrush = Application.Current.TryFindResource($"Panel{driveId}Brush") as Brush;
+        var accentBrush = Application.Current.TryFindResource($"Panel{driveId}Accent") as Brush;
+        DriveIdentityHeader.Background = headerBrush
+            ?? Application.Current.TryFindResource("SurfaceVariantBrush") as Brush
+            ?? Brushes.Gray;
+        TxtDriveIdentity.Foreground = accentBrush
+            ?? Application.Current.TryFindResource("TextSecondary") as Brush
+            ?? Brushes.Gray;
+    }
 
     public void ToggleChart()
     {
@@ -312,16 +335,90 @@ public partial class MonitorControlDialog : UserControl
 
         plot.Legend.IsVisible = true;
         plot.Legend.Alignment = Alignment.UpperRight;
-        plot.Legend.BackgroundColor = GetThemeColor("SurfaceVariantBrush");
-        plot.Legend.FontColor = GetThemeColor("TextPrimary");
-        plot.Legend.OutlineColor = GetThemeColor("BorderDefault");
+        var legendBg = GetThemeColor("SurfaceVariantBrush");
+        plot.Legend.BackgroundColor = legendBg.WithAlpha(80);
+        plot.Legend.FontColor = GetThemeColor("TextPrimary").WithAlpha(160);
+        plot.Legend.OutlineColor = GetThemeColor("BorderDefault").WithAlpha(80);
 
         // Build dynamic groups and scale panel
         RebuildScaleGroups();
 
+        // Crosshair
+        _crosshair = plot.Add.Crosshair(0, 0);
+        _crosshair.IsVisible = false;
+        _crosshair.LineColor = GetThemeColor("SecondaryBrush");
+        _crosshair.LineWidth = 1;
+
+        MonitorPlot.MouseMove += OnChartMouseMove;
+        MonitorPlot.MouseLeave += OnChartMouseLeave;
+
         plot.Axes.AutoScale();
         MonitorPlot.Refresh();
         UpdateScaleTextBoxes();
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    //  CROSSHAIR + VALUE TOOLTIP
+    // ═══════════════════════════════════════════════════════════
+
+    private void OnChartMouseMove(object sender, MouseEventArgs e)
+    {
+        if (_crosshair == null) return;
+
+        var pos = e.GetPosition(MonitorPlot);
+        var pixel = new ScottPlot.Pixel((float)pos.X, (float)pos.Y);
+        var coords = MonitorPlot.Plot.GetCoordinates(pixel);
+
+        _crosshair.Position = new ScottPlot.Coordinates(coords.X, coords.Y);
+        _crosshair.IsVisible = true;
+
+        // Build channel value tooltip
+        int index = (int)(coords.X / PeriodMs);
+        index = Math.Clamp(index, 0, PointCount - 1);
+
+        var checkBoxes = new[] { ChkCh1, ChkCh2, ChkCh3, ChkCh4 };
+        var sb = new System.Text.StringBuilder();
+        sb.AppendLine($"T: {coords.X:F1} ms");
+
+        for (int ch = 0; ch < 4; ch++)
+        {
+            if (checkBoxes[ch].IsChecked != true) continue;
+            var color = _channelColors[ch];
+            double val = _channelData[ch][index];
+            sb.AppendLine($"CH{ch + 1}: {val:F1}");
+        }
+
+        CrosshairValueText.Text = sb.ToString().TrimEnd();
+        CrosshairTooltip.Visibility = Visibility.Visible;
+
+        // Position tooltip near cursor using RenderTransform (avoids layout thrashing)
+        var tooltipParent = (Grid)CrosshairTooltip.Parent;
+        double offsetX = pos.X + 15;
+        double offsetY = pos.Y - 10;
+
+        // Clamp to chart bounds
+        double ttWidth = CrosshairTooltip.ActualWidth > 0 ? CrosshairTooltip.ActualWidth : 120;
+        double ttHeight = CrosshairTooltip.ActualHeight > 0 ? CrosshairTooltip.ActualHeight : 60;
+        if (offsetX + ttWidth > tooltipParent.ActualWidth)
+            offsetX = pos.X - ttWidth - 10;
+        if (offsetY + ttHeight > tooltipParent.ActualHeight)
+            offsetY = tooltipParent.ActualHeight - ttHeight;
+        if (offsetY < 0) offsetY = 0;
+
+        CrosshairTranslate.X = offsetX;
+        CrosshairTranslate.Y = offsetY;
+
+        MonitorPlot.Refresh();
+    }
+
+    private void OnChartMouseLeave(object sender, MouseEventArgs e)
+    {
+        if (_crosshair != null)
+        {
+            _crosshair.IsVisible = false;
+            MonitorPlot.Refresh();
+        }
+        CrosshairTooltip.Visibility = Visibility.Collapsed;
     }
 
     private static ScottPlot.Color GetThemeColor(string resourceKey)
@@ -424,6 +521,33 @@ public partial class MonitorControlDialog : UserControl
         }
         ShowCollectingProgress(false);
         TxtStatus.Text = "Stopped";
+    }
+
+    private void BtnSettingsMenu_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is Button btn && btn.ContextMenu != null)
+        {
+            btn.ContextMenu.PlacementTarget = btn;
+            btn.ContextMenu.IsOpen = true;
+        }
+    }
+
+    private void ChartToolbar_SizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        // Use parent toolbar width (stable, won't oscillate) instead of WrapPanel height
+        if (!e.WidthChanged) return;
+        bool compact = ChartToolbar.ActualWidth < 780;
+        var vis = compact ? Visibility.Collapsed : Visibility.Visible;
+        TxtSingleLabel.Visibility = vis;
+        TxtContinLabel.Visibility = vis;
+        TxtStopLabel.Visibility = vis;
+        TxtAutoScaleLabel.Visibility = vis;
+        TxtSettingLabel.Visibility = vis;
+
+        // Hide chart legend when compact
+        var plot = MonitorPlot.Plot;
+        plot.Legend.IsVisible = !compact;
+        MonitorPlot.Refresh();
     }
 
     private void BtnOption_Click(object sender, RoutedEventArgs e)
@@ -920,7 +1044,7 @@ public partial class MonitorControlDialog : UserControl
 
             // Max/Min grid
             var grid = new Grid { Margin = new Thickness(0, 2, 0, 0) };
-            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(28) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(22) });
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
             grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
@@ -938,7 +1062,7 @@ public partial class MonitorControlDialog : UserControl
             {
                 Text = "10000",
                 Tag = groupIndex,
-                Padding = new Thickness(3, 1, 3, 1),
+                Padding = new Thickness(2, 1, 2, 1),
                 Margin = new Thickness(0, 0, 0, 1)
             };
             if (TryFindResource("FontFamilyCode") is FontFamily ff) maxBox.FontFamily = ff;
@@ -1192,9 +1316,9 @@ public partial class MonitorControlDialog : UserControl
                 _signals[ch]!.Color = _channelColors[ch];
         }
 
-        plot.Legend.BackgroundColor = GetThemeColor("SurfaceVariantBrush");
-        plot.Legend.FontColor = GetThemeColor("TextPrimary");
-        plot.Legend.OutlineColor = GetThemeColor("BorderDefault");
+        plot.Legend.BackgroundColor = GetThemeColor("SurfaceVariantBrush").WithAlpha(80);
+        plot.Legend.FontColor = GetThemeColor("TextPrimary").WithAlpha(160);
+        plot.Legend.OutlineColor = GetThemeColor("BorderDefault").WithAlpha(80);
 
         // Update group axis colors
         for (int g = 0; g < _groupYAxes.Count; g++)

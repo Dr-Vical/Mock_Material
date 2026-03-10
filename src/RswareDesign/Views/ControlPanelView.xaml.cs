@@ -36,6 +36,26 @@ public partial class ControlPanelView : UserControl
         UpdateRangeLabel();
     }
 
+    private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        if (e.ClickCount == 1)
+            Window.GetWindow(this)?.DragMove();
+    }
+
+    private void TitleBar_Close(object sender, RoutedEventArgs e)
+    {
+        Window.GetWindow(this)?.Close();
+    }
+
+    public void SetDriveIdentity(string driveId)
+    {
+        TxtDriveIdentity.Text = $"Drive {driveId}";
+        var headerBrush = Application.Current.TryFindResource($"Panel{driveId}Brush") as Brush;
+        var accentBrush = Application.Current.TryFindResource($"Panel{driveId}Accent") as Brush;
+        DriveIdentityHeader.Background = headerBrush ?? GetWpfBrush("SurfaceVariantBrush");
+        TxtDriveIdentity.Foreground = accentBrush ?? GetWpfBrush("TextSecondary");
+    }
+
     public void StartUpdating()
     {
         // Just show the panel — timer starts when Enable is clicked

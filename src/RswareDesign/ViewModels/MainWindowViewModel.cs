@@ -78,6 +78,10 @@ public partial class MainWindowViewModel : ObservableObject
     [ObservableProperty]
     private bool _isPanelDVisible;
 
+    // Graph/Control instance tracking (set by MainWindow code-behind)
+    public HashSet<string> ActiveGraphDrives { get; } = [];
+    public HashSet<string> ActiveControlDrives { get; } = [];
+
     // Bottom checkboxes
     [ObservableProperty]
     private bool _showHelps;
@@ -462,7 +466,7 @@ public class ShowExitConfirmMessage { }
 
 public record ShowMonitorControlMessage();
 
-public record ToggleMonitorSectionMessage(string Section); // "Oscilloscope" or "ControlPanel"
+public record ToggleMonitorSectionMessage(string Section, string DriveId = "A"); // "Oscilloscope" or "ControlPanel" × A/B/C/D
 
 public record FavoriteAnimationMessage(bool IsAdded);
 

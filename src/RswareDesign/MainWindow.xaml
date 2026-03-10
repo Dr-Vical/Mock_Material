@@ -153,16 +153,10 @@
                                 <TextBlock Text="Main Panel" Style="{StaticResource RibbonButtonLabel}" />
                             </StackPanel>
                         </ToggleButton>
-                        <ToggleButton Style="{StaticResource RibbonLargeRippleToggle}" IsChecked="{Binding IsActionPanelVisible, Mode=TwoWay}">
-                            <StackPanel HorizontalAlignment="Center">
-                                <materialDesign:PackIcon Kind="FormatListChecks" Style="{StaticResource RibbonIconOpacityPulse}" />
-                                <TextBlock Text="Action Panel" Style="{StaticResource RibbonButtonLabel}" />
-                            </StackPanel>
-                        </ToggleButton>
                         <ToggleButton Style="{StaticResource RibbonLargeRippleToggle}" IsChecked="{Binding IsErrorLogVisible, Mode=TwoWay}">
                             <StackPanel HorizontalAlignment="Center">
                                 <materialDesign:PackIcon Kind="AlertCircleOutline" Style="{StaticResource RibbonIconOpacityPulse}" />
-                                <TextBlock Text="Error Log" Style="{StaticResource RibbonButtonLabel}" />
+                                <TextBlock Text="Warning/Error" Style="{StaticResource RibbonButtonLabel}" />
                             </StackPanel>
                         </ToggleButton>
                     </Fluent:RibbonGroupBox>
@@ -431,29 +425,65 @@
 
                                         <!-- Expanded: header + panels -->
                                         <Grid x:Name="ParamExpandedArea" Grid.Column="0">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="*" />
-                                            </Grid.RowDefinitions>
-                                            <Border Grid.Row="0" Background="{DynamicResource SurfaceBrush}"
-                                                    BorderBrush="{DynamicResource BorderDefault}" BorderThickness="0,0,0,1"
-                                                    Padding="4,2">
-                                                <DockPanel>
-                                                    <Button DockPanel.Dock="Right"
-                                                            Click="BtnCollapseParams_Click"
-                                                            Background="Transparent" BorderThickness="0"
-                                                            Padding="4,2" Cursor="Hand" ToolTip="Collapse parameter panels">
-                                                        <materialDesign:PackIcon Kind="ChevronLeft"
-                                                                                 Width="14" Height="14"
-                                                                                 Foreground="{DynamicResource TextSecondary}" />
-                                                    </Button>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="*" />
+                                                </Grid.RowDefinitions>
+                                                <Border Grid.Row="0" Background="{DynamicResource SurfaceBrush}"
+                                                        BorderBrush="{DynamicResource BorderDefault}" BorderThickness="0,0,0,1"
+                                                        Padding="4,2">
                                                     <TextBlock x:Name="ParamHeaderText" Text="Parameters"
                                                                VerticalAlignment="Center"
                                                                FontSize="{DynamicResource FontSizeXS}"
                                                                Foreground="{DynamicResource TextSecondary}" />
-                                                </DockPanel>
+                                                </Border>
+                                                <Grid x:Name="centerPanelGrid" Grid.Row="1" />
+                                            </Grid>
+                                            <!-- Collapse button: vertical bar style (matches collapsed bar) -->
+                                            <Border Grid.Column="1" Width="28"
+                                                    Background="{DynamicResource SurfaceVariantBrush}"
+                                                    BorderBrush="{DynamicResource PrimaryBrush}"
+                                                    BorderThickness="2,0,0,0"
+                                                    Cursor="Hand" ToolTip="Collapse parameter panels"
+                                                    MouseLeftButtonDown="BtnCollapseParams_Click">
+                                                <Border.Triggers>
+                                                    <EventTrigger RoutedEvent="MouseEnter">
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetProperty="Width"
+                                                                                 To="34" Duration="0:0:0.15" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </EventTrigger>
+                                                    <EventTrigger RoutedEvent="MouseLeave">
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetProperty="Width"
+                                                                                 To="28" Duration="0:0:0.15" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </EventTrigger>
+                                                </Border.Triggers>
+                                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                    <materialDesign:PackIcon Kind="ChevronDoubleLeft"
+                                                                             Width="18" Height="18"
+                                                                             Foreground="{DynamicResource PrimaryBrush}"
+                                                                             HorizontalAlignment="Center"
+                                                                             Margin="0,0,0,6" />
+                                                    <TextBlock Text="C&#x000A;l&#x000A;o&#x000A;s&#x000A;e"
+                                                               FontSize="{DynamicResource FontSizeSM}"
+                                                               FontWeight="SemiBold"
+                                                               Foreground="{DynamicResource TextPrimary}"
+                                                               TextAlignment="Center"
+                                                               LineHeight="14"
+                                                               HorizontalAlignment="Center" />
+                                                </StackPanel>
                                             </Border>
-                                            <Grid x:Name="centerPanelGrid" Grid.Row="1" />
                                         </Grid>
 
                                         <!-- Collapsed sidebar: vertical bar with expand button -->
@@ -505,8 +535,8 @@
                                                   Background="{DynamicResource BorderDefault}"
                                                   Visibility="Collapsed" />
 
-                                    <!-- Right: Monitor & Scope (embedded) -->
-                                    <views:MonitorControlDialog x:Name="monitorControlView" Grid.Column="2" />
+                                    <!-- Right: Monitor & Control instances (multi-drive) -->
+                                    <Grid x:Name="monitorPanelGrid" Grid.Column="2" />
                                 </Grid>
                             </avalonDockLayout:LayoutDocument>
                         </avalonDockLayout:LayoutDocumentPane>
@@ -526,23 +556,7 @@
 
                 </avalonDockLayout:LayoutPanel>
 
-                <!-- Control Panel (hidden initially, shown as floating on toggle) -->
-                <avalonDockLayout:LayoutRoot.RightSide>
-                    <avalonDockLayout:LayoutAnchorSide>
-                        <avalonDockLayout:LayoutAnchorGroup>
-                            <avalonDockLayout:LayoutAnchorable x:Name="controlPanelPane"
-                                                                Title="Control Panel"
-                                                                ContentId="controlPanel"
-                                                                CanClose="True"
-                                                                CanFloat="True"
-                                                                CanAutoHide="True"
-                                                                FloatingWidth="560"
-                                                                FloatingHeight="380">
-                                <views:ControlPanelView />
-                            </avalonDockLayout:LayoutAnchorable>
-                        </avalonDockLayout:LayoutAnchorGroup>
-                    </avalonDockLayout:LayoutAnchorSide>
-                </avalonDockLayout:LayoutRoot.RightSide>
+                <!-- (Control Panels are now embedded as multi-instance in monitorPanelGrid) -->
             </avalonDockLayout:LayoutRoot>
         </avalonDock:DockingManager>
 
