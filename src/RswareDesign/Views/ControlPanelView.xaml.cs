@@ -2,6 +2,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
 namespace RswareDesign.Views;
@@ -78,12 +79,54 @@ public partial class ControlPanelView : UserControl
         {
             TxtEnableStatus.Text = "● Enabled";
             TxtEnableStatus.Foreground = GetWpfBrush("SuccessBrush");
+            StartEnableBorderAnimation();
         }
         else
         {
             TxtEnableStatus.Text = "● Disabled";
             TxtEnableStatus.Foreground = GetWpfBrush("ErrorBrush");
+            StopEnableBorderAnimation();
         }
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    //  ENABLE BORDER ANIMATION (flowing green border)
+    // ═══════════════════════════════════════════════════════════
+
+    private void StartEnableBorderAnimation()
+    {
+        var greenColor = GetThemeColor("SuccessBrush");
+
+        var lightGreen = Color.FromArgb(140, greenColor.R, greenColor.G, greenColor.B);
+
+        var brush = new LinearGradientBrush
+        {
+            StartPoint = new Point(0, 0),
+            EndPoint = new Point(1, 1),
+            GradientStops = new GradientStopCollection
+            {
+                new(Colors.Transparent, 0.0),
+                new(lightGreen, 0.25),
+                new(lightGreen, 0.5),
+                new(Colors.Transparent, 0.75),
+                new(Colors.Transparent, 1.0)
+            },
+            RelativeTransform = new RotateTransform(0, 0.5, 0.5)
+        };
+
+        EnableBorder.BorderBrush = brush;
+
+        var rotate = (RotateTransform)brush.RelativeTransform;
+        var animation = new DoubleAnimation(0, 360, TimeSpan.FromSeconds(6))
+        {
+            RepeatBehavior = RepeatBehavior.Forever
+        };
+        rotate.BeginAnimation(RotateTransform.AngleProperty, animation);
+    }
+
+    private void StopEnableBorderAnimation()
+    {
+        EnableBorder.BorderBrush = Brushes.Transparent;
     }
 
     // ═══════════════════════════════════════════════════════════
@@ -120,7 +163,7 @@ public partial class ControlPanelView : UserControl
         if (!ConfirmActionDialog.Ask(owner, "Zero Set",
                 "Zero Set 하시겠습니까?\n현재 위치가 0으로 초기화됩니다.",
                 MaterialDesignThemes.Wpf.PackIconKind.Numeric0CircleOutline,
-                "Zero Set", "PrimaryBrush"))
+                "Zero Set", "WarningBrush"))
             return;
 
         _currentPosition = 0;
@@ -145,7 +188,7 @@ public partial class ControlPanelView : UserControl
         if (!ConfirmActionDialog.Ask(owner, "Reset",
                 "Reset 하시겠습니까?\n모든 상태가 초기화됩니다.",
                 MaterialDesignThemes.Wpf.PackIconKind.RestartAlert,
-                "Reset", "ErrorBrush"))
+                "Reset", "WarningBrush"))
             return;
 
         _isEnabled = false;
@@ -155,6 +198,59 @@ public partial class ControlPanelView : UserControl
         _currentVelocity = 0;
         UpdateEnableStatus();
         UpdateStatusMonitor();
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    //  MOTION BUTTONS (Move ABS / Move Rel / Move Zero)
+    // ═══════════════════════════════════════════════════════════
+
+    private void BtnMoveAbs_Click(object sender, RoutedEventArgs e)
+    {
+        FlashTargetPositionBorder();
+    }
+
+    private void BtnMoveRel_Click(object sender, RoutedEventArgs e)
+    {
+        FlashTargetPositionBorder();
+    }
+
+    private void BtnMoveZero_Click(object sender, RoutedEventArgs e)
+    {
+        _currentPosition = 0;
+        UpdateStatusMonitor();
+    }
+
+    private void FlashTargetPositionBorder()
+    {
+        var highlightColor = GetThemeColor("PrimaryBrush");
+        var normalColor = GetThemeColor("BorderDefault");
+
+        // Flash TxtTgtPosA (always)
+        FlashTextBoxBorder(TxtTgtPosA, highlightColor, normalColor);
+
+        // Flash TxtTgtPosB only if 왕복 is checked
+        if (ChkReciprocate.IsChecked == true)
+            FlashTextBoxBorder(TxtTgtPosB, highlightColor, normalColor);
+    }
+
+    private static void FlashTextBoxBorder(TextBox textBox, Color highlightColor, Color normalColor)
+    {
+        var brush = new SolidColorBrush(normalColor);
+        textBox.BorderBrush = brush;
+        textBox.BorderThickness = new Thickness(2);
+
+        // Smooth: fade-in → hold → fade-out
+        var animation = new ColorAnimationUsingKeyFrames();
+        animation.KeyFrames.Add(new LinearColorKeyFrame(highlightColor, TimeSpan.FromMilliseconds(200)));
+        animation.KeyFrames.Add(new LinearColorKeyFrame(highlightColor, TimeSpan.FromMilliseconds(800)));
+        animation.KeyFrames.Add(new LinearColorKeyFrame(normalColor, TimeSpan.FromMilliseconds(1200)));
+        animation.Completed += (_, _) =>
+        {
+            textBox.BorderThickness = new Thickness(1);
+            textBox.BorderBrush = new SolidColorBrush(normalColor);
+        };
+
+        brush.BeginAnimation(SolidColorBrush.ColorProperty, animation);
     }
 
     // ═══════════════════════════════════════════════════════════
@@ -293,22 +389,42 @@ public partial class ControlPanelView : UserControl
             VelocityArcGauge.Children.Add(arcPath);
         }
 
-        var pctText = new TextBlock
+        // Velocity value (rpm) inside the arc
+        var valText = new TextBlock
         {
-            Text = $"{ratio * 100:F0}%",
+            Text = $"{Math.Abs(velocity):F0}",
             FontSize = 9,
+            FontWeight = FontWeights.SemiBold,
             FontFamily = Application.Current.TryFindResource("FontFamilyCode") as FontFamily,
             Foreground = GetWpfBrush("TextPrimary"),
             TextAlignment = TextAlignment.Center
         };
-        pctText.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
-        Canvas.SetLeft(pctText, cx - pctText.DesiredSize.Width / 2);
-        Canvas.SetTop(pctText, cy - pctText.DesiredSize.Height / 2);
-        VelocityArcGauge.Children.Add(pctText);
+        valText.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+        Canvas.SetLeft(valText, cx - valText.DesiredSize.Width / 2);
+        Canvas.SetTop(valText, cy - valText.DesiredSize.Height / 2 - 4);
+        VelocityArcGauge.Children.Add(valText);
+
+        var unitText = new TextBlock
+        {
+            Text = "rpm",
+            FontSize = 7,
+            FontFamily = Application.Current.TryFindResource("FontFamilyCode") as FontFamily,
+            Foreground = GetWpfBrush("TextSecondary"),
+            TextAlignment = TextAlignment.Center
+        };
+        unitText.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+        Canvas.SetLeft(unitText, cx - unitText.DesiredSize.Width / 2);
+        Canvas.SetTop(unitText, cy + valText.DesiredSize.Height / 2 - 4);
+        VelocityArcGauge.Children.Add(unitText);
     }
 
     private static Brush GetWpfBrush(string key)
     {
         return Application.Current.TryFindResource(key) is Brush brush ? brush : Brushes.Gray;
+    }
+
+    private static Color GetThemeColor(string key)
+    {
+        return Application.Current.TryFindResource(key) is SolidColorBrush brush ? brush.Color : Colors.Gray;
     }
 }

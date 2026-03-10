@@ -9,7 +9,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" MinWidth="200" />
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition x:Name="FavoritesColumn" Width="220" MinWidth="150" />
+            <ColumnDefinition x:Name="FavoritesColumn" Width="220" MinWidth="150" MaxWidth="440" />
         </Grid.ColumnDefinitions>
 
         <!-- NOTE: Column order: 0=Chart, 1=Splitter, 2=Favorites(Toggle embedded) -->

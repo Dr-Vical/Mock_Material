@@ -169,6 +169,7 @@ public partial class MainWindow : Window
 
             UpdateComparePanels();
             ApplyWindowChrome(isDark: true); // default is dark theme
+            ApplyAvalonDockHeaderColor();
 
             // Monitor starts hidden (show via Oscilloscope button click)
             monitorControlView.Visibility = Visibility.Collapsed;
@@ -312,19 +313,77 @@ public partial class MainWindow : Window
 
         if (count == 0) return;
 
-        if (count >= 2)
+        var splitterBrush = Application.Current.TryFindResource("BorderDefault") as Brush
+                            ?? Brushes.Gray;
+
+        if (count == 1)
         {
-            centerPanelGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            centerPanelGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            // Single panel: no splitters
         }
-        if (count >= 3)
+        else if (count == 2)
         {
+            // 2 panels: col0 | splitter | col1
+            centerPanelGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            centerPanelGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            centerPanelGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+
+            var vSplitter = new GridSplitter
+            {
+                Width = 4,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Stretch,
+                Background = splitterBrush,
+                Cursor = System.Windows.Input.Cursors.SizeWE,
+            };
+            Grid.SetColumn(vSplitter, 1);
+            centerPanelGrid.Children.Add(vSplitter);
+        }
+        else // 3 or 4 panels: 2x2 grid with splitters
+        {
+            // col0 | vSplitter | col1
+            centerPanelGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            centerPanelGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            centerPanelGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+
+            // row0 | hSplitter | row1
             centerPanelGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+            centerPanelGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
             centerPanelGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+
+            // Vertical splitter (spans all rows)
+            var vSplitter = new GridSplitter
+            {
+                Width = 4,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Stretch,
+                Background = splitterBrush,
+                Cursor = System.Windows.Input.Cursors.SizeWE,
+            };
+            Grid.SetColumn(vSplitter, 1);
+            Grid.SetRowSpan(vSplitter, 3);
+            centerPanelGrid.Children.Add(vSplitter);
+
+            // Horizontal splitter (spans all columns)
+            var hSplitter = new GridSplitter
+            {
+                Height = 4,
+                HorizontalAlignment = HorizontalAlignment.Stretch,
+                VerticalAlignment = VerticalAlignment.Center,
+                Background = splitterBrush,
+                Cursor = System.Windows.Input.Cursors.SizeNS,
+            };
+            Grid.SetRow(hSplitter, 1);
+            Grid.SetColumnSpan(hSplitter, 3);
+            centerPanelGrid.Children.Add(hSplitter);
         }
 
-        int[] cols = [0, 1, 0, 1];
-        int[] rows = [0, 0, 1, 1];
+        // Panel placement: account for splitter columns/rows
+        // 1 panel: col=0, row=0
+        // 2 panels: col=0/2, row=0
+        // 3-4 panels: col=0/2, row=0/2
+        int[] cols = count <= 2 ? [0, 2, 0, 2] : [0, 2, 0, 2];
+        int[] rows = count <= 2 ? [0, 0, 0, 0] : [0, 0, 2, 2];
+
         for (int i = 0; i < count && i < 4; i++)
         {
             var panel = orderedPanels[i].Value;
@@ -562,6 +621,7 @@ public partial class MainWindow : Window
             dockManager.Theme = isDark
                 ? new AvalonDock.Themes.Vs2013DarkTheme()
                 : new AvalonDock.Themes.Vs2013LightTheme();
+            ApplyAvalonDockHeaderColor();
         }
         catch { /* Ignore */ }
 
@@ -602,6 +662,41 @@ public partial class MainWindow : Window
 
         // 7. Refresh chart colors (ScottPlot doesn't use DynamicResource)
         monitorControlView.RefreshChartTheme();
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    //  AVALONDOCK HEADER COLOR OVERRIDE
+    // ═══════════════════════════════════════════════════════════
+
+    private void ApplyAvalonDockHeaderColor()
+    {
+        try
+        {
+            var deepRed = new SolidColorBrush(Color.FromRgb(139, 26, 26));
+            deepRed.Freeze();
+            var lightText = new SolidColorBrush(Colors.White);
+            lightText.Freeze();
+            var grip = new SolidColorBrush(Color.FromRgb(180, 80, 80));
+            grip.Freeze();
+
+            var rk = typeof(AvalonDock.Themes.VS2013.Themes.ResourceKeys);
+            void Set(string name, object value)
+            {
+                var prop = rk.GetProperty(name, System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static);
+                if (prop?.GetValue(null) is { } key)
+                    dockManager.Resources[key] = value;
+            }
+
+            Set("ControlAccentColorKey", Color.FromRgb(139, 26, 26));
+            Set("ControlAccentBrushKey", deepRed);
+            Set("ToolWindowCaptionActiveBackground", deepRed);
+            Set("ToolWindowCaptionActiveText", lightText);
+            Set("ToolWindowCaptionActiveGrip", grip);
+            Set("DocumentWellTabSelectedActiveBackground", deepRed);
+            Set("FloatingWindowToolWindowBorder", deepRed);
+            Set("FloatingWindowDocumentBorder", deepRed);
+        }
+        catch { /* Ignore */ }
     }
 
     // ═══════════════════════════════════════════════════════════

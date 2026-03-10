@@ -6,9 +6,12 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>RswareDesign</RootNamespace>
+    <ApplicationIcon>app.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Resource Include="Assets\icon-64x64.png" />
+    <Resource Include="Assets\app-icon.png" />
+    <Resource Include="app.ico" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\Parameters\CSD7N_Parameter.csv">

@@ -23,6 +23,10 @@ public partial class ConfirmActionDialog : Window
             Application.Current.TryFindResource(confirmBrushKey) is Brush brush)
         {
             BtnConfirm.Background = brush;
+
+            // Color the dialog border based on severity
+            DialogBorder.BorderBrush = brush;
+            DialogBorder.BorderThickness = new Thickness(2);
         }
 
         MouseLeftButtonDown += (_, _) => DragMove();

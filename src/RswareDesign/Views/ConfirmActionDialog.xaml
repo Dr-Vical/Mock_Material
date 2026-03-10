@@ -13,7 +13,8 @@
         TextElement.FontFamily="{DynamicResource FontFamilyUI}"
         TextElement.FontSize="{DynamicResource FontSizeMD}">
 
-    <Border Background="{DynamicResource SurfaceBrush}"
+    <Border x:Name="DialogBorder"
+            Background="{DynamicResource SurfaceBrush}"
             BorderBrush="{DynamicResource BorderDefault}"
             BorderThickness="1"
             CornerRadius="{StaticResource Radius.LG}"

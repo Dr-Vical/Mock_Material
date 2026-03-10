@@ -4,6 +4,8 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              Background="{DynamicResource SurfaceBrush}">
 
+    <Border x:Name="EnableBorder" BorderThickness="2" BorderBrush="Transparent"
+            CornerRadius="{StaticResource Radius.MD}">
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
         <StackPanel Margin="8,6">
 
@@ -136,33 +138,31 @@
                            FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}" />
             </DockPanel>
 
-            <UniformGrid Columns="2">
-                <Button Margin="2,1" Padding="4,4" Cursor="Hand" Background="{DynamicResource SuccessBrush}" Foreground="{DynamicResource TextOnPrimary}" BorderThickness="0" Click="BtnEnable_Click">
+            <!-- Row 1: Enable / Disable / Clear Fault -->
+            <UniformGrid Columns="3" Margin="0,0,0,2">
+                <Button Margin="2,1" Padding="4,2" Cursor="Hand" Background="{DynamicResource SuccessBrush}" Foreground="{DynamicResource TextOnPrimary}" BorderThickness="0" Click="BtnEnable_Click">
                     <StackPanel Orientation="Horizontal"><materialDesign:PackIcon Kind="Play" Width="12" Height="12" VerticalAlignment="Center" Margin="0,0,2,0" /><TextBlock Text="Enable" FontSize="{DynamicResource FontSizeXS}" VerticalAlignment="Center" /></StackPanel>
                 </Button>
-                <Button Margin="2,1" Padding="4,4" Cursor="Hand" Background="{DynamicResource ErrorBrush}" Foreground="{DynamicResource TextOnPrimary}" BorderThickness="0" Click="BtnDisable_Click">
+                <Button Margin="2,1" Padding="4,2" Cursor="Hand" Background="{DynamicResource ErrorBrush}" Foreground="{DynamicResource TextOnPrimary}" BorderThickness="0" Click="BtnDisable_Click">
                     <StackPanel Orientation="Horizontal"><materialDesign:PackIcon Kind="Stop" Width="12" Height="12" VerticalAlignment="Center" Margin="0,0,2,0" /><TextBlock Text="Disable" FontSize="{DynamicResource FontSizeXS}" VerticalAlignment="Center" /></StackPanel>
                 </Button>
-                <!-- Jog- first, Jog+ second (no arrow icons) -->
-                <Button x:Name="BtnJogMinus" Margin="2,1" Padding="4,4" Cursor="Hand" BorderBrush="{DynamicResource BorderDefault}" BorderThickness="1" Background="Transparent" Foreground="{DynamicResource TextPrimary}"
+                <Button Margin="2,1" Padding="4,2" Cursor="Hand" Background="{DynamicResource WarningBrush}" Foreground="#212121" BorderThickness="0" Click="BtnClearFault_Click">
+                    <StackPanel Orientation="Horizontal"><materialDesign:PackIcon Kind="AlertRemove" Width="12" Height="12" VerticalAlignment="Center" Margin="0,0,2,0" /><TextBlock Text="Clear Fault" FontSize="{DynamicResource FontSizeXS}" VerticalAlignment="Center" /></StackPanel>
+                </Button>
+            </UniformGrid>
+
+            <!-- Row 2: Jog- / Jog+ / Zero Set -->
+            <UniformGrid Columns="3" Margin="0,0,0,2">
+                <Button x:Name="BtnJogMinus" Margin="2,1" Padding="4,2" Cursor="Hand" BorderBrush="{DynamicResource BorderDefault}" BorderThickness="1" Background="Transparent" Foreground="{DynamicResource TextPrimary}"
                         PreviewMouseLeftButtonDown="BtnJogMinus_Down" PreviewMouseLeftButtonUp="BtnJog_Up">
                     <TextBlock Text="Jog -" FontSize="{DynamicResource FontSizeXS}" VerticalAlignment="Center" />
                 </Button>
-                <Button x:Name="BtnJogPlus" Margin="2,1" Padding="4,4" Cursor="Hand" BorderBrush="{DynamicResource BorderDefault}" BorderThickness="1" Background="Transparent" Foreground="{DynamicResource TextPrimary}"
+                <Button x:Name="BtnJogPlus" Margin="2,1" Padding="4,2" Cursor="Hand" BorderBrush="{DynamicResource BorderDefault}" BorderThickness="1" Background="Transparent" Foreground="{DynamicResource TextPrimary}"
                         PreviewMouseLeftButtonDown="BtnJogPlus_Down" PreviewMouseLeftButtonUp="BtnJog_Up">
                     <TextBlock Text="Jog +" FontSize="{DynamicResource FontSizeXS}" VerticalAlignment="Center" />
                 </Button>
-                <Button Margin="2,1" Padding="4,4" Cursor="Hand" BorderBrush="{DynamicResource BorderDefault}" BorderThickness="1" Background="Transparent" Foreground="{DynamicResource TextPrimary}" Click="BtnClearFault_Click">
-                    <StackPanel Orientation="Horizontal"><materialDesign:PackIcon Kind="AlertRemove" Width="12" Height="12" VerticalAlignment="Center" Margin="0,0,2,0" Foreground="{DynamicResource WarningBrush}" /><TextBlock Text="Clr Fault" FontSize="{DynamicResource FontSizeXS}" VerticalAlignment="Center" /></StackPanel>
-                </Button>
-                <Button Margin="2,1" Padding="4,4" Cursor="Hand" BorderBrush="{DynamicResource BorderDefault}" BorderThickness="1" Background="Transparent" Foreground="{DynamicResource TextPrimary}" Click="BtnReset_Click">
-                    <StackPanel Orientation="Horizontal"><materialDesign:PackIcon Kind="Restart" Width="12" Height="12" VerticalAlignment="Center" Margin="0,0,2,0" Foreground="{DynamicResource SecondaryBrush}" /><TextBlock Text="Reset" FontSize="{DynamicResource FontSizeXS}" VerticalAlignment="Center" /></StackPanel>
-                </Button>
-                <Button Margin="2,1" Padding="4,4" Cursor="Hand" Background="{DynamicResource PrimaryBrush}" Foreground="{DynamicResource TextOnPrimary}" BorderThickness="0" Click="BtnZeroSet_Click">
+                <Button Margin="2,1" Padding="4,2" Cursor="Hand" BorderBrush="{DynamicResource BorderDefault}" BorderThickness="1" Background="Transparent" Foreground="{DynamicResource TextPrimary}" Click="BtnZeroSet_Click">
                     <StackPanel Orientation="Horizontal"><materialDesign:PackIcon Kind="Numeric0CircleOutline" Width="12" Height="12" VerticalAlignment="Center" Margin="0,0,2,0" /><TextBlock Text="Zero Set" FontSize="{DynamicResource FontSizeXS}" VerticalAlignment="Center" /></StackPanel>
-                </Button>
-                <Button Margin="2,1" Padding="4,4" Cursor="Hand" Background="{DynamicResource PrimaryBrush}" Foreground="{DynamicResource TextOnPrimary}" BorderThickness="0">
-                    <StackPanel Orientation="Horizontal"><materialDesign:PackIcon Kind="HomeCircleOutline" Width="12" Height="12" VerticalAlignment="Center" Margin="0,0,2,0" /><TextBlock Text="Move Zero" FontSize="{DynamicResource FontSizeXS}" VerticalAlignment="Center" /></StackPanel>
                 </Button>
             </UniformGrid>
 
@@ -179,11 +179,11 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="Tgt Speed :" Foreground="{DynamicResource TextSecondary}" FontSize="{DynamicResource FontSizeXS}" VerticalAlignment="Center" Margin="0,0,6,3" />
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Target Speed :" Foreground="{DynamicResource TextSecondary}" FontSize="{DynamicResource FontSizeXS}" VerticalAlignment="Center" Margin="0,0,6,3" />
                 <TextBox Grid.Row="0" Grid.Column="1" Text="500" Background="{DynamicResource SurfaceVariantBrush}" Foreground="{DynamicResource ValueHighlightBrush}" BorderBrush="{DynamicResource BorderDefault}" FontFamily="{DynamicResource FontFamilyCode}" FontSize="{DynamicResource FontSizeXS}" Padding="5,2" Margin="0,0,0,3" />
 
                 <!-- Tgt Pos: 2-column reciprocating targets -->
-                <TextBlock Grid.Row="1" Grid.Column="0" Text="Tgt Pos :" Foreground="{DynamicResource TextSecondary}" FontSize="{DynamicResource FontSizeXS}" VerticalAlignment="Center" Margin="0,0,6,3" />
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Target Position :" Foreground="{DynamicResource TextSecondary}" FontSize="{DynamicResource FontSizeXS}" VerticalAlignment="Center" Margin="0,0,6,3" />
                 <Grid Grid.Row="1" Grid.Column="1" Margin="0,0,0,3">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -202,9 +202,24 @@
                              FontSize="{DynamicResource FontSizeXS}" Padding="5,2" />
                 </Grid>
 
-                <TextBlock Grid.Row="2" Grid.Column="0" Text="Cur Limit :" Foreground="{DynamicResource TextSecondary}" FontSize="{DynamicResource FontSizeXS}" VerticalAlignment="Center" Margin="0,0,6,0" />
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Current Limit :" Foreground="{DynamicResource TextSecondary}" FontSize="{DynamicResource FontSizeXS}" VerticalAlignment="Center" Margin="0,0,6,0" />
                 <TextBox Grid.Row="2" Grid.Column="1" Text="100" Background="{DynamicResource SurfaceVariantBrush}" Foreground="{DynamicResource ValueHighlightBrush}" BorderBrush="{DynamicResource BorderDefault}" FontFamily="{DynamicResource FontFamilyCode}" FontSize="{DynamicResource FontSizeXS}" Padding="5,2" />
             </Grid>
+
+            <!-- ═══ Motion Controls ═══ -->
+            <UniformGrid Columns="4" Margin="0,6,0,0">
+                <CheckBox x:Name="ChkReciprocate" Content="왕복" Margin="2,1" Foreground="{DynamicResource TextPrimary}" FontSize="{DynamicResource FontSizeXS}" VerticalContentAlignment="Center" />
+                <Button Margin="2,1" Padding="4,2" Cursor="Hand" BorderBrush="{DynamicResource BorderDefault}" BorderThickness="1" Background="Transparent" Foreground="{DynamicResource TextPrimary}" Click="BtnMoveAbs_Click">
+                    <TextBlock Text="Move ABS" FontSize="{DynamicResource FontSizeXS}" VerticalAlignment="Center" />
+                </Button>
+                <Button Margin="2,1" Padding="4,2" Cursor="Hand" BorderBrush="{DynamicResource BorderDefault}" BorderThickness="1" Background="Transparent" Foreground="{DynamicResource TextPrimary}" Click="BtnMoveRel_Click">
+                    <TextBlock Text="Move Rel" FontSize="{DynamicResource FontSizeXS}" VerticalAlignment="Center" />
+                </Button>
+                <Button Margin="2,1" Padding="4,2" Cursor="Hand" BorderBrush="{DynamicResource BorderDefault}" BorderThickness="1" Background="Transparent" Foreground="{DynamicResource TextPrimary}" Click="BtnMoveZero_Click">
+                    <TextBlock Text="Move Zero" FontSize="{DynamicResource FontSizeXS}" VerticalAlignment="Center" />
+                </Button>
+            </UniformGrid>
         </StackPanel>
     </ScrollViewer>
+    </Border>
 </UserControl>
