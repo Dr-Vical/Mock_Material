@@ -307,10 +307,20 @@ public partial class ControlPanelView : UserControl
         if (barMaxWidth <= 0) barMaxWidth = 150;
         PositionProgressBar.Width = posRatio * barMaxWidth;
 
+        // Target position red marker
+        if (double.TryParse(TxtTgtPosA.Text, out double targetPos))
+        {
+            double tgtRatio = range > 0 ? Math.Clamp((targetPos - _minPosition) / range, 0, 1) : 0;
+            TargetPositionMarker.Margin = new Thickness(tgtRatio * barMaxWidth - 1, 0, 0, 0);
+            TargetPositionMarker.Visibility = Visibility.Visible;
+        }
+
         // Velocity card
         TxtVelocityValue.Text = _currentVelocity.ToString("N0");
         TxtVelocityMax.Text = $"{MaxVelocity:N0} rpm";
-        DrawVelocityArc(_currentVelocity);
+
+        double targetSpeed = double.TryParse(TxtTargetSpeed.Text, out var ts) ? ts : 500;
+        DrawVelocityArc(_currentVelocity, targetSpeed);
 
         // Load card
         TxtLoadValue.Text = loadPercent.ToString("F0");
@@ -334,7 +344,7 @@ public partial class ControlPanelView : UserControl
     //  VELOCITY ARC GAUGE
     // ═══════════════════════════════════════════════════════════
 
-    private void DrawVelocityArc(double velocity)
+    private void DrawVelocityArc(double velocity, double targetSpeed = 500)
     {
         VelocityArcGauge.Children.Clear();
 
@@ -344,11 +354,12 @@ public partial class ControlPanelView : UserControl
         double radius = 20;
         double thickness = 5;
 
+        // Track ring
         var trackEllipse = new System.Windows.Shapes.Ellipse
         {
             Width = radius * 2,
             Height = radius * 2,
-            Stroke = GetWpfBrush("BackgroundBrush"),
+            Stroke = GetWpfBrush("SurfaceVariantBrush"),
             StrokeThickness = thickness,
             Fill = Brushes.Transparent
         };
@@ -356,46 +367,51 @@ public partial class ControlPanelView : UserControl
         Canvas.SetTop(trackEllipse, cy - radius);
         VelocityArcGauge.Children.Add(trackEllipse);
 
+        // Red limit tick at max velocity position (top = 12 o'clock)
+        double limitRadius = radius + thickness / 2 + 2;
+        var limitTick = new System.Windows.Shapes.Line
+        {
+            X1 = cx, Y1 = cy - limitRadius + 1,
+            X2 = cx, Y2 = cy - limitRadius - 3,
+            Stroke = GetWpfBrush("ErrorBrush"),
+            StrokeThickness = 2,
+            StrokeStartLineCap = PenLineCap.Round,
+            StrokeEndLineCap = PenLineCap.Round
+        };
+        VelocityArcGauge.Children.Add(limitTick);
+
+        // Actual velocity arc
         double ratio = Math.Clamp(Math.Abs(velocity) / MaxVelocity, 0, 0.999);
         if (ratio > 0.01)
         {
-            double startAngle = -90;
-            double sweepAngle = ratio * 360;
-            double endAngle = startAngle + sweepAngle;
-
-            double startRad = startAngle * Math.PI / 180;
-            double endRad = endAngle * Math.PI / 180;
-
-            var startPt = new Point(cx + radius * Math.Cos(startRad), cy + radius * Math.Sin(startRad));
-            var endPt = new Point(cx + radius * Math.Cos(endRad), cy + radius * Math.Sin(endRad));
-
-            bool isLargeArc = sweepAngle > 180;
-
-            var figure = new PathFigure { StartPoint = startPt, IsFilled = false };
-            figure.Segments.Add(new ArcSegment
-            {
-                Point = endPt,
-                Size = new Size(radius, radius),
-                SweepDirection = SweepDirection.Clockwise,
-                IsLargeArc = isLargeArc
-            });
-
-            var geo = new PathGeometry();
-            geo.Figures.Add(figure);
-
             var arcBrush = ratio > 0.8 ? GetWpfBrush("ErrorBrush") :
                            ratio > 0.5 ? GetWpfBrush("WarningBrush") :
                                          GetWpfBrush("SecondaryBrush");
 
-            var arcPath = new System.Windows.Shapes.Path
+            DrawArcSegment(cx, cy, radius, ratio, thickness, arcBrush);
+        }
+
+        // Target speed marker (thin orange tick on the arc)
+        double targetRatio = Math.Clamp(Math.Abs(targetSpeed) / MaxVelocity, 0, 0.999);
+        if (targetRatio > 0.01)
+        {
+            double tgtAngle = -90 + targetRatio * 360;
+            double tgtRad = tgtAngle * Math.PI / 180;
+            double innerR = radius - thickness / 2 - 1;
+            double outerR = radius + thickness / 2 + 1;
+
+            var tgtTick = new System.Windows.Shapes.Line
             {
-                Data = geo,
-                Stroke = arcBrush,
-                StrokeThickness = thickness,
+                X1 = cx + innerR * Math.Cos(tgtRad),
+                Y1 = cy + innerR * Math.Sin(tgtRad),
+                X2 = cx + outerR * Math.Cos(tgtRad),
+                Y2 = cy + outerR * Math.Sin(tgtRad),
+                Stroke = GetWpfBrush("ErrorBrush"),
+                StrokeThickness = 1.5,
                 StrokeStartLineCap = PenLineCap.Round,
                 StrokeEndLineCap = PenLineCap.Round
             };
-            VelocityArcGauge.Children.Add(arcPath);
+            VelocityArcGauge.Children.Add(tgtTick);
         }
 
         // Velocity value (rpm) inside the arc
@@ -425,6 +441,40 @@ public partial class ControlPanelView : UserControl
         Canvas.SetLeft(unitText, cx - unitText.DesiredSize.Width / 2);
         Canvas.SetTop(unitText, cy + valText.DesiredSize.Height / 2 - 4);
         VelocityArcGauge.Children.Add(unitText);
+    }
+
+    private void DrawArcSegment(double cx, double cy, double radius, double ratio, double thickness, Brush brush)
+    {
+        double startAngle = -90;
+        double sweepAngle = ratio * 360;
+        double endAngle = startAngle + sweepAngle;
+
+        double startRad = startAngle * Math.PI / 180;
+        double endRad = endAngle * Math.PI / 180;
+
+        var startPt = new Point(cx + radius * Math.Cos(startRad), cy + radius * Math.Sin(startRad));
+        var endPt = new Point(cx + radius * Math.Cos(endRad), cy + radius * Math.Sin(endRad));
+
+        var figure = new PathFigure { StartPoint = startPt, IsFilled = false };
+        figure.Segments.Add(new ArcSegment
+        {
+            Point = endPt,
+            Size = new Size(radius, radius),
+            SweepDirection = SweepDirection.Clockwise,
+            IsLargeArc = sweepAngle > 180
+        });
+
+        var geo = new PathGeometry();
+        geo.Figures.Add(figure);
+
+        VelocityArcGauge.Children.Add(new System.Windows.Shapes.Path
+        {
+            Data = geo,
+            Stroke = brush,
+            StrokeThickness = thickness,
+            StrokeStartLineCap = PenLineCap.Round,
+            StrokeEndLineCap = PenLineCap.Round
+        });
     }
 
     private static Brush GetWpfBrush(string key)

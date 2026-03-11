@@ -81,19 +81,19 @@
                         </Button>
                     </Fluent:RibbonGroupBox>
                     <Fluent:RibbonGroupBox Header="{DynamicResource loc.ribbon.group.print}">
-                        <Button Style="{StaticResource RibbonLargeRipple}">
+                        <Button Style="{StaticResource RibbonLargeRipple}" Click="BtnPrint_Click">
                             <StackPanel HorizontalAlignment="Center">
                                 <materialDesign:PackIcon Kind="Printer" Style="{StaticResource RibbonIconOpacityPulse}" />
                                 <TextBlock Text="{DynamicResource loc.ribbon.btn.print}" Style="{StaticResource RibbonButtonLabel}" />
                             </StackPanel>
                         </Button>
-                        <Button Style="{StaticResource RibbonLargeRipple}">
+                        <Button Style="{StaticResource RibbonLargeRipple}" Click="BtnPageSetup_Click">
                             <StackPanel HorizontalAlignment="Center">
                                 <materialDesign:PackIcon Kind="FileDocumentEdit" Style="{StaticResource RibbonIconOpacityPulse}" />
                                 <TextBlock Text="{DynamicResource loc.ribbon.btn.pagesetup}" Style="{StaticResource RibbonButtonLabel}" />
                             </StackPanel>
                         </Button>
-                        <Button Style="{StaticResource RibbonLargeRipple}">
+                        <Button Style="{StaticResource RibbonLargeRipple}" Click="BtnPrintSetup_Click">
                             <StackPanel HorizontalAlignment="Center">
                                 <materialDesign:PackIcon Kind="PrinterSettings" Style="{StaticResource RibbonIconOpacityPulse}" />
                                 <TextBlock Text="{DynamicResource loc.ribbon.btn.printsetup}" Style="{StaticResource RibbonButtonLabel}" />
@@ -119,7 +119,7 @@
                                 <TextBlock Text="{DynamicResource loc.ribbon.btn.rescan}" Style="{StaticResource RibbonButtonLabel}" />
                             </StackPanel>
                         </Button>
-                        <Button Style="{StaticResource RibbonLargeRipple}">
+                        <Button Style="{StaticResource RibbonLargeRipple}" Click="BtnRescanOption_Click">
                             <StackPanel HorizontalAlignment="Center">
                                 <materialDesign:PackIcon Kind="CogRefresh" Style="{StaticResource RibbonIconOpacityPulse}" />
                                 <TextBlock Text="{DynamicResource loc.ribbon.btn.rescanoption}" Style="{StaticResource RibbonButtonLabel}" />
@@ -127,7 +127,7 @@
                         </Button>
                     </Fluent:RibbonGroupBox>
                     <Fluent:RibbonGroupBox Header="{DynamicResource loc.ribbon.group.comm}">
-                        <Button Style="{StaticResource RibbonLargeRipple}">
+                        <Button Style="{StaticResource RibbonLargeRipple}" Click="BtnComSetting_Click">
                             <StackPanel HorizontalAlignment="Center">
                                 <materialDesign:PackIcon Kind="SerialPort" Style="{StaticResource RibbonIconOpacityPulse}" />
                                 <TextBlock Text="{DynamicResource loc.ribbon.btn.comsetting}" Style="{StaticResource RibbonButtonLabel}" />

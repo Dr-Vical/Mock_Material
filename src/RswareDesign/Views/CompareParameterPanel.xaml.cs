@@ -143,6 +143,13 @@ public partial class CompareParameterPanel : UserControl
 
     private void OnCloseClick(object sender, RoutedEventArgs e)
     {
+        // If last panel, skip shrink animation — parent will slide-collapse instead
+        if (CanCloseCheck != null && !CanCloseCheck())
+        {
+            CloseRequested?.Invoke(this, EventArgs.Empty);
+            return;
+        }
+
         // Animate out, then fire close
         RenderTransform = new ScaleTransform(1, 1);
         RenderTransformOrigin = new Point(0.5, 0.5);
@@ -231,6 +238,54 @@ public partial class CompareParameterPanel : UserControl
             element = VisualTreeHelper.GetParent(element);
         }
         return null;
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    //  DOUBLE-CLICK TO EDIT VALUE
+    // ═══════════════════════════════════════════════════════════
+
+    private void Grid_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+        if (parameterGrid.SelectedItem is not Parameter param) return;
+
+        // Don't enter edit on star column
+        var dep = e.OriginalSource as DependencyObject;
+        while (dep != null)
+        {
+            if (dep is CheckBox) return;
+            dep = VisualTreeHelper.GetParent(dep);
+        }
+
+        // Find Value column (DataGridTemplateColumn, index 3)
+        if (parameterGrid.Columns.Count <= 3) return;
+        var valueColumn = parameterGrid.Columns[3];
+        parameterGrid.CurrentCell = new DataGridCellInfo(param, valueColumn);
+        parameterGrid.BeginEdit();
+        e.Handled = true;
+    }
+
+    private void ValueEditBox_Loaded(object sender, RoutedEventArgs e)
+    {
+        if (sender is TextBox tb)
+        {
+            tb.Focus();
+            tb.SelectAll();
+
+            // Commit on Enter, cancel on Escape
+            tb.KeyDown += (_, ke) =>
+            {
+                if (ke.Key == Key.Enter)
+                {
+                    parameterGrid.CommitEdit(DataGridEditingUnit.Row, true);
+                    ke.Handled = true;
+                }
+                else if (ke.Key == Key.Escape)
+                {
+                    parameterGrid.CancelEdit(DataGridEditingUnit.Row);
+                    ke.Handled = true;
+                }
+            };
+        }
     }
 
     public void RebuildActionButtons()

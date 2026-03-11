@@ -21,6 +21,20 @@
                     <materialDesign:PackIcon Kind="Close" Width="12" Height="12"
                                              Foreground="{DynamicResource TextSecondary}" />
                 </Button>
+                <!-- Expand All panels -->
+                <Button x:Name="BtnExpandAll" DockPanel.Dock="Right" Click="BtnExpandAll_Click"
+                        Background="Transparent" BorderThickness="0"
+                        Padding="4,0" Cursor="Hand" ToolTip="{DynamicResource loc.monitor.tooltip.expandall}">
+                    <TextBlock Text="&lt; &gt;" FontSize="10" FontWeight="Bold" FontFamily="Consolas"
+                               Foreground="{DynamicResource PrimaryBrush}" />
+                </Button>
+                <!-- Collapse All panels -->
+                <Button x:Name="BtnCollapseAll" DockPanel.Dock="Right" Click="BtnCollapseAll_Click"
+                        Background="Transparent" BorderThickness="0"
+                        Padding="4,0" Cursor="Hand" ToolTip="{DynamicResource loc.monitor.tooltip.collapseall}">
+                    <TextBlock Text="&gt; &lt;" FontSize="10" FontWeight="Bold" FontFamily="Consolas"
+                               Foreground="{DynamicResource TextSecondary}" />
+                </Button>
                 <TextBlock x:Name="TxtDriveIdentity" Text="Drive A"
                            FontSize="{DynamicResource FontSizeSM}" FontWeight="SemiBold"
                            Foreground="{DynamicResource TextSecondary}"

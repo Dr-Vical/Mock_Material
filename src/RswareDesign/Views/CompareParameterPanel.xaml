@@ -24,7 +24,8 @@
                 Background="{Binding HeaderBrush, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 BorderBrush="{DynamicResource DividerBrush}"
                 BorderThickness="0,0,0,1"
-                Padding="{StaticResource Padding.PanelHeader}">
+                Height="22"
+                Padding="6,0">
             <DockPanel>
                 <!-- Close button (rightmost) -->
                 <Button DockPanel.Dock="Right"
@@ -36,7 +37,7 @@
                         ToolTip="{DynamicResource loc.compare.tooltip.close}"
                         VerticalAlignment="Center">
                     <materialDesign:PackIcon Kind="Close"
-                                             Width="14" Height="14"
+                                             Width="12" Height="12"
                                              Foreground="{DynamicResource TextSecondary}" />
                 </Button>
                 <!-- Loading progress (left of close) -->
@@ -61,7 +62,7 @@
                                VerticalAlignment="Center" />
                     <ProgressBar Value="{Binding LoadedCount, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                  Maximum="{Binding TotalCount, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                 Width="48" Height="4"
+                                 Width="72" Height="3"
                                  VerticalAlignment="Center"
                                  Margin="8,0,0,0"
                                  Background="{DynamicResource SurfaceVariantBrush}"
@@ -69,7 +70,7 @@
                 </StackPanel>
                 <!-- Panel label -->
                 <TextBlock Text="{Binding PanelLabel, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                           FontSize="{DynamicResource FontSizeMD}"
+                           FontSize="{DynamicResource FontSizeSM}"
                            FontWeight="Bold"
                            FontFamily="{DynamicResource FontFamilyUI}"
                            Foreground="{Binding LabelBrush, RelativeSource={RelativeSource AncestorType=UserControl}}"
@@ -97,6 +98,7 @@
                       PreviewMouseLeftButtonDown="Grid_PreviewMouseLeftButtonDown"
                       PreviewMouseMove="Grid_PreviewMouseMove"
                       PreviewMouseLeftButtonUp="Grid_PreviewMouseLeftButtonUp"
+                      PreviewMouseDoubleClick="Grid_PreviewMouseDoubleClick"
                       GridLinesVisibility="Horizontal"
                       HeadersVisibility="Column"
                       RowHeight="{DynamicResource Size.GridRowHeight}"
@@ -235,17 +237,53 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="{DynamicResource loc.compare.col.value}"
-                                        Binding="{Binding Value, UpdateSourceTrigger=LostFocus}"
-                                        Width="55" MinWidth="55">
-                        <DataGridTextColumn.ElementStyle>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="Foreground" Value="{DynamicResource ValueHighlightBrush}" />
-                                <Setter Property="FontWeight" Value="SemiBold" />
-                                <Setter Property="TextTrimming" Value="CharacterEllipsis" />
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
-                    </DataGridTextColumn>
+                    <DataGridTemplateColumn Header="{DynamicResource loc.compare.col.value}"
+                                             Width="55" MinWidth="55">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <!-- Enum dropdown (single-click) -->
+                                    <ComboBox ItemsSource="{Binding Options}"
+                                              DisplayMemberPath="Display"
+                                              SelectedValuePath="Value"
+                                              SelectedValue="{Binding Value, UpdateSourceTrigger=PropertyChanged}"
+                                              Visibility="{Binding HasOptions, Converter={StaticResource BoolToVis}}"
+                                              Background="Transparent"
+                                              BorderThickness="0"
+                                              Foreground="{DynamicResource ValueHighlightBrush}"
+                                              FontWeight="SemiBold"
+                                              FontSize="{DynamicResource FontSizeXS}"
+                                              Padding="0"
+                                              Margin="-4,0"
+                                              VerticalAlignment="Center" />
+                                    <!-- Normal text (double-click to edit) -->
+                                    <TextBlock Text="{Binding Value}"
+                                               Visibility="{Binding HasOptions, Converter={StaticResource InverseBoolToVis}}"
+                                               Foreground="{DynamicResource ValueHighlightBrush}"
+                                               FontWeight="SemiBold"
+                                               TextTrimming="CharacterEllipsis"
+                                               VerticalAlignment="Center"
+                                               Cursor="Hand" />
+                                </Grid>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <TextBox x:Name="ValueEditBox"
+                                         Text="{Binding Value, UpdateSourceTrigger=LostFocus}"
+                                         Background="{DynamicResource SurfaceVariantBrush}"
+                                         Foreground="{DynamicResource ValueHighlightBrush}"
+                                         FontWeight="SemiBold"
+                                         BorderBrush="{DynamicResource PrimaryBrush}"
+                                         BorderThickness="1"
+                                         Padding="2,1"
+                                         VerticalContentAlignment="Center"
+                                         SelectionBrush="{DynamicResource PrimaryBrush}"
+                                         CaretBrush="{DynamicResource ValueHighlightBrush}"
+                                         Loaded="ValueEditBox_Loaded" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
 
                     <!-- UNITS, DEFAULT, MIN, MAX -->
                     <DataGridTextColumn Header="{DynamicResource loc.compare.col.units}"

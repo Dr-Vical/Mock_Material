@@ -80,19 +80,19 @@
     <!-- ═══════════════════════════════════════════════════════════ -->
 
     <LinearGradientBrush x:Key="PanelABrush" StartPoint="0,0.5" EndPoint="1,0.5">
-        <GradientStop Color="#50D32F2F" Offset="0" />
+        <GradientStop Color="#90E04040" Offset="0" />
         <GradientStop Color="#002D2D35" Offset="1" />
     </LinearGradientBrush>
     <LinearGradientBrush x:Key="PanelBBrush" StartPoint="0,0.5" EndPoint="1,0.5">
-        <GradientStop Color="#501565C0" Offset="0" />
+        <GradientStop Color="#902575D0" Offset="0" />
         <GradientStop Color="#002D2D35" Offset="1" />
     </LinearGradientBrush>
     <LinearGradientBrush x:Key="PanelCBrush" StartPoint="0,0.5" EndPoint="1,0.5">
-        <GradientStop Color="#502E7D32" Offset="0" />
+        <GradientStop Color="#903E8D42" Offset="0" />
         <GradientStop Color="#002D2D35" Offset="1" />
     </LinearGradientBrush>
     <LinearGradientBrush x:Key="PanelDBrush" StartPoint="0,0.5" EndPoint="1,0.5">
-        <GradientStop Color="#50F9A825" Offset="0" />
+        <GradientStop Color="#90FFB830" Offset="0" />
         <GradientStop Color="#002D2D35" Offset="1" />
     </LinearGradientBrush>
 

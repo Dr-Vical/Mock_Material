@@ -257,6 +257,51 @@ public partial class MonitorControlDialog : UserControl
     }
 
     // ═══════════════════════════════════════════════════════════
+    //  EXPAND / COLLAPSE ALL PANELS
+    // ═══════════════════════════════════════════════════════════
+
+    private void BtnExpandAll_Click(object sender, RoutedEventArgs e)
+    {
+        // Expand Scale Panel (left)
+        if (ScalePanel.Visibility != Visibility.Visible)
+        {
+            ScalePanel.Visibility = Visibility.Visible;
+            ScaleToggleIcon.Kind = PackIconKind.ChevronLeft;
+        }
+
+        // Expand Favorites Panel (right)
+        if (FavoritesInnerContent.Visibility != Visibility.Visible)
+        {
+            FavoritesInnerContent.Visibility = Visibility.Visible;
+            FavoritesColumn.Width = _savedFavoritesWidth;
+            FavoritesColumn.MinWidth = 150;
+            FavoritesSplitter.Visibility = Visibility.Visible;
+            FavoritesToggleIcon.Kind = PackIconKind.ChevronRight;
+        }
+    }
+
+    private void BtnCollapseAll_Click(object sender, RoutedEventArgs e)
+    {
+        // Collapse Scale Panel (left)
+        if (ScalePanel.Visibility == Visibility.Visible)
+        {
+            ScalePanel.Visibility = Visibility.Collapsed;
+            ScaleToggleIcon.Kind = PackIconKind.ChevronRight;
+        }
+
+        // Collapse Favorites Panel (right)
+        if (FavoritesInnerContent.Visibility == Visibility.Visible)
+        {
+            _savedFavoritesWidth = FavoritesColumn.Width;
+            FavoritesInnerContent.Visibility = Visibility.Collapsed;
+            FavoritesColumn.Width = GridLength.Auto;
+            FavoritesColumn.MinWidth = 0;
+            FavoritesSplitter.Visibility = Visibility.Collapsed;
+            FavoritesToggleIcon.Kind = PackIconKind.ChevronLeft;
+        }
+    }
+
+    // ═══════════════════════════════════════════════════════════
     //  CLEAR ALL FAVORITES
     // ═══════════════════════════════════════════════════════════
 

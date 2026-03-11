@@ -1,6 +1,7 @@
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -111,6 +112,13 @@ public partial class MainWindow : Window
                     break;
                 case "Load Favorite":
                     LoadFavorites(vm);
+                    break;
+                case "Export":
+                case "Export Log":
+                    ExportParameters(msg.PanelId);
+                    break;
+                case "Import":
+                    ImportParameters(msg.PanelId);
                     break;
             }
         });
@@ -239,6 +247,182 @@ public partial class MainWindow : Window
     }
 
     // ═══════════════════════════════════════════════════════════
+    //  RESCAN OPTION
+    // ═══════════════════════════════════════════════════════════
+
+    private void BtnRescanOption_Click(object sender, RoutedEventArgs e)
+    {
+        var dlg = new RescanOptionDialog { Owner = this };
+        if (dlg.ShowDialog() == true)
+        {
+            var vm = DataContext as MainWindowViewModel;
+            vm?.AddStatus("Rescan option updated");
+        }
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    //  COMMUNICATION SETTINGS
+    // ═══════════════════════════════════════════════════════════
+
+    private void BtnComSetting_Click(object sender, RoutedEventArgs e)
+    {
+        var vm = DataContext as MainWindowViewModel;
+        var dlg = new ComSettingDialog { Owner = this };
+        dlg.SetCurrentValues(vm?.SelectedPort ?? "COM3", 115200);
+
+        if (dlg.ShowDialog() == true && vm != null)
+        {
+            vm.SelectedPort = dlg.SelectedPort;
+            vm.AddStatus($"COM: {dlg.SelectedPort} @ {dlg.BaudRate}, {dlg.CommType}, Addr={dlg.DriveAddress}");
+        }
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    //  PRINT / PAGE SETUP
+    // ═══════════════════════════════════════════════════════════
+
+    private PrintSettings? _pageSettings;
+    private System.Windows.Controls.PrintDialog? _printDialog;
+
+    private void BtnPageSetup_Click(object sender, RoutedEventArgs e)
+    {
+        var dlg = new PageSetupDialog { Owner = this, Panels = _comparePanels };
+
+        // Restore previous settings
+        if (_pageSettings != null)
+        {
+            dlg.TxtDocTitle.Text = _pageSettings.DocTitle;
+            dlg.TxtCompany.Text = _pageSettings.Company;
+            dlg.ChkIncludeDate.IsChecked = _pageSettings.IncludeDate;
+            dlg.ChkDriveModel.IsChecked = _pageSettings.IncludeDriveModel;
+            dlg.ChkFirmware.IsChecked = _pageSettings.IncludeFirmware;
+            dlg.ChkConnection.IsChecked = _pageSettings.IncludeConnection;
+            dlg.ChkAllParams.IsChecked = _pageSettings.PrintAllParams;
+            dlg.ChkModifiedOnly.IsChecked = _pageSettings.PrintModifiedOnly;
+            dlg.ChkFavorites.IsChecked = _pageSettings.PrintFavorites;
+            dlg.ChkFaults.IsChecked = _pageSettings.PrintFaults;
+            dlg.ChkMonitorData.IsChecked = _pageSettings.PrintMonitorData;
+            dlg.TxtHeader.Text = _pageSettings.HeaderText;
+            dlg.TxtFooter.Text = _pageSettings.FooterText;
+            dlg.ChkPageNumbers.IsChecked = _pageSettings.IncludePageNumbers;
+            dlg.TxtMarginTop.Text = _pageSettings.MarginTop.ToString();
+            dlg.TxtMarginBottom.Text = _pageSettings.MarginBottom.ToString();
+            dlg.TxtMarginLeft.Text = _pageSettings.MarginLeft.ToString();
+            dlg.TxtMarginRight.Text = _pageSettings.MarginRight.ToString();
+        }
+
+        if (dlg.ShowDialog() == true)
+        {
+            _pageSettings = new PrintSettings
+            {
+                DocTitle = dlg.DocTitle,
+                Company = dlg.Company,
+                IncludeDate = dlg.IncludeDate,
+                IncludeDriveModel = dlg.IncludeDriveModel,
+                IncludeFirmware = dlg.IncludeFirmware,
+                IncludeConnection = dlg.IncludeConnection,
+                PrintAllParams = dlg.PrintAllParams,
+                PrintModifiedOnly = dlg.PrintModifiedOnly,
+                PrintFavorites = dlg.PrintFavorites,
+                PrintFaults = dlg.PrintFaults,
+                PrintMonitorData = dlg.PrintMonitorData,
+                HeaderText = dlg.HeaderText,
+                FooterText = dlg.FooterText,
+                IncludePageNumbers = dlg.IncludePageNumbers,
+                MarginTop = dlg.MarginTop,
+                MarginBottom = dlg.MarginBottom,
+                MarginLeft = dlg.MarginLeft,
+                MarginRight = dlg.MarginRight,
+            };
+        }
+    }
+
+    private void BtnPrintSetup_Click(object sender, RoutedEventArgs e)
+    {
+        _printDialog ??= new System.Windows.Controls.PrintDialog();
+        _printDialog.ShowDialog();
+    }
+
+    private void BtnPrint_Click(object sender, RoutedEventArgs e)
+    {
+        var vm = DataContext as MainWindowViewModel;
+        var settings = _pageSettings ?? new PrintSettings();
+        var doc = PrintDocumentBuilder.Build(settings, vm, _comparePanels);
+
+        doc.PagePadding = new Thickness(
+            settings.MarginLeft * 96 / 25.4,
+            settings.MarginTop * 96 / 25.4,
+            settings.MarginRight * 96 / 25.4,
+            settings.MarginBottom * 96 / 25.4);
+
+        var preview = new PrintPreviewDialog { Owner = this };
+        preview.LoadDocument(doc);
+        preview.ShowDialog();
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    //  EXPORT / IMPORT PARAMETERS
+    // ═══════════════════════════════════════════════════════════
+
+    private void ExportParameters(string panelId)
+    {
+        if (!_comparePanels.TryGetValue(panelId, out var panel)) return;
+        var parameters = panel.PanelParameters;
+        if (parameters == null || parameters.Count == 0) return;
+
+        var vm = DataContext as MainWindowViewModel;
+        var nodeType = vm?.SelectedNodeType ?? "Parameters";
+
+        var dlg = new Microsoft.Win32.SaveFileDialog
+        {
+            Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*",
+            DefaultExt = ".csv",
+            FileName = $"{vm?.DriveInfo}_{nodeType}_{panelId}_{DateTime.Now:yyyyMMdd_HHmmss}"
+        };
+
+        if (dlg.ShowDialog(this) == true)
+        {
+            int count = ParameterFileService.Export(dlg.FileName, parameters,
+                vm?.DriveInfo ?? "", vm?.FirmwareVersion ?? "");
+            vm?.AddStatus($"Export: {count} parameters → {System.IO.Path.GetFileName(dlg.FileName)}");
+        }
+    }
+
+    private void ImportParameters(string panelId)
+    {
+        if (!_comparePanels.TryGetValue(panelId, out var panel)) return;
+        var parameters = panel.PanelParameters;
+        if (parameters == null) return;
+
+        var vm = DataContext as MainWindowViewModel;
+
+        var dlg = new Microsoft.Win32.OpenFileDialog
+        {
+            Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*",
+            DefaultExt = ".csv"
+        };
+
+        if (dlg.ShowDialog(this) == true)
+        {
+            var (overrides, fileDrive, fileFirmware) = ParameterFileService.Import(dlg.FileName);
+
+            // Validate drive type match
+            var currentDrive = vm?.DriveInfo ?? "";
+            if (!string.IsNullOrEmpty(fileDrive) && !string.IsNullOrEmpty(currentDrive)
+                && fileDrive != currentDrive)
+            {
+                var result = System.Windows.MessageBox.Show(this,
+                    $"Drive mismatch!\n\nFile: {fileDrive} (FW: {fileFirmware})\nCurrent: {currentDrive} (FW: {vm?.FirmwareVersion})\n\nContinue import?",
+                    "Import Warning", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Warning);
+                if (result != System.Windows.MessageBoxResult.Yes) return;
+            }
+
+            var (restored, overridden) = ParameterFileService.ApplyImport(parameters, overrides);
+            vm?.AddStatus($"Import: {overridden} applied, {restored} restored ({System.IO.Path.GetFileName(dlg.FileName)})");
+        }
+    }
+
+    // ═══════════════════════════════════════════════════════════
     //  COMPARE PANEL MANAGEMENT (A/B/C/D)
     // ═══════════════════════════════════════════════════════════
 
@@ -295,8 +479,17 @@ public partial class MainWindow : Window
                     LoadedCount = 0,
                     ActionButtons = ActionButtonRegistry.GetForNodeType(nodeType),
                 };
+                panel.CanCloseCheck = () => _comparePanels.Count > 1;
                 panel.CloseRequested += (s, _) =>
                 {
+                    // Last panel: collapse param area instead of closing
+                    if (_comparePanels.Count <= 1)
+                    {
+                        if (!_isParamCollapsed)
+                            BtnCollapseParams_Click(this, new RoutedEventArgs());
+                        return;
+                    }
+
                     switch (id)
                     {
                         case "A": vm.IsPanelAVisible = false; break;
@@ -570,7 +763,7 @@ public partial class MainWindow : Window
                         CanFloat = true,
                         CanAutoHide = true,
                         FloatingWidth = 390,
-                        FloatingHeight = 420,
+                        FloatingHeight = 403,
                     };
                     pane.Closed += (_, _) =>
                     {

@@ -53,17 +53,30 @@ public static class CsvParameterLoader
             ? rows.Where(r => r.Tree.StartsWith("Fully Closed System", StringComparison.OrdinalIgnoreCase))
             : rows.Where(r => r.Tree.Equals(csvTree, StringComparison.OrdinalIgnoreCase));
 
-        return filtered.Select(r => new Parameter
+        return filtered.Select(r =>
         {
-            FtNumber = r.FtNo,
-            Name     = r.Name,
-            Value    = r.Default,
-            Unit     = r.Unit == "-" ? "" : r.Unit,
-            Default  = r.Default,
-            Min      = r.Min,
-            Max      = r.Max,
-            Access   = string.IsNullOrWhiteSpace(r.DataAttribute) ? "r/w" : r.DataAttribute,
-            Group    = r.Group == "(top-level)" ? "" : r.Group,
+            var p = new Parameter
+            {
+                FtNumber = r.FtNo,
+                Name     = r.Name,
+                Value    = r.Default,
+                Unit     = r.Unit == "-" ? "" : r.Unit,
+                Default  = r.Default,
+                Min      = r.Min,
+                Max      = r.Max,
+                Access   = string.IsNullOrWhiteSpace(r.DataAttribute) ? "r/w" : r.DataAttribute,
+                Group    = r.Group == "(top-level)" ? "" : r.Group,
+            };
+
+            // Parse enum options from Remark (e.g., "0: Label A; 1: Label B" or "0:A, 1:B")
+            if (!string.IsNullOrWhiteSpace(r.Remark))
+            {
+                var options = ParseEnumOptions(r.Remark);
+                if (options.Count > 0)
+                    p.Options = options;
+            }
+
+            return p;
         }).ToList();
     }
 
@@ -107,6 +120,45 @@ public static class CsvParameterLoader
         }
 
         return new ObservableCollection<Parameter>(baseParams);
+    }
+
+    /// <summary>
+    /// Parse enum options from Remark column.
+    /// Supports patterns: "0: Label A; 1: Label B" or "0:A, 1:B, 2:C"
+    /// Strips [(status)] markers.
+    /// </summary>
+    private static List<ParameterOption> ParseEnumOptions(string remark)
+    {
+        var result = new List<ParameterOption>();
+
+        // Remove [(status)] markers
+        var clean = remark.Replace("[(status)]", "").Trim();
+        if (string.IsNullOrEmpty(clean)) return result;
+
+        // Try splitting by ";" first, then by "," with digit pattern
+        var parts = clean.Contains(';')
+            ? clean.Split(';')
+            : clean.Split(',');
+
+        foreach (var part in parts)
+        {
+            var trimmed = part.Trim();
+            // Match pattern: "0: Label" or "0:Label"
+            var colonIdx = trimmed.IndexOf(':');
+            if (colonIdx <= 0) continue;
+
+            var key = trimmed.Substring(0, colonIdx).Trim();
+            var label = trimmed.Substring(colonIdx + 1).Trim();
+
+            // Key must be numeric (possibly with leading digits)
+            if (key.Length > 0 && char.IsDigit(key[0]))
+            {
+                result.Add(new ParameterOption { Value = key, Label = label });
+            }
+        }
+
+        // Only return if we found at least 2 options (otherwise it's not really an enum)
+        return result.Count >= 2 ? result : new List<ParameterOption>();
     }
 
     private static int GetDecimalPlaces(string s)

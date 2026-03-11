@@ -1,0 +1,121 @@
+NodeType,Label,IconKind,Style
+# Parameter config nodes — Refresh / Save | Import / Export
+ModeConfig,Refresh,Refresh,Primary
+ModeConfig,Save,ContentSaveAll,Secondary
+ModeConfig,---,,
+ModeConfig,Import,Import,Outlined
+ModeConfig,Export,Export,Outlined
+Motor,Refresh,Refresh,Primary
+Motor,Save,ContentSaveAll,Secondary
+Motor,---,,
+Motor,Import,Import,Outlined
+Motor,Export,Export,Outlined
+PIDTuning,Refresh,Refresh,Primary
+PIDTuning,Save,ContentSaveAll,Secondary
+PIDTuning,---,,
+PIDTuning,Import,Import,Outlined
+PIDTuning,Export,Export,Outlined
+Tuningless,Refresh,Refresh,Primary
+Tuningless,Save,ContentSaveAll,Secondary
+Tuningless,---,,
+Tuningless,Import,Import,Outlined
+Tuningless,Export,Export,Outlined
+ResonantSuppression,Refresh,Refresh,Primary
+ResonantSuppression,Save,ContentSaveAll,Secondary
+ResonantSuppression,---,,
+ResonantSuppression,Import,Import,Outlined
+ResonantSuppression,Export,Export,Outlined
+VibrationSuppression,Refresh,Refresh,Primary
+VibrationSuppression,Save,ContentSaveAll,Secondary
+VibrationSuppression,---,,
+VibrationSuppression,Import,Import,Outlined
+VibrationSuppression,Export,Export,Outlined
+Encoders,Refresh,Refresh,Primary
+Encoders,Save,ContentSaveAll,Secondary
+Encoders,---,,
+Encoders,Import,Import,Outlined
+Encoders,Export,Export,Outlined
+DigitalInputs,Refresh,Refresh,Primary
+DigitalInputs,Save,ContentSaveAll,Secondary
+DigitalInputs,---,,
+DigitalInputs,Import,Import,Outlined
+DigitalInputs,Export,Export,Outlined
+DigitalOutputs,Refresh,Refresh,Primary
+DigitalOutputs,Save,ContentSaveAll,Secondary
+DigitalOutputs,---,,
+DigitalOutputs,Import,Import,Outlined
+DigitalOutputs,Export,Export,Outlined
+AnalogOutputs,Refresh,Refresh,Primary
+AnalogOutputs,Save,ContentSaveAll,Secondary
+AnalogOutputs,---,,
+AnalogOutputs,Import,Import,Outlined
+AnalogOutputs,Export,Export,Outlined
+ECATHoming,Refresh,Refresh,Primary
+ECATHoming,Save,ContentSaveAll,Secondary
+ECATHoming,---,,
+ECATHoming,Import,Import,Outlined
+ECATHoming,Export,Export,Outlined
+FullyClosed,Refresh,Refresh,Primary
+FullyClosed,Save,ContentSaveAll,Secondary
+FullyClosed,---,,
+FullyClosed,Import,Import,Outlined
+FullyClosed,Export,Export,Outlined
+# Monitor / Oscilloscope — Refresh | Export
+Monitor,Refresh,Refresh,Primary
+Monitor,---,,
+Monitor,Export,Export,Outlined
+Oscilloscope,Refresh,Refresh,Primary
+Oscilloscope,---,,
+Oscilloscope,Export,Export,Outlined
+# Faults — Refresh / Clear Faults | Export
+Faults,Refresh,Refresh,Primary
+Faults,Clear Faults,AlertRemove,Secondary
+Faults,---,,
+Faults,Export Log,Export,Outlined
+# Service Info — Refresh | Export
+ServiceInfo,Refresh,Refresh,Primary
+ServiceInfo,---,,
+ServiceInfo,Export,Export,Outlined
+# Control Panel — Enable / Disable | Jog+/Jog-/Home
+ControlPanel,Enable,Play,Primary
+ControlPanel,Disable,Stop,Secondary
+ControlPanel,---,,
+ControlPanel,Jog +,ArrowRight,Outlined
+ControlPanel,Jog -,ArrowLeft,Outlined
+ControlPanel,Home,Home,Outlined
+# Group nodes — Refresh / Save | Import / Export
+Group0,Refresh,Refresh,Primary
+Group0,Save,ContentSaveAll,Secondary
+Group0,---,,
+Group0,Import,Import,Outlined
+Group0,Export,Export,Outlined
+Group1,Refresh,Refresh,Primary
+Group1,Save,ContentSaveAll,Secondary
+Group1,---,,
+Group1,Import,Import,Outlined
+Group1,Export,Export,Outlined
+Group2,Refresh,Refresh,Primary
+Group2,Save,ContentSaveAll,Secondary
+Group2,---,,
+Group2,Import,Import,Outlined
+Group2,Export,Export,Outlined
+Group3,Refresh,Refresh,Primary
+Group3,Save,ContentSaveAll,Secondary
+Group3,---,,
+Group3,Import,Import,Outlined
+Group3,Export,Export,Outlined
+Group4,Refresh,Refresh,Primary
+Group4,Save,ContentSaveAll,Secondary
+Group4,---,,
+Group4,Import,Import,Outlined
+Group4,Export,Export,Outlined
+Group5,Refresh,Refresh,Primary
+Group5,Save,ContentSaveAll,Secondary
+Group5,---,,
+Group5,Import,Import,Outlined
+Group5,Export,Export,Outlined
+# Favorites — Save / Load
+Favorites,Save Favorite,StarPlus,Primary
+Favorites,Load Favorite,FolderStar,Secondary
+# Default (fallback) — Refresh only
+_default,Refresh,Refresh,Primary

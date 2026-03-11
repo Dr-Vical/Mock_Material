@@ -32,6 +32,9 @@ public partial class MainWindowViewModel : ObservableObject
     private string _driveInfo = "CSD7N";
 
     [ObservableProperty]
+    private string _firmwareVersion = "V1.02.03";
+
+    [ObservableProperty]
     private string _modeInfo = "";
 
     [ObservableProperty]
@@ -457,6 +460,11 @@ public partial class MainWindowViewModel : ObservableObject
     {
         StatusEntries.Add(new StatusEntry { Status = LocalizationService.GetFormat("loc.status.entry.status", LocalizationService.Get("loc.tree.ecathoming")), Value = LocalizationService.Get("loc.status.idle"), Units = "" });
         StatusEntries.Add(new StatusEntry { Status = LocalizationService.GetFormat("loc.status.entry.error", LocalizationService.Get("loc.tree.ecathoming")), Value = LocalizationService.Get("loc.status.noerror"), Units = "" });
+    }
+
+    public void AddStatus(string message)
+    {
+        StatusEntries.Add(new StatusEntry { Status = message, Value = "", Units = "" });
     }
 }
 

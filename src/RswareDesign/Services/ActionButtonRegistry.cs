@@ -1,86 +1,75 @@
+using System.IO;
 using RswareDesign.Models;
 
 namespace RswareDesign.Services;
 
 public static class ActionButtonRegistry
 {
-    private static readonly ActionButton Sep = new() { IsSeparator = true };
+    private static readonly Dictionary<string, List<ActionButton>> _cache = new();
+    private static bool _loaded;
 
-    public static List<ActionButton> GetForNodeType(string nodeType) => nodeType switch
+    public static List<ActionButton> GetForNodeType(string nodeType)
     {
-        // Parameter config nodes: full read/write/save + compare/export/revert
-        "ModeConfig" or "Motor" or "PIDTuning" or "Tuningless"
-            or "ResonantSuppression" or "VibrationSuppression"
-            or "Encoders" or "DigitalInputs" or "DigitalOutputs"
-            or "AnalogOutputs" or "ECATHoming" or "FullyClosed" =>
-        [
-            new() { Label = "Read All",  IconKind = "DatabaseArrowDown", Style = "Primary" },
-            new() { Label = "Write All", IconKind = "DatabaseArrowUp",   Style = "Primary" },
-            new() { Label = "Save",      IconKind = "ContentSaveAll",    Style = "Secondary" },
-            Sep,
-            new() { Label = "Compare",   IconKind = "CompareHorizontal", Style = "Outlined" },
-            new() { Label = "Export",    IconKind = "Export",             Style = "Outlined" },
-            new() { Label = "Revert",    IconKind = "UndoVariant",       Style = "Outlined" },
-        ],
+        EnsureLoaded();
 
-        // Monitor/Oscilloscope: read-only + refresh
-        "Monitor" or "Oscilloscope" =>
-        [
-            new() { Label = "Read All",  IconKind = "DatabaseArrowDown", Style = "Primary" },
-            new() { Label = "Refresh",   IconKind = "Refresh",           Style = "Secondary" },
-            Sep,
-            new() { Label = "Export",    IconKind = "Export",             Style = "Outlined" },
-        ],
+        if (_cache.TryGetValue(nodeType, out var buttons))
+            return buttons;
 
-        // Faults/Service: read + clear + export
-        "Faults" =>
-        [
-            new() { Label = "Read All",     IconKind = "DatabaseArrowDown", Style = "Primary" },
-            new() { Label = "Clear Faults", IconKind = "AlertRemove",       Style = "Secondary" },
-            Sep,
-            new() { Label = "Export Log",   IconKind = "Export",            Style = "Outlined" },
-        ],
+        if (_cache.TryGetValue("_default", out var fallback))
+            return fallback;
 
-        "ServiceInfo" =>
-        [
-            new() { Label = "Read All",  IconKind = "DatabaseArrowDown", Style = "Primary" },
-            Sep,
-            new() { Label = "Export",    IconKind = "Export",             Style = "Outlined" },
-        ],
+        return new List<ActionButton> { new() { Label = "Refresh", IconKind = "Refresh", Style = "Primary" } };
+    }
 
-        // Control Panel: enable/disable/jog
-        "ControlPanel" =>
-        [
-            new() { Label = "Enable",   IconKind = "Play",  Style = "Primary" },
-            new() { Label = "Disable",  IconKind = "Stop",  Style = "Secondary" },
-            Sep,
-            new() { Label = "Jog +",    IconKind = "ArrowRight",     Style = "Outlined" },
-            new() { Label = "Jog -",    IconKind = "ArrowLeft",      Style = "Outlined" },
-            new() { Label = "Home",     IconKind = "Home",           Style = "Outlined" },
-        ],
+    private static void EnsureLoaded()
+    {
+        if (_loaded) return;
+        _loaded = true;
 
-        // Group nodes (offline): read/write/save + compare/export
-        "Group0" or "Group1" or "Group2" or "Group3" or "Group4" or "Group5" =>
-        [
-            new() { Label = "Read All",  IconKind = "DatabaseArrowDown", Style = "Primary" },
-            new() { Label = "Write All", IconKind = "DatabaseArrowUp",   Style = "Primary" },
-            new() { Label = "Save",      IconKind = "ContentSaveAll",    Style = "Secondary" },
-            Sep,
-            new() { Label = "Compare",   IconKind = "CompareHorizontal", Style = "Outlined" },
-            new() { Label = "Export",    IconKind = "Export",             Style = "Outlined" },
-        ],
+        var csvPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Config", "ActionButtons.csv");
+        if (!File.Exists(csvPath)) return;
 
-        // Favorites: save/load
-        "Favorites" =>
-        [
-            new() { Label = "Save Favorite", IconKind = "StarPlus", Style = "Primary" },
-            new() { Label = "Load Favorite", IconKind = "FolderStar", Style = "Secondary" },
-        ],
+        foreach (var line in File.ReadLines(csvPath))
+        {
+            var trimmed = line.Trim();
+            if (string.IsNullOrEmpty(trimmed) || trimmed.StartsWith('#'))
+                continue;
 
-        // Default (container nodes, etc.): minimal
-        _ =>
-        [
-            new() { Label = "Read All",  IconKind = "DatabaseArrowDown", Style = "Primary" },
-        ],
-    };
+            var cols = trimmed.Split(new[] { ',' }, 4);
+            if (cols.Length < 2) continue;
+
+            var node = cols[0].Trim();
+            if (node == "NodeType") continue; // skip header
+
+            if (!_cache.ContainsKey(node))
+                _cache[node] = new List<ActionButton>();
+
+            var label = cols.Length > 1 ? cols[1].Trim() : "";
+            var iconKind = cols.Length > 2 ? cols[2].Trim() : "";
+            var style = cols.Length > 3 ? cols[3].Trim() : "Primary";
+
+            if (label == "---")
+            {
+                _cache[node].Add(new ActionButton { IsSeparator = true });
+            }
+            else
+            {
+                _cache[node].Add(new ActionButton
+                {
+                    Label = label,
+                    IconKind = string.IsNullOrEmpty(iconKind) ? "Help" : iconKind,
+                    Style = string.IsNullOrEmpty(style) ? "Primary" : style,
+                });
+            }
+        }
+    }
+
+    /// <summary>
+    /// Force reload from CSV (e.g., after file change).
+    /// </summary>
+    public static void Reload()
+    {
+        _cache.Clear();
+        _loaded = false;
+    }
 }

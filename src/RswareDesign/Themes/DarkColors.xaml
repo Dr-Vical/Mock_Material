@@ -80,19 +80,19 @@
 
     <!-- Panel A/B/C/D — visible accent on dark theme -->
     <LinearGradientBrush x:Key="PanelABrush" StartPoint="0,0.5" EndPoint="1,0.5">
-        <GradientStop Color="#50C06060" Offset="0" />
+        <GradientStop Color="#90D07070" Offset="0" />
         <GradientStop Color="#002D2D30" Offset="1" />
     </LinearGradientBrush>
     <LinearGradientBrush x:Key="PanelBBrush" StartPoint="0,0.5" EndPoint="1,0.5">
-        <GradientStop Color="#50C0A850" Offset="0" />
+        <GradientStop Color="#90D0B860" Offset="0" />
         <GradientStop Color="#002D2D30" Offset="1" />
     </LinearGradientBrush>
     <LinearGradientBrush x:Key="PanelCBrush" StartPoint="0,0.5" EndPoint="1,0.5">
-        <GradientStop Color="#505878C0" Offset="0" />
+        <GradientStop Color="#906888D0" Offset="0" />
         <GradientStop Color="#002D2D30" Offset="1" />
     </LinearGradientBrush>
     <LinearGradientBrush x:Key="PanelDBrush" StartPoint="0,0.5" EndPoint="1,0.5">
-        <GradientStop Color="#5058C078" Offset="0" />
+        <GradientStop Color="#9068D088" Offset="0" />
         <GradientStop Color="#002D2D30" Offset="1" />
     </LinearGradientBrush>
 

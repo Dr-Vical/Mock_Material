@@ -1,0 +1,243 @@
+<Window x:Class="RswareDesign.Views.ComSettingDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="{DynamicResource loc.ribbon.btn.comsetting}"
+        Width="440" Height="480"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        TextElement.Foreground="{DynamicResource TextPrimary}"
+        TextElement.FontFamily="{DynamicResource FontFamilyUI}"
+        TextElement.FontSize="{DynamicResource FontSizeMD}">
+
+    <Border Background="{DynamicResource SurfaceBrush}"
+            BorderBrush="{DynamicResource BorderDefault}"
+            BorderThickness="1"
+            CornerRadius="{StaticResource Radius.LG}"
+            Margin="8"
+            Effect="{StaticResource MaterialDesignShadowDepth3}">
+        <Grid Margin="{StaticResource Padding.Dialog}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,12">
+                <materialDesign:PackIcon Kind="SerialPort"
+                                         Width="{StaticResource Size.IconXL}"
+                                         Height="{StaticResource Size.IconXL}"
+                                         Foreground="{DynamicResource PrimaryBrush}"
+                                         VerticalAlignment="Center"
+                                         Margin="{StaticResource Margin.Inline}" />
+                <TextBlock Text="{DynamicResource loc.ribbon.btn.comsetting}"
+                           FontSize="{DynamicResource FontSizeLG}"
+                           FontWeight="SemiBold"
+                           Foreground="{DynamicResource TextPrimary}"
+                           VerticalAlignment="Center" />
+            </StackPanel>
+
+            <!-- Content -->
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,0,0,12">
+                <StackPanel>
+
+                    <!-- ═══ Serial Port ═══ -->
+                    <TextBlock Text="{DynamicResource loc.comsetting.serial}"
+                               FontSize="{DynamicResource FontSizeSM}"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource TextSecondary}"
+                               Margin="0,0,0,6" />
+
+                    <Border Background="{DynamicResource SurfaceVariantBrush}"
+                            CornerRadius="{StaticResource Radius.MD}"
+                            Padding="12,8" Margin="0,0,0,12">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="110" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <!-- Port -->
+                            <TextBlock Grid.Row="0" Text="{DynamicResource loc.comsetting.port}"
+                                       Foreground="{DynamicResource TextSecondary}"
+                                       VerticalAlignment="Center" Margin="0,4" />
+                            <Grid Grid.Row="0" Grid.Column="1" Margin="0,4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <ComboBox x:Name="CmbPort"
+                                          Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                          FontSize="{DynamicResource FontSizeSM}"
+                                          Padding="8,4" />
+                                <Button Grid.Column="1"
+                                        Style="{StaticResource MaterialDesignIconButton}"
+                                        Width="28" Height="28" Margin="4,0,0,0"
+                                        ToolTip="{DynamicResource loc.comsetting.refresh}"
+                                        Click="BtnRefreshPorts_Click">
+                                    <materialDesign:PackIcon Kind="Refresh" Width="16" Height="16"
+                                                             Foreground="{DynamicResource PrimaryBrush}" />
+                                </Button>
+                            </Grid>
+
+                            <!-- Baud Rate -->
+                            <TextBlock Grid.Row="1" Text="{DynamicResource loc.comsetting.baudrate}"
+                                       Foreground="{DynamicResource TextSecondary}"
+                                       VerticalAlignment="Center" Margin="0,4" />
+                            <ComboBox x:Name="CmbBaudRate" Grid.Row="1" Grid.Column="1"
+                                      Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                      FontSize="{DynamicResource FontSizeSM}"
+                                      Padding="8,4" Margin="0,4" />
+
+                            <!-- Data Bits -->
+                            <TextBlock Grid.Row="2" Text="{DynamicResource loc.comsetting.databits}"
+                                       Foreground="{DynamicResource TextSecondary}"
+                                       VerticalAlignment="Center" Margin="0,4" />
+                            <ComboBox x:Name="CmbDataBits" Grid.Row="2" Grid.Column="1"
+                                      Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                      FontSize="{DynamicResource FontSizeSM}"
+                                      Padding="8,4" Margin="0,4" />
+
+                            <!-- Parity -->
+                            <TextBlock Grid.Row="3" Text="{DynamicResource loc.comsetting.parity}"
+                                       Foreground="{DynamicResource TextSecondary}"
+                                       VerticalAlignment="Center" Margin="0,4" />
+                            <ComboBox x:Name="CmbParity" Grid.Row="3" Grid.Column="1"
+                                      Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                      FontSize="{DynamicResource FontSizeSM}"
+                                      Padding="8,4" Margin="0,4" />
+
+                            <!-- Stop Bits -->
+                            <TextBlock Grid.Row="4" Text="{DynamicResource loc.comsetting.stopbits}"
+                                       Foreground="{DynamicResource TextSecondary}"
+                                       VerticalAlignment="Center" Margin="0,4" />
+                            <ComboBox x:Name="CmbStopBits" Grid.Row="4" Grid.Column="1"
+                                      Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                      FontSize="{DynamicResource FontSizeSM}"
+                                      Padding="8,4" Margin="0,4" />
+
+                            <!-- Timeout -->
+                            <TextBlock Grid.Row="5" Text="{DynamicResource loc.comsetting.timeout}"
+                                       Foreground="{DynamicResource TextSecondary}"
+                                       VerticalAlignment="Center" Margin="0,4" />
+                            <Grid Grid.Row="5" Grid.Column="1" Margin="0,4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="TxtTimeout" Text="1000"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         FontSize="{DynamicResource FontSizeSM}"
+                                         Padding="8,4" />
+                                <TextBlock Grid.Column="1" Text="ms"
+                                           Foreground="{DynamicResource TextSecondary}"
+                                           FontSize="{DynamicResource FontSizeSM}"
+                                           VerticalAlignment="Center" Margin="6,0,0,0" />
+                            </Grid>
+                        </Grid>
+                    </Border>
+
+                    <!-- ═══ Protocol ═══ -->
+                    <TextBlock Text="{DynamicResource loc.comsetting.protocol}"
+                               FontSize="{DynamicResource FontSizeSM}"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource TextSecondary}"
+                               Margin="0,0,0,6" />
+
+                    <Border Background="{DynamicResource SurfaceVariantBrush}"
+                            CornerRadius="{StaticResource Radius.MD}"
+                            Padding="12,8" Margin="0,0,0,12">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="110" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <!-- Communication Type -->
+                            <TextBlock Grid.Row="0" Text="{DynamicResource loc.comsetting.commtype}"
+                                       Foreground="{DynamicResource TextSecondary}"
+                                       VerticalAlignment="Center" Margin="0,4" />
+                            <ComboBox x:Name="CmbCommType" Grid.Row="0" Grid.Column="1"
+                                      Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                      FontSize="{DynamicResource FontSizeSM}"
+                                      Padding="8,4" Margin="0,4" />
+
+                            <!-- Drive Address -->
+                            <TextBlock Grid.Row="1" Text="{DynamicResource loc.comsetting.address}"
+                                       Foreground="{DynamicResource TextSecondary}"
+                                       VerticalAlignment="Center" Margin="0,4" />
+                            <TextBox x:Name="TxtAddress" Text="1" Grid.Row="1" Grid.Column="1"
+                                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                     FontSize="{DynamicResource FontSizeSM}"
+                                     Padding="8,4" Margin="0,4" />
+
+                            <!-- Retry Count -->
+                            <TextBlock Grid.Row="2" Text="{DynamicResource loc.comsetting.retry}"
+                                       Foreground="{DynamicResource TextSecondary}"
+                                       VerticalAlignment="Center" Margin="0,4" />
+                            <TextBox x:Name="TxtRetry" Text="3" Grid.Row="2" Grid.Column="1"
+                                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                     FontSize="{DynamicResource FontSizeSM}"
+                                     Padding="8,4" Margin="0,4" />
+                        </Grid>
+                    </Border>
+
+                    <!-- ═══ Status ═══ -->
+                    <Border Background="{DynamicResource SurfaceVariantBrush}"
+                            CornerRadius="{StaticResource Radius.MD}"
+                            Padding="12,8">
+                        <StackPanel Orientation="Horizontal">
+                            <Ellipse x:Name="StatusIndicator" Width="10" Height="10"
+                                     Fill="{DynamicResource ErrorBrush}"
+                                     VerticalAlignment="Center" Margin="0,0,8,0" />
+                            <TextBlock x:Name="TxtStatus"
+                                       Text="{DynamicResource loc.status.disconnected}"
+                                       FontSize="{DynamicResource FontSizeSM}"
+                                       Foreground="{DynamicResource TextSecondary}"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Border>
+
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- Buttons -->
+            <Grid Grid.Row="2">
+                <Button Content="{DynamicResource loc.comsetting.test}"
+                        HorizontalAlignment="Left"
+                        Style="{StaticResource MaterialDesignOutlinedButton}"
+                        BorderBrush="{DynamicResource PrimaryBrush}"
+                        Foreground="{DynamicResource PrimaryBrush}"
+                        Click="BtnTest_Click" />
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Content="{DynamicResource loc.btn.cancel}"
+                            Style="{StaticResource MaterialDesignFlatButton}"
+                            Margin="{StaticResource Margin.Inline}"
+                            Click="BtnCancel_Click" />
+                    <Button Content="{DynamicResource loc.btn.ok}"
+                            Style="{StaticResource MaterialDesignRaisedButton}"
+                            Background="{DynamicResource PrimaryBrush}"
+                            BorderThickness="0"
+                            Click="BtnConfirm_Click" />
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

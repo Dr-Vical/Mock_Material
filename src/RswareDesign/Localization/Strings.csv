@@ -176,3 +176,45 @@ loc.status.idle,0:대기,0:IDLE
 loc.status.warning,경고,Warning
 loc.status.warning.value.min,최소값({0})으로 제한됨,Value clamped to Min ({0})
 loc.status.warning.value.max,최대값({0})으로 제한됨,Value clamped to Max ({0})
+loc.pagesetup.header,문서 헤더,Document Header
+loc.pagesetup.title,문서 제목,Title
+loc.pagesetup.company,회사명,Company
+loc.pagesetup.includedate,날짜/시간 포함,Include Date/Time
+loc.pagesetup.driveinfo,드라이브 정보,Drive Info
+loc.pagesetup.drivemodel,드라이브 모델,Drive Model
+loc.pagesetup.firmware,펌웨어 버전,Firmware Version
+loc.pagesetup.connection,연결 정보 (포트/주소),Connection Info (Port/Address)
+loc.pagesetup.content,인쇄 항목,Print Content
+loc.pagesetup.allparams,전체 파라미터,All Parameters
+loc.pagesetup.modifiedonly,변경된 항목만,Modified Only
+loc.pagesetup.favorites,즐겨찾기 파라미터,Favorite Parameters
+loc.pagesetup.faults,오류 이력,Fault History
+loc.pagesetup.monitor,모니터 데이터,Monitor Data
+loc.pagesetup.headerfooter,머리글 / 바닥글,Header / Footer
+loc.pagesetup.headertext,머리글,Header
+loc.pagesetup.footertext,바닥글,Footer
+loc.pagesetup.pagenumbers,페이지 번호 표시,Show Page Numbers
+loc.pagesetup.margins,여백 (mm),Margins (mm)
+loc.pagesetup.margin.top,상단,Top
+loc.pagesetup.margin.bottom,하단,Bottom
+loc.pagesetup.margin.left,좌측,Left
+loc.pagesetup.margin.right,우측,Right
+loc.pagesetup.preview,미리보기,Preview
+loc.comsetting.serial,시리얼 포트,Serial Port
+loc.comsetting.port,포트,Port
+loc.comsetting.refresh,포트 새로고침,Refresh Ports
+loc.comsetting.baudrate,통신 속도,Baud Rate
+loc.comsetting.databits,데이터 비트,Data Bits
+loc.comsetting.parity,패리티,Parity
+loc.comsetting.stopbits,정지 비트,Stop Bits
+loc.comsetting.timeout,타임아웃,Timeout
+loc.comsetting.protocol,프로토콜,Protocol
+loc.comsetting.commtype,통신 방식,Comm Type
+loc.comsetting.address,드라이브 주소,Drive Address
+loc.comsetting.retry,재시도 횟수,Retry Count
+loc.comsetting.test,연결 테스트,Test Connection
+loc.rescan.drivemodel,드라이브 모델,Drive Model
+loc.rescan.selectall,전체 선택,Select All
+loc.rescan.channel,채널 범위,Channel Range
+loc.monitor.tooltip.expandall,패널 모두 열기,Expand All Panels
+loc.monitor.tooltip.collapseall,패널 모두 닫기,Collapse All Panels

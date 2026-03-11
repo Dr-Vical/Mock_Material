@@ -82,13 +82,13 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{DynamicResource loc.errorlog.col.status}"
                                     Binding="{Binding Status}"
-                                    Width="*" />
+                                    Width="Auto" MinWidth="120" />
                 <DataGridTextColumn Header="{DynamicResource loc.errorlog.col.value}"
                                     Binding="{Binding Value}"
-                                    Width="200" />
+                                    Width="Auto" MinWidth="100" />
                 <DataGridTextColumn Header="{DynamicResource loc.errorlog.col.units}"
                                     Binding="{Binding Units}"
-                                    Width="100" />
+                                    Width="Auto" MinWidth="60" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
