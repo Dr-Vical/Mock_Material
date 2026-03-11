@@ -1,0 +1,14 @@
+﻿기능 분류,라이브러리,1안 (Material Design),2안 (기존),라이선스,비고
+프레임워크,.NET 8 (WPF),net8.0-windows,net8.0-windows,MIT,동일
+UI 테마,MaterialDesignInXamlToolkit,O (latest),-,MIT,Material Design 컴포넌트 + 테마
+MVVM,CommunityToolkit.Mvvm,O (latest),-,MIT,"ObservableObject, RelayCommand, Messenger"
+도킹 레이아웃,Dirkster.AvalonDock,O (4.72.1),-,MS-PL,도킹/플로팅/탭 레이아웃 매니저
+리본 바,Fluent.Ribbon,O (10.x),-,MIT,Office 스타일 리본 UI
+차트/그래프,ScottPlot.WPF,O (5.x),O (5.1.57),MIT,실시간 오실로스코프 8채널
+CSV 처리,CsvHelper,O (latest),-,MS-PL,파라미터 CSV 로딩/Export/Import
+시리얼 통신,System.IO.Ports,O (8.x),-,MIT,RS-232/485 드라이브 통신
+DI 컨테이너,Microsoft.Extensions.DI,O (8.x),-,MIT,서비스/ViewModel 의존성 주입
+로깅,Serilog + MS.Logging,O (latest),-,Apache/MIT,"구조화 로깅, crash.log"
+,,,,
+총 라이브러리 수,,10개,1개 (ScottPlot만),,
+상용 라이브러리,,0개 (전부 무료),0개,,

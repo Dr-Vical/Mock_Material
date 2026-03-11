@@ -1,11 +1,11 @@
 ﻿# Prompt Archive Index
 
-> Updated: 2026-03-11 16:13:09 | Total: 492 prompts
+> Updated: 2026-03-11 16:54:11 | Total: 515 prompts
 
 | Category | Count | Latest |
 |----------|------:|--------|| Config | 1 | 2026-02-24 |
 | Debugging | 6 | 2026-03-11 |
-| General | 442 | MonitorCon |
+| General | 465 | MonitorCon |
 | Git-Workflow | 13 | 2026-03-11 |
 | UI | 30 | 2026-03-11 |
 
@@ -38,12 +38,35 @@
 
 ---
 
-## General (442)
+## General (465)
 
 ### MonitorCon
 - `ro:lP` [](General/2026-02/2026-02-27/MonitorControlPanel_Prompt.md)
 
 ### 2026-03-11
+- `16:54` [오케이 잘 됐어](General/2026-03/2026-03-11/2026-03-11_165400.md)
+- `16:53` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-11/2026-03-11_165310.md)
+- `16:43` [별게.. 업센](General/2026-03/2026-03-11/2026-03-11_164317.md)
+- `16:42` [2안 .NET 8 (WPF) │ net8.0-windows │ 프레임워크 ScottPlot.WPF │ 5...](General/2026-03/2026-03-11/2026-03-11_164259.md)
+- `16:40` [내가 다른데 쓰인 라이브러리 목록도 비교 항목으로 가져올 테니까 같이 정리해서 엑셀로 만들어줄래?](General/2026-03/2026-03-11/2026-03-11_164042.md)
+- `16:38` [각 기능을 좀 설명해줘](General/2026-03/2026-03-11/2026-03-11_163843.md)
+- `16:35` [잠시만 일단 1. 여기 사용된 상용 라이브러리 뭐있어](General/2026-03/2026-03-11/2026-03-11_163546.md)
+- `16:33` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-11/2026-03-11_163325.md)
+- `16:32` [열기 >> 이게 이렇게 되었을 때 로고가 보여야 하고, 우측에 그래프가 없을때만 보일것. 지금 보니까 파라메...](General/2026-03/2026-03-11/2026-03-11_163212.md)
+- `16:30` [아니.. 열기 >> 일때 로고 보여야 된다고](General/2026-03/2026-03-11/2026-03-11_163038.md)
+- `16:30` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-11/2026-03-11_163009.md)
+- `16:29` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-11/2026-03-11_162905.md)
+- `16:27` [무튼 지금도 똑같아. 열기 일때만 보여야 하고. 열기 눌렀을 때 패널에 아무것도 없으면 a파라메터 창 띄우기...](General/2026-03/2026-03-11/2026-03-11_162758.md)
+- `16:27` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-11/2026-03-11_162703.md)
+- `16:26` [아니요. 지금 << 닫기 버튼 이 있을 때 위치가 맞는데](General/2026-03/2026-03-11/2026-03-11_162606.md)
+- `16:24` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-11/2026-03-11_162423.md)
+- `16:23` [아니 이것도 열기 단기 패널에 따라 움직이는ㄷ네?](General/2026-03/2026-03-11/2026-03-11_162347.md)
+- `16:23` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-11/2026-03-11_162326.md)
+- `16:23` [나왔다. 근데 이거 센터에 큰 로고 였는데 좌하단에 작은 로고가 됐어](General/2026-03/2026-03-11/2026-03-11_162301.md)
+- `16:21` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-11/2026-03-11_162133.md)
+- `16:19` [그런건 하지 말고... 여러개 있으면 의 미는 로고가 여러개 였다면 그중에 왼쪽에 있던 로고만 남기고 나머...](General/2026-03/2026-03-11/2026-03-11_161950.md)
+- `16:18` [배경에 RS로고가 자꾸 위치가 변하는 것 같은데 그냥 고정 위치로 해줘 여러개 있으면 하나만 표시하고.](General/2026-03/2026-03-11/2026-03-11_161836.md)
+- `16:14` [오.. 지금까지 내용 정리해주고 아발론 사용 스킬에 업데이트 해줘 혹시 스킬이 없으면 생성해서 스킬에 저장해...](General/2026-03/2026-03-11/2026-03-11_161421.md)
 - `16:12` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-11/2026-03-11_161257.md)
 - `16:00` [안떠. 도킹 툴들이 기존창 떼어내서 붙일려면](General/2026-03/2026-03-11/2026-03-11_160050.md)
 - `15:59` [C:\Users\bcchoi\AppData\Local\Temp\claude\C--Users-bcchoi-De...](General/2026-03/2026-03-11/2026-03-11_155913.md)
