@@ -18,7 +18,7 @@
                 <ControlTemplate TargetType="Button">
                     <Border x:Name="Bg" Background="Transparent"
                             CornerRadius="{StaticResource Radius.SM}"
-                            Padding="8,7,8,1" MinWidth="54" MinHeight="53">
+                            Padding="8,12,8,1" MinWidth="54" MinHeight="53">
                         <ContentPresenter HorizontalAlignment="Center"
                                           VerticalAlignment="Center" />
                     </Border>
@@ -57,7 +57,7 @@
                 <ControlTemplate TargetType="ToggleButton">
                     <Border x:Name="Bg" Background="Transparent"
                             CornerRadius="{StaticResource Radius.SM}"
-                            Padding="8,7,8,1" MinWidth="54" MinHeight="53">
+                            Padding="8,12,8,1" MinWidth="54" MinHeight="53">
                         <ContentPresenter HorizontalAlignment="Center"
                                           VerticalAlignment="Center" />
                     </Border>

@@ -14,8 +14,8 @@
         TextElement.FontSize="{DynamicResource FontSizeMD}">
 
     <Border Background="{DynamicResource SurfaceBrush}"
-            BorderBrush="{DynamicResource BorderDefault}"
-            BorderThickness="1"
+            BorderBrush="{DynamicResource RSBlueBrush}"
+            BorderThickness="2"
             CornerRadius="{StaticResource Radius.LG}"
             Margin="8"
             Effect="{StaticResource MaterialDesignShadowDepth3}">
@@ -239,7 +239,7 @@
                 <Button Content="{DynamicResource loc.pagesetup.preview}"
                         HorizontalAlignment="Left"
                         Style="{StaticResource MaterialDesignOutlinedButton}"
-                        BorderBrush="{DynamicResource PrimaryBrush}"
+                        BorderBrush="{DynamicResource RSBlueBrush}"
                         Foreground="{DynamicResource PrimaryBrush}"
                         Click="BtnPreview_Click" />
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">

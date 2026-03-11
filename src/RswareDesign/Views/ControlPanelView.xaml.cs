@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Shapes;
 using System.Windows.Threading;
 using RswareDesign.Services;
 
@@ -22,6 +23,7 @@ public partial class ControlPanelView : UserControl
 
     private double _currentPosition;
     private double _currentVelocity;
+    private double _currentLoad; // independent load simulation
     private double _minPosition = -1000;
     private double _maxPosition = 3000;
     private double _jogSpeed = 50; // position units per tick
@@ -246,16 +248,15 @@ public partial class ControlPanelView : UserControl
     {
         var brush = new SolidColorBrush(normalColor);
         textBox.BorderBrush = brush;
-        textBox.BorderThickness = new Thickness(2);
+        // Keep BorderThickness at 1 to avoid layout shift
+        textBox.BorderThickness = new Thickness(1);
 
-        // Smooth: fade-in → hold → fade-out
         var animation = new ColorAnimationUsingKeyFrames();
         animation.KeyFrames.Add(new LinearColorKeyFrame(highlightColor, TimeSpan.FromMilliseconds(200)));
         animation.KeyFrames.Add(new LinearColorKeyFrame(highlightColor, TimeSpan.FromMilliseconds(800)));
         animation.KeyFrames.Add(new LinearColorKeyFrame(normalColor, TimeSpan.FromMilliseconds(1200)));
         animation.Completed += (_, _) =>
         {
-            textBox.BorderThickness = new Thickness(1);
             textBox.BorderBrush = new SolidColorBrush(normalColor);
         };
 
@@ -276,6 +277,9 @@ public partial class ControlPanelView : UserControl
             _currentPosition += _jogDirection * _jogSpeed;
             _currentPosition = Math.Clamp(_currentPosition, _minPosition, _maxPosition);
             _currentVelocity = _jogDirection * 800 + (_rng.NextDouble() - 0.5) * 50;
+            // Load: 100~140% when jogging
+            _currentLoad += (120 - _currentLoad) * 0.15 + (_rng.NextDouble() - 0.5) * 8;
+            _currentLoad = Math.Clamp(_currentLoad, 100, 140);
         }
         else
         {
@@ -284,6 +288,9 @@ public partial class ControlPanelView : UserControl
             _currentPosition = Math.Clamp(_currentPosition, _minPosition, _maxPosition);
             _currentVelocity *= 0.9; // decay toward zero
             _currentVelocity += (_rng.NextDouble() - 0.5) * 10;
+            // Load: decay to 5~15% when idle
+            _currentLoad += (10 - _currentLoad) * 0.1 + (_rng.NextDouble() - 0.5) * 3;
+            _currentLoad = Math.Clamp(_currentLoad, 0, 300);
         }
 
         UpdateStatusMonitor();
@@ -295,8 +302,6 @@ public partial class ControlPanelView : UserControl
 
     private void UpdateStatusMonitor()
     {
-        double loadPercent = Math.Abs(_currentVelocity / MaxVelocity) * 100;
-
         // Position card — show actual value (can be negative)
         TxtPositionValue.Text = _currentPosition.ToString("N2");
 
@@ -315,17 +320,19 @@ public partial class ControlPanelView : UserControl
             TargetPositionMarker.Visibility = Visibility.Visible;
         }
 
-        // Velocity card
-        TxtVelocityValue.Text = _currentVelocity.ToString("N0");
+        // Velocity card — arc gauge
+        TxtVelocityValue.Text = (_currentVelocity >= 0 ? "+" : "") + _currentVelocity.ToString("N0");
+        TxtVelocityMin.Text = $"-{MaxVelocity:N0}";
         TxtVelocityMax.Text = $"{MaxVelocity:N0} rpm";
 
         double targetSpeed = double.TryParse(TxtTargetSpeed.Text, out var ts) ? ts : 500;
-        DrawVelocityArc(_currentVelocity, targetSpeed);
+        DrawSpeedArcGauge(_currentVelocity, targetSpeed);
 
-        // Load card
+        // Load card — use independent _currentLoad
+        double loadPercent = _currentLoad;
         TxtLoadValue.Text = loadPercent.ToString("F0");
         double loadRatio = Math.Clamp(loadPercent / MaxLoad, 0, 1);
-        LoadBarFill.Height = loadRatio * 40;
+        LoadBarFill.Height = loadRatio * 80; // bar height is now 80
 
         if (loadPercent > 100)
             TxtLoadValue.Foreground = GetWpfBrush("ErrorBrush");
@@ -341,140 +348,111 @@ public partial class ControlPanelView : UserControl
     }
 
     // ═══════════════════════════════════════════════════════════
-    //  VELOCITY ARC GAUGE
+    //  VELOCITY NEEDLE GAUGE (0 at top, -max left, +max right)
     // ═══════════════════════════════════════════════════════════
 
-    private void DrawVelocityArc(double velocity, double targetSpeed = 500)
+    private static readonly SolidColorBrush NeedleBrush = CreateFrozen(Color.FromRgb(200, 200, 60));
+    private static readonly SolidColorBrush NeedleCmdBrush = CreateFrozen(Color.FromRgb(100, 185, 220));
+
+    private static SolidColorBrush CreateFrozen(Color c)
     {
-        VelocityArcGauge.Children.Clear();
-
-        double size = 48;
-        double cx = size / 2;
-        double cy = size / 2;
-        double radius = 20;
-        double thickness = 5;
-
-        // Track ring
-        var trackEllipse = new System.Windows.Shapes.Ellipse
-        {
-            Width = radius * 2,
-            Height = radius * 2,
-            Stroke = GetWpfBrush("SurfaceVariantBrush"),
-            StrokeThickness = thickness,
-            Fill = Brushes.Transparent
-        };
-        Canvas.SetLeft(trackEllipse, cx - radius);
-        Canvas.SetTop(trackEllipse, cy - radius);
-        VelocityArcGauge.Children.Add(trackEllipse);
-
-        // Red limit tick at max velocity position (top = 12 o'clock)
-        double limitRadius = radius + thickness / 2 + 2;
-        var limitTick = new System.Windows.Shapes.Line
-        {
-            X1 = cx, Y1 = cy - limitRadius + 1,
-            X2 = cx, Y2 = cy - limitRadius - 3,
-            Stroke = GetWpfBrush("ErrorBrush"),
-            StrokeThickness = 2,
-            StrokeStartLineCap = PenLineCap.Round,
-            StrokeEndLineCap = PenLineCap.Round
-        };
-        VelocityArcGauge.Children.Add(limitTick);
-
-        // Actual velocity arc
-        double ratio = Math.Clamp(Math.Abs(velocity) / MaxVelocity, 0, 0.999);
-        if (ratio > 0.01)
-        {
-            var arcBrush = ratio > 0.8 ? GetWpfBrush("ErrorBrush") :
-                           ratio > 0.5 ? GetWpfBrush("WarningBrush") :
-                                         GetWpfBrush("SecondaryBrush");
-
-            DrawArcSegment(cx, cy, radius, ratio, thickness, arcBrush);
-        }
-
-        // Target speed marker (thin orange tick on the arc)
-        double targetRatio = Math.Clamp(Math.Abs(targetSpeed) / MaxVelocity, 0, 0.999);
-        if (targetRatio > 0.01)
-        {
-            double tgtAngle = -90 + targetRatio * 360;
-            double tgtRad = tgtAngle * Math.PI / 180;
-            double innerR = radius - thickness / 2 - 1;
-            double outerR = radius + thickness / 2 + 1;
-
-            var tgtTick = new System.Windows.Shapes.Line
-            {
-                X1 = cx + innerR * Math.Cos(tgtRad),
-                Y1 = cy + innerR * Math.Sin(tgtRad),
-                X2 = cx + outerR * Math.Cos(tgtRad),
-                Y2 = cy + outerR * Math.Sin(tgtRad),
-                Stroke = GetWpfBrush("ErrorBrush"),
-                StrokeThickness = 1.5,
-                StrokeStartLineCap = PenLineCap.Round,
-                StrokeEndLineCap = PenLineCap.Round
-            };
-            VelocityArcGauge.Children.Add(tgtTick);
-        }
-
-        // Velocity value (rpm) inside the arc
-        var valText = new TextBlock
-        {
-            Text = $"{Math.Abs(velocity):F0}",
-            FontSize = 9,
-            FontWeight = FontWeights.SemiBold,
-            FontFamily = Application.Current.TryFindResource("FontFamilyCode") as FontFamily,
-            Foreground = GetWpfBrush("TextPrimary"),
-            TextAlignment = TextAlignment.Center
-        };
-        valText.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
-        Canvas.SetLeft(valText, cx - valText.DesiredSize.Width / 2);
-        Canvas.SetTop(valText, cy - valText.DesiredSize.Height / 2 - 4);
-        VelocityArcGauge.Children.Add(valText);
-
-        var unitText = new TextBlock
-        {
-            Text = "rpm",
-            FontSize = 7,
-            FontFamily = Application.Current.TryFindResource("FontFamilyCode") as FontFamily,
-            Foreground = GetWpfBrush("TextSecondary"),
-            TextAlignment = TextAlignment.Center
-        };
-        unitText.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
-        Canvas.SetLeft(unitText, cx - unitText.DesiredSize.Width / 2);
-        Canvas.SetTop(unitText, cy + valText.DesiredSize.Height / 2 - 4);
-        VelocityArcGauge.Children.Add(unitText);
+        var b = new SolidColorBrush(c);
+        b.Freeze();
+        return b;
     }
 
-    private void DrawArcSegment(double cx, double cy, double radius, double ratio, double thickness, Brush brush)
+    private void DrawSpeedArcGauge(double velocity, double targetSpeed)
     {
-        double startAngle = -90;
-        double sweepAngle = ratio * 360;
-        double endAngle = startAngle + sweepAngle;
+        SpeedArcCanvas.Children.Clear();
 
-        double startRad = startAngle * Math.PI / 180;
-        double endRad = endAngle * Math.PI / 180;
+        double cx = 50, cy = 48;
+        double arcR = 38;
+        // 0 at top (angle 0), -max at left (-135°), +max at right (+135°)
+        // Value v maps to angle: (v / MaxVelocity) * 135°
+        double totalSweep = 270; // from -135° to +135°
 
-        var startPt = new Point(cx + radius * Math.Cos(startRad), cy + radius * Math.Sin(startRad));
-        var endPt = new Point(cx + radius * Math.Cos(endRad), cy + radius * Math.Sin(endRad));
-
-        var figure = new PathFigure { StartPoint = startPt, IsFilled = false };
-        figure.Segments.Add(new ArcSegment
+        Point ToPoint(double angleDeg, double r)
         {
-            Point = endPt,
-            Size = new Size(radius, radius),
-            SweepDirection = SweepDirection.Clockwise,
-            IsLargeArc = sweepAngle > 180
-        });
+            double rad = angleDeg * Math.PI / 180;
+            return new Point(cx + r * Math.Sin(rad), cy - r * Math.Cos(rad));
+        }
 
+        double ValueToAngle(double v) => Math.Clamp(v / MaxVelocity, -1, 1) * 135;
+
+        var trackBrush = GetWpfBrush("SurfaceBrush");
+        var tickBrush = GetWpfBrush("TextSecondary");
+
+        // 1. Arc track (background)
+        var startPt = ToPoint(-135, arcR);
+        var endPt = ToPoint(135, arcR);
+        var fig = new PathFigure { StartPoint = startPt, IsClosed = false };
+        fig.Segments.Add(new ArcSegment(endPt, new Size(arcR, arcR), 0, true, SweepDirection.Clockwise, true));
         var geo = new PathGeometry();
-        geo.Figures.Add(figure);
-
-        VelocityArcGauge.Children.Add(new System.Windows.Shapes.Path
+        geo.Figures.Add(fig);
+        SpeedArcCanvas.Children.Add(new Path
         {
-            Data = geo,
-            Stroke = brush,
-            StrokeThickness = thickness,
-            StrokeStartLineCap = PenLineCap.Round,
-            StrokeEndLineCap = PenLineCap.Round
+            Stroke = trackBrush, StrokeThickness = 5, Data = geo,
+            StrokeStartLineCap = PenLineCap.Round, StrokeEndLineCap = PenLineCap.Round
         });
+
+        // 2. Tick marks (major every 1/6 of range)
+        for (int i = 0; i <= 6; i++)
+        {
+            double tickAngle = -135 + (totalSweep * i / 6.0);
+            var p1 = ToPoint(tickAngle, arcR - 3);
+            var p2 = ToPoint(tickAngle, arcR + 5);
+            SpeedArcCanvas.Children.Add(new Line
+            {
+                X1 = p1.X, Y1 = p1.Y, X2 = p2.X, Y2 = p2.Y,
+                Stroke = tickBrush, StrokeThickness = 1
+            });
+        }
+        // Minor ticks
+        for (int i = 0; i < 12; i++)
+        {
+            double tickAngle = -135 + (totalSweep * i / 12.0);
+            var p1 = ToPoint(tickAngle, arcR - 1);
+            var p2 = ToPoint(tickAngle, arcR + 3);
+            SpeedArcCanvas.Children.Add(new Line
+            {
+                X1 = p1.X, Y1 = p1.Y, X2 = p2.X, Y2 = p2.Y,
+                Stroke = trackBrush, StrokeThickness = 0.5
+            });
+        }
+
+        // 3. Cmd needle (target speed, thin, light blue)
+        double cmdAngle = ValueToAngle(targetSpeed);
+        var cmdTip = ToPoint(cmdAngle, arcR - 6);
+        var cmdBase = ToPoint(cmdAngle, 8);
+        SpeedArcCanvas.Children.Add(new Line
+        {
+            X1 = cmdBase.X, Y1 = cmdBase.Y, X2 = cmdTip.X, Y2 = cmdTip.Y,
+            Stroke = NeedleCmdBrush, StrokeThickness = 1.5,
+            StrokeStartLineCap = PenLineCap.Round, StrokeEndLineCap = PenLineCap.Round
+        });
+
+        // 4. Current needle (velocity, thick, yellow-green)
+        double curAngle = ValueToAngle(velocity);
+        var curTip = ToPoint(curAngle, arcR - 6);
+        var curBase = ToPoint(curAngle, 6);
+        SpeedArcCanvas.Children.Add(new Line
+        {
+            X1 = curBase.X, Y1 = curBase.Y, X2 = curTip.X, Y2 = curTip.Y,
+            Stroke = NeedleBrush, StrokeThickness = 2,
+            StrokeStartLineCap = PenLineCap.Round, StrokeEndLineCap = PenLineCap.Round
+        });
+
+        // 5. Center dot
+        var dot = new System.Windows.Shapes.Ellipse
+        {
+            Width = 6, Height = 6, Fill = GetWpfBrush("TextPrimary")
+        };
+        Canvas.SetLeft(dot, cx - 3);
+        Canvas.SetTop(dot, cy - 3);
+        SpeedArcCanvas.Children.Add(dot);
+
+        // Update Cmd/Cur label
+        TxtVelocityCmdCur.Text = $"Cmd: {targetSpeed:N0}  Cur: {velocity:N0}";
     }
 
     private static Brush GetWpfBrush(string key)

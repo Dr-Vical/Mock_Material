@@ -35,15 +35,15 @@
                             <TextBlock x:Name="TxtPositionValue" Text="0.00"
                                        FontSize="{DynamicResource FontSizeXXL}" FontWeight="Bold"
                                        FontFamily="{DynamicResource FontFamilyCode}"
-                                       Foreground="{DynamicResource SuccessBrush}" />
+                                       Foreground="{DynamicResource PrimaryBrush}" />
                             <TextBlock Text=" mm" FontSize="{DynamicResource FontSizeSM}"
-                                       Foreground="{DynamicResource SuccessBrush}"
+                                       Foreground="{DynamicResource PrimaryBrush}"
                                        VerticalAlignment="Bottom" Margin="0,0,0,2" />
                         </StackPanel>
                         <!-- Progress bar with target marker -->
                         <Grid x:Name="PositionBarGrid" Height="8" Margin="0,2,0,4">
                             <Border Background="{DynamicResource SurfaceVariantBrush}" CornerRadius="2" />
-                            <Border x:Name="PositionProgressBar" Background="{DynamicResource SuccessBrush}"
+                            <Border x:Name="PositionProgressBar" Background="{DynamicResource PrimaryBrush}"
                                     CornerRadius="2" HorizontalAlignment="Left" Width="0" Height="4"
                                     VerticalAlignment="Center" />
                             <!-- Target position red marker -->
@@ -61,15 +61,34 @@
                     </StackPanel>
                 </Border>
 
-                <!-- Card 2: ACTUAL VELOCITY -->
+                <!-- Card 2: ACTUAL VELOCITY (Needle Gauge + Value) -->
                 <Border Grid.Column="2" Background="{DynamicResource SurfaceVariantBrush}"
                         CornerRadius="{StaticResource Radius.MD}" Padding="8,6">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0">
+                        <!-- Gauge on left -->
+                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                            <Canvas x:Name="SpeedArcCanvas" Width="100" Height="60" />
+                            <DockPanel Margin="2,0,2,0">
+                                <TextBlock x:Name="TxtVelocityMin" Text="-3,900" FontSize="7"
+                                           Foreground="{DynamicResource TextSecondary}"
+                                           FontFamily="{DynamicResource FontFamilyCode}"
+                                           DockPanel.Dock="Left" />
+                                <TextBlock Text="0" FontSize="7"
+                                           Foreground="{DynamicResource TextSecondary}"
+                                           FontFamily="{DynamicResource FontFamilyCode}"
+                                           HorizontalAlignment="Center" />
+                                <TextBlock x:Name="TxtVelocityMax" Text="3,900" FontSize="7"
+                                           Foreground="{DynamicResource TextSecondary}"
+                                           FontFamily="{DynamicResource FontFamilyCode}"
+                                           DockPanel.Dock="Right" HorizontalAlignment="Right" />
+                            </DockPanel>
+                        </StackPanel>
+                        <!-- Value on right (same size as Position/Load) -->
+                        <StackPanel Grid.Column="1" VerticalAlignment="Top" Margin="6,0,0,0">
                             <TextBlock Text="{DynamicResource loc.control.velocity}" FontSize="{DynamicResource FontSizeXS}"
                                        Foreground="{DynamicResource TextSecondary}" FontWeight="SemiBold"
                                        Margin="0,0,0,4" />
@@ -77,19 +96,16 @@
                                 <TextBlock x:Name="TxtVelocityValue" Text="0"
                                            FontSize="{DynamicResource FontSizeXXL}" FontWeight="Bold"
                                            FontFamily="{DynamicResource FontFamilyCode}"
-                                           Foreground="{DynamicResource SuccessBrush}" />
+                                           Foreground="{DynamicResource TextPrimary}" />
                                 <TextBlock Text=" rpm" FontSize="{DynamicResource FontSizeSM}"
-                                           Foreground="{DynamicResource SuccessBrush}"
+                                           Foreground="{DynamicResource TextPrimary}"
                                            VerticalAlignment="Bottom" Margin="0,0,0,2" />
                             </StackPanel>
-                            <TextBlock x:Name="TxtVelocityMax" Text="3,900 rpm"
-                                       FontSize="{DynamicResource FontSizeXS}"
+                            <TextBlock x:Name="TxtVelocityCmdCur" Text="Cmd: 0  Cur: 0" FontSize="7"
                                        Foreground="{DynamicResource TextSecondary}"
                                        FontFamily="{DynamicResource FontFamilyCode}"
-                                       HorizontalAlignment="Left" Margin="0,4,0,0" />
+                                       Margin="0,2,0,0" />
                         </StackPanel>
-                        <Canvas x:Name="VelocityArcGauge" Grid.Column="1"
-                                Width="48" Height="48" VerticalAlignment="Center" Margin="4,0,0,0" />
                     </Grid>
                 </Border>
 
@@ -115,24 +131,28 @@
                                            VerticalAlignment="Bottom" Margin="0,0,0,2" />
                             </StackPanel>
                         </StackPanel>
-                        <Grid Grid.Column="1" Width="28" Margin="4,0,0,0" VerticalAlignment="Center">
+                        <Grid Grid.Column="1" Width="36" Margin="4,0,0,0" VerticalAlignment="Center">
                             <StackPanel>
                                 <TextBlock Text="300%" FontSize="8"
                                            Foreground="{DynamicResource TextSecondary}"
                                            FontFamily="{DynamicResource FontFamilyCode}"
                                            HorizontalAlignment="Center" Margin="0,0,0,2" />
-                                <Border Height="40" Background="{DynamicResource SurfaceVariantBrush}"
-                                        CornerRadius="2">
+                                <Border Height="80" Background="{DynamicResource SurfaceBrush}"
+                                        CornerRadius="3" BorderBrush="{DynamicResource BorderDefault}" BorderThickness="1">
                                     <Border x:Name="LoadBarFill" CornerRadius="2" VerticalAlignment="Bottom" Height="0">
                                         <Border.Background>
                                             <LinearGradientBrush StartPoint="0.5,1" EndPoint="0.5,0">
-                                                <GradientStop Color="#FF66BB6A" Offset="0" />
-                                                <GradientStop Color="#FFFFD54F" Offset="0.5" />
-                                                <GradientStop Color="#FFEF5350" Offset="1" />
+                                                <GradientStop Color="#FF555555" Offset="0" />
+                                                <GradientStop Color="#FF666666" Offset="0.55" />
+                                                <GradientStop Color="#FF8B1A1A" Offset="1" />
                                             </LinearGradientBrush>
                                         </Border.Background>
                                     </Border>
                                 </Border>
+                                <TextBlock Text="0%" FontSize="8"
+                                           Foreground="{DynamicResource TextSecondary}"
+                                           FontFamily="{DynamicResource FontFamilyCode}"
+                                           HorizontalAlignment="Center" Margin="0,2,0,0" />
                             </StackPanel>
                         </Grid>
                     </Grid>
@@ -157,8 +177,8 @@
                 <Button Margin="2,1" Padding="4,1" Cursor="Hand" Foreground="{DynamicResource TextOnPrimary}" BorderThickness="0" Click="BtnEnable_Click">
                     <Button.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                            <GradientStop Color="#FF5BA85B" Offset="0" />
-                            <GradientStop Color="#FF3D8B3D" Offset="1" />
+                            <GradientStop Color="#FF498649" Offset="0" />
+                            <GradientStop Color="#FF316F31" Offset="1" />
                         </LinearGradientBrush>
                     </Button.Background>
                     <StackPanel Orientation="Horizontal"><materialDesign:PackIcon Kind="Play" Width="11" Height="11" VerticalAlignment="Center" Margin="0,0,2,0" /><TextBlock Text="{DynamicResource loc.control.enable}" FontSize="{DynamicResource FontSizeXS}" VerticalAlignment="Center" /></StackPanel>
@@ -166,8 +186,8 @@
                 <Button Margin="2,1" Padding="4,1" Cursor="Hand" Foreground="{DynamicResource TextOnPrimary}" BorderThickness="0" Click="BtnDisable_Click">
                     <Button.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                            <GradientStop Color="#FFD04848" Offset="0" />
-                            <GradientStop Color="#FFB03030" Offset="1" />
+                            <GradientStop Color="#FFA63A3A" Offset="0" />
+                            <GradientStop Color="#FF8D2626" Offset="1" />
                         </LinearGradientBrush>
                     </Button.Background>
                     <StackPanel Orientation="Horizontal"><materialDesign:PackIcon Kind="Stop" Width="11" Height="11" VerticalAlignment="Center" Margin="0,0,2,0" /><TextBlock Text="{DynamicResource loc.control.disable}" FontSize="{DynamicResource FontSizeXS}" VerticalAlignment="Center" /></StackPanel>
@@ -175,8 +195,8 @@
                 <Button Margin="2,1" Padding="4,1" Cursor="Hand" Foreground="#212121" BorderThickness="0" Click="BtnClearFault_Click">
                     <Button.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                            <GradientStop Color="#FFE0C040" Offset="0" />
-                            <GradientStop Color="#FFC0A030" Offset="1" />
+                            <GradientStop Color="#FFB39A33" Offset="0" />
+                            <GradientStop Color="#FF9A8026" Offset="1" />
                         </LinearGradientBrush>
                     </Button.Background>
                     <StackPanel Orientation="Horizontal"><materialDesign:PackIcon Kind="AlertRemove" Width="11" Height="11" VerticalAlignment="Center" Margin="0,0,2,0" /><TextBlock Text="{DynamicResource loc.control.clearfault}" FontSize="{DynamicResource FontSizeXS}" VerticalAlignment="Center" /></StackPanel>
@@ -189,8 +209,8 @@
                         PreviewMouseLeftButtonDown="BtnJogMinus_Down" PreviewMouseLeftButtonUp="BtnJog_Up">
                     <Button.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                            <GradientStop Color="#FF484848" Offset="0" />
-                            <GradientStop Color="#FF383838" Offset="1" />
+                            <GradientStop Color="#FF3A3A3A" Offset="0" />
+                            <GradientStop Color="#FF2D2D2D" Offset="1" />
                         </LinearGradientBrush>
                     </Button.Background>
                     <TextBlock Text="{DynamicResource loc.control.jogminus}" FontSize="{DynamicResource FontSizeXS}" VerticalAlignment="Center" />
@@ -199,8 +219,8 @@
                         PreviewMouseLeftButtonDown="BtnJogPlus_Down" PreviewMouseLeftButtonUp="BtnJog_Up">
                     <Button.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                            <GradientStop Color="#FF484848" Offset="0" />
-                            <GradientStop Color="#FF383838" Offset="1" />
+                            <GradientStop Color="#FF3A3A3A" Offset="0" />
+                            <GradientStop Color="#FF2D2D2D" Offset="1" />
                         </LinearGradientBrush>
                     </Button.Background>
                     <TextBlock Text="{DynamicResource loc.control.jogplus}" FontSize="{DynamicResource FontSizeXS}" VerticalAlignment="Center" />
@@ -208,8 +228,8 @@
                 <Button Margin="2,1" Padding="4,2" Cursor="Hand" BorderThickness="0" Foreground="{DynamicResource TextPrimary}" Click="BtnZeroSet_Click">
                     <Button.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                            <GradientStop Color="#FF484848" Offset="0" />
-                            <GradientStop Color="#FF383838" Offset="1" />
+                            <GradientStop Color="#FF3A3A3A" Offset="0" />
+                            <GradientStop Color="#FF2D2D2D" Offset="1" />
                         </LinearGradientBrush>
                     </Button.Background>
                     <StackPanel Orientation="Horizontal"><materialDesign:PackIcon Kind="Numeric0CircleOutline" Width="12" Height="12" VerticalAlignment="Center" Margin="0,0,2,0" /><TextBlock Text="{DynamicResource loc.control.zeroset}" FontSize="{DynamicResource FontSizeXS}" VerticalAlignment="Center" /></StackPanel>
@@ -262,8 +282,8 @@
                 <Button Margin="2,1" Padding="4,2" Cursor="Hand" Foreground="#1A1A1A" BorderThickness="0" Click="BtnMoveAbs_Click">
                     <Button.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                            <GradientStop Color="#FFFFFFFF" Offset="0" />
-                            <GradientStop Color="#FFD8D8D8" Offset="1" />
+                            <GradientStop Color="#FFCCCCCC" Offset="0" />
+                            <GradientStop Color="#FFADADAD" Offset="1" />
                         </LinearGradientBrush>
                     </Button.Background>
                     <TextBlock Text="{DynamicResource loc.control.moveabs}" FontSize="{DynamicResource FontSizeXS}" FontWeight="SemiBold" VerticalAlignment="Center" />
@@ -271,8 +291,8 @@
                 <Button Margin="2,1" Padding="4,2" Cursor="Hand" Foreground="#1A1A1A" BorderThickness="0" Click="BtnMoveRel_Click">
                     <Button.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                            <GradientStop Color="#FFFFFFFF" Offset="0" />
-                            <GradientStop Color="#FFD8D8D8" Offset="1" />
+                            <GradientStop Color="#FFCCCCCC" Offset="0" />
+                            <GradientStop Color="#FFADADAD" Offset="1" />
                         </LinearGradientBrush>
                     </Button.Background>
                     <TextBlock Text="{DynamicResource loc.control.moverel}" FontSize="{DynamicResource FontSizeXS}" FontWeight="SemiBold" VerticalAlignment="Center" />
@@ -280,8 +300,8 @@
                 <Button Margin="2,1" Padding="4,2" Cursor="Hand" Foreground="#1A1A1A" BorderThickness="0" Click="BtnMoveZero_Click">
                     <Button.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                            <GradientStop Color="#FFFFFFFF" Offset="0" />
-                            <GradientStop Color="#FFD8D8D8" Offset="1" />
+                            <GradientStop Color="#FFCCCCCC" Offset="0" />
+                            <GradientStop Color="#FFADADAD" Offset="1" />
                         </LinearGradientBrush>
                     </Button.Background>
                     <TextBlock Text="{DynamicResource loc.control.movezero}" FontSize="{DynamicResource FontSizeXS}" FontWeight="SemiBold" VerticalAlignment="Center" />

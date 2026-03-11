@@ -58,11 +58,26 @@ public partial class MainWindow : Window
 
         WeakReferenceMessenger.Default.Register<TreeNodeSelectedMessage>(this, (_, msg) =>
         {
+            // If a specific drive is active but its panel doesn't exist, show warning
+            if (msg.ActiveDrive != null && !_comparePanels.ContainsKey(msg.ActiveDrive))
+            {
+                ConfirmActionDialog.Info(this,
+                    LocalizationService.Get("loc.drive.nopanel.title"),
+                    LocalizationService.Get("loc.drive.nopanel.msg").Replace("\\n", "\n"),
+                    MaterialDesignThemes.Wpf.PackIconKind.InformationOutline,
+                    "WarningBrush");
+                return;
+            }
+
             // Refresh per-panel data + action buttons when tree selection changes
             var newButtons = ActionButtonRegistry.GetForNodeType(msg.NodeType);
             var vm = DataContext as MainWindowViewModel;
             foreach (var (id, panel) in _comparePanels)
             {
+                // If a specific drive is active, only update that drive's panel
+                if (msg.ActiveDrive != null && id != msg.ActiveDrive)
+                    continue;
+
                 if (msg.NodeType == "Favorites" && vm != null)
                 {
                     // Favorites: bind directly to VM's FavoriteParameters (shared collection)
@@ -126,6 +141,11 @@ public partial class MainWindow : Window
         WeakReferenceMessenger.Default.Register<LanguageChangedMessage>(this, (_, msg) =>
         {
             LocalizationService.ApplyLanguage(msg.IsKorean);
+        });
+
+        WeakReferenceMessenger.Default.Register<DisableAllActivatedMessage>(this, (_, _) =>
+        {
+            PlayDisableAllBorderAnimation();
         });
 
         WeakReferenceMessenger.Default.Register<ShowExitConfirmMessage>(this, (_, _) =>
@@ -203,6 +223,13 @@ public partial class MainWindow : Window
             MonitorColumn.Width = new GridLength(0);
             CenterSplitter.Visibility = Visibility.Collapsed;
             CenterSplitterColumn.Width = new GridLength(0);
+
+            // Repopulate tiled watermark on resize
+            centerContentGrid.SizeChanged += (_, _) =>
+            {
+                if (CenterWatermarkMini.Visibility == Visibility.Visible)
+                    Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Loaded, PopulateTiledWatermark);
+            };
         };
     }
 
@@ -411,10 +438,12 @@ public partial class MainWindow : Window
             if (!string.IsNullOrEmpty(fileDrive) && !string.IsNullOrEmpty(currentDrive)
                 && fileDrive != currentDrive)
             {
-                var result = System.Windows.MessageBox.Show(this,
+                if (!ConfirmActionDialog.Ask(this,
+                    "Import Warning",
                     $"Drive mismatch!\n\nFile: {fileDrive} (FW: {fileFirmware})\nCurrent: {currentDrive} (FW: {vm?.FirmwareVersion})\n\nContinue import?",
-                    "Import Warning", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Warning);
-                if (result != System.Windows.MessageBoxResult.Yes) return;
+                    MaterialDesignThemes.Wpf.PackIconKind.AlertCircleOutline,
+                    "Import",
+                    "WarningBrush")) return;
             }
 
             var (restored, overridden) = ParameterFileService.ApplyImport(parameters, overrides);
@@ -523,11 +552,105 @@ public partial class MainWindow : Window
         }
     }
 
+    private void PlayDisableAllBorderAnimation()
+    {
+        // Rotating red border on the DisableAll button using DashOffset animation
+        var errorBrush = Application.Current.TryFindResource("ErrorBrush") as Brush ?? Brushes.Red;
+        DisableAllBorderAnim.BorderBrush = errorBrush;
+
+        var sb = new System.Windows.Media.Animation.Storyboard();
+
+        // Fade in border
+        var fadeIn = new System.Windows.Media.Animation.DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(150));
+        System.Windows.Media.Animation.Storyboard.SetTarget(fadeIn, DisableAllBorderAnim);
+        System.Windows.Media.Animation.Storyboard.SetTargetProperty(fadeIn, new PropertyPath(OpacityProperty));
+
+        // Hold visible
+        var hold = new System.Windows.Media.Animation.DoubleAnimation(1, 1, TimeSpan.FromMilliseconds(1200))
+        { BeginTime = TimeSpan.FromMilliseconds(150) };
+        System.Windows.Media.Animation.Storyboard.SetTarget(hold, DisableAllBorderAnim);
+        System.Windows.Media.Animation.Storyboard.SetTargetProperty(hold, new PropertyPath(OpacityProperty));
+
+        // Fade out
+        var fadeOut = new System.Windows.Media.Animation.DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(400))
+        { BeginTime = TimeSpan.FromMilliseconds(1350) };
+        System.Windows.Media.Animation.Storyboard.SetTarget(fadeOut, DisableAllBorderAnim);
+        System.Windows.Media.Animation.Storyboard.SetTargetProperty(fadeOut, new PropertyPath(OpacityProperty));
+
+        sb.Children.Add(fadeIn);
+        sb.Children.Add(hold);
+        sb.Children.Add(fadeOut);
+        sb.Begin();
+    }
+
+    private void PopulateTiledWatermark()
+    {
+        CenterWatermarkMini.Children.Clear();
+        // Canvas doesn't participate in layout, so use parent's dimensions
+        var parent = CenterWatermarkMini.Parent as FrameworkElement;
+        double w = parent?.ActualWidth ?? CenterWatermarkMini.ActualWidth;
+        double h = parent?.ActualHeight ?? CenterWatermarkMini.ActualHeight;
+        if (w <= 0 || h <= 0) return;
+
+        // Set Canvas size to match parent so ClipToBounds works
+        CenterWatermarkMini.Width = w;
+        CenterWatermarkMini.Height = h;
+
+        var fillBrush = Application.Current.TryFindResource("TextDisabled") as Brush ?? Brushes.Gray;
+        double tileW = 320, tileH = 160;
+        double logoW = 180, logoH = 45;
+
+        for (double y = -80; y < h + 80; y += tileH)
+        {
+            for (double x = -100; x < w + 100; x += tileW)
+            {
+                var vb = new Viewbox
+                {
+                    Width = logoW, Height = logoH,
+                    Stretch = Stretch.Uniform,
+                    Opacity = 0.08,
+                    RenderTransformOrigin = new Point(0.5, 0.5),
+                    RenderTransform = new RotateTransform(-25)
+                };
+                var canvas = new Canvas { Width = 156, Height = 37 };
+                // RS logo paths (simplified: R + S only for tile)
+                canvas.Children.Add(new System.Windows.Shapes.Path { Fill = fillBrush, Data = Geometry.Parse("M5.81035 9.46846L16.2325 9.47603C17.6363 9.49062 19.1219 9.41164 20.5094 9.56159C21.939 9.7161 23.8462 10.4143 24.7559 11.6002C25.7202 12.8627 26.0264 14.2049 25.8236 15.7642C25.4809 18.3997 23.1735 19.9538 20.684 20.2379C20.1574 20.298 19.714 20.3693 19.1759 20.2942C19.505 20.7525 19.8314 21.2627 20.1631 21.7332L22.705 25.3349C23.4829 26.4608 24.3044 27.6745 25.1208 28.7691C24.3932 28.6645 23.7108 28.7884 22.9793 28.7722C21.8614 28.7473 20.6446 28.781 19.5302 28.7266C19.2215 28.7116 18.4769 28.363 18.2668 28.128C17.6303 27.4162 17.1122 26.5177 16.5737 25.7166L12.7802 20.0649C12.2866 19.2833 11.6936 18.4885 11.2251 17.6982C11.2366 17.6991 11.2481 17.7 11.2596 17.7008C12.268 17.7724 13.6038 17.7518 14.6204 17.733C16.1616 17.7044 18.1203 18.0049 19.3577 16.9256C20.3652 16.0467 20.4724 14.0051 19.5752 13.0045C18.5351 11.7865 17.2317 12.1167 15.8241 12.0621C13.8194 11.988 11.768 12.1387 9.77506 12.0078C9.83818 12.5722 9.80709 13.2736 9.80213 13.8517L9.79714 16.3278L9.7972 24.5043C9.79226 25.4374 9.79241 26.3706 9.79765 27.3039C9.7983 27.7723 9.7822 28.3026 9.80533 28.7651C9.42378 28.7099 8.8505 28.7382 8.45026 28.7411L6.34765 28.7515C6.00421 28.7541 5.56802 28.7858 5.23764 28.7249C4.58238 28.6042 4.07737 28.0983 4.04062 27.4232C3.98939 26.4823 4.00192 25.5473 4.00019 24.6086L4.01893 18.8195C4.01503 17.3518 4.03094 15.8534 4.01341 14.3952C3.99816 13.6213 3.99613 12.8473 4.00733 12.0734C4.01617 11.2802 3.89903 10.4403 4.56543 9.89451C4.96041 9.57105 5.32043 9.50309 5.81035 9.46846Z") });
+                canvas.Children.Add(new System.Windows.Shapes.Path { Fill = fillBrush, Data = Geometry.Parse("M28.5663 26.2168C29.3782 26.2605 30.5087 26.2215 31.3507 26.2201L36.7153 26.2147L39.9291 26.2161C41.0752 26.2184 42.227 26.3684 43.1447 25.5135C43.6931 25.0024 43.9283 24.2929 43.9635 23.5644C44.1103 21.96 43.1606 20.4424 41.4318 20.4377C40.0247 20.4501 38.5535 20.3946 37.1529 20.4318C34.592 20.4998 31.709 20.3463 29.8407 18.3347C28.0631 16.4207 28.1248 13.0107 30.0652 11.2211C32.0128 9.42482 34.2785 9.46311 36.7141 9.47331L39.5879 9.47025L44.4172 9.46736C45.2054 9.46821 45.9952 9.45274 46.7831 9.46952C47.2272 9.48403 47.6761 9.65076 47.9768 9.98586C48.432 10.4932 48.5045 11.2324 48.5125 11.8841C48.5139 12.0058 48.4711 12.0616 48.3577 12.0935C48.275 12.0652 48.2373 12.0683 48.1523 12.0669C47.4168 12.0357 46.727 12.0608 45.993 12.0571C44.3305 12.0419 42.668 12.038 41.0055 12.0454C40.0558 12.0377 39.1064 12.0361 38.1567 12.0406C37.6383 12.0421 37.0571 12.0156 36.5549 12.0912C35.2393 12.2909 34.2865 13.3209 34.2629 14.6635C34.2485 15.4871 34.3148 16.1385 34.9012 16.7662C35.8662 17.7989 37.046 17.7037 38.3123 17.7195L41.542 17.7346C42.3137 17.7379 43.1186 17.7051 43.8909 17.7786C47.179 18.0975 49.5064 19.9829 49.4214 23.4621C49.3494 26.4014 47.4973 28.2057 44.6706 28.6889C43.8841 28.8232 42.8165 28.7521 42.004 28.7495L37.4482 28.7322L32.0659 28.7518C31.4197 28.7521 30.7704 28.7713 30.1247 28.7574C28.6222 28.7254 28.7001 27.2664 28.5663 26.2168Z") });
+                vb.Child = canvas;
+                Canvas.SetLeft(vb, x);
+                Canvas.SetTop(vb, y);
+                CenterWatermarkMini.Children.Add(vb);
+            }
+        }
+    }
+
     private void RebuildCenterLayout()
     {
         var orderedPanels = _comparePanels.OrderBy(p => p.Key).ToList();
         int count = orderedPanels.Count;
         var activeSet = new HashSet<CompareParameterPanel>(orderedPanels.Select(p => p.Value));
+
+        // Watermark: <3 panels → big center, 3+ panels → 50% bottom-right
+        CenterWatermark.Visibility = Visibility.Visible;
+        CenterWatermarkMini.Visibility = Visibility.Collapsed;
+        if (count >= 3)
+        {
+            CenterWatermark.Width = 360;
+            CenterWatermark.MaxHeight = 108;
+            CenterWatermark.HorizontalAlignment = HorizontalAlignment.Right;
+            CenterWatermark.VerticalAlignment = VerticalAlignment.Bottom;
+            CenterWatermark.Margin = new Thickness(0, 0, 20, 20);
+            CenterWatermark.Opacity = 0.25;
+        }
+        else
+        {
+            CenterWatermark.Width = 720;
+            CenterWatermark.MaxHeight = 216;
+            CenterWatermark.HorizontalAlignment = HorizontalAlignment.Center;
+            CenterWatermark.VerticalAlignment = VerticalAlignment.Center;
+            CenterWatermark.Margin = new Thickness(530, 0, 0, 0);
+            CenterWatermark.Opacity = 0.45;
+        }
 
         // Remove panels that are no longer active + old splitters
         foreach (var child in centerPanelGrid.Children.OfType<CompareParameterPanel>().ToList())
@@ -1020,13 +1143,11 @@ public partial class MainWindow : Window
         }
         catch { /* Ignore */ }
 
-        // 3. Switch AvalonDock theme
+        // 3. Switch AvalonDock theme via DictionaryTheme (overlay color support)
         try
         {
-            dockManager.Theme = isDark
-                ? new AvalonDock.Themes.Vs2013DarkTheme()
-                : new AvalonDock.Themes.Vs2013LightTheme();
-            ApplyAvalonDockHeaderColor();
+            _patchedFloatingWindows.Clear();
+            ApplyAvalonDockHeaderColor(isDark);
         }
         catch { /* Ignore */ }
 
@@ -1071,13 +1192,45 @@ public partial class MainWindow : Window
     }
 
     // ═══════════════════════════════════════════════════════════
-    //  AVALONDOCK HEADER COLOR OVERRIDE
+    //  AVALONDOCK THEME via DictionaryTheme (overlay color override)
     // ═══════════════════════════════════════════════════════════
 
-    private void ApplyAvalonDockHeaderColor()
+    // DictionaryTheme is abstract — concrete subclass
+    private sealed class RsDictionaryTheme : AvalonDock.Themes.DictionaryTheme
+    {
+        public RsDictionaryTheme(ResourceDictionary rd) : base(rd) { }
+    }
+
+    // Keep reference to the theme dict so we can modify it on theme switch
+    private ResourceDictionary? _avalonThemeDict;
+
+    private void ApplyAvalonDockHeaderColor(bool isDark = true)
     {
         try
         {
+            // Load the VS2013 theme ResourceDictionary
+            var themeUri = isDark
+                ? new Uri("/AvalonDock.Themes.VS2013;component/DarkTheme.xaml", UriKind.Relative)
+                : new Uri("/AvalonDock.Themes.VS2013;component/LightTheme.xaml", UriKind.Relative);
+
+            _avalonThemeDict = new ResourceDictionary { Source = themeUri };
+
+            // Override accent color in the loaded dictionary — this propagates to OverlayWindow
+            // because DictionaryTheme shares the SAME ResourceDictionary instance
+            var rk = typeof(AvalonDock.Themes.VS2013.Themes.ResourceKeys);
+            var bf = System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static;
+            var keys = new Dictionary<string, object>();
+            foreach (var prop in rk.GetProperties(bf))
+            {
+                var key = prop.GetValue(null);
+                if (key != null) keys[prop.Name] = key;
+            }
+            foreach (var field in rk.GetFields(bf))
+            {
+                var key = field.GetValue(null);
+                if (key != null && !keys.ContainsKey(field.Name)) keys[field.Name] = key;
+            }
+
             var deepRed = new SolidColorBrush(Color.FromRgb(139, 26, 26));
             deepRed.Freeze();
             var lightText = new SolidColorBrush(Colors.White);
@@ -1085,24 +1238,135 @@ public partial class MainWindow : Window
             var grip = new SolidColorBrush(Color.FromRgb(180, 80, 80));
             grip.Freeze();
 
-            var rk = typeof(AvalonDock.Themes.VS2013.Themes.ResourceKeys);
             void Set(string name, object value)
             {
-                var prop = rk.GetProperty(name, System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static);
-                if (prop?.GetValue(null) is { } key)
-                    dockManager.Resources[key] = value;
+                if (keys.TryGetValue(name, out var key))
+                    _avalonThemeDict[key] = value;
             }
 
+            // Master accent color — OverlayWindow DynamicResource references this
             Set("ControlAccentColorKey", Color.FromRgb(139, 26, 26));
             Set("ControlAccentBrushKey", deepRed);
+
+            // Docked state
             Set("ToolWindowCaptionActiveBackground", deepRed);
             Set("ToolWindowCaptionActiveText", lightText);
             Set("ToolWindowCaptionActiveGrip", grip);
             Set("DocumentWellTabSelectedActiveBackground", deepRed);
+
+            // Floating state
             Set("FloatingWindowToolWindowBorder", deepRed);
             Set("FloatingWindowDocumentBorder", deepRed);
+            Set("FloatingWindowTitleBarBackground", deepRed);
+            Set("FloatingWindowTitleBarText", lightText);
+
+            // Docking indicators — via same dictionary (DictionaryTheme shares instance)
+            Set("DockingButtonForegroundBrushKey", deepRed);
+            Set("PreviewBoxBorderBrushKey", deepRed);
+            var previewBg = new SolidColorBrush(Color.FromArgb(128, 139, 26, 26));
+            previewBg.Freeze();
+            Set("PreviewBoxBackgroundBrushKey", previewBg);
+
+            // Apply as DictionaryTheme — OverlayWindow will use same dict instance
+            dockManager.Theme = new RsDictionaryTheme(_avalonThemeDict);
+
+            // Hook for floating window visual tree patching (backup)
+            dockManager.LayoutChanged -= DockManager_InjectFloatingResources;
+            dockManager.LayoutUpdated -= DockManager_InjectFloatingResources;
+            dockManager.LayoutChanged += DockManager_InjectFloatingResources;
+            dockManager.LayoutUpdated += DockManager_InjectFloatingResources;
         }
-        catch { /* Ignore */ }
+        catch { }
+    }
+
+    private readonly HashSet<int> _patchedFloatingWindows = new();
+    private bool _isPatchingFloating;
+
+    private void DockManager_InjectFloatingResources(object? sender, EventArgs e)
+    {
+        if (_isPatchingFloating) return; // prevent re-entrancy
+        _isPatchingFloating = true;
+        try
+        {
+            var windows = Application.Current.Windows.OfType<Window>().ToList();
+            foreach (var w in windows)
+            {
+                if (w is not AvalonDock.Controls.LayoutAnchorableFloatingWindowControl &&
+                    w is not AvalonDock.Controls.LayoutDocumentFloatingWindowControl)
+                    continue;
+
+                if (!w.IsLoaded || !_patchedFloatingWindows.Add(w.GetHashCode())) continue;
+
+                // Walk visual tree after render to fix blue elements
+                w.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, () =>
+                {
+                    try { PatchFloatingWindowVisualTree(w); } catch { }
+                });
+            }
+        }
+        catch { }
+        finally { _isPatchingFloating = false; }
+    }
+
+    private static bool IsBlueAccent(Color c)
+    {
+        // VS2013 blue accent: #007ACC or similar blue tones (broad detection)
+        return c.B > 140 && c.R < 100 && c.G < 180 && c.A > 100;
+    }
+
+    private static readonly SolidColorBrush _patchRed = CreateFrozenBrush(139, 26, 26);
+    private static readonly SolidColorBrush _patchWhite = CreateFrozenBrush(255, 255, 255);
+    private static readonly SolidColorBrush _patchGrip = CreateFrozenBrush(180, 80, 80);
+    private static readonly SolidColorBrush _patchLightGray = CreateFrozenBrush(190, 190, 190);
+
+    private static SolidColorBrush CreateFrozenBrush(byte r, byte g, byte b)
+    {
+        var brush = new SolidColorBrush(Color.FromRgb(r, g, b));
+        brush.Freeze();
+        return brush;
+    }
+
+    private void PatchFloatingWindowVisualTree(DependencyObject parent)
+    {
+        int count = VisualTreeHelper.GetChildrenCount(parent);
+        for (int i = 0; i < count; i++)
+        {
+            var child = VisualTreeHelper.GetChild(parent, i);
+
+            // Border: Background + BorderBrush
+            if (child is System.Windows.Controls.Border border)
+            {
+                if (border.Background is SolidColorBrush bg && IsBlueAccent(bg.Color))
+                    border.Background = _patchRed;
+                if (border.BorderBrush is SolidColorBrush bb && IsBlueAccent(bb.Color))
+                    border.BorderBrush = _patchRed;
+            }
+
+            // Panel: Background
+            if (child is System.Windows.Controls.Panel panel &&
+                panel.Background is SolidColorBrush pbg && IsBlueAccent(pbg.Color))
+                panel.Background = _patchRed;
+
+            // Shape (Path, Line, Rectangle, Ellipse): Fill + Stroke → light gray for grip dots
+            if (child is System.Windows.Shapes.Shape shape)
+            {
+                if (shape.Fill is SolidColorBrush sf && IsBlueAccent(sf.Color))
+                    shape.Fill = _patchLightGray;
+                if (shape.Stroke is SolidColorBrush ss && IsBlueAccent(ss.Color))
+                    shape.Stroke = _patchLightGray;
+            }
+
+            // TextBlock/Control: Foreground (blue dots could be text-based grip)
+            if (child is System.Windows.Controls.TextBlock tb &&
+                tb.Foreground is SolidColorBrush tf && IsBlueAccent(tf.Color))
+                tb.Foreground = _patchWhite;
+
+            if (child is System.Windows.Controls.Control ctrl &&
+                ctrl.Foreground is SolidColorBrush cf && IsBlueAccent(cf.Color))
+                ctrl.Foreground = _patchWhite;
+
+            PatchFloatingWindowVisualTree(child);
+        }
     }
 
     // ═══════════════════════════════════════════════════════════

@@ -70,7 +70,7 @@ public partial class MainWindowViewModel : ObservableObject
 
     // Compare panel visibility (A/B/C/D) — all panels are equal, all can be closed
     [ObservableProperty]
-    private bool _isPanelAVisible = true; // A is default-on at startup
+    private bool _isPanelAVisible; // starts off — user opens via tree
 
     [ObservableProperty]
     private bool _isPanelBVisible;
@@ -139,6 +139,10 @@ public partial class MainWindowViewModel : ObservableObject
 
         // Load parameters from CSV for selected node
         LoadParametersForNode(msg.NodeType);
+
+        // Auto-open Panel A if no panels are visible
+        if (!IsPanelAVisible && !IsPanelBVisible && !IsPanelCVisible && !IsPanelDVisible)
+            IsPanelAVisible = true;
 
         // Update status entries
         StatusEntries.Clear();
@@ -298,7 +302,10 @@ public partial class MainWindowViewModel : ObservableObject
     private void Enable() { }
 
     [RelayCommand]
-    private void DisableAll() { }
+    private void DisableAll()
+    {
+        WeakReferenceMessenger.Default.Send(new DisableAllActivatedMessage());
+    }
 
     [RelayCommand]
     private void ClearFaultAll() { }
@@ -396,12 +403,12 @@ public partial class MainWindowViewModel : ObservableObject
 
         var onlineDrives = new DriveTreeNode
         {
-            Name = LocalizationService.Get("loc.tree.online"), IconKind = "LanConnect", NodeType = "", IsExpanded = true,
+            Name = LocalizationService.Get("loc.tree.online"), IconKind = "LanConnect", NodeType = "", IsExpanded = false,
             Children =
             [
                 new DriveTreeNode
                 {
-                    Name = LocalizationService.Get("loc.tree.drive"), IconKind = "Cog", NodeType = "", IsExpanded = true,
+                    Name = LocalizationService.Get("loc.tree.drive"), IconKind = "Cog", NodeType = "", IsExpanded = false,
                     Children =
                     [
                         new DriveTreeNode { Name = LocalizationService.Get("loc.tree.modeconfig"), IconKind = "TuneVertical", NodeType = "ModeConfig" },
@@ -409,7 +416,7 @@ public partial class MainWindowViewModel : ObservableObject
                         new DriveTreeNode { Name = LocalizationService.Get("loc.tree.motor"), NodeType = "Motor", CustomIconPath = "M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z" },
                         new DriveTreeNode
                         {
-                            Name = LocalizationService.Get("loc.tree.pidtuning"), IconKind = "ChartLine", NodeType = "PIDTuning", IsExpanded = true,
+                            Name = LocalizationService.Get("loc.tree.pidtuning"), IconKind = "ChartLine", NodeType = "PIDTuning", IsExpanded = false,
                             Children =
                             [
                                 new DriveTreeNode { Name = LocalizationService.Get("loc.tree.tuningless"), IconKind = "AutoFix", NodeType = "Tuningless" },
@@ -433,12 +440,12 @@ public partial class MainWindowViewModel : ObservableObject
 
         var offlineDrives = new DriveTreeNode
         {
-            Name = LocalizationService.Get("loc.tree.offline"), IconKind = "LanDisconnect", NodeType = "", IsExpanded = true,
+            Name = LocalizationService.Get("loc.tree.offline"), IconKind = "LanDisconnect", NodeType = "", IsExpanded = false,
             Children =
             [
                 new DriveTreeNode
                 {
-                    Name = LocalizationService.Get("loc.tree.group"), IconKind = "FormatListBulleted", NodeType = "", IsExpanded = true,
+                    Name = LocalizationService.Get("loc.tree.group"), IconKind = "FormatListBulleted", NodeType = "", IsExpanded = false,
                     Children =
                     [
                         new DriveTreeNode { Name = LocalizationService.Get("loc.tree.group0"), IconKind = "Numeric0BoxOutline", NodeType = "Group0" },
@@ -489,7 +496,7 @@ public record FontSizeChangedMessage(int FontSize);
 
 public record ShowAdminPasswordMessage(string Target);
 
-public record TreeNodeSelectedMessage(string NodeName, string NodeType);
+public record TreeNodeSelectedMessage(string NodeName, string NodeType, string? ActiveDrive = null);
 
 public record ComparePanelChangedMessage(string PanelId, bool IsVisible);
 
@@ -508,3 +515,5 @@ public record ShowClearFavoritesConfirmMessage();
 public record ActionButtonClickedMessage(string Label, string PanelId);
 
 public record LanguageChangedMessage(bool IsKorean);
+
+public record DisableAllActivatedMessage();

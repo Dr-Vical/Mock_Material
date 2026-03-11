@@ -15,8 +15,8 @@
 
     <Border x:Name="DialogBorder"
             Background="{DynamicResource SurfaceBrush}"
-            BorderBrush="{DynamicResource BorderDefault}"
-            BorderThickness="1"
+            BorderBrush="{DynamicResource RSBlueBrush}"
+            BorderThickness="2"
             CornerRadius="{StaticResource Radius.LG}"
             Margin="8"
             Effect="{StaticResource MaterialDesignShadowDepth3}">
@@ -53,7 +53,7 @@
 
             <!-- Buttons -->
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Content="{DynamicResource loc.btn.cancel}"
+                <Button x:Name="BtnCancel" Content="{DynamicResource loc.btn.cancel}"
                         Style="{StaticResource MaterialDesignFlatButton}"
                         Margin="{StaticResource Margin.Inline}"
                         Click="BtnCancel_Click" />

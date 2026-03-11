@@ -327,14 +327,19 @@ public partial class MonitorControlDialog : UserControl
 
     private double GeneratePoint(int channel)
     {
-        double noise = _rng.NextDouble() - 0.5;
         double p = _phase * 0.04;
         return channel switch
         {
-            0 => Math.Sin(p * 0.5) * 10000 + p * 10 + noise * 50,              // Position Current
-            1 => Math.Sin(p * 0.5) * 10000 + p * 10 + noise * 20 + 150,        // Position Command (tracking)
-            2 => Math.Cos(p) * 3500 + Math.Cos(p * 2.3) * 500 + noise * 30,    // Velocity Current
-            3 => Math.Cos(p) * 3500 + Math.Cos(p * 2.3) * 500 + noise * 15 + 80, // Velocity Command (tracking)
+            // Position Command — ideal smooth curve
+            1 => Math.Sin(p * 0.5) * 10000 + p * 10,
+            // Position Actual — tracks command with ±10% noise
+            0 => Math.Sin(p * 0.5) * 10000 + p * 10
+                 + (Math.Sin(p * 0.5) * 10000 + p * 10) * 0.1 * (_rng.NextDouble() - 0.5) * 2,
+            // Velocity Command — ideal smooth curve
+            3 => Math.Cos(p) * 3500 + Math.Cos(p * 2.3) * 500,
+            // Velocity Actual — tracks command with ±10% noise
+            2 => Math.Cos(p) * 3500 + Math.Cos(p * 2.3) * 500
+                 + (Math.Cos(p) * 3500 + Math.Cos(p * 2.3) * 500) * 0.1 * (_rng.NextDouble() - 0.5) * 2,
             _ => 0
         };
     }
@@ -512,7 +517,19 @@ public partial class MonitorControlDialog : UserControl
 
     private void BtnSingle_Click(object sender, RoutedEventArgs e)
     {
-        if (_isRunning) return;
+        // If continuous is running, stop it and switch to single
+        if (_isRunning)
+        {
+            _timer.Stop();
+            _isRunning = false;
+        }
+
+        // If a previous single capture is in progress, stop it
+        if (_singleTimer != null)
+        {
+            _singleTimer.Stop();
+            _singleTimer = null;
+        }
 
         ShowCollectingProgress(true, isIndeterminate: false);
         CollectingProgress.Value = 0;

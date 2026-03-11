@@ -73,6 +73,7 @@ loc.control.moverel,상대 이동,Move Rel
 loc.control.movezero,원점 이동,Move Zero
 loc.control.confirm.zeroset.title,원점 설정,Zero Set
 loc.control.confirm.zeroset.msg,Zero Set 하시겠습니까?\n현재 위치가 0으로 초기화됩니다.,Proceed with Zero Set?\nCurrent position will be reset to 0.
+loc.control.confirm.zeroset.btn,원점 설정,Zero Set
 loc.control.confirm.clearfault.title,오류 클리어,Clear Fault
 loc.control.confirm.clearfault.msg,Clear Fault 하시겠습니까?\n현재 발생한 Fault를 초기화합니다.,Proceed with Clear Fault?\nAll current faults will be cleared.
 loc.control.confirm.clearfault.btn,오류 클리어,Clear Fault
@@ -218,3 +219,5 @@ loc.rescan.selectall,전체 선택,Select All
 loc.rescan.channel,채널 범위,Channel Range
 loc.monitor.tooltip.expandall,패널 모두 열기,Expand All Panels
 loc.monitor.tooltip.collapseall,패널 모두 닫기,Collapse All Panels
+loc.drive.nopanel.title,파라미터 창 없음,No Parameter Panel
+loc.drive.nopanel.msg,선택된 파라미터 창이 없습니다.\n파라미터 창을 활성화해 주세요.,No parameter panel is active.\nPlease activate a parameter panel.

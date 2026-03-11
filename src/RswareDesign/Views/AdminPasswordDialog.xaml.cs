@@ -21,11 +21,18 @@ public partial class AdminPasswordDialog : Window
         }
         else
         {
-            MessageBox.Show("Incorrect password.", "Authentication Failed",
-                MessageBoxButton.OK, MessageBoxImage.Warning);
+            ConfirmActionDialog.Info(this,
+                "Authentication Failed", "Incorrect password.",
+                MaterialDesignThemes.Wpf.PackIconKind.ShieldAlertOutline,
+                "ErrorBrush");
             PasswordInput.Clear();
             PasswordInput.Focus();
         }
+    }
+
+    private void TitleBar_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+        DragMove();
     }
 
     private void BtnCancel_Click(object sender, RoutedEventArgs e)

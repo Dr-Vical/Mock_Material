@@ -14,8 +14,8 @@
         TextElement.FontSize="{DynamicResource FontSizeMD}">
 
     <Border Background="{DynamicResource SurfaceBrush}"
-            BorderBrush="{DynamicResource BorderDefault}"
-            BorderThickness="1"
+            BorderBrush="{DynamicResource RSBlueBrush}"
+            BorderThickness="2"
             CornerRadius="{StaticResource Radius.LG}"
             Margin="8"
             Effect="{StaticResource MaterialDesignShadowDepth3}">

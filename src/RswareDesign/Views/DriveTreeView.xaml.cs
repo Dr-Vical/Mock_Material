@@ -35,7 +35,7 @@ public partial class DriveTreeView : UserControl
         if (e.NewValue is DriveTreeNode node)
         {
             WeakReferenceMessenger.Default.Send(
-                new TreeNodeSelectedMessage(node.Name, node.NodeType));
+                new TreeNodeSelectedMessage(node.Name, node.NodeType, _activeDrive));
         }
     }
 

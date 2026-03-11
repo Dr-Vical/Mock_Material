@@ -50,6 +50,8 @@
     <SolidColorBrush x:Key="RibbonBackgroundBrush"  Color="#FF252526" />
     <SolidColorBrush x:Key="TreeBackgroundBrush"    Color="#FF252526" />
     <SolidColorBrush x:Key="GridHeaderBrush"        Color="#FF37474F" />
+    <SolidColorBrush x:Key="RSRedBrush"        Color="#FF8B1A1A" />
+    <SolidColorBrush x:Key="RSBlueBrush"       Color="#FF1976D2" />
     <SolidColorBrush x:Key="GridAlternatingRowBrush" Color="#FF2A2A2E" />
     <SolidColorBrush x:Key="StatusBarBrush"         Color="#FF546E7A" />
     <SolidColorBrush x:Key="StatusBarForeground"    Color="#FFFFFFFF" />

@@ -220,7 +220,7 @@
                     <DataGridTextColumn Header="{DynamicResource loc.compare.col.ftnum}"
                                         Binding="{Binding ShortNumber}"
                                         IsReadOnly="True"
-                                        Width="65" MinWidth="65">
+                                        Width="70" MinWidth="70">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="TextTrimming" Value="CharacterEllipsis" />
@@ -230,7 +230,7 @@
                     <DataGridTextColumn Header="{DynamicResource loc.compare.col.parameter}"
                                         Binding="{Binding Name}"
                                         IsReadOnly="True"
-                                        Width="*">
+                                        Width="130" MinWidth="130">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="TextTrimming" Value="CharacterEllipsis" />
@@ -238,7 +238,7 @@
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
                     <DataGridTemplateColumn Header="{DynamicResource loc.compare.col.value}"
-                                             Width="55" MinWidth="55">
+                                             Width="80" MinWidth="80">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>

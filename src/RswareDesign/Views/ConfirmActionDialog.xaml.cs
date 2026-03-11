@@ -29,6 +29,12 @@ public partial class ConfirmActionDialog : Window
             DialogBorder.BorderThickness = new Thickness(2);
         }
 
+        Loaded += (_, _) =>
+        {
+            if (_hideCancel)
+                BtnCancel.Visibility = Visibility.Collapsed;
+        };
+
         MouseLeftButtonDown += (_, _) => DragMove();
         KeyDown += (_, e) =>
         {
@@ -52,6 +58,24 @@ public partial class ConfirmActionDialog : Window
         if (owner != null) dialog.Owner = owner;
         return dialog.ShowDialog() == true;
     }
+
+    /// <summary>
+    /// Show a styled info/warning dialog with OK button only (no cancel).
+    /// </summary>
+    public static void Info(Window? owner, string title, string message,
+        PackIconKind icon = PackIconKind.InformationOutline,
+        string? borderBrushKey = null)
+    {
+        var dialog = new ConfirmActionDialog(title, message, icon,
+            Services.LocalizationService.Get("loc.btn.ok"), borderBrushKey)
+        {
+            _hideCancel = true
+        };
+        if (owner != null) dialog.Owner = owner;
+        dialog.ShowDialog();
+    }
+
+    private bool _hideCancel;
 
     private void BtnConfirm_Click(object sender, RoutedEventArgs e)
     {

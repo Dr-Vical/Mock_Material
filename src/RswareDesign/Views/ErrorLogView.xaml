@@ -6,31 +6,11 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!-- Header Bar -->
-        <Border Grid.Row="0"
-                Background="{DynamicResource GridHeaderBrush}"
-                Padding="{StaticResource Padding.ToolWindow}">
-            <StackPanel Orientation="Horizontal">
-                <materialDesign:PackIcon Kind="AlertCircleOutline"
-                                         Width="{DynamicResource Size.IconSM}"
-                                         Height="{DynamicResource Size.IconSM}"
-                                         Foreground="{DynamicResource WarningBrush}"
-                                         VerticalAlignment="Center"
-                                         Margin="0,0,6,0" />
-                <TextBlock Text="{DynamicResource loc.errorlog.title}"
-                           Foreground="{DynamicResource TextPrimary}"
-                           FontWeight="SemiBold"
-                           FontSize="{DynamicResource FontSizeSM}"
-                           VerticalAlignment="Center" />
-            </StackPanel>
-        </Border>
-
         <!-- Status DataGrid -->
-        <DataGrid Grid.Row="1"
+        <DataGrid Grid.Row="0"
                   ItemsSource="{Binding StatusEntries}"
                   AutoGenerateColumns="False"
                   CanUserAddRows="False"
